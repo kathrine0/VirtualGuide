@@ -14,7 +14,7 @@ namespace VirtualGuide.Models
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection")//, throwIfV1Schema: false
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
