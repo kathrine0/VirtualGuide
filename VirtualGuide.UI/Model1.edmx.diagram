@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b5b98c5d3cc4f09aa6fa39ab5afb58f" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="VirtualGuideModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.AspNetUsers" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.Excursions" Width="1.5" PointX="7.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.Place_Excursion" Width="1.5" PointX="9.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.Places" Width="1.5" PointX="7.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.Properties" Width="1.5" PointX="12.875" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.Travels" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualGuideModel.User_Purchased_Travel" Width="1.5" PointX="10.5" PointY="9.375" IsExpanded="true" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Travels_dbo_AspNetUsers_ApproverId" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Travels_dbo_AspNetUsers_CreatorId" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_User_Purchased_Travel_dbo_AspNetUsers_User_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Excursions_dbo_Travels_Travel_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Place_Excursion_dbo_Excursions_Excursion_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Properties_dbo_Excursions_Excursion_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Place_Excursion_dbo_Places_Place_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Places_dbo_Places_ParentId" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Places_dbo_Travels_Travel_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Properties_dbo_Places_Place_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_Properties_dbo_Travels_Travel_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.FK_dbo_User_Purchased_Travel_dbo_Travels_Travel_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="VirtualGuideModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

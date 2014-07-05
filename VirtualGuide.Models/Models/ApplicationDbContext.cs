@@ -63,7 +63,7 @@ namespace VirtualGuide.Models
         }
 
 
-        public override async Task<int> SaveChangesAsync()
+        public override int SaveChanges()
         {
 
             foreach (var travel in ChangeTracker.Entries<Travel>())
@@ -106,7 +106,7 @@ namespace VirtualGuide.Models
                 }
             }
 
-            return await base.SaveChangesAsync();
+            return base.SaveChanges();
         }
 
     }

@@ -30,6 +30,10 @@ namespace VirtualGuide.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        [Required]
+        //[RegularExpression(@"^[a-z]{2}-[A-Z]{2}$")]
+        public string Language { get; set; }
+
         public double Price { get; set; }
     }
 
