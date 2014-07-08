@@ -13,33 +13,24 @@ namespace VirtualGuide.Service
     [ServiceContract]
     public interface IService
     {
-
         [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        // TODO: Add your service operations here
-
-        [OperationContract]
-        [WebGet]
+        [WebInvoke(Method = "GET", UriTemplate = "Travel" )]
         List<Travel> GetTravelsList();
 
         [OperationContract]
-        [WebGet(UriTemplate = "Travel/{id}")]
+        [WebInvoke(Method = "GET", UriTemplate = "Travel/{id}")]
         Travel GetTravelById(string id);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "Travel/Add/{name}")]
+        [WebInvoke(Method = "PUT", UriTemplate = "Travel/Add/{name}")]
         void AddTravel(string name);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "Travel/Edit/{id}/{name}")]
+        [WebInvoke(Method = "PUT", UriTemplate = "Travel/Edit/{id}/{name}")]
         void UpdateTravel(string id, string name);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "Travel/Delete/{id}")]
+        [WebInvoke(Method = "DELETE", UriTemplate = "Travel/Delete/{id}")]
         void DeleteTravel(string id);
     }
 

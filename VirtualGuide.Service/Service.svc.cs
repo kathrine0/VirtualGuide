@@ -15,29 +15,26 @@ namespace VirtualGuide.Service
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public string GetData(int value)
+        private List<Travel> EntitesToList(List<Travel> list)
         {
-            return string.Format("You testetest: {0}", value);
-        }
+            var result = new List<Travel>();
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
+            foreach(var item in list)
             {
-                throw new ArgumentNullException("composite");
+                result.Add(new Travel(item));
             }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
 
+            return result;
+        }
 
         public List<Travel> GetTravelsList()
         {
-            //return db.Travels.ToList();
-            return new List<Travel>() {new Travel() { Id = 1, Name = "test" }};
+            var result = new List<Travel>();
+            using (var context = new ApplicationDbContext())
+            {
+                result = context.Travels.ToList();
+            }
+            return EntitesToList(result);
         }
 
         public Travel GetTravelById(string id)
@@ -45,7 +42,14 @@ namespace VirtualGuide.Service
             try
             {
                 int travelId = Convert.ToInt32(id);
-                return db.Travels.SingleOrDefault(travel => travel.Id == travelId);
+                var result = db.Travels.SingleOrDefault(travel => travel.Id == travelId);
+
+                return new Travel()
+                { 
+                    Id = result.Id,
+                    Name = result.Name,
+                    Description = result.Description
+                };
             }
             catch
             {
@@ -92,4 +96,5 @@ namespace VirtualGuide.Service
             }
         }
     }
+
 }
