@@ -131,7 +131,7 @@ namespace VirtualGuide.UI.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Create
         {
-            public readonly string travelView = "model";
+            public readonly string model = "model";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -140,7 +140,7 @@ namespace VirtualGuide.UI.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
-            public readonly string travelView = "model";
+            public readonly string model = "model";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -222,14 +222,14 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.BasicTravelViewModel travelView);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.BasicTravelViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(VirtualGuide.Models.BasicTravelViewModel travelView)
+        public override System.Web.Mvc.ActionResult Create(VirtualGuide.Models.BasicTravelViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", travelView);
-            CreateOverride(callInfo, travelView);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            CreateOverride(callInfo, model);
             return callInfo;
         }
 
@@ -246,14 +246,14 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.BasicTravelViewModel travelView);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.BasicTravelViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(VirtualGuide.Models.BasicTravelViewModel travelView)
+        public override System.Web.Mvc.ActionResult Edit(VirtualGuide.Models.BasicTravelViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", travelView);
-            EditOverride(callInfo, travelView);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditOverride(callInfo, model);
             return callInfo;
         }
 

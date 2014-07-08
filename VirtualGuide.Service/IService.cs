@@ -5,12 +5,13 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using VirtualGuide.Models;
 
 namespace VirtualGuide.Service
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService" in both code and config file together.
     [ServiceContract]
-    public interface IService1
+    public interface IService
     {
 
         [OperationContract]
@@ -20,6 +21,26 @@ namespace VirtualGuide.Service
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
         // TODO: Add your service operations here
+
+        [OperationContract]
+        [WebGet]
+        List<Travel> GetTravelsList();
+
+        [OperationContract]
+        [WebGet(UriTemplate = "Travel/{id}")]
+        Travel GetTravelById(string id);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "Travel/Add/{name}")]
+        void AddTravel(string name);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "Travel/Edit/{id}/{name}")]
+        void UpdateTravel(string id, string name);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "Travel/Delete/{id}")]
+        void DeleteTravel(string id);
     }
 
 
