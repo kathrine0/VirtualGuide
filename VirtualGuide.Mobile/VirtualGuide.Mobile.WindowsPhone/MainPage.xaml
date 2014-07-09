@@ -5,10 +5,23 @@
     xmlns:local="using:VirtualGuide.Mobile"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <StackPanel VerticalAlignment="Center" Margin="20,0">
+            <TextBlock x:Uid="Username" Text="Username" />
+            <TextBox x:Name="Username" TextWrapping="Wrap" />
+            <TextBlock x:Uid="Password" Text="Password" />
+            <TextBox x:Name="Password" TextWrapping="Wrap" />
+            <Button x:Uid="LoginButton" Content="Login" HorizontalAlignment="Stretch" Click="LoginButton_Click" />
 
+            <TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource LightGreen}" />
+                <TextBlock x:Uid="or" Text="or" Margin="7,0" />
+                <TextBlock x:Uid="SkipLogin" Text="Skip login" Foreground="{StaticResource LightGreen}" Tapped="SkipLogin_Tapped" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

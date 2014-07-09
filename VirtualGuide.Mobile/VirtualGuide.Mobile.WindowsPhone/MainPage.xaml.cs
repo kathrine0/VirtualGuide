@@ -44,5 +44,17 @@ namespace VirtualGuide.Mobile
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+            //Autentification
+            Frame.Navigate(typeof(GuideList));
+        }
+
+        private void SkipLogin_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GuideList));
+        }
     }
 }
