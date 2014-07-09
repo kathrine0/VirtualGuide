@@ -121,7 +121,7 @@ namespace SQLite
     }
 
 	/// <summary>
-	/// Represents an open connection to a SQLite database.
+	/// Represents an open Connection to a SQLite database.
 	/// </summary>
 	public partial class SQLiteConnection : IDisposable
 	{
@@ -255,7 +255,7 @@ namespace SQLite
 		}
 
 		/// <summary>
-		/// Returns the mappings from types to tables that the connection
+		/// Returns the mappings from types to tables that the Connection
 		/// currently understands.
 		/// </summary>
 		public IEnumerable<TableMapping> TableMappings {
@@ -583,7 +583,7 @@ namespace SQLite
 		/// in the command text for each of the arguments and then executes that command.
 		/// Use this method instead of Query when you don't expect rows back. Such cases include
 		/// INSERTs, UPDATEs, and DELETEs.
-		/// You can set the Trace or TimeExecution properties of the connection
+		/// You can set the Trace or TimeExecution properties of the Connection
 		/// to profile execution.
 		/// </summary>
 		/// <param name="query">
@@ -677,7 +677,7 @@ namespace SQLite
 		/// <returns>
 		/// An enumerable with one result for each row returned by the query.
 		/// The enumerator will call sqlite3_step on each call to MoveNext, so the database
-		/// connection must remain open for the lifetime of the enumerator.
+		/// Connection must remain open for the lifetime of the enumerator.
 		/// </returns>
 		public IEnumerable<T> DeferredQuery<T>(string query, params object[] args) where T : new()
 		{
@@ -731,7 +731,7 @@ namespace SQLite
 		/// <returns>
 		/// An enumerable with one result for each row returned by the query.
 		/// The enumerator will call sqlite3_step on each call to MoveNext, so the database
-		/// connection must remain open for the lifetime of the enumerator.
+		/// Connection must remain open for the lifetime of the enumerator.
 		/// </returns>
 		public IEnumerable<object> DeferredQuery(TableMapping map, string query, params object[] args)
 		{
@@ -1028,7 +1028,7 @@ namespace SQLite
 		/// </summary>
 		/// <param name="action">
 		/// The <see cref="Action"/> to perform within a transaction. <param name="action"> can contain any number
-		/// of operations on the connection but should never call <see cref="BeginTransaction"/> or
+		/// of operations on the Connection but should never call <see cref="BeginTransaction"/> or
 		/// <see cref="Commit"/>.
 		/// </param>
 		public void RunInTransaction (Action action)
@@ -1491,7 +1491,7 @@ namespace SQLite
 	}
 
 	/// <summary>
-	/// Represents a parsed connection string.
+	/// Represents a parsed Connection string.
 	/// </summary>
 	class SQLiteConnectionString
 	{

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using VirtualGuide.Mobile.ViewModel;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -27,6 +28,7 @@ namespace VirtualGuide.Mobile
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private TravelViewModel _travelViewModel = new TravelViewModel();
 
         public GuideList()
         {
@@ -35,6 +37,8 @@ namespace VirtualGuide.Mobile
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            _travelViewModel.LoadData();
         }
 
         /// <summary>

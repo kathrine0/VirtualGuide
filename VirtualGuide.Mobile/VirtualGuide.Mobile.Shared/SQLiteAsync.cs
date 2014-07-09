@@ -270,7 +270,7 @@ namespace SQLite
 			where T : new ()
 		{
 			//
-			// This isn't async as the underlying connection doesn't go out to the database
+			// This isn't async as the underlying Connection doesn't go out to the database
 			// until the query is performed. The Async methods are on the query iteself.
 			//
 			var conn = GetConnection ();
@@ -421,7 +421,7 @@ namespace SQLite
 		static readonly SQLiteConnectionPool _shared = new SQLiteConnectionPool ();
 
 		/// <summary>
-		/// Gets the singleton instance of the connection tool.
+		/// Gets the singleton instance of the Connection tool.
 		/// </summary>
 		public static SQLiteConnectionPool Shared
 		{

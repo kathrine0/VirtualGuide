@@ -9,17 +9,19 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VirtualGuide.Models;
+using VirtualGuide.Services.Repository;
 
 namespace VirtualGuide.UI.WebApi
 {
     public class TravelsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private TravelRepository tr = new TravelRepository();
 
         // GET: api/Travels
-        public IList<Travel> GetTravels()
+        public IList<BasicTravelViewModel> GetTravels()
         {
-            return db.Travels.ToList();
+            return tr.GetApprovedTravelList();
         }
 
         // GET: api/Travels/5

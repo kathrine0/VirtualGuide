@@ -58,14 +58,12 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Excursion.cs" />
     <Compile Include="Models\IAuditable.cs" />
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Place_Excursion.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Travel.cs" />
-    <Compile Include="Models\TravelViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\User_Purchased_Travel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />

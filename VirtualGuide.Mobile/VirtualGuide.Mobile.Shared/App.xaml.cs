@@ -1,8 +1,10 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using VirtualGuide.Mobile.Model;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -28,6 +30,9 @@ namespace VirtualGuide.Mobile
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
 #endif
+
+        public static string WebService = @"http://localhost:5871/api/";
+        public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -101,8 +106,17 @@ namespace VirtualGuide.Mobile
                 }
             }
 
+            // Setup database
+            SetupDatabase();
+
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        private async void SetupDatabase()
+        {
+            //create sqlite Connection
+            await Connection.CreateTableAsync<Travel>();
         }
 
 #if WINDOWS_PHONE_APP
