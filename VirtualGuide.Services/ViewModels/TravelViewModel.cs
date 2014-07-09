@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using VirtualGuide.Models;
 
-namespace VirtualGuide.Models
+namespace VirtualGuide.Services
 {
     public class BasicTravelViewModel
     {

@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using VirtualGuide.Models;
+using VirtualGuide.Services;
 
 namespace VirtualGuide.UI.Controllers
 {

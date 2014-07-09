@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Mobile.Windows
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Services", "VirtualGuide.Services\VirtualGuide.Services.csproj", "{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		VirtualGuide.Mobile\VirtualGuide.Mobile.Shared\VirtualGuide.Mobile.Shared.projitems*{7eaf0aa7-0f4a-4428-946d-57a2d62e3d11}*SharedItemsImports = 13
@@ -149,6 +151,21 @@ Global
 		{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}.Release|ARM.ActiveCfg = Release|Any CPU
 		{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}.Release|x64.ActiveCfg = Release|Any CPU
 		{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug_x86|Any CPU.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug_x86|Any CPU.Build.0 = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug_x86|ARM.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug_x86|x64.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug_x86|x86.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Release|ARM.ActiveCfg = Release|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Release|x64.ActiveCfg = Release|Any CPU
+		{3021CAAC-5D1A-4A63-B34A-51CDAF24C266}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

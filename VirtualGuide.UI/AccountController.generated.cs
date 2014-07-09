@@ -21,6 +21,7 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
+using VirtualGuide.Services;
 namespace VirtualGuide.UI.Controllers
 {
     public partial class AccountController
@@ -325,10 +326,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.LoginViewModel model, string returnUrl);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, LoginViewModel model, string returnUrl);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(VirtualGuide.Models.LoginViewModel model, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -349,10 +350,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.RegisterViewModel model);
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, RegisterViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(VirtualGuide.Models.RegisterViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(RegisterViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -385,10 +386,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.ForgotPasswordViewModel model);
+        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, ForgotPasswordViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ForgotPassword(VirtualGuide.Models.ForgotPasswordViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ForgotPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -420,10 +421,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.ResetPasswordViewModel model);
+        partial void ResetPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, ResetPasswordViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetPassword(VirtualGuide.Models.ResetPasswordViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -468,10 +469,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void ManageOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.ManageUserViewModel model);
+        partial void ManageOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, ManageUserViewModel model);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Manage(VirtualGuide.Models.ManageUserViewModel model)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Manage(ManageUserViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Manage);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -528,10 +529,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void ExternalLoginConfirmationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.ExternalLoginConfirmationViewModel model, string returnUrl);
+        partial void ExternalLoginConfirmationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, ExternalLoginConfirmationViewModel model, string returnUrl);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ExternalLoginConfirmation(VirtualGuide.Models.ExternalLoginConfirmationViewModel model, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ExternalLoginConfirmation);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);

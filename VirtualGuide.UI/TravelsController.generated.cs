@@ -21,6 +21,7 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
+using VirtualGuide.Services;
 namespace VirtualGuide.UI.Controllers
 {
     public partial class TravelsController
@@ -222,10 +223,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.BasicTravelViewModel model);
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, BasicTravelViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Create(VirtualGuide.Models.BasicTravelViewModel model)
+        public override System.Web.Mvc.ActionResult Create(BasicTravelViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
@@ -246,10 +247,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.Models.BasicTravelViewModel model);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, BasicTravelViewModel model);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(VirtualGuide.Models.BasicTravelViewModel model)
+        public override System.Web.Mvc.ActionResult Edit(BasicTravelViewModel model)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
