@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using VirtualGuide.Mobile.Model;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -23,7 +24,7 @@ namespace VirtualGuide.Mobile.ViewModel
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public async void LoadData()
+        public async Task<List<Travel>> LoadData()
         {
             if (this.IsDataLoaded == false)
             {
@@ -31,7 +32,7 @@ namespace VirtualGuide.Mobile.ViewModel
                 //try
                 //{
                     string responseBody = await client.GetStringAsync(App.WebService + "Travels");
-                    Parse(responseBody);
+                    var result = Parse(responseBody);
 
                 //}
                 //catch (HttpRequestException e)
@@ -40,41 +41,24 @@ namespace VirtualGuide.Mobile.ViewModel
                 //}
 
                 client.Dispose();
+
+                return result;
             }
+
+            return null;
         }
 
-        private void Parse(string responseBody)
+        private List<Travel> Parse(string responseBody)
         {
-            //try
-            //{
-            //    this.Travels.Clear();
-            //    if (e.Result != null)
-            //    {
-            //        var items = JsonConvert.DeserializeObject<BookDetails[]>(e.Result);
-            //        int id = 0;
-            //        foreach (Travel item in items)
-            //        {
-            //            this.Items.Add(new ItemViewModel()
-            //            {
-            //                ID = (id++).ToString(),
-            //                LineOne = book.Title,
-            //                LineTwo = book.Author,
-            //                LineThree = book.Description.Replace("\n", " ")
-            //            });
-            //        }
-            //        this.IsDataLoaded = true;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    this.Items.Add(new ItemViewModel()
-            //    {
-            //        ID = "0",
-            //        LineOne = "An Error Occurred",
-            //        LineTwo = String.Format("The following exception occured: {0}", ex.Message),
-            //        LineThree = String.Format("Additional inner exception information: {0}", ex.InnerException.Message)
-            //    });
-            //}
+            var travels = new List<Travel>();
+            if (!String.IsNullOrEmpty(responseBody))
+            {
+                var result = JsonConvert.DeserializeObject<List<Travel>>(responseBody);
+
+                return result;
+            }
+
+            return travels;
         }
     }
 }

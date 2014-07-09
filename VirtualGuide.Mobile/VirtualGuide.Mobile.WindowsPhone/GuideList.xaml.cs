@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.ViewModel;
+using VirtualGuide.Mobile.Model;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -30,6 +31,9 @@ namespace VirtualGuide.Mobile
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private TravelViewModel _travelViewModel = new TravelViewModel();
 
+        private List<Travel> _availableTravels = new List<Travel>();
+        private List<Travel> _ownedTravels = new List<Travel>();
+
         public GuideList()
         {
             this.InitializeComponent();
@@ -38,7 +42,6 @@ namespace VirtualGuide.Mobile
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            _travelViewModel.LoadData();
         }
 
         /// <summary>
@@ -100,14 +103,26 @@ namespace VirtualGuide.Mobile
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+
+            try
+            {
+                _availableTravels = await _travelViewModel.LoadData();
+                AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                AvailableTravels.ItemsSource = _availableTravels;
+            } 
+            catch (Exception)
+            {
+                NoConnectionMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedFrom(e);
+
         }
 
         #endregion

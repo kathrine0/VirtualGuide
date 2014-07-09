@@ -31,7 +31,7 @@ namespace VirtualGuide.Mobile
         private TransitionCollection transitions;
 #endif
 
-        public static string WebService = @"http://localhost:5871/api/";
+        public static string WebService = @"http://192.168.10.189/VirtualGuide/api/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
 
         /// <summary>

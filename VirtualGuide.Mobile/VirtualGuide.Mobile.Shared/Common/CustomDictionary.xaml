@@ -32,4 +32,8 @@
         <Setter Property="Foreground" Value="{StaticResource Gray}" />
     </Style>
 
+    <Style TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
 </ResourceDictionary>
