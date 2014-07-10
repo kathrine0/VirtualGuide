@@ -148,6 +148,8 @@ namespace VirtualGuide.Mobile
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: Save application state and stop any background activity
+            SQLite.SQLiteConnectionPool.Shared.Reset();
+
             deferral.Complete();
         }
     }

@@ -105,6 +105,11 @@ namespace VirtualGuide.Mobile.View
         {
             this.navigationHelper.OnNavigatedTo(e);
 
+            //Get travels from DB
+            _ownedTravels = await _travelViewModel.GetItemsFromDb();
+            OwnedTravels.ItemsSource = _ownedTravels;
+
+
             //start downloading data
             Task<List<Travel>> availableTravelsTask = _travelViewModel.LoadAvailableTravels();
             Task<List<Travel>> ownedTravelsTask = null;
@@ -119,6 +124,7 @@ namespace VirtualGuide.Mobile.View
                 {
                     _ownedTravels = await ownedTravelsTask;
                     OwnedTravels.ItemsSource = _ownedTravels;
+                    await _travelViewModel.AddItemsToDb(_ownedTravels);
                 }
                 catch (Exception)
                 {
