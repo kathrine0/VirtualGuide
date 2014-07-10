@@ -15,16 +15,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Travel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TravelViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)View\" />
     <Folder Include="$(MSBuildThisFileDirectory)Strings\" />
   </ItemGroup>
   <ItemGroup>

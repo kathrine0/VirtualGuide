@@ -10,10 +10,10 @@
 
     <Grid>
         <StackPanel VerticalAlignment="Center" Margin="20,0">
-            <TextBlock x:Uid="Username" Text="Username" />
+            <TextBlock x:Uid="UsernameLabel" Text="Username" />
             <TextBox x:Name="Username" TextWrapping="Wrap" />
-            <TextBlock x:Uid="Password" Text="Password" />
-            <TextBox x:Name="Password" TextWrapping="Wrap" />
+            <TextBlock x:Uid="PasswordLabel" Text="Password" />
+            <PasswordBox x:Name="Password" />
             <Button x:Uid="LoginButton" Content="Login" HorizontalAlignment="Stretch" Click="LoginButton_Click" />
 
             <TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />

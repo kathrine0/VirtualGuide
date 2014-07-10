@@ -15,37 +15,32 @@ namespace VirtualGuide.Mobile.ViewModel
     {
         public ObservableCollection<Travel> Travels { get; private set; }
 
-        public bool IsDataLoaded
-        {
-            get;
-            private set;
-        }
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
         public async Task<List<Travel>> LoadData()
         {
-            if (this.IsDataLoaded == false)
+            HttpClient client = new HttpClient();
+            try
             {
-                HttpClient client = new HttpClient();
-                //try
-                //{
-                    string responseBody = await client.GetStringAsync(App.WebService + "Travels");
-                    var result = Parse(responseBody);
-
-                //}
-                //catch (HttpRequestException e)
-                //{
-                    
-                //}
-
-                client.Dispose();
-
+                string responseBody = await client.GetStringAsync(App.WebService + "api/Travels");
+                var result = Parse(responseBody);
                 return result;
             }
-
-            return null;
+            catch (HttpRequestException)
+            {
+                throw;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                client.Dispose();
+            }
+            
         }
 
         private List<Travel> Parse(string responseBody)

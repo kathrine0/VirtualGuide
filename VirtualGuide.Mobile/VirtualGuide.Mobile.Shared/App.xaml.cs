@@ -31,8 +31,9 @@ namespace VirtualGuide.Mobile
         private TransitionCollection transitions;
 #endif
 
-        public static string WebService = @"http://192.168.10.189/VirtualGuide/api/";
+        public const string WebService = @"http://192.168.10.189/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
+        public static string AuthToken = String.Empty;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -115,7 +116,8 @@ namespace VirtualGuide.Mobile
 
         private async void SetupDatabase()
         {
-            //create sqlite Connection
+            //create sqlite database tables
+            await Connection.CreateTableAsync<User>();
             await Connection.CreateTableAsync<Travel>();
         }
 

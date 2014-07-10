@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
+using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,6 +27,8 @@ namespace VirtualGuide.Mobile
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private UserViewModel _userViewModel = new UserViewModel();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -45,10 +52,26 @@ namespace VirtualGuide.Mobile
             // this event is handled for you.
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-            //Autentification
+            var username = Username.Text;
+            var password = Password.Password;
+
+            try
+            {
+                await _userViewModel.Login(username, password);
+            }
+            catch (HttpRequestException)
+            {
+                MessageBoxHelper.Show("Invalid username or password or no internet connection", "Error");
+                return;
+            }
+            catch
+            {
+                MessageBoxHelper.Show("Unknown error", "Error");
+                return;
+            }
+
             Frame.Navigate(typeof(GuideList));
         }
 
