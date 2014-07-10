@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.ViewModel;
 using VirtualGuide.Mobile.Model;
+using System.Threading.Tasks;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -31,6 +32,7 @@ namespace VirtualGuide.Mobile
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private TravelViewModel _travelViewModel = new TravelViewModel();
 
+        //TODO: observable collection
         private List<Travel> _availableTravels = new List<Travel>();
         private List<Travel> _ownedTravels = new List<Travel>();
 
@@ -107,9 +109,32 @@ namespace VirtualGuide.Mobile
         {
             this.navigationHelper.OnNavigatedTo(e);
 
+            //start downloading data
+            Task<List<Travel>> availableTravelsTask = _travelViewModel.LoadAvailableTravels();
+            Task<List<Travel>> ownedTravelsTask = null;
+
+            if (App.AuthToken != String.Empty)
+            {
+                ownedTravelsTask = _travelViewModel.LoadOwnedTravels();
+
+
+                //Download user travels
+                try
+                {
+                    _ownedTravels = await ownedTravelsTask;
+                    OwnedTravels.ItemsSource = _ownedTravels;
+                }
+                catch (Exception)
+                {
+                    MessageBoxHelper.Show("An error has occured", "Error");
+                }
+
+            }
+            //Download available travels
+            //TODO: download only these not owned but user yet
             try
             {
-                _availableTravels = await _travelViewModel.LoadData();
+                _availableTravels = await availableTravelsTask;
                 AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 AvailableTravels.ItemsSource = _availableTravels;
             } 
@@ -117,6 +142,10 @@ namespace VirtualGuide.Mobile
             {
                 NoConnectionMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
+
+
+
+            //TODO: store travels in memory
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

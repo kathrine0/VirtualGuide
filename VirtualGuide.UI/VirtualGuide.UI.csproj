@@ -256,7 +256,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="WebApi\AccountController.cs" />
-    <Compile Include="WebApi\RegisterExternalBindingModel.cs" />
     <Compile Include="WebApi\TravelsController.cs" />
   </ItemGroup>
   <ItemGroup>

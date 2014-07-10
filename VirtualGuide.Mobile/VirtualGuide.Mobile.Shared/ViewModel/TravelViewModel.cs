@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using VirtualGuide.Mobile.Model;
 using System.Net.Http;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.Common;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -15,45 +16,15 @@ namespace VirtualGuide.Mobile.ViewModel
     {
         public ObservableCollection<Travel> Travels { get; private set; }
 
-
-        /// <summary>
-        /// Creates and adds a few ItemViewModel objects into the Items collection.
-        /// </summary>
-        public async Task<List<Travel>> LoadData()
+        public async Task<List<Travel>> LoadAvailableTravels()
         {
-            HttpClient client = new HttpClient();
-            try
-            {
-                string responseBody = await client.GetStringAsync(App.WebService + "api/Travels");
-                var result = Parse(responseBody);
-                return result;
-            }
-            catch (HttpRequestException)
-            {
-                throw;
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                client.Dispose();
-            }
-            
+            return await HttpHelper.GetData<List<Travel>>("api/Travels");
         }
 
-        private List<Travel> Parse(string responseBody)
+        public async Task<List<Travel>> LoadOwnedTravels()
         {
-            var travels = new List<Travel>();
-            if (!String.IsNullOrEmpty(responseBody))
-            {
-                var result = JsonConvert.DeserializeObject<List<Travel>>(responseBody);
-
-                return result;
-            }
-
-            return travels;
+            return await HttpHelper.GetData<List<Travel>>("api/OwnedTravels");
         }
+
     }
 }

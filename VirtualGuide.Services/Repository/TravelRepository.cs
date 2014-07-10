@@ -27,9 +27,10 @@ namespace VirtualGuide.Services.Repository
             return result;
         }
 
-        public IList<BasicTravelViewModel> GetOwnedTravelList(string userId)
+        public IList<BasicTravelViewModel> GetOwnedTravelList(string userEmail)
         {
-            var user = userManager.FindById(userId);
+
+            var user = userManager.FindByEmail(userEmail);
             var items = user.PurchasedTravels;
             var result = new List<BasicTravelViewModel>();
 

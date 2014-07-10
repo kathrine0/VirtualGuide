@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />

@@ -34,17 +34,26 @@
             </Grid.RowDefinitions>
 
             <!--Owned Guides-->
-            <ListView x:Name="OwnedTravels" Grid.Row="0">
-                
+            <ListView x:Name="OwnedTravels" Grid.Row="0" Margin="0,0,0,10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2" Height="100" Background="#FF77B5FF" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <StackPanel Margin="20,5" Grid.Column="0" >
+                                <TextBlock Text="{Binding Name}" FontSize="25" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding Description}" FontSize="18" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
             
             <!--Available Guides-->
             
             <ProgressBar x:Name="AvailableTravelsProgress" Grid.Row="1" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" Width="100" Height="100" />
             <TextBlock x:Name="NoConnectionMessage" Grid.Row="1" Text="No Internet Connection" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <ListView x:Name="AvailableTravels" Grid.Row="1" HorizontalContentAlignment="Stretch">
+            <ListView x:Name="AvailableTravels" Grid.Row="1">
                 <ListView.ItemTemplate>
-                    <DataTemplate VirtualizingStackPanel.VirtualizationMode="Standard">
+                    <DataTemplate>
                         <Grid Margin="0,2" Height="100" Background="{StaticResource LightGreen}" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />

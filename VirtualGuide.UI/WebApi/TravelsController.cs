@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VirtualGuide.Models;
@@ -14,17 +15,38 @@ using VirtualGuide.Services.Repository;
 
 namespace VirtualGuide.UI.WebApi
 {
+    [RoutePrefix("api")]
     public class TravelsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private TravelRepository tr = new TravelRepository();
 
         // GET: api/Travels
+        [Route("Travels")]
         public IList<BasicTravelViewModel> GetTravels()
         {
             return tr.GetApprovedTravelList();
         }
 
+        [Authorize]
+        [Route("OwnedTravels")]
+        public IList<BasicTravelViewModel> GetOwnedTravels()
+        {
+            if (HttpContext.Current != null && HttpContext.Current.User != null
+                && HttpContext.Current.User.Identity.Name != null)
+            {
+                var userName = HttpContext.Current.User.Identity.Name;
+                return tr.GetOwnedTravelList(userName);
+            }
+            else
+            {
+                //TODO: Throw proper exception
+                throw new Exception("Not Authorized");
+            }
+
+        }
+
+        [Route("Travels/{id}")]
         // GET: api/Travels/5
         [ResponseType(typeof(Travel))]
         public IHttpActionResult GetTravel(int id)
