@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
-namespace VirtualGuide.Mobile
+namespace VirtualGuide.Mobile.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -31,10 +31,6 @@ namespace VirtualGuide.Mobile
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private TravelViewModel _travelViewModel = new TravelViewModel();
-
-        //TODO: observable collection
-        private List<Travel> _availableTravels = new List<Travel>();
-        private List<Travel> _ownedTravels = new List<Travel>();
 
         public GuideList()
         {

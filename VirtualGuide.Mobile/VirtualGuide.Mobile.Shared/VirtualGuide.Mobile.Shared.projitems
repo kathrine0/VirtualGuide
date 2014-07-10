@@ -27,9 +27,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TravelViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)View\" />
     <Folder Include="$(MSBuildThisFileDirectory)Strings\" />
   </ItemGroup>
   <ItemGroup>
