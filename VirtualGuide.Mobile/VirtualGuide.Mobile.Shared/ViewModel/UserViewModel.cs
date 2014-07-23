@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
-    class UserViewModel
+    public class UserViewModel
     {
         public async Task Login(string username, string password)
         {

@@ -8,12 +8,13 @@ namespace VirtualGuide.Mobile.Model
 {
     [ImplementPropertyChanged]
     [Table("Travel")]
-    class Travel
+    public class Travel
     {
         [PrimaryKey, Unique]
         public int Id { get; set; }
 
         [Column("Name")]
+        [NotNull]
         public string Name { get; set; }
 
         [Column("Description")]
@@ -25,17 +26,14 @@ namespace VirtualGuide.Mobile.Model
         [Column("Author")]
         public virtual String Author { get; set; }
 
-        //public virtual IList<Place> Places { get; set; }
-
-        //public virtual IList<Excursion> Excursions { get; set; }
-
-        //public virtual IList<Property> Properties { get; set; }
-
         /// <summary>
         /// Language code in format of pl_PL
         /// </summary>
 
         [Column("Language")]
         public string Language { get; set; }
+
+        public DateTime LastUpdated { get; set; }
+
     }
 }

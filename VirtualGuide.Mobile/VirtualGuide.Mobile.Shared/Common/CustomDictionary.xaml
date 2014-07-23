@@ -6,11 +6,16 @@
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
             <SolidColorBrush Color="#FF9CCD4D" x:Key="LightGreen"/>
+            <SolidColorBrush Color="#FF5FA0ED" x:Key="LightBlue"/>
+            <SolidColorBrush Color="#FFDFE44A" x:Key="LightYellow" />
+            <SolidColorBrush Color="#FFB471C3" x:Key="LightViolet" />            
+            
             <SolidColorBrush Color="#FF808080" x:Key="Gray"/>
             <SolidColorBrush Color="#FFFFFFFF" x:Key="PageBackground" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
+    <!--General Styles-->
 
     <Style TargetType="TextBlock">
         <Setter Property="Foreground" Value="#FF323232"/>
@@ -32,6 +37,9 @@
         <Setter Property="Foreground" Value="{StaticResource Gray}" />
     </Style>
 
+    <!--End General Styles-->
+    <!--List View-->
+    
     <Style TargetType="ListView">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
@@ -39,5 +47,46 @@
     <Style TargetType="ListViewItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
+
+    <!--End List View-->
+    
+    <!--Grid View-->
+    
+    <Style TargetType="GridView">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style TargetType="GridViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+
+    <DataTemplate x:Key="FoodDataTemplate">
+        <Border 
+        BorderBrush="CornflowerBlue" 
+        BorderThickness="3" 
+        CornerRadius="10" 
+        Margin="10">
+
+            <StackPanel 
+            Width="150" 
+            Height="175" >
+
+                <TextBlock 
+                FontSize="18" 
+                Margin="5" 
+                Foreground="Coral"
+                TextAlignment="Center" 
+                Text="{Binding Name}"/>
+
+                <!--<Image 
+                Width="75" 
+                Height="75" 
+                Margin="10" 
+                Source="{Binding ImgPath}"/>-->
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!--End Grid View-->
 
 </ResourceDictionary>

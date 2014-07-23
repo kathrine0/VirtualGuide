@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
 
     <Grid x:Name="LayoutRoot">
 
@@ -25,7 +26,7 @@
         <StackPanel Grid.Row="0" Margin="24,17,0,28">
             <TextBlock Text="Guide list" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
         </StackPanel>
-        
+
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot">
             <Grid.RowDefinitions>
@@ -34,10 +35,10 @@
             </Grid.RowDefinitions>
 
             <!--Owned Guides-->
-            <ListView x:Name="OwnedTravels" Grid.Row="0" Margin="0,0,0,10">
+            <ListView x:Name="OwnedTravels" Grid.Row="0" Margin="0,0,0,10" IsItemClickEnabled="True" ItemClick="OwnedTravels_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,2" Height="100" Background="#FF77B5FF" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid Margin="0,2" Height="100" VerticalAlignment="Center" Background="LightBlue" HorizontalAlignment="Stretch">
                             <StackPanel Margin="20,5" Grid.Column="0" >
                                 <TextBlock Text="{Binding Name}" FontSize="25" TextWrapping="NoWrap"/>
                                 <TextBlock Text="{Binding Description}" FontSize="18" TextWrapping="Wrap" />
@@ -46,9 +47,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
             <!--Available Guides-->
-            
+
             <ProgressBar x:Name="AvailableTravelsProgress" Grid.Row="1" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" Width="100" Height="100" />
             <TextBlock x:Name="NoConnectionMessage" Grid.Row="1" Text="No Internet Connection" HorizontalAlignment="Center" Visibility="Collapsed" />
             <ListView x:Name="AvailableTravels" Grid.Row="1">

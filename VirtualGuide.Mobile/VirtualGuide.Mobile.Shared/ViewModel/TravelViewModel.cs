@@ -12,7 +12,7 @@ using VirtualGuide.Mobile.Common;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
-    class TravelViewModel
+    public class TravelViewModel
     {
         public ObservableCollection<Travel> Travels { get; private set; }
 
@@ -38,5 +38,16 @@ namespace VirtualGuide.Mobile.ViewModel
             return travels;
         }
         
+        public async Task DownloadAndSaveOwnedTravels()
+        {
+            var travels = await LoadAvailableTravels();
+            await AddItemsToDb(travels);
+
+            //Download properties
+            foreach (var travel in travels)
+            {
+
+            }
+        }
     }
 }

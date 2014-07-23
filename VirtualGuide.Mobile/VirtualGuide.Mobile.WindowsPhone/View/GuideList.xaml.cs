@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.ViewModel;
 using VirtualGuide.Mobile.Model;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -29,8 +30,11 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideList : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private TravelViewModel _travelViewModel = new TravelViewModel();
+
+        //TODO proper binding
+        public ObservableCollection<Travel> AvailableTravelsList = new ObservableCollection<Travel>();
+        public ObservableCollection<Travel> OwnedTravelsList = new ObservableCollection<Travel>();
 
         public GuideList()
         {
@@ -39,7 +43,6 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
         }
 
         /// <summary>
@@ -50,14 +53,6 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -101,13 +96,31 @@ namespace VirtualGuide.Mobile.View
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
 
+            SetupList();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedFrom(e);
+
+        }
+
+        #endregion
+
+        private void OwnedTravels_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(GuideMain), (e.ClickedItem as Travel).Id);
+        }
+
+        private async void SetupList()
+        {
             //Get travels from DB
-            _ownedTravels = await _travelViewModel.GetItemsFromDb();
-            OwnedTravels.ItemsSource = _ownedTravels;
+            OwnedTravelsList = new ObservableCollection<Travel>(await _travelViewModel.GetItemsFromDb());
+            OwnedTravels.ItemsSource = OwnedTravelsList;
 
 
             //start downloading data
@@ -122,40 +135,31 @@ namespace VirtualGuide.Mobile.View
                 //Download user travels
                 try
                 {
-                    _ownedTravels = await ownedTravelsTask;
-                    OwnedTravels.ItemsSource = _ownedTravels;
+                    var _ownedTravels = await ownedTravelsTask;
+                    OwnedTravelsList = new ObservableCollection<Travel>(_ownedTravels);
+                    OwnedTravels.ItemsSource = OwnedTravelsList;
                     await _travelViewModel.AddItemsToDb(_ownedTravels);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     MessageBoxHelper.Show("An error has occured", "Error");
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
                 }
 
             }
             //Download available travels
-            //TODO: download only these not owned but user yet
+            //TODO: download only these not owned by user yet
             try
             {
-                _availableTravels = await availableTravelsTask;
+                var _availableTravels = await availableTravelsTask;
+                AvailableTravelsList = new ObservableCollection<Travel>(_availableTravels);
                 AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                AvailableTravels.ItemsSource = _availableTravels;
-            } 
+                AvailableTravels.ItemsSource = AvailableTravelsList;
+            }
             catch (Exception)
             {
                 NoConnectionMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
-
-
-
-            //TODO: store travels in memory
         }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            this.navigationHelper.OnNavigatedFrom(e);
-
-        }
-
-        #endregion
     }
 }

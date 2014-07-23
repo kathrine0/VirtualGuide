@@ -25,7 +25,7 @@ namespace VirtualGuide.Mobile.Common
                 var result = ParseData<T>(responseBody);
                 return result;
             }
-            catch (HttpRequestException e)
+            catch (HttpRequestException)
             {
                 //TODO: Handle no internet connection
                 throw;
