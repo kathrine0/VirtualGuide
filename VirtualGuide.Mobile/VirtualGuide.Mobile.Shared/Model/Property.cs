@@ -20,7 +20,7 @@ namespace VirtualGuide.Mobile.Model
         [Column("Description")]
         public string Description { get; set; }
 
-        [Column("Order")]
+        [Column("ItemsOrder")]
         public int Order { get; set; }
 
         [Column("TravelId"), Indexed]

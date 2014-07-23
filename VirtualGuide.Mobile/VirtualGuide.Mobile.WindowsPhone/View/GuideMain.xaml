@@ -29,22 +29,19 @@
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GridView x:Name="ConstantPropertiesView" Grid.Row="0" Margin="0,0,10,0" HorizontalAlignment="Center">
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid 
-                            Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
+            <GridView x:Name="ConstantPropertiesView" Grid.Row="0" Margin="0,0,10,0">
+                <ControlTemplate>
+                    <ItemsPresenter />
+                </ControlTemplate>
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="{Binding Background}" Width="180" Height="180" Margin="10,0,0,10">
+                        <Border  Width="180" Height="180" Margin="10,0,0,10" Background="AliceBlue" ><!--Background="{Binding Background}"-->
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="{Binding SymbolCode}" FontFamily="Segoe UI Symbol" HorizontalAlignment="Center" FontSize="70" Margin="0,2" />
+                                <!--<TextBlock Text="{Binding SymbolCode}" FontFamily="Segoe UI Symbol" HorizontalAlignment="Center" FontSize="70" Margin="0,2" />-->
                                 <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" FontSize="25" Margin="0,2" />
                             </StackPanel>
                         </Border>

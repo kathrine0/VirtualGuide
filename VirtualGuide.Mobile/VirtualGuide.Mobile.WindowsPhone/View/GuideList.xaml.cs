@@ -118,7 +118,7 @@ namespace VirtualGuide.Mobile.View
 
         private async void SetupList()
         {
-            //Get travels from DB
+            //Get properties from DB
             OwnedTravelsList = new ObservableCollection<Travel>(await _travelViewModel.GetItemsFromDb());
             OwnedTravels.ItemsSource = OwnedTravelsList;
 
@@ -132,7 +132,7 @@ namespace VirtualGuide.Mobile.View
                 ownedTravelsTask = _travelViewModel.DownloadAndSaveOwnedTravels();
 
 
-                //Download user travels
+                //Download user properties
                 try
                 {
                     var _ownedTravels = await ownedTravelsTask;
@@ -146,7 +146,7 @@ namespace VirtualGuide.Mobile.View
                 }
 
             }
-            //Download available travels
+            //Download available properties
             //TODO: download only these not owned by user yet
             try
             {

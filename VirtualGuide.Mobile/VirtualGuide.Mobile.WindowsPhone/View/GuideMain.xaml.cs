@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -26,10 +28,13 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
 
-        private List<ConstantProperties> _constantProperties = new List<ConstantProperties>() { 
-            new ConstantProperties() {Name = "Maps", Background=new SolidColorBrush(Colors.LightBlue), SymbolCode="\uD83C\uDF0D"},
-            new ConstantProperties() {Name = "Tours", Background=new SolidColorBrush(Colors.LightGreen), SymbolCode="\uD83C\uDFF0"},
+        private List<SimplePropertyViewModel> _propertiesList = new List<SimplePropertyViewModel>() { 
+            new SimplePropertyViewModel() {Name = "Maps", Background=new SolidColorBrush(Colors.LightBlue), SymbolCode="\uD83C\uDF0D"},
+            new SimplePropertyViewModel() {Name = "Tours", Background=new SolidColorBrush(Colors.LightGreen), SymbolCode="\uD83C\uDFF0"},
         };
+        private PropertyViewModel _propertyViewModel = new PropertyViewModel();
+
+        private int _travelId;
 
         public GuideMain()
         {
@@ -81,10 +86,15 @@ namespace VirtualGuide.Mobile.View
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.
         /// This parameter is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
-            ConstantPropertiesView.ItemsSource = _constantProperties;
+            _travelId = (int) e.Parameter;
+
+            var dbProps = await _propertyViewModel.GetSimpleProperties(_travelId);
+
+            _propertiesList.AddRange(dbProps);
+            ConstantPropertiesView.ItemsSource = _propertiesList;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -93,12 +103,6 @@ namespace VirtualGuide.Mobile.View
 
         }
 
-        class ConstantProperties
-        {
-            public string Name { get; set; }
-            public string ImagePath { get; set; }
-            public Brush Background { get; set; }
-            public string SymbolCode { get; set; }
-        }
+        
     }
 }
