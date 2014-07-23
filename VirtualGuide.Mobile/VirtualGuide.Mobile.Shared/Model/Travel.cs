@@ -33,6 +33,9 @@ namespace VirtualGuide.Mobile.Model
         [Column("Language")]
         public string Language { get; set; }
 
+        [Ignore]
+        public List<Property> Properties { get; set; }
+
         public DateTime LastUpdated { get; set; }
 
     }

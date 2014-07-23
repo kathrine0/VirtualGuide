@@ -34,20 +34,6 @@ namespace VirtualGuide.Models
             CreatedAt = travel.CreatedAt;
             UpdatedAt = travel.UpdatedAt;
         }
-
-        public void AddProperty(string PropertyName)
-        {
-            Properties.Add(new Property()
-            {
-                Title = PropertyName
-            });
-        }
-
-        public void AddPlace()
-        {
-            Places.Add(new Place());
-        }
-
         
         public int Id { get; set; }
 

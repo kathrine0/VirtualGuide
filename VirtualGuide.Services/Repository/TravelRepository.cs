@@ -14,6 +14,7 @@ namespace VirtualGuide.Services.Repository
         private ApplicationDbContext db = new ApplicationDbContext();
         UserManager<User> userManager = new UserManager<User>(new UserStore<User>(new ApplicationDbContext()));
 
+        
         public IList<BasicTravelViewModel> GetApprovedTravelList()
         {
             var items = db.Travels.Where(x => x.ApprovalStatus == true);
@@ -27,21 +28,24 @@ namespace VirtualGuide.Services.Repository
             return result;
         }
 
-        public IList<BasicTravelViewModel> GetOwnedTravelList(string userEmail)
+        public IList<ComplexReadTravelViewModel> GetOwnedTravelList(string userEmail)
         {
 
             var user = userManager.FindByEmail(userEmail);
             var items = user.PurchasedTravels;
-            var result = new List<BasicTravelViewModel>();
+            var result = new List<ComplexReadTravelViewModel>();
 
             foreach(var item in items)
             {
-                result.Add(new BasicTravelViewModel(item.Travel));
+                result.Add(new ComplexReadTravelViewModel(item.Travel));
             }
 
             return result;
         }
 
-
+        public BasicTravelViewModel GetOwnedTravelDetails(int id, string userEmail)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

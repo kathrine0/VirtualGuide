@@ -117,9 +117,11 @@ namespace VirtualGuide.Mobile
 
         private async void SetupDatabase()
         {
+            //await Connection.DropTableAsync<Travel>();
             //create sqlite database tables
             await Connection.CreateTableAsync<User>();
             await Connection.CreateTableAsync<Travel>();
+            await Connection.CreateTableAsync<Property>();
         }
 
 #if WINDOWS_PHONE_APP

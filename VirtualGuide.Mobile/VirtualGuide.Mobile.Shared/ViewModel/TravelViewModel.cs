@@ -26,28 +26,25 @@ namespace VirtualGuide.Mobile.ViewModel
             return await HttpHelper.GetData<List<Travel>>("api/OwnedTravels");
         }
 
-        public async Task AddItemsToDb(List<Travel> travels)
-        {
-            await App.Connection.InsertOrReplaceAllAsync(travels);
-        }
-
         public async Task<List<Travel>> GetItemsFromDb()
         {
             var travels = await App.Connection.QueryAsync<Travel>("Select * FROM Travel");
 
             return travels;
         }
-        
-        public async Task DownloadAndSaveOwnedTravels()
-        {
-            var travels = await LoadAvailableTravels();
-            await AddItemsToDb(travels);
 
-            //Download properties
+        public async Task<List<Travel>> DownloadAndSaveOwnedTravels()
+        {
+            var travels = await LoadOwnedTravels();
+            await App.Connection.InsertOrReplaceAllAsync(travels);
+
             foreach (var travel in travels)
             {
-
+                await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
             }
+
+            return travels;
+
         }
     }
 }

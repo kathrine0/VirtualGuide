@@ -30,7 +30,7 @@ namespace VirtualGuide.UI.WebApi
 
         [Authorize]
         [Route("OwnedTravels")]
-        public IList<BasicTravelViewModel> GetOwnedTravels()
+        public IList<ComplexReadTravelViewModel> GetOwnedTravels()
         {
             if (HttpContext.Current != null && HttpContext.Current.User != null
                 && HttpContext.Current.User.Identity.Name != null)
@@ -46,85 +46,90 @@ namespace VirtualGuide.UI.WebApi
 
         }
 
-        [Route("Travels/{id}")]
+        [Authorize]
+        [Route("Travel/{id}")]
         // GET: api/Travels/5
-        [ResponseType(typeof(Travel))]
-        public IHttpActionResult GetTravel(int id)
+        //[ResponseType(typeof(Travel))]
+        public BasicTravelViewModel GetTravel(int id)
         {
-            Travel travel = db.Travels.Find(id);
-            if (travel == null)
+            if (HttpContext.Current != null && HttpContext.Current.User != null
+                && HttpContext.Current.User.Identity.Name != null)
             {
-                return NotFound();
+                var userName = HttpContext.Current.User.Identity.Name;
+                return tr.GetOwnedTravelDetails(id, userName);
             }
-
-            return Ok(travel);
+            else
+            {
+                //TODO: Throw proper exception
+                throw new Exception("Not Authorized");
+            }
         }
 
         // PUT: api/Travels/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTravel(int id, Travel travel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutTravel(int id, Travel travel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != travel.Id)
-            {
-                return BadRequest();
-            }
+        //    if (id != travel.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(travel).State = EntityState.Modified;
+        //    db.Entry(travel).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TravelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!TravelExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
         // POST: api/Travels
-        [ResponseType(typeof(Travel))]
-        public IHttpActionResult PostTravel(Travel travel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(Travel))]
+        //public IHttpActionResult PostTravel(Travel travel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            db.Travels.Add(travel);
-            db.SaveChanges();
+        //    db.Travels.Add(travel);
+        //    db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = travel.Id }, travel);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = travel.Id }, travel);
+        //}
 
-        // DELETE: api/Travels/5
-        [ResponseType(typeof(Travel))]
-        public IHttpActionResult DeleteTravel(int id)
-        {
-            Travel travel = db.Travels.Find(id);
-            if (travel == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Travels/5
+        //[ResponseType(typeof(Travel))]
+        //public IHttpActionResult DeleteTravel(int id)
+        //{
+        //    Travel travel = db.Travels.Find(id);
+        //    if (travel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.Travels.Remove(travel);
-            db.SaveChanges();
+        //    db.Travels.Remove(travel);
+        //    db.SaveChanges();
 
-            return Ok(travel);
-        }
+        //    return Ok(travel);
+        //}
 
         protected override void Dispose(bool disposing)
         {

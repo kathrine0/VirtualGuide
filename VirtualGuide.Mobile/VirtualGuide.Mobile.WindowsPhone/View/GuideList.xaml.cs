@@ -129,7 +129,7 @@ namespace VirtualGuide.Mobile.View
 
             if (App.AuthToken != String.Empty)
             {
-                ownedTravelsTask = _travelViewModel.LoadOwnedTravels();
+                ownedTravelsTask = _travelViewModel.DownloadAndSaveOwnedTravels();
 
 
                 //Download user travels
@@ -138,7 +138,6 @@ namespace VirtualGuide.Mobile.View
                     var _ownedTravels = await ownedTravelsTask;
                     OwnedTravelsList = new ObservableCollection<Travel>(_ownedTravels);
                     OwnedTravels.ItemsSource = OwnedTravelsList;
-                    await _travelViewModel.AddItemsToDb(_ownedTravels);
                 }
                 catch (Exception ex)
                 {

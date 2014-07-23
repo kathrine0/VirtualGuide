@@ -66,7 +66,10 @@
     <Compile Include="Repository\TravelRepository.cs" />
     <Compile Include="ViewModels\AccountBindingModels.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
-    <Compile Include="ViewModels\TravelViewModel.cs" />
+    <Compile Include="ViewModels\ExcursionViewModels.cs" />
+    <Compile Include="ViewModels\PlaceViewModels.cs" />
+    <Compile Include="ViewModels\PropertyViewModels.cs" />
+    <Compile Include="ViewModels\TravelViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtualGuide.Models\VirtualGuide.Models.csproj">
