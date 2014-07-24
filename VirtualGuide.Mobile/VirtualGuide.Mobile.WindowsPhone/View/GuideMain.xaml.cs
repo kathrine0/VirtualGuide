@@ -29,7 +29,7 @@ namespace VirtualGuide.Mobile.View
         private NavigationHelper navigationHelper;
 
         private List<SimplePropertyViewModel> _propertiesList = new List<SimplePropertyViewModel>() { 
-            new SimplePropertyViewModel() {Name = "Maps", Background=VirtualGuide.Mobile.Common.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=SimplePropertyViewModel.Types.MAPS},
+            new SimplePropertyViewModel() {Name = "Maps and places", Background=VirtualGuide.Mobile.Common.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=SimplePropertyViewModel.Types.MAPS},
             new SimplePropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Common.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=SimplePropertyViewModel.Types.TOURS},
         };
         private PropertyViewModel _propertyViewModel = new PropertyViewModel();

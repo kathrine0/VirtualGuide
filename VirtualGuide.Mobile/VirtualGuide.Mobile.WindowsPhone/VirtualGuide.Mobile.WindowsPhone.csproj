@@ -169,6 +169,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_x86|x86'">
     <OutputPath>bin\x86\Debug_x86\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <Import Project="..\VirtualGuide.Mobile.Shared\VirtualGuide.Mobile.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="..\..\packages\Fody.1.24.0\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.24.0\build\Fody.targets')" />
