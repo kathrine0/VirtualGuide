@@ -96,6 +96,9 @@
     <Compile Include="View\GuideMain.xaml.cs">
       <DependentUpon>GuideMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\GuideMaps.xaml.cs">
+      <DependentUpon>GuideMaps.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\GuideMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GuideMaps.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

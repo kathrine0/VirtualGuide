@@ -33,18 +33,16 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GridView x:Name="ConstantPropertiesView" Grid.Row="0" Margin="0,0,10,0">
+            <GridView x:Name="PropertiesView" Grid.Row="0" Margin="0,0,10,0" IsItemClickEnabled="True" ItemClick="PropertiesView_ItemClick">
                 <ControlTemplate>
                     <ItemsPresenter />
                 </ControlTemplate>
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <Border  Width="180" Height="180" Margin="10,0,0,10" Background="AliceBlue" ><!--Background="{Binding Background}"-->
-                            <StackPanel VerticalAlignment="Center">
-                                <!--<TextBlock Text="{Binding SymbolCode}" FontFamily="Segoe UI Symbol" HorizontalAlignment="Center" FontSize="70" Margin="0,2" />-->
-                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" FontSize="25" Margin="0,2" />
-                            </StackPanel>
-                        </Border>
+                        <Grid  Width="180" Height="180" Margin="10,0,0,10" Background="{Binding Background}" >
+                            <TextBlock Text="{Binding Symbol}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="80" Margin="0,-10,0,0" />
+                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="17" Margin="5,5,5,10" TextWrapping="Wrap" TextAlignment="Center" />
+                        </Grid>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>           

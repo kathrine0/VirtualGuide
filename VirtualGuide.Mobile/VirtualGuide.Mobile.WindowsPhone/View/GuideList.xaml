@@ -38,7 +38,7 @@
             <ListView x:Name="OwnedTravels" Grid.Row="0" Margin="0,0,0,10" IsItemClickEnabled="True" ItemClick="OwnedTravels_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,2" Height="100" VerticalAlignment="Center" Background="LightBlue" HorizontalAlignment="Stretch">
+                        <Grid Margin="0,2" Height="100" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="{StaticResource ThemeBlue}">
                             <StackPanel Margin="20,5" Grid.Column="0" >
                                 <TextBlock Text="{Binding Name}" FontSize="25" TextWrapping="NoWrap"/>
                                 <TextBlock Text="{Binding Description}" FontSize="18" TextWrapping="Wrap" />
@@ -55,7 +55,7 @@
             <ListView x:Name="AvailableTravels" Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,2" Height="100" Background="{StaticResource LightGreen}" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                        <Grid Margin="0,2" Height="100" Background="{StaticResource ThemeGreen}" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="50" />

@@ -5,10 +5,12 @@
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
-            <SolidColorBrush Color="#FF9CCD4D" x:Key="LightGreen"/>
-            <SolidColorBrush Color="#FF5FA0ED" x:Key="LightBlue"/>
-            <SolidColorBrush Color="#FFDFE44A" x:Key="LightYellow" />
-            <SolidColorBrush Color="#FFB471C3" x:Key="LightViolet" />            
+            <SolidColorBrush Color="#FF9CCD4D" x:Key="ThemeStrongGreen"/>
+            <SolidColorBrush Color="#FFB0D794" x:Key="ThemeGreen"/>
+            <SolidColorBrush Color="#FF47A2B0" x:Key="ThemeBlue"/>
+            <SolidColorBrush Color="#FFFBDE8A" x:Key="ThemeYellow" />
+            <SolidColorBrush Color="#FFFA5456" x:Key="ThemeRed" />
+            <SolidColorBrush Color="#FF4C6472" x:Key="ThemeGray" />            
             
             <SolidColorBrush Color="#FF808080" x:Key="Gray"/>
             <SolidColorBrush Color="#FFFFFFFF" x:Key="PageBackground" />
@@ -25,8 +27,8 @@
         <Setter Property="BorderBrush" Value="#FFD6D6D6" />
     </Style>
     <Style TargetType="Button" >
-        <Setter Property="Background" Value="{StaticResource LightGreen}" />
-        <Setter Property="BorderBrush" Value="{StaticResource LightGreen}" />
+        <Setter Property="Background" Value="{StaticResource ThemeStrongGreen}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ThemeStrongGreen}" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="22" />
     </Style>

@@ -16,6 +16,7 @@ namespace VirtualGuide.Services
             Description = property.Description;
             Order = property.Order;
             TravelId = property.Travel.Id;
+            Symbol = property.Symbol;
         }
 
         public static List<BasicPropertyViewModel> CreatePropertyList(IList<Property> properties)
@@ -35,5 +36,6 @@ namespace VirtualGuide.Services
         public string Description { get; set; }
         public int TravelId { get; set; }
         public int Order { get; set; }
+        public string Symbol { get; set; }
     }
 }

@@ -25,5 +25,8 @@ namespace VirtualGuide.Mobile.Model
 
         [Column("TravelId"), Indexed]
         public int TravelId { get; set; }
+
+        [Column("Symbol")]
+        public string Symbol { get; set; }
     }
 }

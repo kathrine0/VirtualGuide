@@ -1,14 +1,13 @@
-﻿using System;
+﻿using VirtualGuide.Mobile.Common;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using VirtualGuide.Mobile.Common;
-using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI;
+using Windows.Graphics.Display;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -17,26 +16,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
+// The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace VirtualGuide.Mobile.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GuideMain : Page
+    public sealed partial class GuideMaps : Page
     {
         private NavigationHelper navigationHelper;
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private List<SimplePropertyViewModel> _propertiesList = new List<SimplePropertyViewModel>() { 
-            new SimplePropertyViewModel() {Name = "Maps", Background=VirtualGuide.Mobile.Common.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=SimplePropertyViewModel.Types.MAPS},
-            new SimplePropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Common.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=SimplePropertyViewModel.Types.TOURS},
-        };
-        private PropertyViewModel _propertyViewModel = new PropertyViewModel();
-
-        private int _travelId;
-
-        public GuideMain()
+        public GuideMaps()
         {
             this.InitializeComponent();
 
@@ -53,6 +45,14 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Gets the view model for this <see cref="Page"/>.
+        /// This can be changed to a strongly typed view model.
+        /// </summary>
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return this.defaultViewModel; }
+        }
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -81,44 +81,31 @@ namespace VirtualGuide.Mobile.View
         {
         }
 
+        #region NavigationHelper registration
+
         /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
+        /// The methods provided in this section are simply used to allow
+        /// NavigationHelper to respond to the page's navigation methods.
+        /// <para>
+        /// Page specific logic should be placed in event handlers for the  
+        /// <see cref="NavigationHelper.LoadState"/>
+        /// and <see cref="NavigationHelper.SaveState"/>.
+        /// The navigation parameter is available in the LoadState method 
+        /// in addition to page state preserved during an earlier session.
+        /// </para>
         /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.
-        /// This parameter is typically used to configure the page.</param>
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        /// <param name="e">Provides data for navigation methods and event
+        /// handlers that cannot cancel the navigation request.</param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
-            _travelId = (int) e.Parameter;
-
-            var dbProps = await _propertyViewModel.GetSimpleProperties(_travelId);
-
-            _propertiesList.AddRange(dbProps);
-            PropertiesView.ItemsSource = _propertiesList;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedFrom(e);
-
         }
 
-        private void PropertiesView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var clickedItem = (SimplePropertyViewModel) e.ClickedItem;
-
-            switch(clickedItem.Type)
-            {
-                case SimplePropertyViewModel.Types.MAPS:
-                    Frame.Navigate(typeof(GuideMaps), _travelId);
-                break;
-                case SimplePropertyViewModel.Types.TOURS:
-                break;
-                case SimplePropertyViewModel.Types.REGULAR:
-                break;
-            }
-        }
-
-        
+        #endregion
     }
 }
