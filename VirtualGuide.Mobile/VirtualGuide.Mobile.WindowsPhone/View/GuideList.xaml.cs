@@ -19,6 +19,7 @@ using VirtualGuide.Mobile.ViewModel;
 using VirtualGuide.Mobile.Model;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using VirtualGuide.Mobile.Repository;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -30,11 +31,11 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideList : Page
     {
         private NavigationHelper navigationHelper;
-        private TravelViewModel _travelViewModel = new TravelViewModel();
+        private TravelRepository _travelRepository = new TravelRepository();
 
         //TODO proper binding
-        public ObservableCollection<Travel> AvailableTravelsList = new ObservableCollection<Travel>();
-        public ObservableCollection<Travel> OwnedTravelsList = new ObservableCollection<Travel>();
+        public ObservableCollection<TravelViewModel> AvailableTravelsList = new ObservableCollection<TravelViewModel>();
+        public ObservableCollection<TravelViewModel> OwnedTravelsList = new ObservableCollection<TravelViewModel>();
 
         public GuideList()
         {
@@ -113,30 +114,30 @@ namespace VirtualGuide.Mobile.View
 
         private void OwnedTravels_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(GuideMain), (e.ClickedItem as Travel).Id);
+            Frame.Navigate(typeof(GuideMain), (e.ClickedItem as TravelViewModel).Id);
         }
 
         private async void SetupList()
         {
             //Get properties from DB
-            OwnedTravelsList = new ObservableCollection<Travel>(await _travelViewModel.GetItemsFromDb());
+            OwnedTravelsList = new ObservableCollection<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
             OwnedTravels.ItemsSource = OwnedTravelsList;
 
 
             //start downloading data
-            Task<List<Travel>> availableTravelsTask = _travelViewModel.LoadAvailableTravels();
-            Task<List<Travel>> ownedTravelsTask = null;
+            Task<List<TravelViewModel>> availableTravelsTask = _travelRepository.GetAvailableTravels();
+            Task<List<TravelViewModel>> ownedTravelsTask = null;
 
             if (App.AuthToken != String.Empty)
             {
-                ownedTravelsTask = _travelViewModel.DownloadAndSaveOwnedTravels();
+                ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
 
 
                 //Download user properties
                 try
                 {
                     var _ownedTravels = await ownedTravelsTask;
-                    OwnedTravelsList = new ObservableCollection<Travel>(_ownedTravels);
+                    OwnedTravelsList = new ObservableCollection<TravelViewModel>(_ownedTravels);
                     OwnedTravels.ItemsSource = OwnedTravelsList;
                 }
                 catch (Exception ex)
@@ -151,7 +152,7 @@ namespace VirtualGuide.Mobile.View
             try
             {
                 var _availableTravels = await availableTravelsTask;
-                AvailableTravelsList = new ObservableCollection<Travel>(_availableTravels);
+                AvailableTravelsList = new ObservableCollection<TravelViewModel>(_availableTravels);
                 AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 AvailableTravels.ItemsSource = AvailableTravelsList;
             }

@@ -49,6 +49,9 @@ namespace VirtualGuide.Services
             //TODO Excursions =
             Properties = BasicPropertyViewModel.CreatePropertyList(travel.Properties);
             Language = travel.Language;
+            Latitude = travel.Latitude;
+            Longitude = travel.Longitude;
+            ZoomLevel = travel.ZoomLevel;
 
         }
 
@@ -65,5 +68,9 @@ namespace VirtualGuide.Services
         public virtual IList<BasicPropertyViewModel> Properties { get; set; }
 
         public string Language { get; set; }
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double ZoomLevel { get; set; }
     }
 }

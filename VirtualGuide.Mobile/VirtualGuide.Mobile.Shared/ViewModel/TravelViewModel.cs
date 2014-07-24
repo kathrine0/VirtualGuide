@@ -12,39 +12,39 @@ using VirtualGuide.Mobile.Common;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
+
     public class TravelViewModel
     {
-        public ObservableCollection<Travel> Travels { get; private set; }
-
-        public async Task<List<Travel>> LoadAvailableTravels()
+        public TravelViewModel()
         {
-            return await HttpHelper.GetData<List<Travel>>("api/Travels");
+
         }
 
-        public async Task<List<Travel>> LoadOwnedTravels()
+        public TravelViewModel(Travel travel)
         {
-            return await HttpHelper.GetData<List<Travel>>("api/OwnedTravels");
+            Id = travel.Id;
+            Name = travel.Name;
+            Description = travel.Description;
+            Price = travel.Price;
+            Latitude = travel.Latitude;
+            Longitude = travel.Longitude;
+            ZoomLevel = travel.ZoomLevel;
         }
 
-        public async Task<List<Travel>> GetItemsFromDb()
-        {
-            var travels = await App.Connection.QueryAsync<Travel>("Select * FROM Travel");
+        public int Id { get; set; }
 
-            return travels;
-        }
+        public string Name { get; set; }
 
-        public async Task<List<Travel>> DownloadAndSaveOwnedTravels()
-        {
-            var travels = await LoadOwnedTravels();
-            await App.Connection.InsertOrReplaceAllAsync(travels);
+        public string Description { get; set; }
 
-            foreach (var travel in travels)
-            {
-                await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
-            }
+        public double Price { get; set; }
 
-            return travels;
+        public List<Property> Properties { get; set; }
 
-        }
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        public double ZoomLevel { get; set; }
     }
 }

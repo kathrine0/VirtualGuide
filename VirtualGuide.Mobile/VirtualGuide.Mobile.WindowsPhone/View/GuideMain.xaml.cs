@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -32,7 +33,7 @@ namespace VirtualGuide.Mobile.View
             new SimplePropertyViewModel() {Name = "Maps and places", Background=VirtualGuide.Mobile.Common.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=SimplePropertyViewModel.Types.MAPS},
             new SimplePropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Common.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=SimplePropertyViewModel.Types.TOURS},
         };
-        private PropertyViewModel _propertyViewModel = new PropertyViewModel();
+        private PropertyRepository _propertyRepository = new PropertyRepository();
 
         private int _travelId;
 
@@ -91,7 +92,7 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.OnNavigatedTo(e);
             _travelId = (int) e.Parameter;
 
-            var dbProps = await _propertyViewModel.GetSimpleProperties(_travelId);
+            var dbProps = await _propertyRepository.GetSimpleProperties(_travelId);
 
             _propertiesList.AddRange(dbProps);
             PropertiesView.ItemsSource = _propertiesList;

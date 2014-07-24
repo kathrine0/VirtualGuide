@@ -38,5 +38,14 @@ namespace VirtualGuide.Mobile.Model
 
         public DateTime LastUpdated { get; set; }
 
+        [Column("Latitude")]
+        public double Latitude { get; set; }
+        
+        [Column("Longitude")]
+        public double Longitude { get; set; }
+     
+        [Column("ZoomLevel")]
+        public double ZoomLevel { get; set; }
+
     }
 }

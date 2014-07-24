@@ -25,6 +25,8 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class GuideMaps : Page
     {
+        private int _travelId;
+
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 

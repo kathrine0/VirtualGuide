@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\ColorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MessageBoxHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
@@ -25,6 +26,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Property.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Travel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\ExcursionRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\PlaceRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\PropertyRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\TravelRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\MySQLiteExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />
