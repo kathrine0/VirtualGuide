@@ -86,10 +86,11 @@ namespace VirtualGuide.Models
         
         public string Language { get; set; }
 
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double ZoomLevel { get; set; }
         
         public DateTime CreatedAt { get; set; }
-
-
         
         public DateTime UpdatedAt { get; set; }
     }

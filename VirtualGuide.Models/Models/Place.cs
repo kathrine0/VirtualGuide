@@ -24,9 +24,9 @@ namespace VirtualGuide.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        public double Gps { get; set; }
-
-        public double Radius { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double ZoomLevel { get; set; }
 
         public IList<Property> Properties { get; set; }
 
