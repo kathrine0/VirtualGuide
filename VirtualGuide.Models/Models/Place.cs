@@ -26,6 +26,7 @@ namespace VirtualGuide.Models
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        //TODO Remove this prop
         public double ZoomLevel { get; set; }
 
         public IList<Property> Properties { get; set; }

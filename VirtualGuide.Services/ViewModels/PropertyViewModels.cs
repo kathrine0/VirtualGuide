@@ -19,17 +19,7 @@ namespace VirtualGuide.Services
             Symbol = property.Symbol;
         }
 
-        public static List<BasicPropertyViewModel> CreatePropertyList(IList<Property> properties)
-        {
-            var result = new List<BasicPropertyViewModel>();
-
-            foreach(var property in properties)
-            {
-                result.Add(new BasicPropertyViewModel(property));
-            }
-
-            return result;
-        }
+        
 
         public int Id { get; set; }
         public string Title { get; set; }

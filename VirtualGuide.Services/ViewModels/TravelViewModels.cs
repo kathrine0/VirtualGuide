@@ -45,9 +45,9 @@ namespace VirtualGuide.Services
             Id = travel.Id;
             Name = travel.Name;
             Description = travel.Description;
-            //TODO Places = 
+            Places = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(travel.Places);
             //TODO Excursions =
-            Properties = BasicPropertyViewModel.CreatePropertyList(travel.Properties);
+            Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(travel.Properties);
             Language = travel.Language;
             Latitude = travel.Latitude;
             Longitude = travel.Longitude;
