@@ -113,7 +113,7 @@ namespace VirtualGuide.Mobile.Common
         RelayCommand _goForwardCommand;
 
         /// <summary>
-        /// <see cref="RelayCommand"/> used to bind to the back Button's Command property
+        /// <see cref="RelayCommand"/> used to bind to the back Button's Command place
         /// for navigating to the most recent item in back navigation history, if a Frame
         /// manages its own navigation history.
         /// 
@@ -159,7 +159,7 @@ namespace VirtualGuide.Mobile.Common
         }
 
         /// <summary>
-        /// Virtual method used by the <see cref="GoBackCommand"/> property
+        /// Virtual method used by the <see cref="GoBackCommand"/> place
         /// to determine if the <see cref="Frame"/> can go back.
         /// </summary>
         /// <returns>
@@ -171,7 +171,7 @@ namespace VirtualGuide.Mobile.Common
             return this.Frame != null && this.Frame.CanGoBack;
         }
         /// <summary>
-        /// Virtual method used by the <see cref="GoForwardCommand"/> property
+        /// Virtual method used by the <see cref="GoForwardCommand"/> place
         /// to determine if the <see cref="Frame"/> can go forward.
         /// </summary>
         /// <returns>
@@ -184,7 +184,7 @@ namespace VirtualGuide.Mobile.Common
         }
 
         /// <summary>
-        /// Virtual method used by the <see cref="GoBackCommand"/> property
+        /// Virtual method used by the <see cref="GoBackCommand"/> place
         /// to invoke the <see cref="Windows.UI.Xaml.Controls.Frame.GoBack"/> method.
         /// </summary>
         public virtual void GoBack()
@@ -192,7 +192,7 @@ namespace VirtualGuide.Mobile.Common
             if (this.Frame != null && this.Frame.CanGoBack) this.Frame.GoBack();
         }
         /// <summary>
-        /// Virtual method used by the <see cref="GoForwardCommand"/> property
+        /// Virtual method used by the <see cref="GoForwardCommand"/> place
         /// to invoke the <see cref="Windows.UI.Xaml.Controls.Frame.GoForward"/> method.
         /// </summary>
         public virtual void GoForward()
@@ -313,7 +313,7 @@ namespace VirtualGuide.Mobile.Common
         /// navigation and process lifetime management logic should be placed.
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property provides the group to be displayed.</param>
+        /// place provides the group to be displayed.</param>
         public void OnNavigatedTo(NavigationEventArgs e)
         {
             var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
@@ -355,7 +355,7 @@ namespace VirtualGuide.Mobile.Common
         /// navigation and process lifetime management logic should be placed.
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property provides the group to be displayed.</param>
+        /// place provides the group to be displayed.</param>
         public void OnNavigatedFrom(NavigationEventArgs e)
         {
             var frameState = SuspensionManager.SessionStateForFrame(this.Frame);

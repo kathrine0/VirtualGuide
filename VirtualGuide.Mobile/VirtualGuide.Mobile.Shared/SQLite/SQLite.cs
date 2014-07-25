@@ -153,7 +153,7 @@ namespace SQLite
 		/// Specifies the path to the database file.
 		/// </param>
 		/// <param name="storeDateTimeAsTicks">
-		/// Specifies whether to store DateTime properties as ticks (true) or strings (false). You
+		/// Specifies whether to store DateTime places as ticks (true) or strings (false). You
 		/// absolutely do want to store them as Ticks in all new projects. The default of false is
 		/// only here for backwards compatibility. There is a *significant* speed advantage, with no
 		/// down sides, when setting storeDateTimeAsTicks = true.
@@ -170,7 +170,7 @@ namespace SQLite
 		/// Specifies the path to the database file.
 		/// </param>
 		/// <param name="storeDateTimeAsTicks">
-		/// Specifies whether to store DateTime properties as ticks (true) or strings (false). You
+		/// Specifies whether to store DateTime places as ticks (true) or strings (false). You
 		/// absolutely do want to store them as Ticks in all new projects. The default of false is
 		/// only here for backwards compatibility. There is a *significant* speed advantage, with no
 		/// down sides, when setting storeDateTimeAsTicks = true.
@@ -275,7 +275,7 @@ namespace SQLite
 		/// </param>     
 		/// <returns>
 		/// The mapping represents the schema of the columns of the database and contains 
-		/// methods to set and get properties of objects.
+		/// methods to set and get places of objects.
 		/// </returns>
         public TableMapping GetMapping(Type type, CreateFlags createFlags = CreateFlags.None)
 		{
@@ -295,7 +295,7 @@ namespace SQLite
 		/// </summary>
 		/// <returns>
 		/// The mapping represents the schema of the columns of the database and contains 
-		/// methods to set and get properties of objects.
+		/// methods to set and get places of objects.
 		/// </returns>
 		public TableMapping GetMapping<T> ()
 		{
@@ -393,7 +393,7 @@ namespace SQLite
 					}
 
 					if (i.Unique != iinfo.Unique)
-						throw new Exception ("All the columns in an index must have the same value for their Unique property");
+						throw new Exception ("All the columns in an index must have the same value for their Unique place");
 
 					iinfo.Columns.Add (new IndexedColumn {
 						Order = i.Order,
@@ -460,11 +460,11 @@ namespace SQLite
         }
 
         /// <summary>
-        /// Creates an index for the specified object property.
+        /// Creates an index for the specified object place.
         /// e.g. CreateIndex<Client>(c => c.Name);
         /// </summary>
         /// <typeparam name="T">Type to reflect to a database table.</typeparam>
-        /// <param name="property">Property to index</param>
+        /// <param name="place">Property to index</param>
         /// <param name="unique">Whether the index should be unique</param>
         public void CreateIndex<T>(Expression<Func<T, object>> property, bool unique = false)
         {
@@ -480,7 +480,7 @@ namespace SQLite
             var propertyInfo = mx.Member as PropertyInfo;
             if (propertyInfo == null)
             {
-                throw new ArgumentException("The lambda expression 'property' should point to a valid Property");
+                throw new ArgumentException("The lambda expression 'place' should point to a valid Property");
             }
 
             var propName = propertyInfo.Name;
@@ -583,7 +583,7 @@ namespace SQLite
 		/// in the command text for each of the arguments and then executes that command.
 		/// Use this method instead of Query when you don't expect rows back. Such cases include
 		/// INSERTs, UPDATEs, and DELETEs.
-		/// You can set the Trace or TimeExecution properties of the connection
+		/// You can set the Trace or TimeExecution places of the connection
 		/// to profile execution.
 		/// </summary>
 		/// <param name="query">

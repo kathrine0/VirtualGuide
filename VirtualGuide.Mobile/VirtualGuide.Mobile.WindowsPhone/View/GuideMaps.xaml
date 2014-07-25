@@ -5,8 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:RegularExpressions="using:System.Text.RegularExpressions"
     x:Class="VirtualGuide.Mobile.View.GuideMaps"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -17,22 +18,71 @@
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-
+        <!--<Maps:MapControl x:Name="test" />-->
         <Hub>
             <HubSection Header="Maps" x:Name="TheHub" DataContext="{Binding Map}">
                 <DataTemplate>
                     <Grid Margin="-20,0,0,0" x:Name="blabla">
                         <Maps:MapControl
-                            x:Name="Maps"
-                            MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
-                            LandmarksVisible="True" 
-                            PedestrianFeaturesVisible="True"
-                            ZoomLevel="{Binding ZoomLevel}" 
-                            Center="{Binding Center}"
-                            >
-                            <Maps:MapItemsControl></Maps:MapItemsControl>
+							x:Name="Maps"
+							MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
+							LandmarksVisible="True" 
+							PedestrianFeaturesVisible="True"
+							ZoomLevel="{Binding ZoomLevel}" 
+							Center="{Binding Center}" >
+
+                            <Maps:MapItemsControl ItemsSource="{Binding MapElements}">
+                                <Maps:MapItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Image Source="ms-appx:///Assets/MapMarker.png" 
+                                                   Stretch="UniformToFill" 
+                                                   Width="50" Height="50"
+                                                   Maps:MapControl.Location="{Binding Point}" Tapped="Image_Tapped" 
+                                                   
+                                                   />
+                                            <!--Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"-->
+                                            <Grid Height="40" 
+                                                  Background="#BF000000"
+                                                  Visibility="{Binding DetailsVisibility}"
+                                                  Maps:MapControl.Location="{Binding Point}" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="40" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock 
+                                                    Grid.Column="0"
+                                                    Foreground="White"
+                                                    Maps:MapControl.Location="{Binding Point}" 
+                                                    Text="{Binding Title}"                                                
+                                                    FontSize="15" Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"/>
+                                                <Grid 
+                                                    Margin="1"
+                                                    Grid.Column="1"
+                                                    Background="{StaticResource ThemeStrongGreen}">
+                                                    <TextBlock 
+                                                        Text="?" 
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="White"
+                                                        FontSize="22"/>
+                                                </Grid>
+                                                <Polygon Points="0,0 7.5,15, 15,0" 
+                                                     VerticalAlignment="Bottom" 
+                                                     HorizontalAlignment="Center" 
+                                                     Fill="#BF000000" 
+                                                     Margin="7.5,0,0,-14.6" 
+                                                     />
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </Maps:MapItemsControl.ItemTemplate>
+                            </Maps:MapItemsControl>
+
                         </Maps:MapControl>
-                    <!--Margin="-20,0,0,0"-->
+                        <!--Margin="-20,0,0,0"-->
                     </Grid>
                 </DataTemplate>
             </HubSection>
@@ -42,6 +92,40 @@
                         <StackPanel Grid.Row="0" Margin="19,0,0,0">
                             <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
                             <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                            
+                            <Grid Height="40" Background="#BF000000" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="40" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock 
+                                    Grid.Column="0"
+                                    Foreground="White"
+                                    Maps:MapControl.Location="{Binding Point}" 
+                                    Text="Big Ben"                                                
+                                    FontSize="15" Margin="5"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                />
+                                <Grid 
+                                    Margin="1"
+                                    Grid.Column="1"
+                                    Background="{StaticResource ThemeStrongGreen}">
+                                    <TextBlock 
+                                        Text="?" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="White"
+                                        FontSize="22"/>
+                                </Grid>
+
+                                <Polygon Points="0,0 7.5,15, 15,0" 
+                                         VerticalAlignment="Bottom" 
+                                         HorizontalAlignment="Center" 
+                                         Fill="#BF000000" 
+                                         Margin="7.5,0,0,-14.6" 
+                                         />
+                            </Grid>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

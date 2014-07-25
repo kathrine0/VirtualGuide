@@ -6,7 +6,6 @@ using System.Text;
 
 namespace VirtualGuide.Mobile.Model
 {
-    [ImplementPropertyChanged]
     [Table("Property")]
     public class Property
     {

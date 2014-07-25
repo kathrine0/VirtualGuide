@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.ViewModel;
 using VirtualGuide.Mobile.Repository;
 using Windows.Devices.Geolocation;
+using Windows.UI.Xaml.Controls.Maps;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -29,7 +30,9 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideMaps : Page
     {
         private TravelViewModel _travel;
+        private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
         private TravelRepository _travelRepository = new TravelRepository();
+        private PlaceRepository _placeRepository = new PlaceRepository();
 
         private NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -72,13 +75,13 @@ namespace VirtualGuide.Mobile.View
         {
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
+            _places = await _placeRepository.GetSimplePlaces(travelId);
 
             this.DefaultViewModel["Map"] = new {
                 ZoomLevel = _travel.ZoomLevel,
-                Center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude})
+                Center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude}),
+                MapElements = _places
             };
-
-
         }
 
         /// <summary>
@@ -111,10 +114,6 @@ namespace VirtualGuide.Mobile.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
-
-
-            //Map.Center = new GeoCoordinate(47.6097, -122.3331);
-            //Map.ZoomLevel = 18;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -123,5 +122,27 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
+
+        #region helper methods
+
+        private MapIcon GetMapIcon(MapPlaceViewModel place)
+        {
+            MapIcon element = new MapIcon();
+            element.Location = place.Point;
+            element.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            element.Title = place.Name;
+            element.ZIndex = 9999;
+
+            return element;
+        }
+
+        #endregion
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var element = (MapPlaceViewModel) ((Image)sender).DataContext;
+            element.DetailsVisibility = Visibility.Visible;
+        }
+
     }
 }

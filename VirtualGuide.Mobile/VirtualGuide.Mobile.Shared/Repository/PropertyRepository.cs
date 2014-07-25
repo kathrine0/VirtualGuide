@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.ViewModel;
 
@@ -19,14 +20,8 @@ namespace VirtualGuide.Mobile.Repository
         public async Task<List<SimplePropertyViewModel>> GetSimpleProperties(int travelId)
         {
             var properties = await GetPropertiesByTravelIdAsync(travelId);
-            var result = new List<SimplePropertyViewModel>();
 
-            foreach (var property in properties)
-            {
-                result.Add(new SimplePropertyViewModel(property));
-            }
-
-            return result;
+            return ModelHelper.ObjectToViewModel<SimplePropertyViewModel, Property>(properties);
         }
     }
 }

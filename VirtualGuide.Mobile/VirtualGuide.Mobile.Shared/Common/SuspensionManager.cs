@@ -172,7 +172,7 @@ namespace VirtualGuide.Mobile.Common
                 sessionStateKey = sessionBaseKey + "_" + sessionStateKey;
             }
 
-            // Use a dependency property to associate the session key with a frame, and keep a list of frames whose
+            // Use a dependency place to associate the session key with a frame, and keep a list of frames whose
             // navigation state should be managed
             frame.SetValue(FrameSessionStateKeyProperty, sessionStateKey);
             _registeredFrames.Add(new WeakReference<Frame>(frame));

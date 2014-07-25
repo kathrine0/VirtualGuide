@@ -60,6 +60,7 @@ namespace VirtualGuide.Mobile.Repository
             foreach (var travel in travels)
             {
                 await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
+                await App.Connection.InsertOrReplaceAllAsync(travel.Places);
             }
 
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(travels);

@@ -6,7 +6,6 @@ using System.Text;
 
 namespace VirtualGuide.Mobile.Model
 {
-    [ImplementPropertyChanged]
     [Table("Travel")]
     public class Travel
     {
@@ -35,6 +34,9 @@ namespace VirtualGuide.Mobile.Model
 
         [Ignore]
         public List<Property> Properties { get; set; }
+
+        [Ignore]
+        public List<Place> Places { get; set; }
 
         public DateTime LastUpdated { get; set; }
 

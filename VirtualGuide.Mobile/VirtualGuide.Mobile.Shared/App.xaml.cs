@@ -122,6 +122,7 @@ namespace VirtualGuide.Mobile
             await Connection.CreateTableAsync<User>();
             await Connection.CreateTableAsync<Travel>();
             await Connection.CreateTableAsync<Property>();
+            await Connection.CreateTableAsync<Place>();
         }
 
 #if WINDOWS_PHONE_APP
