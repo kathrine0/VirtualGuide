@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     x:Class="VirtualGuide.Mobile.View.GuideMaps"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -17,15 +18,20 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Hub >
-            <HubSection Header="Maps" >
+        <Hub>
+            <HubSection Header="Maps" x:Name="TheHub" DataContext="{Binding Map}">
                 <DataTemplate>
-                    <Grid Margin="-20,0,0,0">
-                        <Maps:MapControl 
+                    <Grid Margin="-20,0,0,0" x:Name="blabla">
+                        <Maps:MapControl
+                            x:Name="Maps"
                             MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
                             LandmarksVisible="True" 
                             PedestrianFeaturesVisible="True"
-                            />
+                            ZoomLevel="{Binding ZoomLevel}" 
+                            Center="{Binding Center}"
+                            >
+                            <Maps:MapItemsControl></Maps:MapItemsControl>
+                        </Maps:MapControl>
                     <!--Margin="-20,0,0,0"-->
                     </Grid>
                 </DataTemplate>

@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using VirtualGuide.Mobile.ViewModel;
+using VirtualGuide.Mobile.Repository;
+using Windows.Devices.Geolocation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -25,10 +28,12 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class GuideMaps : Page
     {
-        private int _travelId;
+        private TravelViewModel _travel;
+        private TravelRepository _travelRepository = new TravelRepository();
 
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+
 
         public GuideMaps()
         {
@@ -47,10 +52,6 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
         public ObservableDictionary DefaultViewModel
         {
             get { return this.defaultViewModel; }
@@ -67,8 +68,17 @@ namespace VirtualGuide.Mobile.View
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            var travelId = (int)e.NavigationParameter;
+            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
+
+            this.DefaultViewModel["Map"] = new {
+                ZoomLevel = _travel.ZoomLevel,
+                Center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude})
+            };
+
+
         }
 
         /// <summary>
@@ -98,9 +108,13 @@ namespace VirtualGuide.Mobile.View
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+
+
+            //Map.Center = new GeoCoordinate(47.6097, -122.3331);
+            //Map.ZoomLevel = 18;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
