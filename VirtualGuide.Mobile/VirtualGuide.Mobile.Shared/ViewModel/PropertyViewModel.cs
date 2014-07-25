@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,13 @@ using Windows.UI.Xaml.Media;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
+    [ImplementPropertyChanged]
     public class PropertyViewModel
     {
 
     }
 
+    [ImplementPropertyChanged]
     public class SimplePropertyViewModel
     {
         public enum Types

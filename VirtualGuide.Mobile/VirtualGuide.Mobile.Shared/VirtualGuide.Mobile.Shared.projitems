@@ -31,13 +31,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repository\PlaceRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\PropertyRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\TravelRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\UserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\MySQLiteExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PropertyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TravelViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\UserViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>

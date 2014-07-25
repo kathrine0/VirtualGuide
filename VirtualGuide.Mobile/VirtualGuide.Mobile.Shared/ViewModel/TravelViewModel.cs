@@ -9,10 +9,12 @@ using VirtualGuide.Mobile.Model;
 using System.Net.Http;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
+using PropertyChanged;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
 
+    [ImplementPropertyChanged]
     public class TravelViewModel
     {
         public TravelViewModel()

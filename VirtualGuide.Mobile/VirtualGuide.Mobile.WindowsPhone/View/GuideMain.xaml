@@ -26,7 +26,7 @@
             <TextBlock Text="TODO Name Here" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
         </StackPanel>
 
-        <!--TODO: Content should be placed within the following grid-->
+        <!-- TODO Hub here -->
         <Grid Grid.Row="1" x:Name="ContentRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

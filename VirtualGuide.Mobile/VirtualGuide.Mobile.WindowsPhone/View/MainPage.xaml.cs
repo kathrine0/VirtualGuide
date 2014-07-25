@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,7 +28,7 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private UserViewModel _userViewModel = new UserViewModel();
+        private UserRepository _userRepository = new UserRepository();
 
         public MainPage()
         {
@@ -59,7 +60,7 @@ namespace VirtualGuide.Mobile.View
 
             try
             {
-                await _userViewModel.Login(username, password);
+                await _userRepository.Login(username, password);
             }
             catch (HttpRequestException)
             {

@@ -6,9 +6,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VirtualGuide.Mobile.ViewModel
+namespace VirtualGuide.Mobile.Repository
 {
-    public class UserViewModel
+    public class UserRepository
     {
         public async Task Login(string username, string password)
         {
