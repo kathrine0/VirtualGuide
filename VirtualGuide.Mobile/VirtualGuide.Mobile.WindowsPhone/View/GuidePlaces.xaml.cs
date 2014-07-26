@@ -18,7 +18,7 @@ namespace VirtualGuide.Mobile.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GuideMaps : Page
+    public sealed partial class GuidePlaces : Page
     {
         private TravelViewModel _travel;
         private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
@@ -31,7 +31,7 @@ namespace VirtualGuide.Mobile.View
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
 
-        public GuideMaps()
+        public GuidePlaces()
         {
             this.InitializeComponent();
 
@@ -70,6 +70,7 @@ namespace VirtualGuide.Mobile.View
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
             _places = await _placeRepository.GetSimplePlaces(travelId);
 
+            this.DefaultViewModel["Title"] = _travel.Name;
             this.DefaultViewModel["Map"] = new {
                 ZoomLevel = _travel.ZoomLevel,
                 Center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude}),
@@ -116,45 +117,16 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        #region helper methods
-
-        private MapIcon GetMapIcon(MapPlaceViewModel place)
-        {
-            MapIcon element = new MapIcon();
-            element.Location = place.Point;
-            element.NormalizedAnchorPoint = new Point(0.5, 1.0);
-            element.Title = place.Name;
-            element.ZIndex = 9999;
-
-            return element;
-        }
-
-        #endregion
-
-        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-            HideDetailClouds();
-
-            var element = (MapPlaceViewModel) ((Image)sender).DataContext;
-            element.DetailsVisibility = true;
-
-            _visibleDetailsPlaceId = element.Id;
-        }
-
-        private void HideDetailClouds()
-        {
-            if (_visibleDetailsPlaceId != null)
-            {
-                _places.Find(place => place.Id == _visibleDetailsPlaceId).DetailsVisibility = false;
-            }
-
-            _visibleDetailsPlaceId = null;
-        }
-
+        
         private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //HideDetailClouds(); 
+            Frame.Navigate(typeof(MapView), _travel.Id);
+        }
+
+        private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            Frame.Navigate(typeof(MapView), _travel.Id);
+
         }
 
     }

@@ -12,5 +12,11 @@ namespace VirtualGuide.Mobile.Common
             MessageDialog messageDialog = new MessageDialog(content, title);
             messageDialog.ShowAsync();
         }
+
+        public static void Show(string content)
+        {
+            MessageDialog messageDialog = new MessageDialog(content);
+            messageDialog.ShowAsync();
+        }
     }
 }

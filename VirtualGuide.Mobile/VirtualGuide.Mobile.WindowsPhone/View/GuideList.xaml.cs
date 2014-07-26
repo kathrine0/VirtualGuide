@@ -163,7 +163,7 @@ namespace VirtualGuide.Mobile.View
                 else if (ex.Message == System.Net.HttpStatusCode.Unauthorized.ToString())
                 {
                     MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
-                    this.Frame.Navigate(typeof(MainPage));
+                    this.Frame.Navigate(typeof(LoginPage));
                 }
                 else
                 {

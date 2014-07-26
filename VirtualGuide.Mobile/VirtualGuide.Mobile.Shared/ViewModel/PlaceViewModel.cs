@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 namespace VirtualGuide.Mobile.ViewModel
 {
     [ImplementPropertyChanged]
-    class MapPlaceViewModel
+    public class MapPlaceViewModel
     {
         public MapPlaceViewModel() {}
 

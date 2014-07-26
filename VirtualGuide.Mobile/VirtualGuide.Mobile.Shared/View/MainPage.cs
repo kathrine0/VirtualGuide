@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace VirtualGuide.Mobile.View
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class LoginPage : Page
     {
     }
 }

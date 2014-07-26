@@ -102,7 +102,7 @@ namespace VirtualGuide.Mobile
                 // configuring the new page by passing required information as a navigation
                 // parameter    
                 var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                var page = typeof(MainPage); 
+                var page = typeof(LoginPage); 
                 if (localSettings.Values["token"] != null)
                 {
                     page = typeof(GuideList);
