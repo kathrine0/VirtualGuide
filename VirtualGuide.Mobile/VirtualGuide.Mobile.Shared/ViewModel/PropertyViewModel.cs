@@ -9,30 +9,28 @@ using Windows.UI.Xaml.Media;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
+
     [ImplementPropertyChanged]
     public class PropertyViewModel
-    {
-
-    }
-
-    [ImplementPropertyChanged]
-    public class SimplePropertyViewModel
     {
         public enum Types
         {
             MAPS, TOURS, REGULAR
         }
 
-        public SimplePropertyViewModel() { }
+        public PropertyViewModel() { }
 
-        public SimplePropertyViewModel(Property property)
+        public PropertyViewModel(Property property)
         {
+            Id = property.Id;
             Name = property.Title;
             Symbol = property.Symbol;
             Background = ColorHelper.YELLOW;
             Type = Types.REGULAR;
+            Description = property.Description;
 
         }
+        public int Id { get; set; }
         
         private string _name = String.Empty;
         public string Name {
@@ -45,6 +43,7 @@ namespace VirtualGuide.Mobile.ViewModel
                 _name = value;
             }
         }
+        public string Description { get; set; }
         public Brush Background { get; set; }
         public string Symbol { get; set; }
         public Types Type { get; set; }

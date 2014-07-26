@@ -5,12 +5,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:converter="using:VirtualGuide.Mobile.Common"
     xmlns:RegularExpressions="using:System.Text.RegularExpressions"
     x:Class="VirtualGuide.Mobile.View.GuideMaps"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converter:TrueIsVisible x:Key="TrueIsVisible" />
+        <converter:FalseIsVisible x:Key="FalseIsVisible" />
+    </Page.Resources>
+    
     <Grid x:Name="LayoutRoot">
 
         <Grid.ChildrenTransitions>
@@ -29,54 +35,62 @@
 							LandmarksVisible="True" 
 							PedestrianFeaturesVisible="True"
 							ZoomLevel="{Binding ZoomLevel}" 
-							Center="{Binding Center}" >
+							Center="{Binding Center}" 
+                            Tapped="Maps_Tapped">
 
                             <Maps:MapItemsControl ItemsSource="{Binding MapElements}">
                                 <Maps:MapItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
+                                        <Canvas>
                                             <Image Source="ms-appx:///Assets/MapMarker.png" 
                                                    Stretch="UniformToFill" 
                                                    Width="50" Height="50"
                                                    Maps:MapControl.Location="{Binding Point}" Tapped="Image_Tapped" 
-                                                   
+                                                   Margin="-25,-50,0,0"
+                                                   Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
+                                                   Maps:MapControl.NormalizedAnchorPoint="0.5,0.5" Canvas.ZIndex="1"
                                                    />
                                             <!--Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"-->
-                                            <Grid Height="40" 
-                                                  Background="#BF000000"
-                                                  Visibility="{Binding DetailsVisibility}"
-                                                  Maps:MapControl.Location="{Binding Point}" >
+                                            <Grid Height="60" 
+                                                  Background="Black"
+                                                  Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
+                                                  Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                  Maps:MapControl.Location="{Binding Point}" 
+                                                  Canvas.ZIndex="2"
+                                                  Width="200" Margin="-80, -88, 0, 0">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="40" />
+                                                    <ColumnDefinition Width="60" />
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock 
                                                     Grid.Column="0"
                                                     Foreground="White"
-                                                    Maps:MapControl.Location="{Binding Point}" 
-                                                    Text="{Binding Title}"                                                
+                                                    Text="{Binding Name}"       
+                                                    TextWrapping="Wrap"
                                                     FontSize="15" Margin="5"
                                                     VerticalAlignment="Center"
-                                                    HorizontalAlignment="Left"/>
+                                                    HorizontalAlignment="Center"/>
                                                 <Grid 
                                                     Margin="1"
                                                     Grid.Column="1"
                                                     Background="{StaticResource ThemeStrongGreen}">
                                                     <TextBlock 
-                                                        Text="?" 
+                                                        Text="&#xe111;" 
+                                                        FontFamily="Segoe UI Symbol"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         Foreground="White"
-                                                        FontSize="22"/>
+                                                        FontSize="40"/>
                                                 </Grid>
-                                                <Polygon Points="0,0 7.5,15, 15,0" 
+                                                <Polygon Points="0,0 20,20,40,0" 
                                                      VerticalAlignment="Bottom" 
                                                      HorizontalAlignment="Center" 
-                                                     Fill="#BF000000" 
-                                                     Margin="7.5,0,0,-14.6" 
+                                                     Fill="Black" 
+                                                     Margin="0,0,-20,-19" 
                                                      />
+                                                <Ellipse Width="20" Height="10" VerticalAlignment="Bottom" Fill="#7F000000" Margin="0,0,-20,-24"/>
                                             </Grid>
-                                        </Grid>
+                                        </Canvas>
                                     </DataTemplate>
                                 </Maps:MapItemsControl.ItemTemplate>
                             </Maps:MapItemsControl>

@@ -6,8 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    >
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="PropertyContentTemplate">
+                <Grid>
+                    <TextBlock FontSize="20" TextWrapping="WrapWholeWords" Text="{Binding Description}" />
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+    
     <Grid x:Name="LayoutRoot">
 
         <Grid.ChildrenTransitions>
@@ -20,32 +32,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- TitlePanel -->
-        <StackPanel Grid.Row="0" Margin="24,17,0,28">
-            <TextBlock Text="TODO Name Here" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
-        </StackPanel>
-
-        <!-- TODO Hub here -->
-        <Grid Grid.Row="1" x:Name="ContentRoot">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <GridView x:Name="PropertiesView" Grid.Row="0" Margin="0,0,10,0" IsItemClickEnabled="True" ItemClick="PropertiesView_ItemClick">
-                <ControlTemplate>
-                    <ItemsPresenter />
-                </ControlTemplate>
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid  Width="180" Height="180" Margin="10,0,0,10" Background="{Binding Background}" >
-                            <TextBlock Text="{Binding Symbol}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="80" Margin="0,-10,0,0" />
-                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="17" Margin="5,5,5,10" TextWrapping="Wrap" TextAlignment="Center" />
-                        </Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>           
-        </Grid>
+        
+        <Hub Grid.Row="1" Header="{Binding Title}" x:Name="MainHub">
+            <HubSection x:Name="TheHub" DataContext="{Binding Properties}">
+                <DataTemplate>
+                    <GridView 
+                        x:Name="PropertiesView" 
+                        IsItemClickEnabled="True" 
+                        ItemClick="PropertiesView_ItemClick"
+                        ItemsSource="{Binding}"
+                        ItemTemplate="{StaticResource 160x160Grid}"
+                            />
+                </DataTemplate>
+            </HubSection>
+        </Hub>
     </Grid>
 </Page>

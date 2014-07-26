@@ -1,19 +1,10 @@
 ﻿using VirtualGuide.Mobile.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.ViewModel;
 using VirtualGuide.Mobile.Repository;
@@ -33,6 +24,8 @@ namespace VirtualGuide.Mobile.View
         private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
+
+        private int? _visibleDetailsPlaceId;
 
         private NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -140,8 +133,28 @@ namespace VirtualGuide.Mobile.View
 
         private void Image_Tapped(object sender, TappedRoutedEventArgs e)
         {
+
+            HideDetailClouds();
+
             var element = (MapPlaceViewModel) ((Image)sender).DataContext;
-            element.DetailsVisibility = Visibility.Visible;
+            element.DetailsVisibility = true;
+
+            _visibleDetailsPlaceId = element.Id;
+        }
+
+        private void HideDetailClouds()
+        {
+            if (_visibleDetailsPlaceId != null)
+            {
+                _places.Find(place => place.Id == _visibleDetailsPlaceId).DetailsVisibility = false;
+            }
+
+            _visibleDetailsPlaceId = null;
+        }
+
+        private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            //HideDetailClouds(); 
         }
 
     }

@@ -17,11 +17,11 @@ namespace VirtualGuide.Mobile.Repository
             return properties;
         }
 
-        public async Task<List<SimplePropertyViewModel>> GetSimpleProperties(int travelId)
+        public async Task<List<PropertyViewModel>> GetSimpleProperties(int travelId)
         {
             var properties = await GetPropertiesByTravelIdAsync(travelId);
 
-            return ModelHelper.ObjectToViewModel<SimplePropertyViewModel, Property>(properties);
+            return ModelHelper.ObjectToViewModel<PropertyViewModel, Property>(properties);
         }
     }
 }

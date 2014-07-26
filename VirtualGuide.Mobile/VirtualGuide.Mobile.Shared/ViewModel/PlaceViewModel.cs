@@ -25,14 +25,6 @@ namespace VirtualGuide.Mobile.ViewModel
 
         public Geopoint Point { get; set; }
 
-       
-        private Visibility _detailsVisibility = Visibility.Collapsed;
-        public Visibility DetailsVisibility
-        {
-            get { return _detailsVisibility; }
-            set { _detailsVisibility = value; }
-        }
-        
-
+        public bool DetailsVisibility { get; set; }
     }
 }

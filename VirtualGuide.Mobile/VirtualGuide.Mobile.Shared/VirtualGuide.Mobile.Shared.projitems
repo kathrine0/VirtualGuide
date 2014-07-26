@@ -16,6 +16,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Common\ColorHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Converters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ModelHelper.cs" />
@@ -23,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\UIHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Place.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Property.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Travel.cs" />

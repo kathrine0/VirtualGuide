@@ -62,31 +62,15 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 
-    <DataTemplate x:Key="FoodDataTemplate">
-        <Border 
-        BorderBrush="CornflowerBlue" 
-        BorderThickness="3" 
-        CornerRadius="10" 
-        Margin="10">
-
-            <StackPanel 
-            Width="150" 
-            Height="175" >
-
-                <TextBlock 
-                FontSize="18" 
-                Margin="5" 
-                Foreground="Coral"
-                TextAlignment="Center" 
-                Text="{Binding Name}"/>
-
-                <!--<Image 
-                Width="75" 
-                Height="75" 
-                Margin="10" 
-                Source="{Binding ImgPath}"/>-->
-            </StackPanel>
-        </Border>
+    <DataTemplate x:Key="160x160Grid">
+        <Grid  
+            Width="160" 
+            Height="160" 
+            Margin="0,0,10,10" 
+            Background="{Binding Background}" >
+            <TextBlock Text="{Binding Symbol}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60" Margin="0,-10,0,0" />
+            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="17" Margin="5,5,5,10" TextWrapping="Wrap" TextAlignment="Center" />
+        </Grid>
     </DataTemplate>
 
     <!--End Grid View-->
