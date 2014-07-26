@@ -13,6 +13,8 @@ using Windows.UI;
 using PropertyChanged;
 using Windows.Foundation;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Controls.Maps;
+using System.Threading.Tasks;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -24,8 +26,8 @@ namespace VirtualGuide.Mobile.View
     
     public sealed partial class MapView : Page
     {
-        private TravelViewModel _travel;
-        private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
+        private TravelViewModel _travel = null;
+        private List<MapPlaceViewModel> _places = null;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
@@ -50,10 +52,6 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
-
 
         }
 
@@ -96,21 +94,12 @@ namespace VirtualGuide.Mobile.View
         {
             //Hide system tray
             StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-            statusBar.HideAsync();
+            await statusBar.HideAsync();
 
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
             _places = await _placeRepository.GetSimplePlaces(travelId);
 
-            _mapElements.ZoomLevel = _travel.ZoomLevel;
-            _mapElements.Center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
-            _mapElements.Places = _places;
-
-            //this.DefaultViewModel["ZoomLevel"] = _mapElements.ZoomLevel;
-            //this.DefaultViewModel["Center"] = _mapElements.Center;
-            //defaultViewModel["Maps"] = _mapElements;
-            //this.DefaultViewModel["MapElements"] = _places;
-            //this.DefaultViewModel["UserPosition"] = _mapElements.UserGeoposition;
         }
 
         /// <summary>
@@ -240,15 +229,43 @@ namespace VirtualGuide.Mobile.View
         }
 
 
-        private void LocateMeGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void LocateMeGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
             if (MapElements.UserGeoposition != null)
             {
-                MapElements.ZoomLevel = 19;
-                MapElements.Center = MapElements.UserGeoposition;
-                //Maps.ZoomLevel = 15;
+                await Maps.TrySetViewAsync(MapElements.UserGeoposition, 19, null, null, MapAnimationKind.Default);
+
             }
+        }
+
+        private async void Maps_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            //Wait if travel has not been loaded yet
+            if (_travel == null)
+            {
+                await Task.Delay(300);
+            }
+            
+            //set initial parameters
+            var zoomLevel = _travel.ZoomLevel;
+            var center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
+
+            //zoom map
+            await Maps.TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.Default);
+
+            //wait if places has not been loaded
+            if (_places == null)
+            {
+                await Task.Delay(300);
+            }
+
+            //load places
+            MapElements.Places = _places;
+
+            //setup geolocation
+            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
         }
     }
 

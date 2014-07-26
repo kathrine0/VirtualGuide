@@ -85,7 +85,7 @@
 		PedestrianFeaturesVisible="True"
 		ZoomLevel="{Binding ZoomLevel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 		Center="{Binding Center, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-        Tapped="Maps_Tapped"
+        Tapped="Maps_Tapped" Loaded="Maps_Loaded"
             >
 
             <Maps:MapItemsControl ItemsSource="{Binding Places}" ItemTemplate="{StaticResource MapMarker}">
