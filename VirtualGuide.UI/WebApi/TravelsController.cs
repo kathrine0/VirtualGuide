@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,6 +16,7 @@ using VirtualGuide.Services.Repository;
 
 namespace VirtualGuide.UI.WebApi
 {
+    [Authorize]
     [RoutePrefix("api")]
     public class TravelsController : ApiController
     {
@@ -22,31 +24,29 @@ namespace VirtualGuide.UI.WebApi
         private TravelRepository tr = new TravelRepository();
 
         // GET: api/Travels
+        [AllowAnonymous]
         [Route("Travels")]
         public IList<BasicTravelViewModel> GetTravels()
         {
             return tr.GetApprovedTravelList();
         }
 
-        [Authorize]
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("OwnedTravels")]
         public IList<ComplexReadTravelViewModel> GetOwnedTravels()
         {
-            if (HttpContext.Current != null && HttpContext.Current.User != null
-                && HttpContext.Current.User.Identity.Name != null)
-            {
-                var userName = HttpContext.Current.User.Identity.Name;
-                return tr.GetOwnedTravelList(userName);
-            }
-            else
-            {
-                //TODO: Throw proper exception
-                throw new Exception("Not Authorized");
-            }
+            //if (HttpContext.Current != null && HttpContext.Current.User != null
+                //&& HttpContext.Current.User.Identity.Name != null)
+
+            //ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+            var userName = User.Identity.Name;
+            return tr.GetOwnedTravelList(userName);
+            
 
         }
 
-        [Authorize]
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("Travel/{id}")]
         // GET: api/Travels/5
         //[ResponseType(typeof(Travel))]

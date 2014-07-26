@@ -13,24 +13,31 @@ namespace VirtualGuide.Mobile.Common
         public static async Task<T> GetData<T>(string webPath)
         {
             HttpClient client = new HttpClient();
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
             try
             {
                 //authenticate request
-                if (!String.IsNullOrEmpty(App.AuthToken))
+                if (localSettings.Values["token"] != null)
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.AuthToken);
+                    var token = (string) localSettings.Values["token"];
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 }
 
-                string responseBody = await client.GetStringAsync(App.WebService + webPath);
-                var result = ParseData<T>(responseBody);
-                return result;
+                var response = await client.GetAsync(App.WebService + webPath);
+
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var result = ParseData<T>(responseBody);
+                    return result;
+                }
+                else
+                {
+                    throw new HttpRequestException(response.StatusCode.ToString());
+                }
             }
-            catch (HttpRequestException)
-            {
-                //TODO: Handle no internet connection
-                throw;
-            }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }

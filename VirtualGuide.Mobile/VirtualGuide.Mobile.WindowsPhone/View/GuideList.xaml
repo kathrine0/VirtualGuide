@@ -74,4 +74,11 @@
 
         </Grid>
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Background="#7FB9B9B9">
+            <AppBarButton Label="Refresh" Icon="Refresh" Click="RefreshAppBarButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
 </Page>

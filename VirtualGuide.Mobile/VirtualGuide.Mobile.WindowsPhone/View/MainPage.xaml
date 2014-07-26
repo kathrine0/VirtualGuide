@@ -8,14 +8,41 @@
     mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Storyboard x:Name="SpinningAnimation">
+            <DoubleAnimation AutoReverse="False"
+                   Duration="0:0:1"
+                   From="0"
+                   RepeatBehavior="Forever"
+                   Storyboard.TargetName="SpinningRotateTransform"
+                   Storyboard.TargetProperty="Angle"
+                   To="360" />
+        </Storyboard>
+    </Page.Resources>
+    
     <Grid>
         <StackPanel VerticalAlignment="Center" Margin="20,0">
             <TextBlock x:Uid="UsernameLabel" Text="Username" />
             <TextBox x:Name="Username" TextWrapping="Wrap" />
             <TextBlock x:Uid="PasswordLabel" Text="Password" />
             <PasswordBox x:Name="Password" />
-            <Button x:Uid="LoginButton" Content="Login" HorizontalAlignment="Stretch" Click="LoginButton_Click" />
-
+            <Grid>
+                <Button x:Name="LoginButton" Content="Login"  HorizontalAlignment="Stretch" Click="LoginButton_Click" />
+                <Image
+                    x:Name="LoginProgress"
+                    Visibility="Collapsed"
+                    Height="30"
+                    Width="30"
+                    Source="ms-appx:///Assets/Spinner.png"
+                    Stretch="Uniform">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="SpinningRotateTransform"
+                                CenterX="15"
+                                CenterY="15" />
+                        </Image.RenderTransform>
+                </Image>
+            </Grid>
+           
             <TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource ThemeGreen}" />

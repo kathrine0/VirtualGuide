@@ -29,6 +29,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class MainPage : Page
     {
         private UserRepository _userRepository = new UserRepository();
+        private bool _loginInProgress = false;
 
         public MainPage()
         {
@@ -55,25 +56,62 @@ namespace VirtualGuide.Mobile.View
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_loginInProgress) return;
+
+            _loginInProgress = true;
+
             var username = Username.Text;
             var password = Password.Password;
+            var buttonContent = LoginButton.Content;
+            var error = false;
+
+            if (username == string.Empty || password == string.Empty)
+            {
+                MessageBoxHelper.Show("Enter username and password", "");
+                error = true;
+            }
 
             try
             {
+                LoginButton.Content = "";
+                LoginProgress.Visibility = Visibility.Visible;
+                this.SpinningAnimation.Begin();
                 await _userRepository.Login(username, password);
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
-                MessageBoxHelper.Show("Invalid username or password or no internet connection", "Error");
-                return;
+                if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
+                {
+                    MessageBoxHelper.Show("No internet connection. Turn on Data Transfer or Wifi or skip login and work offline.", "No Connection");
+                }
+                else if (ex.Message == System.Net.HttpStatusCode.BadRequest.ToString())
+                {
+                    MessageBoxHelper.Show("Invalid username or password", "Error");
+                }
+                else
+                {
+                    MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                }
+
+                error = true;
             }
             catch
             {
-                MessageBoxHelper.Show("Unknown error", "Error");
-                return;
+                MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                error = true;
             }
 
-            Frame.Navigate(typeof(GuideList));
+            if (!error)
+            {
+                Frame.Navigate(typeof(GuideList));
+            }
+            else
+            {
+                LoginButton.Content = buttonContent;
+                LoginProgress.Visibility = Visibility.Collapsed;
+            }
+
+            _loginInProgress = false;
         }
 
         private void SkipLogin_Tapped(object sender, TappedRoutedEventArgs e)

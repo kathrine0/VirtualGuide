@@ -20,6 +20,7 @@ using VirtualGuide.Mobile.Model;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using VirtualGuide.Mobile.Repository;
+using System.Net.Http;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -100,7 +101,7 @@ namespace VirtualGuide.Mobile.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
-
+            //TODO Check if token is still active
             SetupList();
         }
 
@@ -126,39 +127,49 @@ namespace VirtualGuide.Mobile.View
 
             //start downloading data
             Task<List<TravelViewModel>> availableTravelsTask = _travelRepository.GetAvailableTravels();
-            Task<List<TravelViewModel>> ownedTravelsTask = null;
-
-            if (App.AuthToken != String.Empty)
-            {
-                ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
-
-
-                //Download user places
-                try
-                {
-                    var _ownedTravels = await ownedTravelsTask;
-                    OwnedTravelsList = new ObservableCollection<TravelViewModel>(_ownedTravels);
-                    OwnedTravels.ItemsSource = OwnedTravelsList;
-                }
-                catch (Exception ex)
-                {
-                    MessageBoxHelper.Show("An error has occured", "Error");
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
-                }
-
-            }
+            
             //Download available places
             //TODO: download only these not owned by user yet
             try
             {
                 var _availableTravels = await availableTravelsTask;
                 AvailableTravelsList = new ObservableCollection<TravelViewModel>(_availableTravels);
-                AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 AvailableTravels.ItemsSource = AvailableTravelsList;
             }
             catch (Exception)
             {
                 NoConnectionMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+
+            AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task<List<TravelViewModel>> ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
+
+                var _ownedTravels = await ownedTravelsTask;
+                OwnedTravelsList = new ObservableCollection<TravelViewModel>(_ownedTravels);
+                OwnedTravels.ItemsSource = OwnedTravelsList;
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
+                {
+                    MessageBoxHelper.Show("Please check your internet connection.", "No Connection");
+                }
+                else if (ex.Message == System.Net.HttpStatusCode.Unauthorized.ToString())
+                {
+                    MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
+                    this.Frame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+
+                }
             }
         }
     }

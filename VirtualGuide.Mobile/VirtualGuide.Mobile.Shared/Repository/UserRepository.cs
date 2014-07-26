@@ -23,14 +23,22 @@ namespace VirtualGuide.Mobile.Repository
 
                     //throw exception if status 400 or no connection
                     //TODO: different error when invalid login, different when no connection
-                    response.EnsureSuccessStatusCode();
 
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseBody);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
 
-                    if (!result.ContainsKey("access_token")) throw new Exception();
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseBody);
 
-                    App.AuthToken = result["access_token"];
+                        if (!result.ContainsKey("access_token")) throw new Exception();
+
+                        var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                        localSettings.Values["token"] = result["access_token"];
+                    }
+                    else
+                    {
+                        throw new HttpRequestException(response.StatusCode.ToString());
+                    }
                 }
                 catch (HttpRequestException)
                 {

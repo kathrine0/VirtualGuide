@@ -34,7 +34,6 @@ namespace VirtualGuide.Mobile
 
         public const string WebService = @"http://192.168.10.184/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
-        public static string AuthToken = String.Empty;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -101,8 +100,16 @@ namespace VirtualGuide.Mobile
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
-                // parameter
-                if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                // parameter    
+                var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                var page = typeof(MainPage); 
+                if (localSettings.Values["token"] != null)
+                {
+                    page = typeof(GuideList);
+                }
+                
+
+                if (!rootFrame.Navigate(page, e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

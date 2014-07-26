@@ -7,10 +7,10 @@ namespace VirtualGuide.Mobile.Common
 {
     class MessageBoxHelper
     {
-        public static async void Show(string content, string title)
+        public static void Show(string content, string title)
         {
             MessageDialog messageDialog = new MessageDialog(content, title);
-            await messageDialog.ShowAsync();
+            messageDialog.ShowAsync();
         }
     }
 }
