@@ -41,7 +41,6 @@ namespace VirtualGuide.Mobile.View
         private MapElements _mapElements = new MapElements();
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         
-
         private Geolocator _geolocator = null;
 
         public MapView()
@@ -154,7 +153,7 @@ namespace VirtualGuide.Mobile.View
             {
                 Geoposition pos = e.Position;
 
-                MapElements.UserGeoposition = new Geopoint(new BasicGeoposition() { Latitude = pos.Coordinate.Latitude, Longitude = pos.Coordinate.Longitude });
+                MapElements.UserGeoposition = new Geopoint(pos.Coordinate.Point.Position);
             });
         }
 

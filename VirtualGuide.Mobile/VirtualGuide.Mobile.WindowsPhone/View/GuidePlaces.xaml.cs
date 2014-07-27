@@ -12,6 +12,7 @@ using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Helper;
+using Windows.UI.Core;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -30,10 +31,16 @@ namespace VirtualGuide.Mobile.View
         private NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        private Geolocator _geolocator = null;
 
         public GuidePlaces()
         {
             this.InitializeComponent();
+
+            _geolocator = new Geolocator();
+            _geolocator.ReportInterval = 10000;
+            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -108,12 +115,65 @@ namespace VirtualGuide.Mobile.View
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            _geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
         #endregion
 
-        
+        #region positioning
+
+        async private void OnPositionChanged(Geolocator sender, PositionChangedEventArgs e)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                CalculateDistances();
+            });
+        }
+
+        /// <summary>
+        /// This is the event handler for StatusChanged events.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        async private void OnStatusChanged(Geolocator sender, StatusChangedEventArgs e)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                switch (e.Status)
+                {
+                    case PositionStatus.Ready:
+                        CalculateDistances();
+                        break;
+
+                    case PositionStatus.Disabled:
+                        MessageBoxHelper.Show("Location feature is turned off");
+                        break;
+                    case PositionStatus.Initializing:
+                    case PositionStatus.NoData:
+                    case PositionStatus.NotInitialized:
+                    case PositionStatus.NotAvailable:
+                    default:
+                        break;
+
+                }
+            });
+        }
+
+        private async void CalculateDistances()
+        {
+            var pos = await _geolocator.GetGeopositionAsync();
+
+            foreach(var place in _places)
+            {
+                place.SetDistance(pos);
+            }
+        }
+
+        #endregion
+
         private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(MapView), _travel.Id);

@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ColorHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\GeoHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />

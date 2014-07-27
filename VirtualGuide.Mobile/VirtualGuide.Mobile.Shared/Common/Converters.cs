@@ -33,7 +33,7 @@ namespace VirtualGuide.Mobile.Common
         }
     }
 
-    class FalseIsVisible : IValueConverter
+    public class FalseIsVisible : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -57,6 +57,31 @@ namespace VirtualGuide.Mobile.Common
             {
                 return false;
             }
+        }
+    }
+
+    public class DistanceToString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var distance = (double)value;
+
+            if (distance > 1000)
+            {
+                double rnddist = Math.Round(distance/1000, 2);
+                return String.Format("{0} km", rnddist.ToString());
+            }
+            else
+            {
+                int intdist = (int)distance;
+                return String.Format("{0} m", intdist.ToString());
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            //Don;t really need this
+            return 0;
         }
     }
 }

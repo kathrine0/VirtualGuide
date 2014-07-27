@@ -13,6 +13,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
+        <converter:DistanceToString x:Key="DistanceToString" />
+        
         <DataTemplate x:Key="PlaceDescriptionTemplate">
             <Grid>
                 <TextBlock FontSize="20" TextWrapping="WrapWholeWords" Text="{Binding Description}" />
@@ -62,8 +64,8 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,0,0,19">
-                                        <TextBlock Text="{Binding Name}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                                        <TextBlock Text="Tutaj będzie odległość" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                                        <TextBlock Text="{Binding Distance, Mode=OneWay,  Converter={StaticResource DistanceToString}}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
