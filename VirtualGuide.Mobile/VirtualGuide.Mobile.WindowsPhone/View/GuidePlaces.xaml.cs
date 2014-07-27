@@ -38,7 +38,7 @@ namespace VirtualGuide.Mobile.View
             this.InitializeComponent();
 
             _geolocator = new Geolocator();
-            _geolocator.ReportInterval = 10000;
+            _geolocator.ReportInterval = 1000;
             _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
             _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 

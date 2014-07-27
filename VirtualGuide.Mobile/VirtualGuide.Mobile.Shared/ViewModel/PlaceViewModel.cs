@@ -86,6 +86,6 @@ namespace VirtualGuide.Mobile.ViewModel
 
         public string Description { get; set; }
 
-        public double Distance { get; set; }
+        public double? Distance { get; set; }
     }
 }

@@ -64,16 +64,20 @@ namespace VirtualGuide.Mobile.Common
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var distance = (double)value;
+            var distance = (double?)value;
 
+            if (distance == null)
+            {
+                return "? km";
+            }
             if (distance > 1000)
             {
-                double rnddist = Math.Round(distance/1000, 2);
+                double rnddist = Math.Round(distance.Value/1000, 2);
                 return String.Format("{0} km", rnddist.ToString());
             }
             else
             {
-                int intdist = (int)distance;
+                int intdist = (int)distance.Value;
                 return String.Format("{0} m", intdist.ToString());
             }
         }
