@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Windows.UI.Popups;
 
-namespace VirtualGuide.Mobile.Common
+namespace VirtualGuide.Mobile.Helper
 {
     class MessageBoxHelper
     {

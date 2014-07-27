@@ -5,7 +5,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace VirtualGuide.Mobile.Common
+namespace VirtualGuide.Mobile.Helper
 {
     class ColorHelper
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using Windows.UI.Xaml.Media;
 

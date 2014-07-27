@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using VirtualGuide.Mobile.Repository;
 using System.Net.Http;
+using VirtualGuide.Mobile.Helper;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 

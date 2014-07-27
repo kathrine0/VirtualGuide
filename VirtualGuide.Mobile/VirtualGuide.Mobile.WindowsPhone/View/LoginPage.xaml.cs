@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;

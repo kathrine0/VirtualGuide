@@ -16,6 +16,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls.Maps;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using VirtualGuide.Mobile.Helper;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 

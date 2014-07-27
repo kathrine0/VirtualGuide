@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirtualGuide.Mobile.Common
+namespace VirtualGuide.Mobile.Helper
 {
     public class ModelHelper
     {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
+using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using Windows.Foundation;
@@ -34,8 +35,8 @@ namespace VirtualGuide.Mobile.View
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private List<PropertyViewModel> _propertiesListAll = new List<PropertyViewModel>() { 
-            new PropertyViewModel() {Name = "Maps and places", Background=VirtualGuide.Mobile.Common.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=PropertyViewModel.Types.MAPS},
-            new PropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Common.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=PropertyViewModel.Types.TOURS},
+            new PropertyViewModel() {Name = "Maps and places", Background=VirtualGuide.Mobile.Helper.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=PropertyViewModel.Types.MAPS},
+            new PropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=PropertyViewModel.Types.TOURS},
         };
 
         private List<PropertyViewModel> _propertiesList;

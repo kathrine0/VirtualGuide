@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VirtualGuide.Mobile.Common;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace VirtualGuide.Mobile.Common
+namespace VirtualGuide.Mobile.Helper
 {
     /// <summary>
     /// NavigationHelper aids in navigation between pages.  It provides commands used to 
