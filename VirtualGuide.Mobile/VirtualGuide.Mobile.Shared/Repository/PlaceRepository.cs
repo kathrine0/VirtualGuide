@@ -17,11 +17,18 @@ namespace VirtualGuide.Mobile.Repository
             return places;
         }
 
-        public async Task<List<MapPlaceViewModel>> GetSimplePlaces(int travelId)
+        public async Task<List<MapPlaceViewModel>> GetPlacesForMap(int travelId)
         {
             var places = await GetParentPlacesByTravelIdAsync(travelId);
 
             return ModelHelper.ObjectToViewModel<MapPlaceViewModel, Place>(places);
+        }
+
+        public async Task<List<PlaceViewModel>> GetParentPlaces(int travelId)
+        {
+            var places = await GetParentPlacesByTravelIdAsync(travelId);
+
+            return ModelHelper.ObjectToViewModel<PlaceViewModel, Place>(places);
         }
     }
 }

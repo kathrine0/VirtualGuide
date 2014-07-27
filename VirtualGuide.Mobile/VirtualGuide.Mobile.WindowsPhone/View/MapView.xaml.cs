@@ -99,7 +99,7 @@ namespace VirtualGuide.Mobile.View
 
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
-            _places = await _placeRepository.GetSimplePlaces(travelId);
+            _places = await _placeRepository.GetPlacesForMap(travelId);
 
         }
 

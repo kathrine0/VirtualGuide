@@ -27,4 +27,22 @@ namespace VirtualGuide.Mobile.ViewModel
 
         public bool DetailsVisibility { get; set; }
     }
+
+    [ImplementPropertyChanged]
+    public class PlaceViewModel
+    {
+        public PlaceViewModel() { }
+        public PlaceViewModel(Place place)
+        {
+            Id = place.Id;
+            Name = place.Name;
+            Description = place.Description;
+        }
+
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+    }
 }

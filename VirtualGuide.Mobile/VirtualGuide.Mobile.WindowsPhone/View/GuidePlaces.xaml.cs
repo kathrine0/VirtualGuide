@@ -22,7 +22,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuidePlaces : Page
     {
         private TravelViewModel _travel;
-        private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
+        private List<PlaceViewModel> _places = new List<PlaceViewModel>();
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
@@ -69,9 +69,10 @@ namespace VirtualGuide.Mobile.View
         {
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
-            _places = await _placeRepository.GetSimplePlaces(travelId);
+            _places = await _placeRepository.GetParentPlaces(travelId);
 
             this.DefaultViewModel["Title"] = _travel.Name;
+            this.DefaultViewModel["Places"] = _places;
         }
 
         /// <summary>
@@ -137,6 +138,27 @@ namespace VirtualGuide.Mobile.View
             var center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude});
 
             await ((MapControl)sender).TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.None);
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var clickedItem = (PlaceViewModel)e.ClickedItem;
+            HubSection hubSection = null;
+            //Add hub item and navigate to it
+            if (MainHub.Sections.Count < 3)
+            {
+                hubSection = new HubSection();
+                MainHub.Sections.Add(hubSection);
+            }
+            else //Or modify existing hub
+            {
+                hubSection = MainHub.Sections[2];
+            }
+
+            hubSection.Header = clickedItem.Name;
+            hubSection.DataContext = clickedItem;
+            hubSection.ContentTemplate = (DataTemplate)this.Resources["PlaceDescriptionTemplate"];
+            MainHub.ScrollToSection(hubSection);
         }
 
     }
