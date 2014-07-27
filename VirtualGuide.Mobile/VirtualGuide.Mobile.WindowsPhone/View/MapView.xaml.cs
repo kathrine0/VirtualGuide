@@ -15,6 +15,7 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls.Maps;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -32,12 +33,12 @@ namespace VirtualGuide.Mobile.View
         private PlaceRepository _placeRepository = new PlaceRepository();
 
         private int? _visibleDetailsPlaceId;
+        private bool _markerTapped = false;
         
         private NavigationHelper navigationHelper;
         
         private MapElements _mapElements = new MapElements();
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
         
 
         private Geolocator _geolocator = null;
@@ -202,7 +203,7 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        private void MarkerImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
             HideDetailClouds();
@@ -211,6 +212,15 @@ namespace VirtualGuide.Mobile.View
             element.DetailsVisibility = true;
 
             _visibleDetailsPlaceId = element.Id;
+            _markerTapped = true;
+            WaitMarkerTap();
+            
+        }
+
+        private async void WaitMarkerTap()
+        {
+            await Task.Delay(100);
+            _markerTapped = false;
         }
 
         private void HideDetailClouds()
@@ -223,9 +233,10 @@ namespace VirtualGuide.Mobile.View
             _visibleDetailsPlaceId = null;
         }
 
-        private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
         {
-            //HideDetailClouds(); 
+            if (_markerTapped) return;
+            HideDetailClouds(); 
         }
 
 
@@ -267,6 +278,8 @@ namespace VirtualGuide.Mobile.View
             _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
             _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
         }
+
+        
     }
 
     [ImplementPropertyChanged]

@@ -21,7 +21,7 @@
                     <Image Source="ms-appx:///Assets/MapMarker.png" 
                 Stretch="UniformToFill" 
                 Width="50" Height="50"
-                Maps:MapControl.Location="{Binding Point}" Tapped="Image_Tapped" 
+                Maps:MapControl.Location="{Binding Point}" Tapped="MarkerImage_Tapped" 
                 Margin="-25,-50,0,0"
                 Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
                 Maps:MapControl.NormalizedAnchorPoint="0.5,0.5" Canvas.ZIndex="1" />
@@ -85,7 +85,7 @@
 		PedestrianFeaturesVisible="True"
 		ZoomLevel="{Binding ZoomLevel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 		Center="{Binding Center, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-        Tapped="Maps_Tapped" Loaded="Maps_Loaded"
+        MapTapped="Maps_MapTapped" Loaded="Maps_Loaded"
             >
 
             <Maps:MapItemsControl ItemsSource="{Binding Places}" ItemTemplate="{StaticResource MapMarker}">
