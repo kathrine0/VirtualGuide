@@ -20,6 +20,7 @@ namespace VirtualGuide.Models
         public int Order { get; set; }
         public virtual Travel Travel { get; set; }
         public string Symbol { get; set; }
+        public string ImageSrc { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

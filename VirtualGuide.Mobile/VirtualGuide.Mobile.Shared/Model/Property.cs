@@ -7,7 +7,7 @@ using System.Text;
 namespace VirtualGuide.Mobile.Model
 {
     [Table("Property")]
-    public class Property
+    public class Property : BaseModel
     {
         [PrimaryKey, Unique]
         public int Id { get; set; }

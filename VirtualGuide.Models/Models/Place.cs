@@ -37,6 +37,8 @@ namespace VirtualGuide.Models
 
         public virtual PlaceCategory Category { get; set; }
 
+        public string ImageSrc { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

@@ -61,7 +61,7 @@ namespace VirtualGuide.Models
         
         public virtual User Approver { get; set; }
 
-
+        public string ImageSrc { get; set; }
         
         public bool ApprovalStatus { get; set; }
 

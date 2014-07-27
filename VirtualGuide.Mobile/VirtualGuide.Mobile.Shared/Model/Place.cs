@@ -6,7 +6,7 @@ using System.Text;
 namespace VirtualGuide.Mobile.Model
 {
     [Table("Place")]
-    public class Place
+    public class Place : BaseImageModel
     {
         [PrimaryKey, Unique]
         public int Id { get; set; }
@@ -34,5 +34,9 @@ namespace VirtualGuide.Mobile.Model
 
         [Column("TravelId")]
         public int TravelId { get; set; }
+
+        [Column("ImageSrc")]
+        public string ImageSrc { get; set; }
     }
+
 }

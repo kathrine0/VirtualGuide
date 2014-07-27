@@ -6,6 +6,9 @@ using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.ViewModel;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace VirtualGuide.Mobile.Repository
 {
@@ -58,15 +61,28 @@ namespace VirtualGuide.Mobile.Repository
             var travels = await LoadOwnedTravels();
             await App.Connection.InsertOrReplaceAllAsync(travels);
 
+            
             foreach (var travel in travels)
             {
                 await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
                 await App.Connection.InsertOrReplaceAllAsync(travel.Places);
             }
+            
+            DownloadMedia(travels);
 
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(travels);
+            
             return viewModels;
         }
+
+
+        private async void DownloadMedia(List<Travel> travels)
+        {
+            await HttpHelper.ImageDownloader<Travel>(travels);
+
+        }
+
+        
 
         #endregion
 

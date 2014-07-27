@@ -26,6 +26,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UIHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BaseImageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Place.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Property.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Travel.cs" />

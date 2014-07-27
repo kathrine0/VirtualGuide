@@ -5,6 +5,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.Model;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace VirtualGuide.Mobile.Helper
 {
@@ -58,6 +62,55 @@ namespace VirtualGuide.Mobile.Helper
             }
 
             throw new ArgumentNullException("Response Body is null or empty");
+        }
+
+        public async static Task ImageDownloader<T>(List<T> items) where T : BaseImageModel
+        {
+            var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var imageFolder = await localFolder.CreateFolderAsync("images", CreationCollisionOption.OpenIfExists);
+
+            foreach (var item in items)
+            {
+                var filename = String.Format("travel{0}.main", item.Id);
+                var newLocation = await HttpHelper.Download(item.ImageSrc, filename);
+                item.ImageSrc = newLocation;
+            }
+
+            await App.Connection.UpdateAllAsync(items);
+        }
+
+        public async static Task<string> Download(string path, string filename)
+        {
+            var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            var imageFolder = await localFolder.CreateFolderAsync("images", CreationCollisionOption.OpenIfExists);
+
+            Uri source = new Uri(App.WebService + path);
+            string destinationFileName = String.Format("{0}.{1}", filename, GetFileExtension(path));
+            StorageFile destinationFile = await imageFolder.CreateFileAsync(destinationFileName, CreationCollisionOption.ReplaceExisting);
+
+            BackgroundDownloader downloader = new BackgroundDownloader();
+            DownloadOperation download = downloader.CreateDownload(source, destinationFile);
+
+            await download.StartAsync();
+
+            ResponseInformation response = download.GetResponseInformation();
+            Uri imageUri;
+            BitmapImage image = null;
+
+            if (Uri.TryCreate(destinationFile.Path, UriKind.RelativeOrAbsolute, out imageUri))
+            {
+                image = new BitmapImage(imageUri);
+            }
+
+            return destinationFileName;
+        }
+
+        private static string GetFileExtension(string path)
+        {
+            int dot = path.LastIndexOf(".");
+            string extension = path.Substring(dot + 1, path.Length - dot - 1);
+
+            return extension;
         }
     }
 }

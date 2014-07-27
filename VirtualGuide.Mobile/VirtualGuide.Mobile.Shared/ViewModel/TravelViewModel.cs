@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
 using PropertyChanged;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -31,6 +33,7 @@ namespace VirtualGuide.Mobile.ViewModel
             Latitude = travel.Latitude;
             Longitude = travel.Longitude;
             ZoomLevel = travel.ZoomLevel;
+            _imageSrc = travel.ImageSrc;
         }
 
         public int Id { get; set; }
@@ -48,5 +51,43 @@ namespace VirtualGuide.Mobile.ViewModel
         public double Longitude { get; set; }
 
         public double ZoomLevel { get; set; }
+
+        private string _imageSrc;
+        public ImageSource ImagePath
+        {
+            get
+            {
+                ImageSource bitmap = null;
+                try
+                {
+                    Uri uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    bitmap = new BitmapImage(uri);
+                }
+                catch
+                {
+                }
+                return bitmap;
+            }
+            set { ;}
+        }
+
+        public ImageSource WebImage
+        {
+            get
+            {
+                ImageSource bitmap = null;
+                try
+                {
+                    Uri uri = new Uri(App.WebService + _imageSrc);
+                    bitmap = new BitmapImage(uri);
+                }
+                catch
+                {
+                }
+                return bitmap;
+            }
+            set { ;}
+        }
+
     }
 }

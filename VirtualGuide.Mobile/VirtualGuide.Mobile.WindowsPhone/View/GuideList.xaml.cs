@@ -143,6 +143,7 @@ namespace VirtualGuide.Mobile.View
             }
 
             AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            AvailableTravels.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)

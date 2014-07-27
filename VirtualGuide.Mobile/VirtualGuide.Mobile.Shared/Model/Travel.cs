@@ -7,7 +7,7 @@ using System.Text;
 namespace VirtualGuide.Mobile.Model
 {
     [Table("Travel")]
-    public class Travel
+    public class Travel : BaseImageModel
     {
         [PrimaryKey, Unique]
         public int Id { get; set; }
@@ -48,6 +48,8 @@ namespace VirtualGuide.Mobile.Model
      
         [Column("ZoomLevel")]
         public double ZoomLevel { get; set; }
+        [Column("ImageSrc")]
+        public string ImageSrc { get; set; }
 
     }
 }

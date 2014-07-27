@@ -19,6 +19,7 @@ namespace VirtualGuide.Services
             Name = travel.Name;
             Description = travel.Description;
             Price = travel.Price;
+            ImageSrc = travel.ImageSrc;
         }
 
         public int Id { get; set; }
@@ -36,6 +37,8 @@ namespace VirtualGuide.Services
         public string Language { get; set; }
 
         public double Price { get; set; }
+        public string ImageSrc { get; set; }
+
     }
 
     public class ComplexReadTravelViewModel
@@ -52,6 +55,7 @@ namespace VirtualGuide.Services
             Latitude = travel.Latitude;
             Longitude = travel.Longitude;
             ZoomLevel = travel.ZoomLevel;
+            ImageSrc = travel.ImageSrc;
 
         }
 
@@ -68,7 +72,7 @@ namespace VirtualGuide.Services
         public virtual IList<BasicPropertyViewModel> Properties { get; set; }
 
         public string Language { get; set; }
-
+        public string ImageSrc { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double ZoomLevel { get; set; }
