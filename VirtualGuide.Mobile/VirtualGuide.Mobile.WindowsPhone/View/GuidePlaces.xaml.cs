@@ -26,8 +26,6 @@ namespace VirtualGuide.Mobile.View
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
-        private int? _visibleDetailsPlaceId;
-
         private NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
