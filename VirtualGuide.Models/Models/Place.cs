@@ -21,13 +21,10 @@ namespace VirtualGuide.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        //TODO Remove this prop
-        public double ZoomLevel { get; set; }
 
         public IList<Property> Properties { get; set; }
 
@@ -36,10 +33,12 @@ namespace VirtualGuide.Models
         public virtual Place Parent { get; set; }
         public int? ParentId { get; set; }
 
-        //[ForeignKey("TravelId")]
         public virtual Travel Travel { get; set; }
+
+        public virtual PlaceCategory Category { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Models\Excursion.cs" />
     <Compile Include="Models\IAuditable.cs" />
     <Compile Include="Models\Place.cs" />
+    <Compile Include="Models\PlaceCategory.cs" />
     <Compile Include="Models\Place_Excursion.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Travel.cs" />
