@@ -22,7 +22,7 @@
         </Grid.ChildrenTransitions>
         <!--<Maps:MapControl x:Name="test" />-->
         <Hub Header="{Binding Title}">
-            <HubSection Header="Maps" x:Name="TheHub" DataContext="{Binding Map}">
+            <HubSection Header="Maps" x:Name="TheHub">
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -32,10 +32,8 @@
                         <Maps:MapControl
 							x:Name="Maps"
 							MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
-							ZoomLevel="{Binding ZoomLevel}" 
-							Center="{Binding Center}" 
-                            Tapped="Maps_Tapped" MapTapped="Maps_MapTapped">
-
+                            Tapped="Maps_Tapped" MapTapped="Maps_MapTapped" Loaded="Maps_Loaded">
+                            
                         </Maps:MapControl>
                         <!--Margin="-20,0,0,0"-->
                     </Grid>

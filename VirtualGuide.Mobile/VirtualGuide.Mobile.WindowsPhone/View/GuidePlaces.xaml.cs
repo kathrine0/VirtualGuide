@@ -10,6 +10,7 @@ using VirtualGuide.Mobile.ViewModel;
 using VirtualGuide.Mobile.Repository;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
+using System.Threading.Tasks;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -71,11 +72,6 @@ namespace VirtualGuide.Mobile.View
             _places = await _placeRepository.GetSimplePlaces(travelId);
 
             this.DefaultViewModel["Title"] = _travel.Name;
-            this.DefaultViewModel["Map"] = new {
-                ZoomLevel = _travel.ZoomLevel,
-                Center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude}),
-                MapElements = _places
-            };
         }
 
         /// <summary>
@@ -127,6 +123,20 @@ namespace VirtualGuide.Mobile.View
         {
             Frame.Navigate(typeof(MapView), _travel.Id);
 
+        }
+
+        private async void Maps_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Wait if travel has not been loaded yet
+            if (_travel == null)
+            {
+                await Task.Delay(300);
+            }
+
+            var zoomLevel = _travel.ZoomLevel;
+            var center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude});
+
+            await ((MapControl)sender).TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.None);
         }
 
     }
