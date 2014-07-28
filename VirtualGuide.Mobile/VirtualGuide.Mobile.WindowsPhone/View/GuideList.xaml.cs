@@ -33,11 +33,13 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideList : Page
     {
         private NavigationHelper navigationHelper;
+        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
+
         private TravelRepository _travelRepository = new TravelRepository();
 
         //TODO proper binding
-        public ObservableCollection<TravelViewModel> AvailableTravelsList = new ObservableCollection<TravelViewModel>();
-        public ObservableCollection<TravelViewModel> OwnedTravelsList = new ObservableCollection<TravelViewModel>();
+        public List<TravelViewModel> AvailableTravelsList = new List<TravelViewModel>();
+        public List<TravelViewModel> OwnedTravelsList = new List<TravelViewModel>();
 
         public GuideList()
         {
@@ -56,6 +58,14 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
+        /// <summary>
+        /// Gets the view model for this <see cref="Page"/>.
+        /// This can be changed to a strongly typed view model.
+        /// </summary>
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return this.defaultViewModel; }
+        }
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -70,6 +80,8 @@ namespace VirtualGuide.Mobile.View
         /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            //TODO Check if token is still active
+            SetupList();
         }
 
         /// <summary>
@@ -102,8 +114,7 @@ namespace VirtualGuide.Mobile.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
-            //TODO Check if token is still active
-            SetupList();
+            
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -122,8 +133,8 @@ namespace VirtualGuide.Mobile.View
         private async void SetupList()
         {
             //Get places from DB
-            OwnedTravelsList = new ObservableCollection<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
-            OwnedTravels.ItemsSource = OwnedTravelsList;
+            OwnedTravelsList = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
+            DefaultViewModel["OwnedTravels"] = OwnedTravelsList;
 
 
             //start downloading data
@@ -134,8 +145,8 @@ namespace VirtualGuide.Mobile.View
             try
             {
                 var _availableTravels = await availableTravelsTask;
-                AvailableTravelsList = new ObservableCollection<TravelViewModel>(_availableTravels);
-                AvailableTravels.ItemsSource = AvailableTravelsList;
+                AvailableTravelsList = new List<TravelViewModel>(_availableTravels);
+                DefaultViewModel["AvailableTravels"] = AvailableTravelsList;
             }
             catch (Exception)
             {
@@ -153,7 +164,7 @@ namespace VirtualGuide.Mobile.View
                 Task<List<TravelViewModel>> ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
 
                 var _ownedTravels = await ownedTravelsTask;
-                OwnedTravelsList = new ObservableCollection<TravelViewModel>(_ownedTravels);
+                OwnedTravelsList = new List<TravelViewModel>(_ownedTravels);
                 OwnedTravels.ItemsSource = OwnedTravelsList;
             }
             catch (HttpRequestException ex)

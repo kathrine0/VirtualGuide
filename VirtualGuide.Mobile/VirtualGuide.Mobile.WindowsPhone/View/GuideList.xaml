@@ -7,8 +7,45 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     >
 
+    <Page.Resources>
+        <DataTemplate x:Key="OwnedTravelsListItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
+                    <Image Source="{Binding ImagePath}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}" Height="79" Width="79"/>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                    <TextBlock Text="{Binding Description, Mode=OneWay}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AvailableTravelsListItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
+                    <Image Opacity="0.5" Source="{Binding WebImage}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}" Height="79" Width="79"/>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                    <TextBlock Text="{Binding Description, Mode=OneWay}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    
     <Grid x:Name="LayoutRoot">
 
         <Grid.ChildrenTransitions>
@@ -35,25 +72,15 @@
             </Grid.RowDefinitions>
 
             <!--Owned Guides-->
-            <ListView x:Name="OwnedTravels" Grid.Row="0" Margin="0,0,0,30" IsItemClickEnabled="True" ItemClick="OwnedTravels_ItemClick">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
-                                <Image Source="{Binding ImagePath}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}" Height="79" Width="79"/>
-                            </Border>
-                            <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
-                                <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                                <TextBlock Text="{Binding Description, Mode=OneWay}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <ListView x:Name="OwnedTravels" 
+                      Grid.Row="0" 
+                      Margin="0,0,0,30" 
+                      IsItemClickEnabled="True" 
+                      ItemClick="OwnedTravels_ItemClick"
+                      DataContext="{Binding OwnedTravels}"
+                      ItemTemplate="{StaticResource OwnedTravelsListItem}"
+                      ItemsSource="{Binding}">
+                
             </ListView>
 
             <!--Available Guides-->
@@ -63,25 +90,10 @@
                       HeaderTemplate="{ThemeResource ListViewHeaderTemplate}" 
                       x:Name="AvailableTravels" Grid.Row="1" 
                       BorderBrush="#FFC5C5C5" BorderThickness="0,2,0,0"
-                      Visibility="Collapsed">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
-                                <Image Opacity="0.5" Source="{Binding WebImage}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}" Height="79" Width="79"/>
-                            </Border>
-                            <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
-                                <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                                <TextBlock Text="{Binding Description, Mode=OneWay}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                      Visibility="Collapsed"
+                      DataContext="{Binding AvailableTravels}"
+                      ItemTemplate="{StaticResource AvailableTravelsListItem}"
+                      ItemsSource="{Binding}">
             </ListView>
 
         </Grid>
