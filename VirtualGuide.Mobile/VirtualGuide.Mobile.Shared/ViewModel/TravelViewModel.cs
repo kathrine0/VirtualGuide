@@ -24,7 +24,17 @@ namespace VirtualGuide.Mobile.ViewModel
 
         }
 
+        public TravelViewModel(Travel travel, bool isOwned)
+        {
+            AssignProperties(travel, isOwned);
+        }
+
         public TravelViewModel(Travel travel)
+        {
+            AssignProperties(travel, true);
+        }
+
+        private void AssignProperties(Travel travel, bool isOwned)
         {
             Id = travel.Id;
             Name = travel.Name;
@@ -34,6 +44,7 @@ namespace VirtualGuide.Mobile.ViewModel
             Longitude = travel.Longitude;
             ZoomLevel = travel.ZoomLevel;
             _imageSrc = travel.ImageSrc;
+            IsOwned = isOwned;
         }
 
         public int Id { get; set; }
@@ -50,6 +61,8 @@ namespace VirtualGuide.Mobile.ViewModel
 
         public double Longitude { get; set; }
 
+        public bool IsOwned { get; set; }
+
         public double ZoomLevel { get; set; }
 
         private string _imageSrc;
@@ -58,9 +71,18 @@ namespace VirtualGuide.Mobile.ViewModel
             get
             {
                 ImageSource bitmap = null;
+                Uri uri = null;
                 try
                 {
-                    Uri uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    if (IsOwned)
+                    {
+                        uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    }
+                    else
+                    {
+                        uri = new Uri(App.WebService + _imageSrc);
+                    }
+
                     bitmap = new BitmapImage(uri);
                 }
                 catch
@@ -70,24 +92,5 @@ namespace VirtualGuide.Mobile.ViewModel
             }
             set { ;}
         }
-
-        public ImageSource WebImage
-        {
-            get
-            {
-                ImageSource bitmap = null;
-                try
-                {
-                    Uri uri = new Uri(App.WebService + _imageSrc);
-                    bitmap = new BitmapImage(uri);
-                }
-                catch
-                {
-                }
-                return bitmap;
-            }
-            set { ;}
-        }
-
     }
 }

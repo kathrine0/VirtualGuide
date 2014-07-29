@@ -5,12 +5,16 @@
     xmlns:local="using:VirtualGuide.Mobile.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     >
 
     <Page.Resources>
+
+        <converter:IsOwnedToOpacity x:Key="IsOwnedToOpacity" />
+
         <DataTemplate x:Key="OwnedTravelsListItem">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -19,24 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
-                    <Image Source="{Binding ImagePath}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}" Height="79" Width="79"/>
-                </Border>
-                <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
-                    <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                    <TextBlock Text="{Binding Description, Mode=OneWay}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Key="AvailableTravelsListItem">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
-                    <Image Opacity="0.5" Source="{Binding WebImage}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}" Height="79" Width="79"/>
+                    <Image Opacity="{Binding IsOwned, Converter={StaticResource IsOwnedToOpacity}}" Source="{Binding ImagePath, Mode=OneWay}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title, Mode=OneWay}" Height="79" Width="79"/>
                 </Border>
                 <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
                     <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
@@ -68,33 +55,26 @@
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="24,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!--Owned Guides-->
-            <ListView x:Name="OwnedTravels" 
+            <!--Guides-->
+            <!-- TOD See also: Groups-->
+            <ListView x:Name="AllTravelsList" 
                       Grid.Row="0" 
                       Margin="0,0,0,30" 
                       IsItemClickEnabled="True" 
                       ItemClick="OwnedTravels_ItemClick"
-                      DataContext="{Binding OwnedTravels}"
+                      
                       ItemTemplate="{StaticResource OwnedTravelsListItem}"
-                      ItemsSource="{Binding}">
+                      ItemsSource="{Binding AllTravels, Mode=OneWay}"
+                      >
                 
             </ListView>
 
             <!--Available Guides-->
             <ProgressBar x:Name="AvailableTravelsProgress" Grid.Row="1" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" Width="100" Height="100" />
             <TextBlock x:Name="NoConnectionMessage" Grid.Row="1" Text="No Internet Connection" HorizontalAlignment="Center" Visibility="Collapsed" />
-            <ListView Header="See also:" 
-                      HeaderTemplate="{ThemeResource ListViewHeaderTemplate}" 
-                      x:Name="AvailableTravels" Grid.Row="1" 
-                      BorderBrush="#FFC5C5C5" BorderThickness="0,2,0,0"
-                      Visibility="Collapsed"
-                      DataContext="{Binding AvailableTravels}"
-                      ItemTemplate="{StaticResource AvailableTravelsListItem}"
-                      ItemsSource="{Binding}">
-            </ListView>
 
         </Grid>
     </Grid>

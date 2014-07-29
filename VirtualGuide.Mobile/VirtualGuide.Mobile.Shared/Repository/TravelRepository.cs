@@ -30,6 +30,12 @@ namespace VirtualGuide.Mobile.Repository
         {
             var availableTravels = await LoadAvailableTravels();
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(availableTravels);
+
+            foreach(var model in viewModels)
+            {
+                model.IsOwned = false;
+            }
+
             return viewModels;
         }
 
@@ -53,7 +59,7 @@ namespace VirtualGuide.Mobile.Repository
                 throw new Exception("Entity not found");
             }
 
-            return new TravelViewModel(travel[0]);
+            return new TravelViewModel(travel[0], true);
         }
 
         public async Task<List<TravelViewModel>> DownloadAndSaveOwnedTravels()

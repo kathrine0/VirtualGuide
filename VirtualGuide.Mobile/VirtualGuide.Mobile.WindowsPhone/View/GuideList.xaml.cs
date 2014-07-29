@@ -37,9 +37,7 @@ namespace VirtualGuide.Mobile.View
 
         private TravelRepository _travelRepository = new TravelRepository();
 
-        //TODO proper binding
-        public List<TravelViewModel> AvailableTravelsList = new List<TravelViewModel>();
-        public List<TravelViewModel> OwnedTravelsList = new List<TravelViewModel>();
+        public ObservableCollection<TravelViewModel> AllTravels = new ObservableCollection<TravelViewModel>();
 
         public GuideList()
         {
@@ -133,8 +131,8 @@ namespace VirtualGuide.Mobile.View
         private async void SetupList()
         {
             //Get places from DB
-            OwnedTravelsList = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
-            DefaultViewModel["OwnedTravels"] = OwnedTravelsList;
+            AllTravels = new ObservableCollection<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
+            DefaultViewModel["AllTravels"] = AllTravels;
 
 
             //start downloading data
@@ -145,8 +143,14 @@ namespace VirtualGuide.Mobile.View
             try
             {
                 var _availableTravels = await availableTravelsTask;
-                AvailableTravelsList = new List<TravelViewModel>(_availableTravels);
-                DefaultViewModel["AvailableTravels"] = AvailableTravelsList;
+                var availableTravelsList = new List<TravelViewModel>(_availableTravels);
+                
+                foreach (var travel in availableTravelsList)
+                {
+                    AllTravels.Add(travel);
+                }
+
+                //DefaultViewModel["AllTravels"] = AllTravels;
             }
             catch (Exception)
             {
@@ -154,7 +158,6 @@ namespace VirtualGuide.Mobile.View
             }
 
             AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            AvailableTravels.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -164,8 +167,7 @@ namespace VirtualGuide.Mobile.View
                 Task<List<TravelViewModel>> ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
 
                 var _ownedTravels = await ownedTravelsTask;
-                OwnedTravelsList = new List<TravelViewModel>(_ownedTravels);
-                OwnedTravels.ItemsSource = OwnedTravelsList;
+                AllTravels = new ObservableCollection<TravelViewModel>(_ownedTravels);
             }
             catch (HttpRequestException ex)
             {
