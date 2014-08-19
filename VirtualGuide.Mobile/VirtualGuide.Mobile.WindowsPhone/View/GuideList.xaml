@@ -67,7 +67,7 @@
                 Grid.Row="0" 
                 Margin="0,0,0,30" 
                 IsItemClickEnabled="True" 
-                ItemClick="OwnedTravels_ItemClick"
+                ItemClick="AllTravels_ItemClick"
                 ItemTemplate="{StaticResource OwnedTravelsListItem}">
                 <ListView.GroupStyle>
                     <GroupStyle HidesIfEmpty="True" >

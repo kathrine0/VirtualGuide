@@ -112,15 +112,24 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        private void OwnedTravels_ItemClick(object sender, ItemClickEventArgs e)
+        private void AllTravels_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(GuideMain), (e.ClickedItem as TravelViewModel).Id);
+            var clicked = (e.ClickedItem as TravelViewModel);
+
+            if (clicked.IsOwned)
+            {
+                Frame.Navigate(typeof(GuideMain), clicked.Id);
+            }
+            else
+            {
+                //TODO navigate to store
+            }
         }
 
         private async void SetupList()
         {
             //Get places from DB
-            _travelViewModel.Data = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
+            _travelViewModel.OwnedTravels = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
             AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
 
             //start downloading data
@@ -133,7 +142,7 @@ namespace VirtualGuide.Mobile.View
                 var _availableTravels = await availableTravelsTask;
                 var availableTravelsList = new List<TravelViewModel>(_availableTravels);
 
-                _travelViewModel.Data.AddRange(availableTravelsList);
+                _travelViewModel.NotOwnedTravels = availableTravelsList;
                 AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
                 
             }
@@ -155,7 +164,7 @@ namespace VirtualGuide.Mobile.View
                 var _ownedTravels = await ownedTravelsTask;
                 ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 
-                _travelViewModel.Data = new List<TravelViewModel>(_ownedTravels);
+                _travelViewModel.OwnedTravels = new List<TravelViewModel>(_ownedTravels);
                 AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
             }
             catch (HttpRequestException ex)

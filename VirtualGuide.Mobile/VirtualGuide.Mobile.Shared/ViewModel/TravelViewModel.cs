@@ -96,9 +96,26 @@ namespace VirtualGuide.Mobile.ViewModel
             set { ;}
         }
 
+        public List<TravelViewModel> OwnedTravels
+        {
+            get;
+            set;
+        }
+
+        public List<TravelViewModel> NotOwnedTravels
+        {
+            get;
+            set;
+        }
+
         public List<TravelViewModel> Data { 
-            get; 
-            set; 
+            get
+            {
+                var data = new List<TravelViewModel>();
+                if(OwnedTravels != null) data.AddRange(OwnedTravels);
+                if(NotOwnedTravels != null) data.AddRange(NotOwnedTravels);
+                return data;
+            }
         }
 
         private CollectionViewSource _collection;
