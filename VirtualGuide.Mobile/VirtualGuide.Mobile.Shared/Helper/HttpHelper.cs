@@ -86,23 +86,31 @@ namespace VirtualGuide.Mobile.Helper
 
             Uri source = new Uri(App.WebService + path);
             string destinationFileName = String.Format("{0}.{1}", filename, GetFileExtension(path));
-            StorageFile destinationFile = await imageFolder.CreateFileAsync(destinationFileName, CreationCollisionOption.ReplaceExisting);
 
-            BackgroundDownloader downloader = new BackgroundDownloader();
-            DownloadOperation download = downloader.CreateDownload(source, destinationFile);
-
-            await download.StartAsync();
-
-            ResponseInformation response = download.GetResponseInformation();
-            Uri imageUri;
-            BitmapImage image = null;
-
-            if (Uri.TryCreate(destinationFile.Path, UriKind.RelativeOrAbsolute, out imageUri))
+            try
             {
-                image = new BitmapImage(imageUri);
-            }
+                StorageFile destinationFile = await imageFolder.CreateFileAsync(destinationFileName, CreationCollisionOption.ReplaceExisting);
 
+                BackgroundDownloader downloader = new BackgroundDownloader();
+                DownloadOperation download = downloader.CreateDownload(source, destinationFile);
+
+                await download.StartAsync();
+
+                ResponseInformation response = download.GetResponseInformation();
+                Uri imageUri;
+                BitmapImage image = null;
+
+                if (Uri.TryCreate(destinationFile.Path, UriKind.RelativeOrAbsolute, out imageUri))
+                {
+                    image = new BitmapImage(imageUri);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                //this means tha file already exist and is open. Ignore it
+            }
             return destinationFileName;
+
         }
 
         private static string GetFileExtension(string path)

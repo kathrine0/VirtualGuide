@@ -46,6 +46,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <ProgressBar x:Name="ProgressBar" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="5" />
+
         <!-- TitlePanel -->
         <StackPanel Grid.Row="0" Margin="24,17,0,28">
             <TextBlock Text="Guide list" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
@@ -65,15 +67,12 @@
                       Margin="0,0,0,30" 
                       IsItemClickEnabled="True" 
                       ItemClick="OwnedTravels_ItemClick"
-                      
                       ItemTemplate="{StaticResource OwnedTravelsListItem}"
                       ItemsSource="{Binding AllTravels, Mode=OneWay}"
                       >
-                
             </ListView>
 
             <!--Available Guides-->
-            <ProgressBar x:Name="AvailableTravelsProgress" Grid.Row="1" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Center" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" Width="100" Height="100" />
             <TextBlock x:Name="NoConnectionMessage" Grid.Row="1" Text="No Internet Connection" HorizontalAlignment="Center" Visibility="Collapsed" />
 
         </Grid>

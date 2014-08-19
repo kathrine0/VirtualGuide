@@ -32,7 +32,7 @@ namespace VirtualGuide.Mobile
         private TransitionCollection transitions;
 #endif
 
-        public const string WebService = @"http://192.168.10.184/VirtualGuide/";
+        public const string WebService = @"http://192.168.20.43/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
 
         /// <summary>

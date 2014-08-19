@@ -157,16 +157,18 @@ namespace VirtualGuide.Mobile.View
                 NoConnectionMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
 
-            AvailableTravelsProgress.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 Task<List<TravelViewModel>> ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
 
                 var _ownedTravels = await ownedTravelsTask;
+                ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 AllTravels = new ObservableCollection<TravelViewModel>(_ownedTravels);
             }
             catch (HttpRequestException ex)
