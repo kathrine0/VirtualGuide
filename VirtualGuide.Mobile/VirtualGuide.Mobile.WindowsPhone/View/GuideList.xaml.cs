@@ -33,11 +33,9 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideList : Page
     {
         private NavigationHelper navigationHelper;
-        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private TravelRepository _travelRepository = new TravelRepository();
-
-        public ObservableCollection<TravelViewModel> AllTravels = new ObservableCollection<TravelViewModel>();
+        private TravelViewModel _travelViewModel = new TravelViewModel();
 
         public GuideList()
         {
@@ -54,15 +52,6 @@ namespace VirtualGuide.Mobile.View
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
-        }
-
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
         }
 
         /// <summary>
@@ -131,9 +120,8 @@ namespace VirtualGuide.Mobile.View
         private async void SetupList()
         {
             //Get places from DB
-            AllTravels = new ObservableCollection<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
-            DefaultViewModel["AllTravels"] = AllTravels;
-
+            _travelViewModel.Data = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
+            AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
 
             //start downloading data
             Task<List<TravelViewModel>> availableTravelsTask = _travelRepository.GetAvailableTravels();
@@ -144,13 +132,10 @@ namespace VirtualGuide.Mobile.View
             {
                 var _availableTravels = await availableTravelsTask;
                 var availableTravelsList = new List<TravelViewModel>(_availableTravels);
-                
-                foreach (var travel in availableTravelsList)
-                {
-                    AllTravels.Add(travel);
-                }
 
-                //DefaultViewModel["AllTravels"] = AllTravels;
+                _travelViewModel.Data.AddRange(availableTravelsList);
+                AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
+                
             }
             catch (Exception)
             {
@@ -169,7 +154,9 @@ namespace VirtualGuide.Mobile.View
 
                 var _ownedTravels = await ownedTravelsTask;
                 ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                AllTravels = new ObservableCollection<TravelViewModel>(_ownedTravels);
+                
+                _travelViewModel.Data = new List<TravelViewModel>(_ownedTravels);
+                AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
             }
             catch (HttpRequestException ex)
             {

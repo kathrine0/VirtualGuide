@@ -14,6 +14,7 @@
     <Page.Resources>
 
         <converter:IsOwnedToOpacity x:Key="IsOwnedToOpacity" />
+        <converter:IsOwnedToText x:Key="IsOwnedToText" />
 
         <DataTemplate x:Key="OwnedTravelsListItem">
             <Grid>
@@ -61,17 +62,26 @@
             </Grid.RowDefinitions>
 
             <!--Guides-->
-            <!-- TOD See also: Groups-->
-            <ListView x:Name="AllTravelsList" 
-                      Grid.Row="0" 
-                      Margin="0,0,0,30" 
-                      IsItemClickEnabled="True" 
-                      ItemClick="OwnedTravels_ItemClick"
-                      ItemTemplate="{StaticResource OwnedTravelsListItem}"
-                      ItemsSource="{Binding AllTravels, Mode=OneWay}"
-                      >
+            <ListView
+                x:Name="AllTravelsList" 
+                Grid.Row="0" 
+                Margin="0,0,0,30" 
+                IsItemClickEnabled="True" 
+                ItemClick="OwnedTravels_ItemClick"
+                ItemTemplate="{StaticResource OwnedTravelsListItem}">
+                <ListView.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True" >
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key, Converter={StaticResource IsOwnedToText}}"
+                                  Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                  Margin="0,20,0,10"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
             </ListView>
-
+            
             <!--Available Guides-->
             <TextBlock x:Name="NoConnectionMessage" Grid.Row="1" Text="No Internet Connection" HorizontalAlignment="Center" Visibility="Collapsed" />
 

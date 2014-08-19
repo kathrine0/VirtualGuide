@@ -12,6 +12,9 @@ using VirtualGuide.Mobile.Common;
 using PropertyChanged;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Collections;
+using Windows.UI.Xaml.Data;
+using VirtualGuide.Mobile.Helper;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -91,6 +94,27 @@ namespace VirtualGuide.Mobile.ViewModel
                 return bitmap;
             }
             set { ;}
+        }
+
+        public List<TravelViewModel> Data { 
+            get; 
+            set; 
+        }
+
+        private CollectionViewSource _collection;
+        public CollectionViewSource Collection
+        {
+            get
+            {
+                _collection = new CollectionViewSource();
+                if (Data != null)
+                {
+                    var grouped = Data.ToGroups(x => x.Name, x => x.IsOwned, true);
+                    _collection.Source = grouped;
+                    _collection.IsSourceGrouped = true;
+                }
+                return _collection;
+            }
         }
     }
 }
