@@ -9,6 +9,7 @@ using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -16,6 +17,7 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -43,8 +45,8 @@ namespace VirtualGuide.Mobile.View
 
         private PropertyRepository _propertyRepository = new PropertyRepository();
         private TravelRepository _travelRepository = new TravelRepository();
-
-        private int _travelId;
+       
+        private TravelViewModel _travel;
 
         public GuideMain()
         {
@@ -92,14 +94,14 @@ namespace VirtualGuide.Mobile.View
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            _travelId = (int)e.NavigationParameter;
+            var travelId = (int)e.NavigationParameter;
 
-            _propertiesList = await _propertyRepository.GetSimpleProperties(_travelId);
-            var travel = await _travelRepository.GetTravelByIdAsync(_travelId);
+            _propertiesList = await _propertyRepository.GetSimpleProperties(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
 
             _propertiesListAll.AddRange(_propertiesList);
             this.DefaultViewModel["Properties"] = _propertiesListAll;
-            this.DefaultViewModel["Title"] = travel.Name;
+            this.DefaultViewModel["Title"] = _travel.Name;
 
             CreateHubSections();
         }
@@ -140,7 +142,7 @@ namespace VirtualGuide.Mobile.View
             switch(clickedItem.Type)
             {
                 case PropertyViewModel.Types.MAPS:
-                    Frame.Navigate(typeof(GuidePlaces), _travelId);
+                    Frame.Navigate(typeof(GuidePlaces), _travel.Id);
                 break;
                 case PropertyViewModel.Types.TOURS:
                 break;
@@ -184,6 +186,35 @@ namespace VirtualGuide.Mobile.View
                 viewer.ChangeView(move, null, null, false);
             }
             viewer.ChangeView(point.X, null, null, false);
+        }
+
+        #endregion
+
+        #region maps
+
+        private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MapView), _travel.Id);
+        }
+
+        private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            Frame.Navigate(typeof(MapView), _travel.Id);
+
+        }
+
+        private async void Maps_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Wait if travel has not been loaded yet
+            if (_travel == null)
+            {
+                await Task.Delay(300);
+            }
+
+            var zoomLevel = _travel.ZoomLevel;
+            var center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
+
+            await ((MapControl)sender).TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.None);
         }
 
         #endregion

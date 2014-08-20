@@ -174,50 +174,30 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MapView), _travel.Id);
-        }
-
-        private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
-        {
-            Frame.Navigate(typeof(MapView), _travel.Id);
-
-        }
-
-        private async void Maps_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Wait if travel has not been loaded yet
-            if (_travel == null)
-            {
-                await Task.Delay(300);
-            }
-
-            var zoomLevel = _travel.ZoomLevel;
-            var center = new Geopoint(new BasicGeoposition() {Latitude = _travel.Latitude, Longitude = _travel.Longitude});
-
-            await ((MapControl)sender).TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.None);
-        }
+        
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var clickedItem = (PlaceViewModel)e.ClickedItem;
-            HubSection hubSection = null;
-            //Add hub item and navigate to it
-            if (MainHub.Sections.Count < 3)
-            {
-                hubSection = new HubSection();
-                MainHub.Sections.Add(hubSection);
-            }
-            else //Or modify existing hub
-            {
-                hubSection = MainHub.Sections[2];
-            }
 
-            hubSection.Header = clickedItem.Name;
-            hubSection.DataContext = clickedItem;
-            hubSection.ContentTemplate = (DataTemplate)this.Resources["PlaceDescriptionTemplate"];
-            MainHub.ScrollToSection(hubSection);
+            //TODO navigate to places details
+
+            //HubSection hubSection = null;
+            //Add hub item and navigate to it
+            //if (MainHub.Sections.Count < 3)
+            //{
+            //    hubSection = new HubSection();
+            //    MainHub.Sections.Add(hubSection);
+            //}
+            //else //Or modify existing hub
+            //{
+            //    hubSection = MainHub.Sections[2];
+            //}
+
+            //hubSection.Header = clickedItem.Name;
+            //hubSection.DataContext = clickedItem;
+            //hubSection.ContentTemplate = (DataTemplate)this.Resources["PlaceDescriptionTemplate"];
+            //MainHub.ScrollToSection(hubSection);
         }
 
     }

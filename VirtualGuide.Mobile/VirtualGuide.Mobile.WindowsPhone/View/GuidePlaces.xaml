@@ -4,7 +4,7 @@
     xmlns:local="using:VirtualGuide.Mobile.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     xmlns:RegularExpressions="using:System.Text.RegularExpressions"
     x:Class="VirtualGuide.Mobile.View.GuidePlaces"
@@ -14,12 +14,6 @@
 
     <Page.Resources>
         <converter:DistanceToString x:Key="DistanceToString" />
-        
-        <DataTemplate x:Key="PlaceDescriptionTemplate">
-            <Grid>
-                <TextBlock FontSize="20" TextWrapping="WrapWholeWords" Text="{Binding Description}" />
-            </Grid>
-        </DataTemplate>
     </Page.Resources>
     
     <Grid x:Name="LayoutRoot">
@@ -29,50 +23,34 @@
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-        <!--<Maps:MapControl x:Name="test" />-->
-        <Hub Header="{Binding Title}" x:Name="MainHub">
-            <HubSection Header="Maps" >
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="250"/>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Maps:MapControl
-                            Grid.Row="0"
-							x:Name="Maps"
-							MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
-                            Tapped="Maps_Tapped" 
-                            MapTapped="Maps_MapTapped"
-                            Loaded="Maps_Loaded">
-                            
-                        </Maps:MapControl>
-                        <!--Margin="-20,0,0,0"-->
-                    </Grid>
-                </DataTemplate>
-            </HubSection>
-            <HubSection Header="Places" DataContext="{Binding Places}">
-                <DataTemplate>
-                    <Grid>
-                        <ListView 
-                            VerticalAlignment="Top"
-                            SelectionMode="None"
-                            IsItemClickEnabled="True"
-                            ItemsSource="{Binding}"
-                            ContinuumNavigationTransitionInfo.ExitElementContainer="True"
-                            ItemClick="ListView_ItemClick">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Margin="0,0,0,19">
-                                        <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
-                                        <TextBlock Text="{Binding Distance, Mode=OneWay,  Converter={StaticResource DistanceToString}}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </DataTemplate>
-            </HubSection>
-        </Hub>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- TitlePanel -->
+        <StackPanel Grid.Row="0" Margin="24,17,0,28">
+            <TextBlock Text="Places" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1"
+                VerticalAlignment="Top"
+                SelectionMode="None"
+                IsItemClickEnabled="True"
+                ItemsSource="{Binding Places}"
+                ContinuumNavigationTransitionInfo.ExitElementContainer="True"
+                ItemClick="ListView_ItemClick"
+                  Margin="24,0,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,19">
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                            <TextBlock Text="{Binding Distance, Mode=OneWay,  Converter={StaticResource DistanceToString}}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
     </Grid>
 </Page>

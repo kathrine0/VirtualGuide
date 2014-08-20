@@ -5,6 +5,7 @@
     xmlns:local="using:VirtualGuide.Mobile.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
@@ -27,22 +28,35 @@
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         
-        <Hub Grid.Row="1" Header="{Binding Title}" x:Name="MainHub">
+        <Hub Header="{Binding Title}" x:Name="MainHub">
             <HubSection x:Name="TheHub" DataContext="{Binding Properties}">
                 <DataTemplate>
-                    <GridView 
-                        x:Name="PropertiesView" 
-                        IsItemClickEnabled="True" 
-                        ItemClick="PropertiesView_ItemClick"
-                        ItemsSource="{Binding}"
-                        ItemTemplate="{StaticResource 160x160Grid}"
-                            />
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"/>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Maps:MapControl
+                                Grid.Row="0"
+							    x:Name="Maps"
+							    MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
+                                Tapped="Maps_Tapped" 
+                                MapTapped="Maps_MapTapped"
+                                Loaded="Maps_Loaded"
+                                Margin="0,0,10,10"/>
+
+                            <GridView Grid.Row="1"
+                            x:Name="PropertiesView" 
+                            IsItemClickEnabled="True" 
+                            ItemClick="PropertiesView_ItemClick"
+                            ItemsSource="{Binding}"
+                            ItemTemplate="{StaticResource 160x160Grid}"
+                                />
+                        </Grid>
+                    </ScrollViewer>
                 </DataTemplate>
             </HubSection>
         </Hub>
