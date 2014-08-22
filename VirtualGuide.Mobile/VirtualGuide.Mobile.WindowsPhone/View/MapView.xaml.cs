@@ -279,6 +279,13 @@ namespace VirtualGuide.Mobile.View
             _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
         }
 
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var clickedItem = (MapPlaceViewModel)((Grid)sender).DataContext;
+
+            Frame.Navigate(typeof(PlaceMain), clickedItem.Id);
+        }
+
         
     }
 

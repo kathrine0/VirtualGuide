@@ -26,36 +26,38 @@
                 Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
                 Maps:MapControl.NormalizedAnchorPoint="0.5,0.5" Canvas.ZIndex="1" />
                     <Grid Height="60" 
-                Background="Black"
-                Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
-                Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                Maps:MapControl.Location="{Binding Point}" 
-                Canvas.ZIndex="2"
-                Width="200" Margin="-80, -88, 0, 0">
+                        Background="Black"
+                        Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
+                        Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                        Maps:MapControl.Location="{Binding Point}" 
+                        Canvas.ZIndex="2"
+                        Width="200" Margin="-80, -88, 0, 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
                         <TextBlock 
-                    Grid.Column="0"
-                    Foreground="White"
-                    Text="{Binding Name}"       
-                    TextWrapping="Wrap"
-                    FontSize="15" Margin="5"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"/>
-                        <Grid 
-                    Margin="1"
-                    Grid.Column="1"
-                    Background="{StaticResource ThemeStrongGreen}">
+                            Grid.Column="0"
+                            Foreground="White"
+                            Text="{Binding Name}"       
+                            TextWrapping="Wrap"
+                            FontSize="15" Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"/>
+                            <Grid 
+                                Margin="1"
+                                Grid.Column="1"
+                                Background="{StaticResource ThemeStrongGreen}"
+                                Tapped="Grid_Tapped"
+                                DataContext="{Binding}">
                             <TextBlock 
-                        Text="&#xe111;" 
-                        FontFamily="Segoe UI Symbol"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="White"
-                        FontSize="30"/>
-                        </Grid>
+                                Text="&#xe111;" 
+                                FontFamily="Segoe UI Symbol"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                FontSize="30"/>
+                            </Grid>
                         <Polygon Points="0,0 20,20,40,0" 
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Center" 
