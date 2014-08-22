@@ -96,8 +96,8 @@
     <Compile Include="View\GuideMain.xaml.cs">
       <DependentUpon>GuideMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GuidePlaces.xaml.cs">
-      <DependentUpon>GuidePlaces.xaml</DependentUpon>
+    <Compile Include="View\PlacesList.xaml.cs">
+      <DependentUpon>PlacesList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -134,7 +134,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GuidePlaces.xaml">
+    <Page Include="View\PlacesList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

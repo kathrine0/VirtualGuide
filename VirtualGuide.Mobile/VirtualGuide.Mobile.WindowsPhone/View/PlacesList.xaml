@@ -7,7 +7,7 @@
     
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     xmlns:RegularExpressions="using:System.Text.RegularExpressions"
-    x:Class="VirtualGuide.Mobile.View.GuidePlaces"
+    x:Class="VirtualGuide.Mobile.View.PlacesList"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

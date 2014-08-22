@@ -21,7 +21,7 @@ namespace VirtualGuide.Mobile.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GuidePlaces : Page
+    public sealed partial class PlacesList : Page
     {
         private TravelViewModel _travel;
         private List<PlaceViewModel> _places = new List<PlaceViewModel>();
@@ -33,7 +33,7 @@ namespace VirtualGuide.Mobile.View
 
         private Geolocator _geolocator = null;
 
-        public GuidePlaces()
+        public PlacesList()
         {
             this.InitializeComponent();
 

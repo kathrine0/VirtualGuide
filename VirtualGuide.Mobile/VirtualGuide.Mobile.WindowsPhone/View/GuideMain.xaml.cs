@@ -142,7 +142,7 @@ namespace VirtualGuide.Mobile.View
             switch(clickedItem.Type)
             {
                 case PropertyViewModel.Types.MAPS:
-                    Frame.Navigate(typeof(GuidePlaces), _travel.Id);
+                    Frame.Navigate(typeof(PlacesList), _travel.Id);
                 break;
                 case PropertyViewModel.Types.TOURS:
                 break;
