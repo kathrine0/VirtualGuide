@@ -175,7 +175,7 @@ namespace VirtualGuide.Mobile.View
 
                     case PositionStatus.Disabled:
                         LocationEllipseInactive();
-                        MessageBoxHelper.Show("Location feature is turned off");
+                        MessageBoxHelper.ShowNoLocation();
                         break;
                     case PositionStatus.Initializing:
                     case PositionStatus.NoData:
@@ -286,7 +286,6 @@ namespace VirtualGuide.Mobile.View
             Frame.Navigate(typeof(PlaceMain), clickedItem.Id);
         }
 
-        
     }
 
     [ImplementPropertyChanged]

@@ -149,7 +149,7 @@ namespace VirtualGuide.Mobile.View
                         break;
 
                     case PositionStatus.Disabled:
-                        MessageBoxHelper.Show("Location feature is turned off");
+                        MessageBoxHelper.ShowNoLocation();
                         break;
                     case PositionStatus.Initializing:
                     case PositionStatus.NoData:
