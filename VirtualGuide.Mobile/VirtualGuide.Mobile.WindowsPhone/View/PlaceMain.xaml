@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="VirtualGuide.Mobile.View.PlaceMain"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VirtualGuide.Mobile.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}">
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Hub Header="{Binding Place.Name}">
+            <HubSection>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Place.Description}"/>
+                    </Grid>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+
+    </Grid>
+</Page>

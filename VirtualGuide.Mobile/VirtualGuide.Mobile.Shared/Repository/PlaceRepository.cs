@@ -31,5 +31,17 @@ namespace VirtualGuide.Mobile.Repository
 
             return ModelHelper.ObjectToViewModel<PlaceViewModel, Place>(places);
         }
+
+        public async Task<PlaceViewModel> GetPlaceById(int placeId)
+        {
+            var place = await App.Connection.QueryAsync<Place>("Select * FROM Place WHERE Id = ?", placeId);
+
+            if (place.Count == 0)
+                throw new Exception("Element not found");
+
+            var viewmodelList = ModelHelper.ObjectToViewModel<PlaceViewModel, Place>(place);
+
+            return viewmodelList[0];
+         }
     }
 }
