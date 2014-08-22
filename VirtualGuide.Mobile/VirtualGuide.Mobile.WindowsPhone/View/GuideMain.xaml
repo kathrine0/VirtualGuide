@@ -53,7 +53,7 @@
                             IsItemClickEnabled="True" 
                             ItemClick="PropertiesView_ItemClick"
                             ItemsSource="{Binding}"
-                            ItemTemplate="{StaticResource 160x160Grid}"
+                            ItemTemplate="{StaticResource DetailsGrid}"
                                 />
                         </Grid>
                     </ScrollViewer>

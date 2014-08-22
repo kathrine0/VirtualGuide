@@ -1,27 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
-using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -37,7 +27,7 @@ namespace VirtualGuide.Mobile.View
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private List<PropertyViewModel> _propertiesListAll = new List<PropertyViewModel>() { 
-            new PropertyViewModel() {Name = "Maps and places", Background=VirtualGuide.Mobile.Helper.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=PropertyViewModel.Types.MAPS},
+            new PropertyViewModel() {Name = "Places", Background=VirtualGuide.Mobile.Helper.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=PropertyViewModel.Types.MAPS},
             new PropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=PropertyViewModel.Types.TOURS},
         };
 
