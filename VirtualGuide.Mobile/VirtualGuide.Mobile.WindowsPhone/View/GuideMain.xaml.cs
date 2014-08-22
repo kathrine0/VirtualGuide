@@ -149,7 +149,7 @@ namespace VirtualGuide.Mobile.View
                 case PropertyViewModel.Types.REGULAR:
                     var hubElement = MainHub.Sections.Where(x => x.DataContext is PropertyViewModel && ((PropertyViewModel)x.DataContext).Id == clickedItem.Id).First();
                     //MainHub.ScrollToSection(hubElement);
-                    ScollHubToSection(hubElement);
+                    UIHelper.ScollHubToSection(hubElement, ref MainHub);
                 break;
             }
         }
@@ -167,25 +167,6 @@ namespace VirtualGuide.Mobile.View
 
                 MainHub.Sections.Add(hubSection);
             }
-        }
-
-        private void ScollHubToSection(HubSection section)
-        {
-            var visual = section.TransformToVisual(MainHub);
-            var point = visual.TransformPoint(new Point(0, 0));
-            var viewer = UIHelper.FindChild<ScrollViewer>(MainHub, "ScrollViewer");
-
-            //sin(pi/(1080*2) * x) * 1080
-            var xfactor = Math.PI / (point.X*2);
-            double move = 0;
-
-            for (int i = 0; i < point.X;i+=5)
-            {
-                move = Math.Sin(xfactor * i) * point.X;
-                //System.Diagnostics.Debug.WriteLine(move);
-                viewer.ChangeView(move, null, null, false);
-            }
-            viewer.ChangeView(point.X, null, null, false);
         }
 
         #endregion

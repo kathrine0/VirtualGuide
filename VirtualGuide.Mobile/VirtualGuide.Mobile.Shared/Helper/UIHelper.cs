@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace VirtualGuide.Mobile.Helper
@@ -52,6 +54,24 @@ namespace VirtualGuide.Mobile.Helper
             }
 
             return foundChild;
+        }
+
+        public static void ScollHubToSection(HubSection section, ref Hub MainHub)
+        {
+            var visual = section.TransformToVisual(MainHub);
+            var point = visual.TransformPoint(new Point(0, 0));
+            var viewer = UIHelper.FindChild<ScrollViewer>(MainHub, "ScrollViewer");
+
+            //sin(pi/(1080*2) * x) * 1080
+            var xfactor = Math.PI / (point.X * 2);
+            double move = 0;
+
+            for (int i = 0; i < point.X; i += 5)
+            {
+                move = Math.Sin(xfactor * i) * point.X;
+                viewer.ChangeView(move, null, null, false);
+            }
+            viewer.ChangeView(point.X, null, null, false);
         }
     }
 }
