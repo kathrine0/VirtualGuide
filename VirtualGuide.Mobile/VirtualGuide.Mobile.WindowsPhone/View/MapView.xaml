@@ -13,30 +13,30 @@
     >
 
     <Page.Resources>
-            <converter:TrueIsVisible x:Key="TrueIsVisible" />
-            <converter:FalseIsVisible x:Key="FalseIsVisible" />
+        <converter:TrueIsVisible x:Key="TrueIsVisible" />
+        <converter:FalseIsVisible x:Key="FalseIsVisible" />
 
-            <DataTemplate x:Key="MapMarker">
-                <Canvas>
-                    <Image Source="ms-appx:///Assets/MapMarker.png" 
+        <DataTemplate x:Key="MapMarker">
+            <Canvas>
+                <Image Source="ms-appx:///Assets/MapMarker.png" 
                 Stretch="UniformToFill" 
                 Width="50" Height="50"
                 Maps:MapControl.Location="{Binding Point}" Tapped="MarkerImage_Tapped" 
                 Margin="-25,-50,0,0"
                 Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
                 Maps:MapControl.NormalizedAnchorPoint="0.5,0.5" Canvas.ZIndex="1" />
-                    <Grid Height="60" 
+                <Grid Height="60" 
                         Background="Black"
                         Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
                         Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
                         Maps:MapControl.Location="{Binding Point}" 
                         Canvas.ZIndex="2"
                         Width="200" Margin="-80, -88, 0, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="60" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock 
                             Grid.Column="0"
                             Foreground="White"
                             Text="{Binding Name}"       
@@ -44,31 +44,31 @@
                             FontSize="15" Margin="5"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"/>
-                            <Grid 
+                    <Grid 
                                 Margin="1"
                                 Grid.Column="1"
                                 Background="{StaticResource ThemeStrongGreen}"
                                 Tapped="Grid_Tapped"
                                 DataContext="{Binding}">
-                            <TextBlock 
+                        <TextBlock 
                                 Text="&#xe111;" 
                                 FontFamily="Segoe UI Symbol"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Foreground="White"
                                 FontSize="30"/>
-                            </Grid>
-                        <Polygon Points="0,0 20,20,40,0" 
+                    </Grid>
+                    <Polygon Points="0,0 20,20,40,0" 
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Center" 
                     Fill="Black" 
                     Margin="0,0,-20,-19"  />
-                        <Ellipse Width="20" Height="10" VerticalAlignment="Bottom" Fill="#7F000000" Margin="0,0,-20,-24"/>
-                    </Grid>
-                </Canvas>
-            </DataTemplate>
+                    <Ellipse Width="20" Height="10" VerticalAlignment="Bottom" Fill="#7F000000" Margin="0,0,-20,-24"/>
+                </Grid>
+            </Canvas>
+        </DataTemplate>
 
-        </Page.Resources>
+    </Page.Resources>
 
     <Grid x:Name="LayoutRoot">
 
@@ -77,7 +77,7 @@
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
-   
+
 
         <Maps:MapControl
 		x:Name="Maps"
@@ -92,8 +92,8 @@
 
             <Maps:MapItemsControl ItemsSource="{Binding Places}" ItemTemplate="{StaticResource MapMarker}">
             </Maps:MapItemsControl>
-            
-            
+
+
             <Maps:MapItemsControl x:Name="Testtest">
                 <Maps:MapItemsControl.Items>
                     <Grid Visibility="{Binding MarkerVisibility, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="40" Height="40" Maps:MapControl.Location="{Binding UserGeoposition, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" x:Name="CurrentLocationMapMarker">
@@ -138,4 +138,12 @@
         </Grid>
 
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Background="Black" Foreground="#DEFFFFFF">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="MenuPlaces" Label="Places" Click="MenuPlaces_Click" Icon="World" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

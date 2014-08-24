@@ -287,6 +287,11 @@ namespace VirtualGuide.Mobile.View
             Frame.Navigate(typeof(PlaceMain), clickedItem.Id);
         }
 
+        private void MenuPlaces_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GuidePlaces), _travel.Id);
+        }
+
     }
 
     [ImplementPropertyChanged]
