@@ -1,6 +1,7 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
@@ -32,8 +33,8 @@ namespace VirtualGuide.Mobile.ViewModel
 
         }
         public int Id { get; set; }
-        
-        private string _name = String.Empty;
+
+        private string _name = string.Empty;
         public string Name {
             get
             {
@@ -46,7 +47,18 @@ namespace VirtualGuide.Mobile.ViewModel
         }
         public string Description { get; set; }
         public Brush Background { get; set; }
-        public string Symbol { get; set; }
+
+        private string _symbol = string.Empty;
+        public string Symbol { 
+            get
+            {
+                return WebUtility.HtmlDecode(_symbol);
+            }
+            set
+            {
+                _symbol = value;
+            }
+        }
         public Types Type { get; set; }
     }
 
