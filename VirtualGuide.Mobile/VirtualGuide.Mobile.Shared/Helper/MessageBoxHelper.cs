@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Windows.Storage;
+﻿using Windows.Storage;
 using Windows.UI.Popups;
 
 namespace VirtualGuide.Mobile.Helper
@@ -24,11 +21,9 @@ namespace VirtualGuide.Mobile.Helper
 
         public static void ShowNoLocation()
         {
-            if (_appSettings.Containers.ContainsKey("runtimeData") &&
-                ( !_appSettings.Containers["runtimeData"].Values.ContainsKey("locationMsg")
-                || (bool) _appSettings.Containers["runtimeData"].Values["locationMsg"] == false))
+            if (!LocalDataHelper.KeyExists("locationMsg") || LocalDataHelper.GetKeyValue<bool>("locationMsg") == false)
             {
-                _appSettings.Containers["runtimeData"].Values["locationMsg"] = true;
+                LocalDataHelper.SetValue("locationMsg", true); 
                 Show("Location feature is turned off");
             }
         }

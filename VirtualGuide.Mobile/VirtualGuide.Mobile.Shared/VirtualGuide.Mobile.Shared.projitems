@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\GeoHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ListHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\LocalDataHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NavigationHelper.cs" />

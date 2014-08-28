@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.View;
 using Windows.ApplicationModel;
@@ -35,8 +36,6 @@ namespace VirtualGuide.Mobile
 
         public const string WebService = @"http://192.168.20.41/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
-        private ApplicationDataContainer _appSettings = ApplicationData.Current.LocalSettings;
-        
         
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -122,8 +121,7 @@ namespace VirtualGuide.Mobile
             SetupDatabase();
 
             //Create runtime data container
-            ApplicationDataContainer container = _appSettings.CreateContainer("runtimeData", Windows.Storage.ApplicationDataCreateDisposition.Always);
-
+            LocalDataHelper.CreateContainer();
 
             // Ensure the current window is active
             Window.Current.Activate();
@@ -168,7 +166,7 @@ namespace VirtualGuide.Mobile
             SQLite.SQLiteConnectionPool.Shared.Reset();
             
             //Remove runtime data
-            _appSettings.DeleteContainer("runtimeData");
+            LocalDataHelper.DeleteContainer();
 
             deferral.Complete();
         }
