@@ -124,6 +124,9 @@ namespace VirtualGuide.Mobile.View
 
         private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            if (LocalDataHelper.GetKeyValue<bool>("RefreshInProgress")) return;
+            LocalDataHelper.SetValue("RefreshInProgress", true);
+
             try
             {
                 ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -149,6 +152,9 @@ namespace VirtualGuide.Mobile.View
                     MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
 
                 }
+            } finally
+            {
+                LocalDataHelper.SetValue("RefreshInProgress", false);
             }
         }
     }
