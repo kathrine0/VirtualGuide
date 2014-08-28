@@ -59,12 +59,32 @@ namespace VirtualGuide.Mobile.Repository
                 throw new Exception("Entity not found");
             }
 
-            return new TravelViewModel(travel[0], true);
+            return new TravelViewModel(travel[0]);
         }
 
-        public async Task<List<TravelViewModel>> DownloadAndSaveOwnedTravels()
+        private async Task<List<Travel>> GetOwnedTravels()
+        {
+            var travels = await App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE IsOwned=?", true);
+
+            return travels;
+        }
+
+        public async Task<List<TravelViewModel>> DownloadAndSaveAllTravels()
+        {
+            var ownedTravelsTask = await DownloadAndSaveOwnedTravels();
+            var availableTravelsTask = await DownloadAndSaveAvailableTravels(ownedTravelsTask);
+
+            var allTravels = new List<TravelViewModel>();
+            allTravels.AddRange(ownedTravelsTask);
+            allTravels.AddRange(availableTravelsTask);
+
+            return allTravels;
+        }
+
+        private async Task<List<TravelViewModel>> DownloadAndSaveOwnedTravels()
         {
             var travels = await LoadOwnedTravels();
+            foreach (var travel in travels) travel.IsOwned = true;
             await App.Connection.InsertOrReplaceAllAsync(travels);
 
             
@@ -81,14 +101,33 @@ namespace VirtualGuide.Mobile.Repository
             return viewModels;
         }
 
+        private async Task<List<TravelViewModel>> DownloadAndSaveAvailableTravels(List<TravelViewModel> ownedTravels)
+        {
+            var travels = await LoadAvailableTravels();
+            var newTravels = new List<Travel>();
+            foreach (var travel in travels)
+            {
+                if (!ownedTravels.Exists(x => x.Id == travel.Id))
+                {
+                    newTravels.Add(travel);
+                    travel.IsOwned = false;
+                }
+            }
+
+            await App.Connection.InsertOrReplaceAllAsync(newTravels);
+
+            DownloadMedia(newTravels);
+
+            var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(newTravels);
+
+            return viewModels;
+        }
+
 
         private async void DownloadMedia(List<Travel> travels)
         {
             await HttpHelper.ImageDownloader<Travel>(travels);
-
         }
-
-        
 
         #endregion
 

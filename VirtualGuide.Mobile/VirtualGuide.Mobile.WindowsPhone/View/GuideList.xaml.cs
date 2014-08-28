@@ -116,29 +116,10 @@ namespace VirtualGuide.Mobile.View
         private async void SetupList()
         {
             //Get places from DB
-            _travelViewModel.OwnedTravels = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
+            _travelViewModel.Data = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
             AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
 
-            //start downloading data
-            Task<List<TravelViewModel>> availableTravelsTask = _travelRepository.GetAvailableTravels();
-            
-            //Download available places
-            //TODO: download only these not owned by user yet
-            try
-            {
-                var _availableTravels = await availableTravelsTask;
-                var availableTravelsList = new List<TravelViewModel>(_availableTravels);
-
-                _travelViewModel.NotOwnedTravels = availableTravelsList;
-                AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
-                
-            }
-            catch (Exception)
-            {
-                NoConnectionMessage.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            }
-
-            ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+           
         }
 
         private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -146,13 +127,11 @@ namespace VirtualGuide.Mobile.View
             try
             {
                 ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                Task<List<TravelViewModel>> ownedTravelsTask = _travelRepository.DownloadAndSaveOwnedTravels();
 
-                var _ownedTravels = await ownedTravelsTask;
-                ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                
-                _travelViewModel.OwnedTravels = new List<TravelViewModel>(_ownedTravels);
+                _travelViewModel.Data = await _travelRepository.DownloadAndSaveAllTravels();
                 AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
+
+                ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
             catch (HttpRequestException ex)
             {

@@ -48,8 +48,12 @@ namespace VirtualGuide.Mobile.Model
      
         [Column("ZoomLevel")]
         public double ZoomLevel { get; set; }
+        
         [Column("ImageSrc")]
         public string ImageSrc { get; set; }
+        
+        [Column("IsOwned")]
+        public bool IsOwned { get; set; }
 
     }
 }

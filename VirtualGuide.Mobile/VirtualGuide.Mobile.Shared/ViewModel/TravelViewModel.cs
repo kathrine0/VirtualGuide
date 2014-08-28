@@ -27,17 +27,7 @@ namespace VirtualGuide.Mobile.ViewModel
 
         }
 
-        public TravelViewModel(Travel travel, bool isOwned)
-        {
-            AssignProperties(travel, isOwned);
-        }
-
         public TravelViewModel(Travel travel)
-        {
-            AssignProperties(travel, true);
-        }
-
-        private void AssignProperties(Travel travel, bool isOwned)
         {
             Id = travel.Id;
             Name = travel.Name;
@@ -47,7 +37,7 @@ namespace VirtualGuide.Mobile.ViewModel
             Longitude = travel.Longitude;
             ZoomLevel = travel.ZoomLevel;
             _imageSrc = travel.ImageSrc;
-            IsOwned = isOwned;
+            IsOwned = travel.IsOwned;
         }
 
         public int Id { get; set; }
@@ -96,26 +86,10 @@ namespace VirtualGuide.Mobile.ViewModel
             set { ;}
         }
 
-        public List<TravelViewModel> OwnedTravels
+        public List<TravelViewModel> Data
         {
             get;
             set;
-        }
-
-        public List<TravelViewModel> NotOwnedTravels
-        {
-            get;
-            set;
-        }
-
-        public List<TravelViewModel> Data { 
-            get
-            {
-                var data = new List<TravelViewModel>();
-                if(OwnedTravels != null) data.AddRange(OwnedTravels);
-                if(NotOwnedTravels != null) data.AddRange(NotOwnedTravels);
-                return data;
-            }
         }
 
         private CollectionViewSource _collection;

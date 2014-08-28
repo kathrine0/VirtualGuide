@@ -34,7 +34,7 @@ namespace VirtualGuide.Mobile
         private TransitionCollection transitions;
 #endif
 
-        public const string WebService = @"http://192.168.20.41/VirtualGuide/";
+        public const string WebService = @"http://192.168.12.65/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
         
         /// <summary>

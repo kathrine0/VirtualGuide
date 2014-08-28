@@ -24,9 +24,6 @@ namespace SQLite
 
     public partial class SQLiteAsyncConnection
     {
-        
-
-
         public Task<int> InsertOrReplaceAllAsync(IEnumerable items)
         {
             return Task.Factory.StartNew(() =>

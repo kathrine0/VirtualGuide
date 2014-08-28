@@ -84,6 +84,8 @@ namespace VirtualGuide.Mobile.Helper
             var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
             var imageFolder = await localFolder.CreateFolderAsync("images", CreationCollisionOption.OpenIfExists);
 
+            if (String.IsNullOrEmpty(path)) return string.Empty;
+
             Uri source = new Uri(App.WebService + path);
             string destinationFileName = String.Format("{0}.{1}", filename, GetFileExtension(path));
 
