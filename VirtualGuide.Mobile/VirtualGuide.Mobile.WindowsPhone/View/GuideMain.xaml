@@ -14,9 +14,15 @@
     <Page.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="PropertyContentTemplate">
-                <Grid>
-                    <TextBlock FontSize="20" TextWrapping="WrapWholeWords" Text="{Binding Description}" />
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,5,0,0">
+                    <Grid>
+                        <TextBlock FontSize="20" 
+                                   TextWrapping="WrapWholeWords" 
+                                   Text="{Binding Description}" 
+                                   TextAlignment="Justify" 
+                                   LineHeight="3" />
+                    </Grid>
+                </ScrollViewer>
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>

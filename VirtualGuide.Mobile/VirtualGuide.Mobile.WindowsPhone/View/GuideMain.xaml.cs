@@ -151,7 +151,7 @@ namespace VirtualGuide.Mobile.View
             foreach (var property in _propertiesList)
             {
                 HubSection hubSection = new HubSection();
-                hubSection.Header = property.Name;
+                hubSection.Header = property.Symbol + property.Name;
                 hubSection.DataContext = property;
                 hubSection.ContentTemplate = (DataTemplate) this.Resources["PropertyContentTemplate"];
 
