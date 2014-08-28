@@ -52,7 +52,7 @@
                                 Tapped="Maps_Tapped" 
                                 MapTapped="Maps_MapTapped"
                                 Loaded="Maps_Loaded"
-                                Margin="0,0,10,10"/>
+                                Margin="0,0,10,10" />
 
                             <GridView Grid.Row="1"
                             x:Name="PropertiesView" 

@@ -50,12 +50,12 @@ namespace VirtualGuide.Mobile.View
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
-            //TODO Prevent going back when no main section is on screen
-            //if (!MainHub.SectionsInView.Contains(MainHub.Sections[0]))
-            //{
-            //    MainHub.ScrollToSection(MainHub.Sections[0]);
-            //    e.Handled = true;
-            //}
+            if (!MainHub.SectionsInView.First().Equals(MainHub.Sections.First()))
+            {
+                e.Handled = true;
+                //TODO ANIMATE me
+                MainHub.ScrollToSection(MainHub.Sections.First());
+            }
         }
 
         /// <summary>

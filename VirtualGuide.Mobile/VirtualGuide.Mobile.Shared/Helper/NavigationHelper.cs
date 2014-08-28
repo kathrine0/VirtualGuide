@@ -209,6 +209,8 @@ namespace VirtualGuide.Mobile.Helper
         /// <param name="e">Event data describing the conditions that led to the event.</param>
         private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
+            if (e.Handled) return;
+
             if (this.GoBackCommand.CanExecute(null))
             {
                 e.Handled = true;
