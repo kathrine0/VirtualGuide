@@ -108,8 +108,8 @@ namespace VirtualGuide.Mobile.View
             if (e.PageState != null && e.PageState.ContainsKey("Latitude")
                 && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
             {
-                _zoomLevel = (double)e.PageState["Zoom"];
-                _center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
+                _mapElements.ZoomLevel = (double)e.PageState["Zoom"];
+                _mapElements.Center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
             }
 
 
@@ -281,10 +281,11 @@ namespace VirtualGuide.Mobile.View
                 _zoomLevel = _travel.ZoomLevel;
                 _center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
                 animation = MapAnimationKind.Default;
+              
+                //zoom map
+                await Maps.TrySetViewAsync(_center, _zoomLevel, null, null, animation);
             }
 
-            //zoom map
-            await Maps.TrySetViewAsync(_center, _zoomLevel, null, null, animation);
 
             //wait if places has not been loaded
             if (_places == null)
