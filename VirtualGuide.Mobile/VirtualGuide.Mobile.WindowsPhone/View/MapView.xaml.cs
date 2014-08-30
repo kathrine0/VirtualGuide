@@ -43,6 +43,10 @@ namespace VirtualGuide.Mobile.View
         
         private Geolocator _geolocator = null;
 
+        private double _zoomLevel = 0;
+        private Geopoint _center = null;
+
+
         public MapView()
         {
             this.InitializeComponent();
@@ -101,6 +105,14 @@ namespace VirtualGuide.Mobile.View
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
             _places = await _placeRepository.GetPlacesForMap(travelId);
 
+            if (e.PageState != null && e.PageState.ContainsKey("Latitude")
+                && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
+            {
+                _zoomLevel = (double)e.PageState["Zoom"];
+                _center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
+            }
+
+
         }
 
         /// <summary>
@@ -111,9 +123,11 @@ namespace VirtualGuide.Mobile.View
         /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
         /// <param name="e">Event data that provides an empty dictionary to be populated with
         /// serializable state.</param>
-        private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-
+            e.PageState["Latitude"] = Maps.Center.Position.Latitude;
+            e.PageState["Longitude"] = Maps.Center.Position.Longitude;
+            e.PageState["Zoom"] = Maps.ZoomLevel;
         }
 
         #region NavigationHelper registration
@@ -258,13 +272,19 @@ namespace VirtualGuide.Mobile.View
             {
                 await Task.Delay(300);
             }
-            
+
+            var animation = MapAnimationKind.None;
+
             //set initial parameters
-            var zoomLevel = _travel.ZoomLevel;
-            var center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
+            if (_zoomLevel == 0 || _center == null)
+            {
+                _zoomLevel = _travel.ZoomLevel;
+                _center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
+                animation = MapAnimationKind.Default;
+            }
 
             //zoom map
-            await Maps.TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.Default);
+            await Maps.TrySetViewAsync(_center, _zoomLevel, null, null, animation);
 
             //wait if places has not been loaded
             if (_places == null)
