@@ -138,7 +138,6 @@ namespace VirtualGuide.Mobile.View
                 break;
                 case PropertyViewModel.Types.REGULAR:
                     var hubElement = MainHub.Sections.Where(x => x.DataContext is PropertyViewModel && ((PropertyViewModel)x.DataContext).Id == clickedItem.Id).First();
-                    //MainHub.ScrollToSection(hubElement);
                     UIHelper.ScollHubToSection(hubElement, ref MainHub);
                 break;
             }

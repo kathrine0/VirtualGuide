@@ -66,35 +66,34 @@ namespace VirtualGuide.Mobile.Helper
 
         public async static Task ImageDownloader<T>(List<T> items) where T : BaseImageModel
         {
-            var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            var imageFolder = await localFolder.CreateFolderAsync("images", CreationCollisionOption.OpenIfExists);
-
             foreach (var item in items)
             {
-                var type = item.GetType().ToString();
-                var name = type.Substring(type.LastIndexOf('.')+1, type.Length - type.LastIndexOf('.')-1);
-                
-                var filename = String.Format("{0}{1}", name, item.Id);
-                var newLocation = await HttpHelper.Download(item.ImageSrc, filename);
-                item.ImageSrc = newLocation;
+                if (!String.IsNullOrEmpty(item.ImageSrc))
+                {
+                    var type = item.GetType().ToString();
+                    var name = type.Substring(type.LastIndexOf('.')+1, type.Length - type.LastIndexOf('.')-1);
+
+                    var filename = String.Format("{0}_{1}", name, GetFileName(item.ImageSrc));
+                    await HttpHelper.Download(item.ImageSrc, filename);
+                    item.ImageSrc = filename;
+                }
             }
 
             await App.Connection.UpdateAllAsync(items);
         }
 
-        public async static Task<string> Download(string path, string filename)
+        public async static Task Download(string path, string filename)
         {
             var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
             var imageFolder = await localFolder.CreateFolderAsync("images", CreationCollisionOption.OpenIfExists);
 
-            if (String.IsNullOrEmpty(path)) return string.Empty;
+            if (String.IsNullOrEmpty(path)) return;
 
             Uri source = new Uri(App.WebService + path);
-            string destinationFileName = String.Format("{0}.{1}", filename, GetFileExtension(path));
 
             try
             {
-                StorageFile destinationFile = await imageFolder.CreateFileAsync(destinationFileName, CreationCollisionOption.ReplaceExisting);
+                StorageFile destinationFile = await imageFolder.CreateFileAsync(filename, CreationCollisionOption.FailIfExists);
 
                 BackgroundDownloader downloader = new BackgroundDownloader();
                 DownloadOperation download = downloader.CreateDownload(source, destinationFile);
@@ -110,20 +109,21 @@ namespace VirtualGuide.Mobile.Helper
                     image = new BitmapImage(imageUri);
                 }
             }
-            catch (UnauthorizedAccessException)
+            catch (Exception e)
             {
-                //this means tha file already exist and is open. Ignore it
+                //file already exists.
+                return;
             }
-            return destinationFileName;
-
         }
 
-        private static string GetFileExtension(string path)
+        private static string GetFileName(string path)
         {
-            int dot = path.LastIndexOf(".");
-            string extension = path.Substring(dot + 1, path.Length - dot - 1);
+            int slash = path.LastIndexOf("/");
+            if (slash == -1) return path;
 
-            return extension;
+            string name = path.Substring(slash + 1, path.Length - slash - 1);
+
+            return name;
         }
     }
 }

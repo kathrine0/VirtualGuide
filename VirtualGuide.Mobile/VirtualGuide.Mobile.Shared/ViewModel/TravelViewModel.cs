@@ -59,6 +59,8 @@ namespace VirtualGuide.Mobile.ViewModel
         public double ZoomLevel { get; set; }
 
         private string _imageSrc;
+
+        private ImageSource _imagePath;
         public ImageSource ImagePath
         {
             get
@@ -69,13 +71,14 @@ namespace VirtualGuide.Mobile.ViewModel
                 {
                     uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
                     bitmap = new BitmapImage(uri);
+                    _imagePath = bitmap;
                 }
-                catch
+                catch (Exception e)
                 {
+                    System.Diagnostics.Debug.WriteLine(e.ToString());
                 }
-                return bitmap;
+                return _imagePath;
             }
-            set { ;}
         }
 
         public List<TravelViewModel> Data

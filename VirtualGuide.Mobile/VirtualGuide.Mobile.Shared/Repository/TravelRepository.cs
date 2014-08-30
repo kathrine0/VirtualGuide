@@ -84,19 +84,21 @@ namespace VirtualGuide.Mobile.Repository
         private async Task<List<TravelViewModel>> DownloadAndSaveOwnedTravels()
         {
             var travels = await LoadOwnedTravels();
+            var downloadTask = new List<Task>();
+            
             foreach (var travel in travels) travel.IsOwned = true;
             await App.Connection.InsertOrReplaceAllAsync(travels);
-
             
+            downloadTask.Add(HttpHelper.ImageDownloader<Travel>(travels));
             foreach (var travel in travels)
             {
                 await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
 
                 await App.Connection.InsertOrReplaceAllAsync(travel.Places);
-                DownloadMedia<Place>(travel.Places);
+                downloadTask.Add(HttpHelper.ImageDownloader<Place>(travel.Places));
             }
-            
-            DownloadMedia<Travel>(travels);
+
+            await Task.WhenAll(downloadTask);
 
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(travels);
             
@@ -118,17 +120,11 @@ namespace VirtualGuide.Mobile.Repository
 
             await App.Connection.InsertOrReplaceAllAsync(newTravels);
 
-            DownloadMedia<Travel>(newTravels);
+            await HttpHelper.ImageDownloader<Travel>(newTravels);
 
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(newTravels);
 
             return viewModels;
-        }
-
-
-        private async void DownloadMedia<T>(List<T> items) where T : BaseImageModel
-        {
-            await HttpHelper.ImageDownloader<T>(items);
         }
 
         #endregion
