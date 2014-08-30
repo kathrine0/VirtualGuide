@@ -22,7 +22,12 @@ namespace VirtualGuide.Mobile.View
         private NavigationHelper navigationHelper;
 
         private TravelRepository _travelRepository = new TravelRepository();
-        private TravelViewModel _travelViewModel = new TravelViewModel();
+        private readonly TravelViewModel _travelViewModel = new TravelViewModel();
+
+        public TravelViewModel TravelViewModel
+        {
+            get { return this._travelViewModel; }
+        }
 
         public GuideList()
         {
@@ -52,10 +57,10 @@ namespace VirtualGuide.Mobile.View
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             //TODO Check if token is still active
-            SetupList();
+            _travelViewModel.Data = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
         }
 
         /// <summary>
@@ -113,15 +118,6 @@ namespace VirtualGuide.Mobile.View
             }
         }
 
-        private async void SetupList()
-        {
-            //Get places from DB
-            _travelViewModel.Data = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
-            AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
-
-           
-        }
-
         private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (LocalDataHelper.GetKeyValue<bool>("RefreshInProgress")) return;
@@ -132,7 +128,6 @@ namespace VirtualGuide.Mobile.View
                 ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
 
                 _travelViewModel.Data = await _travelRepository.DownloadAndSaveAllTravels();
-                AllTravelsList.ItemsSource = _travelViewModel.Collection.View;
 
                 ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }

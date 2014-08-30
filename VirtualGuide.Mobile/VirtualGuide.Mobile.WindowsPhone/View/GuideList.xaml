@@ -8,7 +8,7 @@
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    DataContext="{Binding TravelViewModel, RelativeSource={RelativeSource Self}}"
     >
 
     <Page.Resources>
@@ -68,6 +68,7 @@
                 Margin="0,0,0,30" 
                 IsItemClickEnabled="True" 
                 ItemClick="AllTravels_ItemClick"
+                ItemsSource="{Binding Collection.View}"
                 ItemTemplate="{StaticResource OwnedTravelsListItem}">
                 <ListView.GroupStyle>
                     <GroupStyle HidesIfEmpty="True" >
