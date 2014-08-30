@@ -120,6 +120,8 @@ namespace VirtualGuide.Mobile
             // Setup database
             SetupDatabase();
 
+            //Remove old runtime data
+            LocalDataHelper.DeleteContainer();
             //Create runtime data container
             LocalDataHelper.CreateContainer();
 

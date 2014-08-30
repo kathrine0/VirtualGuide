@@ -17,7 +17,10 @@ namespace VirtualGuide.Mobile.Helper
 
         public static void DeleteContainer()
         {
-            _appSettings.DeleteContainer(CONTAINER_NAME);
+            if (_appSettings.Containers.ContainsKey(CONTAINER_NAME))
+            {
+                _appSettings.DeleteContainer(CONTAINER_NAME);
+            }
         }
 
         public static bool KeyExists(string key)
