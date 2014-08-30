@@ -91,10 +91,12 @@ namespace VirtualGuide.Mobile.Repository
             foreach (var travel in travels)
             {
                 await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
+
                 await App.Connection.InsertOrReplaceAllAsync(travel.Places);
+                DownloadMedia<Place>(travel.Places);
             }
             
-            DownloadMedia(travels);
+            DownloadMedia<Travel>(travels);
 
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(travels);
             
@@ -116,7 +118,7 @@ namespace VirtualGuide.Mobile.Repository
 
             await App.Connection.InsertOrReplaceAllAsync(newTravels);
 
-            DownloadMedia(newTravels);
+            DownloadMedia<Travel>(newTravels);
 
             var viewModels = ModelHelper.ObjectToViewModel<TravelViewModel, Travel>(newTravels);
 
@@ -124,9 +126,9 @@ namespace VirtualGuide.Mobile.Repository
         }
 
 
-        private async void DownloadMedia(List<Travel> travels)
+        private async void DownloadMedia<T>(List<T> items) where T : BaseImageModel
         {
-            await HttpHelper.ImageDownloader<Travel>(travels);
+            await HttpHelper.ImageDownloader<T>(items);
         }
 
         #endregion

@@ -22,6 +22,7 @@ namespace VirtualGuide.Services
             Description = place.Description;
             Latitude = place.Latitude;
             Longitude = place.Longitude;
+            ImageSrc = place.ImageSrc;
          
             Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(place.Properties);
             Children = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(place.Children);
@@ -40,6 +41,7 @@ namespace VirtualGuide.Services
 
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public string ImageSrc { get; set; }
 
         public IList<BasicPropertyViewModel> Properties { get; set; }
 

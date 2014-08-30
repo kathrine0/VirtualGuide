@@ -71,7 +71,10 @@ namespace VirtualGuide.Mobile.Helper
 
             foreach (var item in items)
             {
-                var filename = String.Format("travel{0}.main", item.Id);
+                var type = item.GetType().ToString();
+                var name = type.Substring(type.LastIndexOf('.')+1, type.Length - type.LastIndexOf('.')-1);
+                
+                var filename = String.Format("{0}{1}", name, item.Id);
                 var newLocation = await HttpHelper.Download(item.ImageSrc, filename);
                 item.ImageSrc = newLocation;
             }
