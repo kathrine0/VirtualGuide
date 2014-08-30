@@ -67,15 +67,7 @@ namespace VirtualGuide.Mobile.ViewModel
                 Uri uri = null;
                 try
                 {
-                    if (IsOwned)
-                    {
-                        uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
-                    }
-                    else
-                    {
-                        uri = new Uri(App.WebService + _imageSrc);
-                    }
-
+                    uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
                     bitmap = new BitmapImage(uri);
                 }
                 catch

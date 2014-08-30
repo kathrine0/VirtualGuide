@@ -24,7 +24,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
-                    <Image Opacity="{Binding IsOwned, Converter={StaticResource IsOwnedToOpacity}}" Source="{Binding ImagePath, Mode=OneWay}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title, Mode=OneWay}" Height="79" Width="79"/>
+                    <Image Opacity="{Binding IsOwned, Converter={StaticResource IsOwnedToOpacity}}" Source="{Binding ImagePath, Mode=OneWay}" Stretch="UniformToFill" Height="79" Width="79"/>
                 </Border>
                 <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
                     <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
