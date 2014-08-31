@@ -12,6 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -92,6 +93,7 @@ namespace VirtualGuide.Mobile.View
             _propertiesListAll.AddRange(_propertiesList);
             this.DefaultViewModel["Properties"] = _propertiesListAll;
             this.DefaultViewModel["Title"] = _travel.Name;
+            this.DefaultViewModel["MapImage"] = new BitmapImage(new Uri(String.Format("ms-appdata:///local/maps/{0}map.png", _travel.Name)));
 
             CreateHubSections();
         }
@@ -160,34 +162,11 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        #region maps
 
-        private void Maps_Tapped(object sender, TappedRoutedEventArgs e)
+        private void MapImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(MapView), _travel.Id);
         }
-
-        private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
-        {
-            Frame.Navigate(typeof(MapView), _travel.Id);
-
-        }
-
-        private async void Maps_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Wait if travel has not been loaded yet
-            if (_travel == null)
-            {
-                await Task.Delay(300);
-            }
-
-            var zoomLevel = _travel.ZoomLevel;
-            var center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
-
-            await ((MapControl)sender).TrySetViewAsync(center, zoomLevel, null, null, MapAnimationKind.None);
-        }
-
-        #endregion
 
     }
 }

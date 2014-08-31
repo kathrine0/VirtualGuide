@@ -30,9 +30,11 @@
                 <EntranceThemeTransition/>
             </TransitionCollection>
         </Grid.ChildrenTransitions>
+
         
+
         <Hub Header="{Binding Title}" x:Name="MainHub">
-            <HubSection x:Name="TheHub" DataContext="{Binding Properties}">
+            <HubSection x:Name="TheHub">
                 <DataTemplate>
                     <ScrollViewer>
                         <Grid>
@@ -40,21 +42,15 @@
                                 <RowDefinition Height="200"/>
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-
-                            <Maps:MapControl
-                                Grid.Row="0"
-							    x:Name="Maps"
-							    MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
-                                Tapped="Maps_Tapped" 
-                                MapTapped="Maps_MapTapped"
-                                Loaded="Maps_Loaded"
-                                Margin="0,0,10,10" />
+                            
+                            <Image Source="{Binding MapImage}" Height="200" Width="Auto" 
+                                   Stretch="UniformToFill" Margin="0,0,10,10" Grid.Row="0" Tapped="MapImage_Tapped"  />
 
                             <GridView Grid.Row="1"
                             x:Name="PropertiesView" 
                             IsItemClickEnabled="True" 
                             ItemClick="PropertiesView_ItemClick"
-                            ItemsSource="{Binding}"
+                            ItemsSource="{Binding Properties}"
                             ItemTemplate="{StaticResource DetailsGrid}"
                                 />
                         </Grid>

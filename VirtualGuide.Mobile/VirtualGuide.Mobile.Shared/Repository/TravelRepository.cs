@@ -89,6 +89,7 @@ namespace VirtualGuide.Mobile.Repository
             foreach (var travel in travels) travel.IsOwned = true;
             await App.Connection.InsertOrReplaceAllAsync(travels);
             
+            downloadTask.Add(HttpHelper.MapDownloader(travels));
             downloadTask.Add(HttpHelper.ImageDownloader<Travel>(travels));
             foreach (var travel in travels)
             {

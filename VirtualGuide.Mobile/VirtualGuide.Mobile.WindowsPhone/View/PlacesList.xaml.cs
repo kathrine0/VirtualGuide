@@ -31,16 +31,12 @@ namespace VirtualGuide.Mobile.View
         private NavigationHelper navigationHelper;
         private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private Geolocator _geolocator = null;
-
         public GuidePlaces()
         {
             this.InitializeComponent();
-
-            _geolocator = new Geolocator();
-            _geolocator.ReportInterval = 1000;
-            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+            
+            App.Geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -115,8 +111,8 @@ namespace VirtualGuide.Mobile.View
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            _geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+            App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -164,7 +160,7 @@ namespace VirtualGuide.Mobile.View
 
         private async void CalculateDistances()
         {
-            var pos = await _geolocator.GetGeopositionAsync();
+            var pos = await App.Geolocator.GetGeopositionAsync();
 
             foreach(var place in _places)
             {

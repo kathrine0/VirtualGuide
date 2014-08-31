@@ -40,8 +40,6 @@ namespace VirtualGuide.Mobile.View
         
         private MapElements _mapElements = new MapElements();
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-        
-        private Geolocator _geolocator = null;
 
         private double _zoomLevel = 0;
         private Geopoint _center = null;
@@ -51,9 +49,6 @@ namespace VirtualGuide.Mobile.View
         {
             this.InitializeComponent();
 
-            _geolocator = new Geolocator();
-            _geolocator.ReportInterval = 1000;
-            
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
@@ -152,8 +147,8 @@ namespace VirtualGuide.Mobile.View
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            _geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+            App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -297,8 +292,8 @@ namespace VirtualGuide.Mobile.View
             MapElements.Places = _places;
 
             //setup geolocation
-            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+            App.Geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
         }
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)

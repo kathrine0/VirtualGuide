@@ -9,6 +9,7 @@ using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -36,7 +37,10 @@ namespace VirtualGuide.Mobile
 
         public const string WebService = @"http://192.168.10.182/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
-        
+        public static Geolocator Geolocator = new Geolocator();
+        public static string MapToken = "6lLX1mlgjcbABymCCQ-y2w";
+        public static string BingToken = "AtxbEfXDApZcBF2d2ngikWZxfUBuIpz82WF6btHwrts4Vx8_R_kvJFxw6YvXgt-a";
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -99,6 +103,8 @@ namespace VirtualGuide.Mobile
                 rootFrame.ContentTransitions = null;
                 rootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
+
+                Geolocator.ReportInterval = 1000;
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation

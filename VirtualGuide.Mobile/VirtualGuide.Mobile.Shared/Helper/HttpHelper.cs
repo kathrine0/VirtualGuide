@@ -74,7 +74,7 @@ namespace VirtualGuide.Mobile.Helper
                     var name = type.Substring(type.LastIndexOf('.')+1, type.Length - type.LastIndexOf('.')-1);
 
                     var filename = String.Format("{0}_{1}", name, GetFileName(item.ImageSrc));
-                    await HttpHelper.Download(item.ImageSrc, filename);
+                    await HttpHelper.Download(App.WebService + item.ImageSrc, filename, "images");
                     item.ImageSrc = filename;
                 }
             }
@@ -82,14 +82,25 @@ namespace VirtualGuide.Mobile.Helper
             await App.Connection.UpdateAllAsync(items);
         }
 
-        public async static Task Download(string path, string filename)
+        public async static Task MapDownloader(List<Travel> travels)
+        {
+            foreach (var travel in travels)
+            {
+                var UriTemplate = "http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/{0},{1}/{2}?mapSize={3},{4}&format=png&key={5}";
+                var Uri = String.Format(UriTemplate, travel.Latitude, travel.Longitude, travel.ZoomLevel-1, 500, 300, App.BingToken);
+
+                await Download(Uri, travel.Name+"map.png", "maps");
+            }
+        }
+
+        public async static Task Download(string path, string filename, string folder)
         {
             var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            var imageFolder = await localFolder.CreateFolderAsync("images", CreationCollisionOption.OpenIfExists);
+            var imageFolder = await localFolder.CreateFolderAsync(folder, CreationCollisionOption.OpenIfExists);
 
             if (String.IsNullOrEmpty(path)) return;
 
-            Uri source = new Uri(App.WebService + path);
+            Uri source = new Uri(path);
 
             try
             {
