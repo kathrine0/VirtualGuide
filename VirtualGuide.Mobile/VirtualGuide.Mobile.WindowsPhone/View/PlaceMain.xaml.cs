@@ -40,7 +40,7 @@ namespace VirtualGuide.Mobile.View
 
         private enum OPTION
         {
-            MAP, GALLERY, SUBPLACES
+            MAP, GALLERY, SUBPLACES, NAVIGATION
         }
 
         public PlaceMain()
@@ -52,6 +52,7 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
             _optionsList.Add(new PlaceMainOptions("Map", OPTION.MAP, "&#x1f30d;", ColorHelper.BLUE));
+            _optionsList.Add(new PlaceMainOptions("Navigate", OPTION.NAVIGATION, "&#x27A4;", ColorHelper.RED));
             _optionsList.Add(new PlaceMainOptions("Gallery", OPTION.GALLERY, "&#x1f4db;", ColorHelper.GREEN));
             _optionsList.Add(new PlaceMainOptions("More", OPTION.SUBPLACES, "&#xe109;", ColorHelper.YELLOW));
         }
