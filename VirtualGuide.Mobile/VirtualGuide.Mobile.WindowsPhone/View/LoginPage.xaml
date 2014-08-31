@@ -23,7 +23,7 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" Margin="20,0">
             <TextBlock x:Uid="UsernameLabel" Text="Username" />
-            <TextBox x:Name="Username" TextWrapping="Wrap" />
+            <TextBox x:Name="Username" />
             <TextBlock x:Uid="PasswordLabel" Text="Password" />
             <PasswordBox x:Name="Password" />
             <Grid>

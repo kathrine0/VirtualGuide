@@ -22,7 +22,7 @@ namespace VirtualGuide.Mobile.View
         private NavigationHelper navigationHelper;
 
         private TravelRepository _travelRepository = new TravelRepository();
-        private readonly TravelViewModel _travelViewModel = new TravelViewModel();
+        private TravelViewModel _travelViewModel = new TravelViewModel();
 
         public TravelViewModel TravelViewModel
         {
@@ -151,6 +151,12 @@ namespace VirtualGuide.Mobile.View
             {
                 LocalDataHelper.SetValue("RefreshInProgress", false);
             }
+        }
+
+        private void LogoutAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Logout
+            Frame.Navigate(typeof(LoginPage));
         }
     }
 }

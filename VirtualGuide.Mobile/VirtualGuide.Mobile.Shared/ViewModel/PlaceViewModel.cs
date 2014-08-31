@@ -5,6 +5,8 @@ using System.Text;
 using VirtualGuide.Mobile.Model;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -39,6 +41,7 @@ namespace VirtualGuide.Mobile.ViewModel
             Description = place.Description;
             _placeLatitude = place.Latitude;
             _placeLongitude = place.Longitude;
+            _imageSrc = place.ImageSrc;
         }
 
         /// <summary>
@@ -87,5 +90,28 @@ namespace VirtualGuide.Mobile.ViewModel
         public string Description { get; set; }
 
         public double? Distance { get; set; }
+
+        private string _imageSrc;
+
+        private ImageSource _imagePath;
+        public ImageSource ImagePath
+        {
+            get
+            {
+                ImageSource bitmap = null;
+                Uri uri = null;
+                try
+                {
+                    uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    bitmap = new BitmapImage(uri);
+                    _imagePath = bitmap;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.ToString());
+                }
+                return _imagePath;
+            }
+        }
     }
 }

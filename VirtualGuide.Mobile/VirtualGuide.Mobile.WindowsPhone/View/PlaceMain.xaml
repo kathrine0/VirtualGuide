@@ -17,15 +17,61 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        <Hub Header="{Binding Place.Name}">
+        <Hub Header="{Binding Place.Name, Mode=OneWay}" >
             <HubSection>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock Text="{Binding Place.Description}"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0" Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Stretch="UniformToFill" Height="100" Width="100" Grid.Column="0" 
+                                   Source="{Binding Place.ImagePath, Mode=OneWay}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Place.Name, Mode=OneWay}"  
+                                       TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" Margin="10,0,0,0"/>
+                        </Grid>
+                        <TextBlock Text="{Binding Place.Description, Mode=OneWay}" Grid.Row="1" Style="{StaticResource BaseTextBlock}"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
-        </Hub>
+            <HubSection>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <GridView Grid.Row="0"
+                                IsItemClickEnabled="True" 
+                                ItemsSource="{Binding Options}"
+                                ItemTemplate="{StaticResource DetailsGrid}"
+                             >
+                        </GridView>
+                    </Grid>
+                </DataTemplate>
 
+            </HubSection>
+        </Hub>
+        
+        <!--<FlipView>
+            <FlipViewItem>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Place.Description, Mode=OneWay}" Grid.Row="0" Style="{StaticResource BaseTextBlock}"/>
+                    </Grid>
+            </FlipViewItem>
+            <FlipViewItem>
+                    <Image Source="{Binding Place.ImagePath, Mode=OneWay}"
+                               Stretch="Uniform" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </FlipViewItem>
+        </FlipView>-->
     </Grid>
 </Page>

@@ -20,10 +20,15 @@
 
     <!--General Styles-->
 
-    <Style TargetType="TextBlock">
+    <Style TargetType="TextBlock" x:Key="BaseTextBlock">
         <Setter Property="Foreground" Value="#FF323232"/>
         <Setter Property="FontSize" Value="20" /> 
+        <Setter Property="TextWrapping" Value="WrapWholeWords" />
+        <Setter Property="TextAlignment" Value="Justify" />
+        <Setter Property="LineHeight" Value="3" />
     </Style>
+    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlock}"></Style>
+    
     <Style TargetType="TextBox">
         <Setter Property="BorderBrush" Value="#FFD6D6D6" />
     </Style>
@@ -76,14 +81,6 @@
             <TextBlock Grid.Column="0" Text="{Binding Symbol}" Foreground="{Binding Background}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"  />
             <TextBlock Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Margin="10,0" TextWrapping="Wrap" />
         </Grid>
-        <!--<Grid  
-            Width="160" 
-            Height="160" 
-            Margin="0,0,10,10" 
-            Background="{Binding Background}" >
-            <TextBlock Text="{Binding Symbol}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60" Margin="0,-10,0,0" />
-            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="17" Margin="5,5,5,10" TextWrapping="Wrap" TextAlignment="Center" />
-        </Grid>-->
     </DataTemplate>
 
     <!--End Grid View-->

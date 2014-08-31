@@ -16,11 +16,7 @@
             <DataTemplate x:Key="PropertyContentTemplate">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,5,0,0">
                     <Grid>
-                        <TextBlock FontSize="20" 
-                                   TextWrapping="WrapWholeWords" 
-                                   Text="{Binding Description}" 
-                                   TextAlignment="Justify" 
-                                   LineHeight="3" />
+                        <TextBlock Text="{Binding Description}" Style="{StaticResource BaseTextBlock}" />
                     </Grid>
                 </ScrollViewer>
             </DataTemplate>

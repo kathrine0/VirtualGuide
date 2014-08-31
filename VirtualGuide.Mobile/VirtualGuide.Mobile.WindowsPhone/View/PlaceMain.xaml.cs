@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
+using PropertyChanged;
+using System.Net;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -32,7 +34,14 @@ namespace VirtualGuide.Mobile.View
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         private PlaceRepository _placeRepository = new PlaceRepository();
-        private PlaceViewModel _place;
+        private PlaceViewModel _placeViewModel;
+
+        private List<PlaceMainOptions> _optionsList = new List<PlaceMainOptions>();
+
+        private enum OPTION
+        {
+            MAP, GALLERY, SUBPLACES
+        }
 
         public PlaceMain()
         {
@@ -41,6 +50,10 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            _optionsList.Add(new PlaceMainOptions("Map", OPTION.MAP, "&#x1f30d;", ColorHelper.BLUE));
+            _optionsList.Add(new PlaceMainOptions("Gallery", OPTION.GALLERY, "&#x1f4db;", ColorHelper.GREEN));
+            _optionsList.Add(new PlaceMainOptions("More", OPTION.SUBPLACES, "&#xe109;", ColorHelper.YELLOW));
         }
 
         /// <summary>
@@ -76,9 +89,10 @@ namespace VirtualGuide.Mobile.View
             var placeId = (int)e.NavigationParameter;
 
             //TODO Handle element not found exception
-            _place = await _placeRepository.GetPlaceById(placeId);
+            _placeViewModel = await _placeRepository.GetPlaceById(placeId);
 
-            this.defaultViewModel["Place"] = _place;
+            this.defaultViewModel["Place"] = _placeViewModel;
+            this.defaultViewModel["Options"] = _optionsList;
 
             //TODO Handle place children here
             //CreateHubSections();
@@ -122,5 +136,34 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
+
+        [ImplementPropertyChanged]
+        private class PlaceMainOptions
+        {
+            public PlaceMainOptions(string name, OPTION type, string symbol, Brush color)
+            {
+                Symbol = symbol;
+                Name = name;
+                Background = color;
+                Type = type;
+            }
+
+            private string _symbol;
+            public string Symbol
+            {
+                get
+                {
+                    return WebUtility.HtmlDecode(_symbol);
+                }
+                set
+                {
+                    _symbol = value;
+                }
+            }
+            public Brush Background { get; set; }
+            public string Name { get; set; }
+
+            public OPTION Type { get; set; }
+        }
     }
 }
