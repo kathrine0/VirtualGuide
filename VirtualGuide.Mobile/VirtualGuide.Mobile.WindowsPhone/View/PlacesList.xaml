@@ -8,7 +8,7 @@
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     xmlns:RegularExpressions="using:System.Text.RegularExpressions"
     x:Class="VirtualGuide.Mobile.View.GuidePlaces"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    DataContext="{Binding PlaceViewModel, RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -38,7 +38,7 @@
                 VerticalAlignment="Top"
                 SelectionMode="None"
                 IsItemClickEnabled="True"
-                ItemsSource="{Binding Places}"
+                ItemsSource="{Binding Collection.View}"
                 ContinuumNavigationTransitionInfo.ExitElementContainer="True"
                 ItemClick="ListView_ItemClick"
                   Margin="24,0,0,0">
@@ -50,7 +50,18 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+                <ListView.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True" >
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key}"
+                                      Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                      Margin="0,20,0,10"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+        </ListView>
 
     </Grid>
 </Page>

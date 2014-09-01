@@ -1,12 +1,12 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using VirtualGuide.Mobile.Model;
 using Windows.Devices.Geolocation;
-using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using VirtualGuide.Mobile.Helper;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -38,6 +38,7 @@ namespace VirtualGuide.Mobile.ViewModel
         {
             Id = place.Id;
             Name = place.Name;
+            Category = place.Category;
             Description = place.Description;
             _placeLatitude = place.Latitude;
             _placeLongitude = place.Longitude;
@@ -111,6 +112,30 @@ namespace VirtualGuide.Mobile.ViewModel
                     System.Diagnostics.Debug.WriteLine(e.ToString());
                 }
                 return _imagePath;
+            }
+        }
+
+        public string Category { get; set; }
+
+        public List<PlaceViewModel> Data
+        {
+            get;
+            set;
+        }
+
+        private CollectionViewSource _collection;
+        public CollectionViewSource Collection
+        {
+            get
+            {
+                _collection = new CollectionViewSource();
+                if (Data != null)
+                {
+                    var grouped = Data.ToGroups(x => x.Name, x => x.Category, true);
+                    _collection.Source = grouped;
+                    _collection.IsSourceGrouped = true;
+                }
+                return _collection;
             }
         }
     }

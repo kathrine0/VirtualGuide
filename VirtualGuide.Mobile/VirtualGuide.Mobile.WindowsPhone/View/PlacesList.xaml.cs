@@ -24,12 +24,12 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuidePlaces : Page
     {
         private TravelViewModel _travel;
-        private List<PlaceViewModel> _places = new List<PlaceViewModel>();
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
+        private PlaceViewModel _placeViewModel = new PlaceViewModel();
+
         private NavigationHelper navigationHelper;
-        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
         public GuidePlaces()
         {
@@ -51,9 +51,9 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        public ObservableDictionary DefaultViewModel
+        public PlaceViewModel PlaceViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return this._placeViewModel; }
         }
 
         /// <summary>
@@ -71,10 +71,8 @@ namespace VirtualGuide.Mobile.View
         {
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
-            _places = await _placeRepository.GetParentPlaces(travelId);
 
-            this.DefaultViewModel["Title"] = _travel.Name;
-            this.DefaultViewModel["Places"] = _places;
+            _placeViewModel.Data = await _placeRepository.GetParentPlaces(travelId);
         }
 
         /// <summary>
@@ -162,7 +160,7 @@ namespace VirtualGuide.Mobile.View
         {
             var pos = await App.Geolocator.GetGeopositionAsync();
 
-            foreach(var place in _places)
+            foreach(var place in _placeViewModel.Data)
             {
                 place.SetDistance(pos);
             }
