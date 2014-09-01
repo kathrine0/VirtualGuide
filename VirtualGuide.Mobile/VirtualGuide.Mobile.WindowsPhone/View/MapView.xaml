@@ -98,7 +98,13 @@
             <Maps:MapItemsControl>
                 <Maps:MapItemsControl.Items>
                     <Grid 
-                        Visibility="{Binding MarkerVisibility, Mode=OneWay}" Width="40" Height="40" Maps:MapControl.Location="{Binding UserGeoposition, Mode=OneWay}" x:Name="CurrentLocationMapMarker">
+                        Visibility="{Binding MarkerVisibility, Mode=OneWay}" 
+                        Width="40" Height="40" 
+                        Maps:MapControl.Location="{Binding UserGeoposition, Mode=OneWay}" 
+                        x:Name="CurrentLocationMapMarker" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <CompositeTransform TranslateX="-20" TranslateY="-20"/>
+                        </Grid.RenderTransform>
                         <Path Data="M20,20 L40,-10 A40,40, 0 0 0 0,-10 z" Visibility="{Binding CompassIsActive, Converter={StaticResource TrueIsVisible}}">
                             <Path.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -111,6 +117,8 @@
                             Fill="#BF000000"
                             Height="30"
                             Width="30"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
                             />
                         <Ellipse
                             Fill="#FF3FA23F"
@@ -165,7 +173,7 @@
                    Source="ms-appx:///Assets/mobius720.png" 
                    Stretch="Uniform" Margin="10" 
                    />
-            
+
             <TextBlock Grid.Row="1" 
                        Text="The compass on your device needs to be calibrated. Hold the device in front of you and sweep it through a figure 8 pattern until the calibration is complete." 
                        Foreground="White" 
@@ -173,7 +181,7 @@
                        TextAlignment="Center"
                        />
         </Grid>
-        
+
     </Grid>
 
     <Page.BottomAppBar>
