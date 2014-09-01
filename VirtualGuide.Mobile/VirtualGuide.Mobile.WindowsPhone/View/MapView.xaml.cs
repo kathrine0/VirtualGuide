@@ -41,6 +41,11 @@ namespace VirtualGuide.Mobile.View
         private MapElement _mapElement = new MapElement();
 
         private Compass _compass;
+
+        /// <summary>
+        /// Is map currently centered to User Position
+        /// </summary>
+        private bool _centeredToPosition = false;
         
         public MapView()
         {
@@ -142,12 +147,7 @@ namespace VirtualGuide.Mobile.View
             App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
             App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
-            if (_compass != null)
-            {
-                _compass.ReadingChanged -= new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
-                // Restore the default report interval to release resources while the sensor is not in use
-                _compass.ReportInterval = 0;
-            }
+            
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -162,7 +162,7 @@ namespace VirtualGuide.Mobile.View
             {
                 Geoposition pos = e.Position;
 
-                MapElements.UserGeoposition = new Geopoint(pos.Coordinate.Point.Position);
+                _mapElement.UserGeoposition = new Geopoint(pos.Coordinate.Point.Position);
             });
         }
 
@@ -179,7 +179,7 @@ namespace VirtualGuide.Mobile.View
                 {
                     case PositionStatus.Ready:
                         LocationEllipseActive();
-                        MapElements.MarkerVisibility = Windows.UI.Xaml.Visibility.Visible;
+                        _mapElement.MarkerVisibility = Windows.UI.Xaml.Visibility.Visible;
                         break;
 
                     case PositionStatus.Disabled:
@@ -202,12 +202,20 @@ namespace VirtualGuide.Mobile.View
         {
             LocationEllipse.Fill = new SolidColorBrush(Color.FromArgb(255, 63, 162, 63));
             LocationEllipse.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+            LocationEllipse.Width = 15;
+            LocationEllipse.Height = 15;
+
+            CompassPath.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void LocationEllipseInactive()
         {
             LocationEllipse.Fill = new SolidColorBrush(Color.FromArgb(255, 83, 83, 83));
             LocationEllipse.Stroke = new SolidColorBrush(Color.FromArgb(255, 195, 195, 195));
+            LocationEllipse.Width = 20;
+            LocationEllipse.Height = 20;
+
+            CompassPath.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         #endregion
@@ -254,6 +262,33 @@ namespace VirtualGuide.Mobile.View
             });
         }
 
+        private void ActivateCompass()
+        {
+            if (_compass != null && !_mapElement.CompassIsActive)
+            {
+                uint minReportInterval = _compass.MinimumReportInterval;
+                _compass.ReportInterval = minReportInterval > 16 ? minReportInterval : 16; ;
+
+                _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
+                CompassPath.Fill = new SolidColorBrush(Colors.White);
+                _mapElement.CompassIsActive = true;
+            }
+        }
+
+        private async void DeactivateCompass()
+        {
+            if (_compass != null && _mapElement.CompassIsActive)
+            {
+                _compass.ReadingChanged -= new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
+                // Restore the default report interval to release resources while the sensor is not in use
+                _compass.ReportInterval = 0;
+                CompassPath.Fill = new SolidColorBrush(Colors.Gray);
+                _mapElement.CompassIsActive = false;
+
+                await Maps.TrySetViewAsync(_mapElement.Center, _mapElement.ZoomLevel, 0, null, MapAnimationKind.Default);
+            }
+        }
+
         #endregion
 
         private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
@@ -287,6 +322,12 @@ namespace VirtualGuide.Mobile.View
             SetupGPSAndCompass();
         }
 
+        private void Maps_CenterChanged(MapControl sender, object args)
+        {
+            DeactivateCompass();
+            _centeredToPosition = false;
+        }
+
         private void MenuPlaces_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Frame.Navigate(typeof(GuidePlaces), _travel.Id);
@@ -298,30 +339,28 @@ namespace VirtualGuide.Mobile.View
             App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             _compass = Compass.GetDefault();
-            if (_compass != null)
-            {
-                // Select a report interval that is both suitable for the purposes of the app and supported by the sensor.
-                // This value will be used later to activate the sensor.
-                uint minReportInterval = _compass.MinimumReportInterval;
-                _compass.ReportInterval = minReportInterval > 16 ? minReportInterval : 16; ;
 
-                _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
-            }
-            else
-            {
-                //TODO
-                //rootPage.NotifyUser("No compass found", NotifyType.ErrorMessage);
-            }
         }
 
         #region MyPosition Button
         private async void LocateMeGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
-            if (MapElements.UserGeoposition != null)
+            //if already centered
+            if (_centeredToPosition)
             {
-                await Maps.TrySetViewAsync(MapElements.UserGeoposition, 19, null, null, MapAnimationKind.Default);
-
+                if (!_mapElement.CompassIsActive)
+                {
+                    ActivateCompass();
+                }
+                else
+                {
+                    DeactivateCompass();
+                }
+            }
+            else if (_mapElement.UserGeoposition != null)
+            {
+                await Maps.TrySetViewAsync(_mapElement.UserGeoposition, 15, null, null, MapAnimationKind.Default);
+                _centeredToPosition = true;
             }
         }
         
@@ -363,6 +402,8 @@ namespace VirtualGuide.Mobile.View
         }
         
         #endregion
+
+        
     }
 
     #region MapElement Class
@@ -374,6 +415,7 @@ namespace VirtualGuide.Mobile.View
         public double ZoomLevel { get; set; }
         public Geopoint Center { get; set; }
 
+        public bool CompassIsActive { get; set; }
         public double Heading { get; set; }
 
         private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();

@@ -88,25 +88,35 @@
 		PedestrianFeaturesVisible="True"
 		ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}" 
 		Center="{Binding Center, Mode=TwoWay}" 
-        MapTapped="Maps_MapTapped" Loaded="Maps_Loaded"
-            >
+        MapTapped="Maps_MapTapped" 
+        Loaded="Maps_Loaded" 
+        CenterChanged="Maps_CenterChanged">
 
-            <Maps:MapItemsControl ItemsSource="{Binding Places}" ItemTemplate="{StaticResource MapMarker}">
-            </Maps:MapItemsControl>
+            <Maps:MapItemsControl 
+                ItemsSource="{Binding Places}" 
+                ItemTemplate="{StaticResource MapMarker}" />
 
-
-            <Maps:MapItemsControl x:Name="Testtest">
+            <Maps:MapItemsControl>
                 <Maps:MapItemsControl.Items>
-                    <Grid Visibility="{Binding MarkerVisibility, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="40" Height="40" Maps:MapControl.Location="{Binding UserGeoposition, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" x:Name="CurrentLocationMapMarker">
+                    <Grid 
+                        Visibility="{Binding MarkerVisibility, Mode=OneWay}" Width="40" Height="40" Maps:MapControl.Location="{Binding UserGeoposition, Mode=OneWay}" x:Name="CurrentLocationMapMarker">
+                        <Path Data="M20,20 L40,-10 A40,40, 0 0 0 0,-10 z" Visibility="{Binding CompassIsActive, Converter={StaticResource TrueIsVisible}}">
+                            <Path.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF999999" Offset="0.488"/>
+                                    <GradientStop Color="Transparent"/>
+                                </LinearGradientBrush>
+                            </Path.Fill>
+                        </Path>
                         <Ellipse 
                             Fill="#BF000000"
-                            Height="40"
-                            Width="40"
+                            Height="30"
+                            Width="30"
                             />
                         <Ellipse
                             Fill="#FF3FA23F"
-                            Height="20"
-                            Width="20"
+                            Height="22"
+                            Width="22"
                             Stroke="White" 
                             StrokeThickness="2"
                             HorizontalAlignment="Center"
@@ -127,6 +137,9 @@
                 Height="40"
                 Width="40"
                 />
+            <Path Fill="Gray" x:Name="CompassPath" Visibility="Collapsed"
+                Data="M20,20 L30,3 A20,20, 0 0 0 10,3 z"
+                 />
             <Ellipse x:Name="LocationEllipse" 
                 Fill="#FF535353"
                 Height="20"
@@ -136,7 +149,9 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 />
+
         </Grid>
+        <!--Data="M0,0 L10,-20 A40,40, 0 0 0 -34.64,-34.64 z"-->
 
     </Grid>
 
