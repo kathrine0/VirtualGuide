@@ -23,12 +23,6 @@ namespace VirtualGuide.Mobile.Model
         [Column("Longitude")]
         public double Longitude { get; set; }
 
-        [Ignore]
-        public IList<Property> Properties { get; set; }
-
-        [Ignore]
-        public virtual IList<Place> Children { get; set; }
-
         [Column("ParentId")]
         public int? ParentId { get; set; }
 
@@ -37,6 +31,15 @@ namespace VirtualGuide.Mobile.Model
 
         [Column("ImageSrc")]
         public string ImageSrc { get; set; }
+
+        [Column("Category")]
+        public string Category { get; set; }
+
+        [Ignore]
+        public IList<Property> Properties { get; set; }
+
+        [Ignore]
+        public virtual IList<Place> Children { get; set; }
     }
 
 }
