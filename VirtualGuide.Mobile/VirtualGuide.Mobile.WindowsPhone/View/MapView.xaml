@@ -48,7 +48,7 @@
                                 Margin="1"
                                 Grid.Column="1"
                                 Background="{StaticResource ThemeStrongGreen}"
-                                Tapped="Grid_Tapped"
+                                Tapped="MapMarkerGrid_Tapped"
                                 DataContext="{Binding}">
                         <TextBlock 
                                 Text="&#xe111;" 
@@ -82,11 +82,12 @@
         <Maps:MapControl
 		x:Name="Maps"
         DataContext="{Binding}"
+        Heading="{Binding Heading, Mode=TwoWay}"
 		MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
 		LandmarksVisible="True" 
 		PedestrianFeaturesVisible="True"
-		ZoomLevel="{Binding ZoomLevel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-		Center="{Binding Center, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+		ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}" 
+		Center="{Binding Center, Mode=TwoWay}" 
         MapTapped="Maps_MapTapped" Loaded="Maps_Loaded"
             >
 

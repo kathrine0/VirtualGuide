@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using VirtualGuide.Mobile.Helper;
+using Windows.Devices.Sensors;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -29,7 +30,6 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class MapView : Page
     {
         private TravelViewModel _travel = null;
-        private List<MapPlaceViewModel> _places = null;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
@@ -38,13 +38,10 @@ namespace VirtualGuide.Mobile.View
         
         private NavigationHelper navigationHelper;
         
-        private MapElements _mapElements = new MapElements();
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private MapElement _mapElement = new MapElement();
 
-        private double _zoomLevel = 0;
-        private Geopoint _center = null;
-
-
+        private Compass _compass;
+        
         public MapView()
         {
             this.InitializeComponent();
@@ -55,6 +52,8 @@ namespace VirtualGuide.Mobile.View
 
         }
 
+        #region Public Properties
+
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
         /// </summary>
@@ -63,21 +62,16 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public ObservableDictionary DefaultViewModel
+        public MapElement MapElements
         {
-            get { return this.defaultViewModel; }
+            get { return this._mapElement; }
+            set { _mapElement = value; }
         }
 
+        #endregion
 
-        public MapElements MapElements
-        {
-            get { return this._mapElements; }
-            set { _mapElements = value; }
-        }
+
+        #region NavigationHelper
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -98,16 +92,16 @@ namespace VirtualGuide.Mobile.View
 
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
-            _places = await _placeRepository.GetPlacesForMap(travelId);
+            _mapElement.Places = await _placeRepository.GetPlacesForMap(travelId);
 
             if (e.PageState != null && e.PageState.ContainsKey("Latitude")
                 && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
             {
-                _mapElements.ZoomLevel = (double)e.PageState["Zoom"];
-                _mapElements.Center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
+                _mapElement.ZoomLevel = (double)e.PageState["Zoom"];
+                _mapElement.Center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
             }
 
-
+            _mapElement.Heading = 0;
         }
 
         /// <summary>
@@ -124,8 +118,6 @@ namespace VirtualGuide.Mobile.View
             e.PageState["Longitude"] = Maps.Center.Position.Longitude;
             e.PageState["Zoom"] = Maps.ZoomLevel;
         }
-
-        #region NavigationHelper registration
 
         /// <summary>
         /// The methods provided in this section are simply used to allow
@@ -149,6 +141,13 @@ namespace VirtualGuide.Mobile.View
         {
             App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
             App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+
+            if (_compass != null)
+            {
+                _compass.ReadingChanged -= new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
+                // Restore the default report interval to release resources while the sensor is not in use
+                _compass.ReportInterval = 0;
+            }
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -213,51 +212,54 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        private void MarkerImage_Tapped(object sender, TappedRoutedEventArgs e)
+        #region Compass
+
+        async private void ReadingChanged(object sender, CompassReadingChangedEventArgs e)
         {
-
-            HideDetailClouds();
-
-            var element = (MapPlaceViewModel)((Image)sender).DataContext;
-            element.DetailsVisibility = true;
-
-            _visibleDetailsPlaceId = element.Id;
-            _markerTapped = true;
-            WaitMarkerTap();
-            
-        }
-
-        private async void WaitMarkerTap()
-        {
-            await Task.Delay(100);
-            _markerTapped = false;
-        }
-
-        private void HideDetailClouds()
-        {
-            if (_visibleDetailsPlaceId != null)
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                _places.Find(place => place.Id == _visibleDetailsPlaceId).DetailsVisibility = false;
-            }
-
-            _visibleDetailsPlaceId = null;
+                CompassReading reading = e.Reading;
+                
+                if (reading.HeadingTrueNorth != null)
+                {
+                    _mapElement.Heading = reading.HeadingTrueNorth.Value;
+                }
+                else if (reading.HeadingMagneticNorth != null)
+                {
+                    _mapElement.Heading = reading.HeadingMagneticNorth;
+                }
+                else
+                {
+                    //calibrate
+                    //ScenarioOutput_TrueNorth.Text = "No data";
+                }
+                switch (reading.HeadingAccuracy)
+                {
+                    case MagnetometerAccuracy.Unknown:
+                        //ScenarioOutput_HeadingAccuracy.Text = "Unknown";
+                        break;
+                    case MagnetometerAccuracy.Unreliable:
+                        //ScenarioOutput_HeadingAccuracy.Text = "Unreliable";
+                        break;
+                    case MagnetometerAccuracy.Approximate:
+                        //ScenarioOutput_HeadingAccuracy.Text = "Approximate";
+                        break;
+                    case MagnetometerAccuracy.High:
+                        //ScenarioOutput_HeadingAccuracy.Text = "High";
+                        break;
+                    default:
+                        //ScenarioOutput_HeadingAccuracy.Text = "No data";
+                        break;
+                }
+            });
         }
+
+        #endregion
 
         private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
         {
             if (_markerTapped) return;
             HideDetailClouds(); 
-        }
-
-
-        private async void LocateMeGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-            if (MapElements.UserGeoposition != null)
-            {
-                await Maps.TrySetViewAsync(MapElements.UserGeoposition, 19, null, null, MapAnimationKind.Default);
-
-            }
         }
 
         private async void Maps_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -271,36 +273,18 @@ namespace VirtualGuide.Mobile.View
             var animation = MapAnimationKind.None;
 
             //set initial parameters
-            if (_zoomLevel == 0 || _center == null)
+            if (_mapElement.ZoomLevel == 0 || _mapElement.Center == null)
             {
-                _zoomLevel = _travel.ZoomLevel;
-                _center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
+                var zoomLevel = _travel.ZoomLevel;
+                var center = new Geopoint(new BasicGeoposition() { Latitude = _travel.Latitude, Longitude = _travel.Longitude });
                 animation = MapAnimationKind.Default;
               
                 //zoom map
-                await Maps.TrySetViewAsync(_center, _zoomLevel, null, null, animation);
+                await Maps.TrySetViewAsync(center, zoomLevel, null, null, animation);
             }
-
-
-            //wait if places has not been loaded
-            if (_places == null)
-            {
-                await Task.Delay(300);
-            }
-
-            //load places
-            MapElements.Places = _places;
 
             //setup geolocation
-            App.Geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
-        }
-
-        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var clickedItem = (MapPlaceViewModel)((Grid)sender).DataContext;
-
-            Frame.Navigate(typeof(PlaceMain), clickedItem.Id);
+            SetupGPSAndCompass();
         }
 
         private void MenuPlaces_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -308,14 +292,89 @@ namespace VirtualGuide.Mobile.View
             Frame.Navigate(typeof(GuidePlaces), _travel.Id);
         }
 
+        private void SetupGPSAndCompass()
+        {
+            App.Geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+
+            _compass = Compass.GetDefault();
+            if (_compass != null)
+            {
+                // Select a report interval that is both suitable for the purposes of the app and supported by the sensor.
+                // This value will be used later to activate the sensor.
+                uint minReportInterval = _compass.MinimumReportInterval;
+                _compass.ReportInterval = minReportInterval > 16 ? minReportInterval : 16; ;
+
+                _compass.ReadingChanged += new TypedEventHandler<Compass, CompassReadingChangedEventArgs>(ReadingChanged);
+            }
+            else
+            {
+                //TODO
+                //rootPage.NotifyUser("No compass found", NotifyType.ErrorMessage);
+            }
+        }
+
+        #region MyPosition Button
+        private async void LocateMeGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+            if (MapElements.UserGeoposition != null)
+            {
+                await Maps.TrySetViewAsync(MapElements.UserGeoposition, 19, null, null, MapAnimationKind.Default);
+
+            }
+        }
+        
+        #endregion
+
+        #region Map Markers
+        private void MapMarkerGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var clickedItem = (MapPlaceViewModel)((Grid)sender).DataContext;
+
+            Frame.Navigate(typeof(PlaceMain), clickedItem.Id);
+        }
+        private async void WaitMarkerTap()
+        {
+            await Task.Delay(100);
+            _markerTapped = false;
+        }
+        private void MarkerImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+            HideDetailClouds();
+
+            var element = (MapPlaceViewModel)((Image)sender).DataContext;
+            element.DetailsVisibility = true;
+
+            _visibleDetailsPlaceId = element.Id;
+            _markerTapped = true;
+            WaitMarkerTap();
+            
+        }
+        private void HideDetailClouds()
+        {
+            if (_visibleDetailsPlaceId != null)
+            {
+                _mapElement.Places.Find(place => place.Id == _visibleDetailsPlaceId).DetailsVisibility = false;
+            }
+
+            _visibleDetailsPlaceId = null;
+        }
+        
+        #endregion
     }
 
+    #region MapElement Class
+
     [ImplementPropertyChanged]
-    public class MapElements
+    public class MapElement
     {
         public Geopoint UserGeoposition { get; set; }
         public double ZoomLevel { get; set; }
         public Geopoint Center { get; set; }
+
+        public double Heading { get; set; }
 
         private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
         public List<MapPlaceViewModel> Places { 
@@ -337,4 +396,6 @@ namespace VirtualGuide.Mobile.View
         }
         
     }
+
+    #endregion
 }
