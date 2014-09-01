@@ -78,7 +78,6 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-
         <Maps:MapControl
 		x:Name="Maps"
         DataContext="{Binding}"
@@ -153,6 +152,28 @@
         </Grid>
         <!--Data="M0,0 L10,-20 A40,40, 0 0 0 -34.64,-34.64 z"-->
 
+        <!--Calibration screen-->
+        <Grid Background="#CC000000"
+              x:Name="CalibrationScreen"
+              Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0"
+                   Source="ms-appx:///Assets/mobius720.png" 
+                   Stretch="Uniform" Margin="10" 
+                   />
+            
+            <TextBlock Grid.Row="1" 
+                       Text="The compass on your device needs to be calibrated. Hold the device in front of you and sweep it through a figure 8 pattern until the calibration is complete." 
+                       Foreground="White" 
+                       Margin="20"
+                       TextAlignment="Center"
+                       />
+        </Grid>
+        
     </Grid>
 
     <Page.BottomAppBar>

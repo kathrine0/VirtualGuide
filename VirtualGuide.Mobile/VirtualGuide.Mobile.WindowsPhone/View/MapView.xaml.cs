@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using VirtualGuide.Mobile.Helper;
 using Windows.Devices.Sensors;
+using Windows.Graphics.Display;
+using Windows.Phone.UI.Input;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -46,6 +48,7 @@ namespace VirtualGuide.Mobile.View
         /// Is map currently centered to User Position
         /// </summary>
         private bool _centeredToPosition = false;
+        private bool _calibrationInProgress = false;
         
         public MapView()
         {
@@ -54,7 +57,9 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
         }
 
         #region Public Properties
@@ -152,6 +157,19 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.OnNavigatedFrom(e);
         }
 
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            if (_calibrationInProgress)
+            {
+                e.Handled = true;
+
+                DeactivateCompass();
+                CalibrationScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                _calibrationInProgress = false;
+
+            }
+        }
+
         #endregion
 
         #region Positioning
@@ -227,36 +245,38 @@ namespace VirtualGuide.Mobile.View
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 CompassReading reading = e.Reading;
-                
+
+                if (reading == null) return;
+
                 if (reading.HeadingTrueNorth != null)
                 {
                     _mapElement.Heading = reading.HeadingTrueNorth.Value;
                 }
-                else if (reading.HeadingMagneticNorth != null)
+                else
                 {
                     _mapElement.Heading = reading.HeadingMagneticNorth;
                 }
-                else
-                {
-                    //calibrate
-                    //ScenarioOutput_TrueNorth.Text = "No data";
-                }
+
                 switch (reading.HeadingAccuracy)
                 {
-                    case MagnetometerAccuracy.Unknown:
-                        //ScenarioOutput_HeadingAccuracy.Text = "Unknown";
-                        break;
+                    //case MagnetometerAccuracy.Unknown:
+                    //    //ScenarioOutput_HeadingAccuracy.Text = "Unknown";
+                    //    break;
                     case MagnetometerAccuracy.Unreliable:
-                        //ScenarioOutput_HeadingAccuracy.Text = "Unreliable";
+                        if (!_calibrationInProgress)
+                        {
+                            CalibrationScreen.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                            _calibrationInProgress = true;
+                        }
                         break;
                     case MagnetometerAccuracy.Approximate:
-                        //ScenarioOutput_HeadingAccuracy.Text = "Approximate";
-                        break;
                     case MagnetometerAccuracy.High:
-                        //ScenarioOutput_HeadingAccuracy.Text = "High";
-                        break;
                     default:
-                        //ScenarioOutput_HeadingAccuracy.Text = "No data";
+                        if (_calibrationInProgress)
+                        {
+                            CalibrationScreen.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                            _calibrationInProgress = false;
+                        }
                         break;
                 }
             });

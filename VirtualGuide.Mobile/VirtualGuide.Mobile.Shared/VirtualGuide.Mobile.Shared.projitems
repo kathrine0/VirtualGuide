@@ -58,6 +58,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\mobius720.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Spinner.png" />
     <Content Include="$(MSBuildThisFileDirectory)FodyWeavers.xml" />
   </ItemGroup>
 </Project>
