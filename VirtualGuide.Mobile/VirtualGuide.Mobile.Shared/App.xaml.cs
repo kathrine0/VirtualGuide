@@ -35,11 +35,12 @@ namespace VirtualGuide.Mobile
         private TransitionCollection transitions;
 #endif
 
-        public const string WebService = @"http://192.168.10.182/VirtualGuide/";
+        public const string WebService = @"http://192.168.12.65/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
         public static Geolocator Geolocator = new Geolocator();
         public static string MapToken = "6lLX1mlgjcbABymCCQ-y2w";
-        public static string BingToken = "AtxbEfXDApZcBF2d2ngikWZxfUBuIpz82WF6btHwrts4Vx8_R_kvJFxw6YvXgt-a";
+        public static string GmapsToken = "AIzaSyBNBqnWyCp2fz0gSKTTK_n7uYQPxTdCQ_0";
+        //public static string GmapsToken = "AtxbEfXDApZcBF2d2ngikWZxfUBuIpz82WF6btHwrts4Vx8_R_kvJFxw6YvXgt-a";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

@@ -86,8 +86,11 @@ namespace VirtualGuide.Mobile.Helper
         {
             foreach (var travel in travels)
             {
-                var UriTemplate = "http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/{0},{1}/{2}?mapSize={3},{4}&format=png&key={5}";
-                var Uri = String.Format(UriTemplate, travel.Latitude, travel.Longitude, travel.ZoomLevel-1, 500, 300, App.BingToken);
+                //var UriTemplate = "http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/{0},{1}/{2}?mapSize={3},{4}&format=png&key={5}";
+                //var Uri = String.Format(UriTemplate, travel.Latitude, travel.Longitude, travel.ZoomLevel+1, 500, 300, App.GmapsToken);
+
+                var UriTemplate = "http://maps.googleapis.com/maps/api/staticmap?center={0},{1}&zoom={2}&size={3}x{4}&key={5}";
+                var Uri = String.Format(UriTemplate, travel.Latitude, travel.Longitude, travel.ZoomLevel+1, 500, 300, App.GmapsToken);
 
                 await Download(Uri, travel.Name+"map.png", "maps");
             }
