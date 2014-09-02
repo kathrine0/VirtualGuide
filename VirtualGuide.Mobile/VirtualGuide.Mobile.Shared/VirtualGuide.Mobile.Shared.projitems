@@ -58,6 +58,24 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\binoculars.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\bridge.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\castle.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\cementary.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\church.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\cinema.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\fountain.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\hotel.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\museum.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\other.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\pagoda.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\restaurant.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\ruins.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\statue.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\temple.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\theater.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\themepark.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\zoo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\mobius720.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Spinner.png" />
     <Content Include="$(MSBuildThisFileDirectory)FodyWeavers.xml" />

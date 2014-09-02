@@ -24,7 +24,8 @@ namespace VirtualGuide.Services
             Longitude = place.Longitude;
             ImageSrc = place.ImageSrc;
             Category = place.Category == null ? string.Empty : place.Category.Name;
-         
+            IconName = place.Category == null ? string.Empty : place.Category.IconName;
+
             Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(place.Properties);
             Children = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(place.Children);
 
@@ -45,6 +46,8 @@ namespace VirtualGuide.Services
         public string ImageSrc { get; set; }
 
         public string Category { get; set; }
+
+        public string IconName { get; set; }
 
         public IList<BasicPropertyViewModel> Properties { get; set; }
 

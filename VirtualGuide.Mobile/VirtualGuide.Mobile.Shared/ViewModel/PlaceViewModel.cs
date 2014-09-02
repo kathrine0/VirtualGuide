@@ -20,6 +20,7 @@ namespace VirtualGuide.Mobile.ViewModel
             Id = place.Id;
             Name = place.Name;
             Point = new Geopoint(new BasicGeoposition() {Latitude = place.Latitude, Longitude = place.Longitude});
+            _iconName = place.IconName;
         }
 
         public int Id { get; set; }
@@ -28,6 +29,29 @@ namespace VirtualGuide.Mobile.ViewModel
         public Geopoint Point { get; set; }
 
         public bool DetailsVisibility { get; set; }
+
+        private string _iconName;
+
+        private ImageSource _icon;
+        public ImageSource Icon 
+        {
+            get
+            {
+                ImageSource bitmap = null;
+                Uri uri = null;
+                try
+                {
+                    uri = new Uri(String.Format("ms-appx:///Assets/Markers/{0}.png", _iconName));
+                    bitmap = new BitmapImage(uri);
+                    _icon = bitmap;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.ToString());
+                }
+                return _icon;
+            }
+        }
     }
 
     [ImplementPropertyChanged]

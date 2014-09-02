@@ -35,6 +35,9 @@ namespace VirtualGuide.Mobile.Model
         [Column("Category")]
         public string Category { get; set; }
 
+        [Column("IconName")]
+        public string IconName { get; set; }
+
         [Ignore]
         public IList<Property> Properties { get; set; }
 

@@ -18,9 +18,8 @@
 
         <DataTemplate x:Key="MapMarker">
             <Canvas>
-                <Image Source="ms-appx:///Assets/MapMarker.png" 
-                Stretch="UniformToFill" 
-                Width="50" Height="50"
+                <Image Source="{Binding Icon}" 
+                Stretch="Uniform"
                 Maps:MapControl.Location="{Binding Point}" Tapped="MarkerImage_Tapped" 
                 Margin="-25,-50,0,0"
                 Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
