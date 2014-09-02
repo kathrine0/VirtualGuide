@@ -105,7 +105,7 @@ namespace VirtualGuide.Mobile
                 rootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
 
-                Geolocator.ReportInterval = 1000;
+                Geolocator.ReportInterval = 10000;
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation

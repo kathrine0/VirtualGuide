@@ -79,17 +79,17 @@
         </Grid.ChildrenTransitions>
 
         <Maps:MapControl
-		x:Name="Maps"
-        DataContext="{Binding}"
-        Heading="{Binding Heading, Mode=TwoWay}"
-		MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
-		LandmarksVisible="True" 
-		PedestrianFeaturesVisible="True"
-		ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}" 
-		Center="{Binding Center, Mode=TwoWay}" 
-        MapTapped="Maps_MapTapped" 
-        Loaded="Maps_Loaded" 
-        CenterChanged="Maps_CenterChanged">
+		    x:Name="Maps"
+            DataContext="{Binding}"
+            Heading="{Binding Heading, Mode=TwoWay}"
+		    MapServiceToken="6lLX1mlgjcbABymCCQ-y2w" 
+		    LandmarksVisible="True" 
+		    PedestrianFeaturesVisible="True"
+		    ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}" 
+		    Center="{Binding Center, Mode=TwoWay}" 
+            MapTapped="Maps_MapTapped" 
+            Loaded="Maps_Loaded" 
+            CenterChanged="Maps_CenterChanged" >
 
             <Maps:MapItemsControl 
                 ItemsSource="{Binding Places}" 

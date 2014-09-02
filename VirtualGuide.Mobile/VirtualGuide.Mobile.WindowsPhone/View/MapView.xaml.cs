@@ -96,6 +96,7 @@ namespace VirtualGuide.Mobile.View
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+
             //Hide system tray
             StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
             await statusBar.HideAsync();
@@ -144,6 +145,8 @@ namespace VirtualGuide.Mobile.View
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            App.Geolocator.ReportInterval = 100;
+
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -151,8 +154,7 @@ namespace VirtualGuide.Mobile.View
         {
             App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
             App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
-
-            
+            App.Geolocator.ReportInterval = 10000;
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -181,6 +183,11 @@ namespace VirtualGuide.Mobile.View
                 Geoposition pos = e.Position;
 
                 _mapElement.UserGeoposition = new Geopoint(pos.Coordinate.Point.Position);
+
+                if (_centeredToPosition)
+                {
+                    _mapElement.Center = _mapElement.UserGeoposition;
+                }
             });
         }
 
@@ -311,6 +318,8 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
+        #region Maps
+
         private void Maps_MapTapped(MapControl sender, MapInputEventArgs args)
         {
             if (_markerTapped) return;
@@ -361,6 +370,8 @@ namespace VirtualGuide.Mobile.View
             _compass = Compass.GetDefault();
 
         }
+
+        #endregion
 
         #region MyPosition Button
         private async void LocateMeGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -422,7 +433,6 @@ namespace VirtualGuide.Mobile.View
         }
         
         #endregion
-
         
     }
 
