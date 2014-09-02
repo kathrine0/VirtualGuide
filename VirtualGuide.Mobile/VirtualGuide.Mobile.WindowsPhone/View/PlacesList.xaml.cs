@@ -160,6 +160,13 @@ namespace VirtualGuide.Mobile.View
         {
             var pos = await App.Geolocator.GetGeopositionAsync();
 
+            //delay this
+            int i = 0;
+            while (_placeViewModel.Data == null || i++<10)
+            {
+                await Task.Delay(300);
+            }
+
             foreach(var place in _placeViewModel.Data)
             {
                 place.SetDistance(pos);
