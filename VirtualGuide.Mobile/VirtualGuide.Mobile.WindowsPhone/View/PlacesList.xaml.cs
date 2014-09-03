@@ -26,17 +26,14 @@ namespace VirtualGuide.Mobile.View
         private TravelViewModel _travel;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
-
         private PlaceViewModel _placeViewModel = new PlaceViewModel();
-
         private NavigationHelper navigationHelper;
+
+        private Geolocator _geolocator = null;
 
         public GuidePlaces()
         {
             this.InitializeComponent();
-            
-            App.Geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
@@ -69,6 +66,12 @@ namespace VirtualGuide.Mobile.View
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            _geolocator = new Geolocator();
+            _geolocator.ReportInterval = 1000 * 5;//5 minutes
+
+            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
 
@@ -109,8 +112,8 @@ namespace VirtualGuide.Mobile.View
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+            _geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -158,7 +161,7 @@ namespace VirtualGuide.Mobile.View
 
         private async void CalculateDistances()
         {
-            var pos = await App.Geolocator.GetGeopositionAsync();
+            var pos = await _geolocator.GetGeopositionAsync();
 
             //delay this
             int i = 0;

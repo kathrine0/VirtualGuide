@@ -43,6 +43,7 @@ namespace VirtualGuide.Mobile.View
         private MapElement _mapElement = new MapElement();
 
         private Compass _compass;
+        private Geolocator _geolocator = null;
 
         /// <summary>
         /// Is map currently centered to User Position
@@ -79,7 +80,6 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
-
 
         #region NavigationHelper
 
@@ -145,16 +145,13 @@ namespace VirtualGuide.Mobile.View
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            App.Geolocator.ReportInterval = 100;
-
             this.navigationHelper.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            App.Geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            App.Geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
-            App.Geolocator.ReportInterval = 10000;
+            _geolocator.PositionChanged -= new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged -= new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             this.navigationHelper.OnNavigatedFrom(e);
         }
@@ -364,8 +361,11 @@ namespace VirtualGuide.Mobile.View
 
         private void SetupGPSAndCompass()
         {
-            App.Geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
-            App.Geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
+            _geolocator = new Geolocator();
+            _geolocator.ReportInterval = 100;
+
+            _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
+            _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             _compass = Compass.GetDefault();
 
