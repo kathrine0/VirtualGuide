@@ -61,7 +61,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\binoculars.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\bridge.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\castle.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\cementary.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\cemetery.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\church.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\cinema.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Markers\fountain.png" />
