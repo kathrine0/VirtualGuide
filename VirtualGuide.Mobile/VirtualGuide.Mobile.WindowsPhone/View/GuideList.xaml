@@ -47,7 +47,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="5" />
+        <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
 
         <!-- TitlePanel -->
         <StackPanel Grid.Row="0" Margin="24,17,0,28">

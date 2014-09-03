@@ -26,7 +26,7 @@ namespace VirtualGuide.Mobile.View
         private TravelViewModel _travel;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
-        private PlaceViewModel _placeViewModel = new PlaceViewModel();
+        private ListPlaceViewModel _placeViewModel = new ListPlaceViewModel();
         private NavigationHelper navigationHelper;
 
         private Geolocator _geolocator = null;
@@ -48,7 +48,7 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        public PlaceViewModel PlaceViewModel
+        public ListPlaceViewModel PlaceViewModel
         {
             get { return this._placeViewModel; }
         }
@@ -143,10 +143,12 @@ namespace VirtualGuide.Mobile.View
                 {
                     case PositionStatus.Ready:
                         CalculateDistances();
+                        
                         break;
 
                     case PositionStatus.Disabled:
                         MessageBoxHelper.ShowNoLocation();
+                        ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         break;
                     case PositionStatus.Initializing:
                     case PositionStatus.NoData:
@@ -174,6 +176,8 @@ namespace VirtualGuide.Mobile.View
             {
                 place.SetDistance(pos);
             }
+
+            ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         #endregion

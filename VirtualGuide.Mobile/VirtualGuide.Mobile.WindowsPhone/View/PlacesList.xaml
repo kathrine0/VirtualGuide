@@ -28,7 +28,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
+        <ProgressBar x:Name="ProgressBar" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
+
         <!-- TitlePanel -->
         <StackPanel Grid.Row="0" Margin="24,17,0,28">
             <TextBlock Text="Places" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>

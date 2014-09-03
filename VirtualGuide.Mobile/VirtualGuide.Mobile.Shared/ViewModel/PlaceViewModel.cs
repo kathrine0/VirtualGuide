@@ -55,18 +55,49 @@ namespace VirtualGuide.Mobile.ViewModel
     }
 
     [ImplementPropertyChanged]
-    public class PlaceViewModel
+    public class ListPlaceViewModel
     {
-        public PlaceViewModel() { }
-        public PlaceViewModel(Place place)
+        public ListPlaceViewModel() { }
+        public ListPlaceViewModel(Place place)
         {
             Id = place.Id;
             Name = place.Name;
             Category = place.Category;
-            Description = place.Description;
             _placeLatitude = place.Latitude;
             _placeLongitude = place.Longitude;
-            _imageSrc = place.ImageSrc;
+        }
+
+        private double _placeLatitude;
+        private double _placeLongitude;
+
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public double? Distance { get; set; }
+
+        public string Category { get; set; }
+
+        public List<ListPlaceViewModel> Data
+        {
+            get;
+            set;
+        }
+
+        private CollectionViewSource _collection;
+        public CollectionViewSource Collection
+        {
+            get
+            {
+                _collection = new CollectionViewSource();
+                if (Data != null)
+                {
+                    var grouped = Data.ToGroups(x => x.Name, x => x.Category, true);
+                    _collection.Source = grouped;
+                    _collection.IsSourceGrouped = true;
+                }
+                return _collection;
+            }
         }
 
         /// <summary>
@@ -104,6 +135,22 @@ namespace VirtualGuide.Mobile.ViewModel
             var distance = (earthRadius * expr2);
             this.Distance = distance * 1000;  // return results as meters
         }
+    }
+
+    [ImplementPropertyChanged]
+    public class PlaceViewModel
+    {
+        public PlaceViewModel() { }
+        public PlaceViewModel(Place place)
+        {
+            Id = place.Id;
+            Name = place.Name;
+            Category = place.Category;
+            Description = place.Description;
+            _placeLatitude = place.Latitude;
+            _placeLongitude = place.Longitude;
+            _imageSrc = place.ImageSrc;
+        }
 
         private double _placeLatitude;
         private double _placeLongitude;
@@ -113,8 +160,6 @@ namespace VirtualGuide.Mobile.ViewModel
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public double? Distance { get; set; }
 
         private string _imageSrc;
 
@@ -141,26 +186,5 @@ namespace VirtualGuide.Mobile.ViewModel
 
         public string Category { get; set; }
 
-        public List<PlaceViewModel> Data
-        {
-            get;
-            set;
-        }
-
-        private CollectionViewSource _collection;
-        public CollectionViewSource Collection
-        {
-            get
-            {
-                _collection = new CollectionViewSource();
-                if (Data != null)
-                {
-                    var grouped = Data.ToGroups(x => x.Name, x => x.Category, true);
-                    _collection.Source = grouped;
-                    _collection.IsSourceGrouped = true;
-                }
-                return _collection;
-            }
-        }
     }
 }
