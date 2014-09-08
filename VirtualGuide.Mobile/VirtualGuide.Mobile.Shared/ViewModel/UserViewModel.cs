@@ -12,13 +12,16 @@ namespace VirtualGuide.Mobile.ViewModel
     [ImplementPropertyChanged]
     public class LoginViewModel
     {
-        private UserRepository _userRepository = new UserRepository();
+
+        #region constructors
 
         public LoginViewModel()
         {
             SignInCommand = new DelegateCommand(SignInExecute);
             SkipLoginCommand = new DelegateCommand(SkipLoginExecute);
         }
+
+        #endregion
 
         #region events
 
@@ -46,11 +49,14 @@ namespace VirtualGuide.Mobile.ViewModel
 
         #region properties
 
-        public string Username { get; set; }
-        public string Password { get; set; }
-
+        private UserRepository _userRepository = new UserRepository();
+       
         private bool _loginInProgress = false;
-
+        
+        public string Username { get; set; }
+      
+        public string Password { get; set; }
+      
         public bool LoginInProgress
         {
             get { return _loginInProgress = false; }
