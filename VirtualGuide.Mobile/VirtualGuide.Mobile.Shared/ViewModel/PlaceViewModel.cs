@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using VirtualGuide.Mobile.Model;
+using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using VirtualGuide.Mobile.Helper;
+using System.Collections.ObjectModel;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -19,12 +21,15 @@ namespace VirtualGuide.Mobile.ViewModel
         {
             Id = place.Id;
             Name = place.Name;
+            Category = place.Category;
             Point = new Geopoint(new BasicGeoposition() {Latitude = place.Latitude, Longitude = place.Longitude});
             _iconName = place.IconName;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public string Category { get; set; }
 
         public Geopoint Point { get; set; }
 
@@ -50,6 +55,44 @@ namespace VirtualGuide.Mobile.ViewModel
                     System.Diagnostics.Debug.WriteLine(e.ToString());
                 }
                 return _icon;
+            }
+        }
+
+        public List<MapPlaceViewModel> Data
+        {
+            get;
+            set;
+        }
+
+        public List<MapPlaceViewModel> FilteredData 
+        { 
+            get
+            {
+                if (Categories == null) return null;
+
+                var visibleCategories = Categories.Where(x => x.Item1 == true).Select(x => x.Item2);
+
+                return Data.Where(x => visibleCategories.Contains(x.Category)).ToList();
+            }
+        }
+
+        private ObservableCollection<Tuple<bool, string>> _categories = null;
+        public ObservableCollection<Tuple<bool, string>> Categories
+        {
+            get
+            {
+                if (_categories == null && Data != null)
+                {
+                    var categories = Data.Select(x => x.Category).Distinct();
+
+                    Categories = new ObservableCollection<Tuple<bool, string>>(categories.Select(x => new Tuple<bool, string>(true, x)));
+                }
+
+                return _categories;
+            }
+            set
+            {
+                _categories = value;
             }
         }
     }

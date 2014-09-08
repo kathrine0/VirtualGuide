@@ -20,6 +20,7 @@ using VirtualGuide.Mobile.Helper;
 using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
 using Windows.Phone.UI.Input;
+using System.Collections.ObjectModel;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -103,7 +104,8 @@ namespace VirtualGuide.Mobile.View
 
             var travelId = (int)e.NavigationParameter;
             _travel = await _travelRepository.GetTravelByIdAsync(travelId);
-            _mapElement.Places = await _placeRepository.GetPlacesForMap(travelId);
+
+            _mapElement.MapPlaceViewModel.Data = await _placeRepository.GetPlacesForMap(travelId);
 
             if (e.PageState != null && e.PageState.ContainsKey("Latitude")
                 && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
@@ -183,7 +185,7 @@ namespace VirtualGuide.Mobile.View
 
                 if (_centeredToPosition)
                 {
-                    _mapElement.Center = _mapElement.UserGeoposition;
+                    Task.Run(() => Maps.TrySetViewAsync(_mapElement.UserGeoposition));
                 }
             });
         }
@@ -348,10 +350,12 @@ namespace VirtualGuide.Mobile.View
             SetupGPSAndCompass();
         }
 
-        private void Maps_CenterChanged(MapControl sender, object args)
+        private async void Maps_CenterChanged(MapControl sender, object args)
         {
-            DeactivateCompass();
-            _centeredToPosition = false;
+            
+            //DeactivateCompass();
+            //_centeredToPosition = false;
+            
         }
 
         private void MenuPlaces_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -362,7 +366,8 @@ namespace VirtualGuide.Mobile.View
         private void SetupGPSAndCompass()
         {
             _geolocator = new Geolocator();
-            _geolocator.ReportInterval = 100;
+            _geolocator.MovementThreshold = 5;
+            _geolocator.DesiredAccuracy = PositionAccuracy.High;
 
             _geolocator.PositionChanged += new TypedEventHandler<Geolocator, PositionChangedEventArgs>(OnPositionChanged);
             _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
@@ -386,6 +391,7 @@ namespace VirtualGuide.Mobile.View
                 else
                 {
                     DeactivateCompass();
+                    _centeredToPosition= false;
                 }
             }
             else if (_mapElement.UserGeoposition != null)
@@ -426,14 +432,19 @@ namespace VirtualGuide.Mobile.View
         {
             if (_visibleDetailsPlaceId != null)
             {
-                _mapElement.Places.Find(place => place.Id == _visibleDetailsPlaceId).DetailsVisibility = false;
+                _mapElement.MapPlaceViewModel.FilteredData.Find(place => place.Id == _visibleDetailsPlaceId).DetailsVisibility = false;
             }
 
             _visibleDetailsPlaceId = null;
         }
         
         #endregion
-        
+
+        private void Filter_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
     }
 
     #region MapElement Class
@@ -441,24 +452,29 @@ namespace VirtualGuide.Mobile.View
     [ImplementPropertyChanged]
     public class MapElement
     {
+        public MapElement()
+        {
+            MapPlaceViewModel = new MapPlaceViewModel();
+        }
         public Geopoint UserGeoposition { get; set; }
         public double ZoomLevel { get; set; }
         public Geopoint Center { get; set; }
-
         public bool CompassIsActive { get; set; }
         public double Heading { get; set; }
 
-        private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
-        public List<MapPlaceViewModel> Places { 
-            get
-            {
-                return _places;
-            }
-            set
-            {
-                _places = new List<MapPlaceViewModel>(value);
-            }
-        }
+        public MapPlaceViewModel MapPlaceViewModel {get;set;}
+
+        //private List<MapPlaceViewModel> _places = new List<MapPlaceViewModel>();
+        //public List<MapPlaceViewModel> Places { 
+        //    get
+        //    {
+        //        return _places;
+        //    }
+        //    set
+        //    {
+        //        _places = new List<MapPlaceViewModel>(value);
+        //    }
+        //}
 
         private Windows.UI.Xaml.Visibility _markerVisibility = Windows.UI.Xaml.Visibility.Collapsed;
         public Windows.UI.Xaml.Visibility MarkerVisibility
