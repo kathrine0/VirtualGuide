@@ -96,7 +96,7 @@
         <CommandBar Background="#7FB9B9B9">
             <AppBarButton Label="Refresh" Icon="Refresh" Command="{Binding RefreshCommand}" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Logout" Command="{Binding LogoutExecute}"/>
+                <AppBarButton Label="Logout" Command="{Binding LogoutCommand}"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

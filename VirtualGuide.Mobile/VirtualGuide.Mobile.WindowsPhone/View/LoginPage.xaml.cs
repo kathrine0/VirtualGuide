@@ -12,7 +12,7 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class LoginPage : Page
     {
-        private LoginViewModel _loginViewModel = new LoginViewModel();
+        private LoginViewModel _viewModel = new LoginViewModel();
 
         public LoginPage()
         {
@@ -20,15 +20,15 @@ namespace VirtualGuide.Mobile.View
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
-            LoginViewModel.SignInSuccessful += NavigateToNextPage;
-            LoginViewModel.SignInInProgress += ShowLoader;
-            LoginViewModel.SignInFailed += HideLoader;
-            LoginViewModel.SkipLogin += NavigateToNextPage;
+            ViewModel.SignInSuccessful += NavigateToNextPage;
+            ViewModel.SkipLogin += NavigateToNextPage;
+
+            this.SpinningAnimation.Begin();
         }
 
-        public LoginViewModel LoginViewModel
+        public LoginViewModel ViewModel
         {
-            get { return this._loginViewModel; }
+            get { return this._viewModel; }
         }
 
         /// <summary>
@@ -50,19 +50,6 @@ namespace VirtualGuide.Mobile.View
         private void NavigateToNextPage()
         {
             Frame.Navigate(typeof(GuideList));
-        }
-
-        private void ShowLoader()
-        {
-            LoginButton.Content = "";
-            LoginProgress.Visibility = Visibility.Visible;
-            this.SpinningAnimation.Begin();
-        }
-
-        private void HideLoader()
-        {
-            LoginButton.Content = "Login";
-            LoginProgress.Visibility = Visibility.Collapsed;
         }
     }
 }

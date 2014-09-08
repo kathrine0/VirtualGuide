@@ -7,19 +7,22 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Class="VirtualGuide.Mobile.View.LoginPage"
+    xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding LoginViewModel, RelativeSource={RelativeSource Mode=Self}}">
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}">
 
     <Page.Resources>
-        <Storyboard x:Name="SpinningAnimation">
+        <converter:TrueIsVisible x:Key="TrueIsVisible" />
+        
+        <Storyboard x:Name="SpinningAnimation" >
         	<DoubleAnimation AutoReverse="False"
         		Duration="0:0:1"
         		From="0"
         		RepeatBehavior="Forever"
         		Storyboard.TargetName="SpinningRotateTransform"
         		Storyboard.TargetProperty="Angle"
-        		To="360" />
+        		To="360"  />
         </Storyboard>
     </Page.Resources>
     
@@ -30,10 +33,10 @@
 			<TextBlock x:Uid="PasswordLabel" Text="Password" />
 			<PasswordBox x:Name="Password" Password="{Binding Password, Mode=TwoWay}" />
 			<Grid>
-				<Button x:Name="LoginButton" Content="Login"  HorizontalAlignment="Stretch" Command="{Binding SignInCommand}"/>
+                <Button x:Name="LoginButton" Content="{Binding LoginButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding SignInCommand}"/>
 				<Image
 					x:Name="LoginProgress"
-					Visibility="Collapsed"
+					Visibility="{Binding ShowLoader, Converter={StaticResource TrueIsVisible}}"
 					Height="30"
 					Width="30"
 					Source="ms-appx:///Assets/Spinner.png"

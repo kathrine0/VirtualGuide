@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Text;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
+using VirtualGuide.Mobile.View;
+using Windows.UI.Xaml.Controls;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -19,6 +21,8 @@ namespace VirtualGuide.Mobile.ViewModel
         {
             SignInCommand = new DelegateCommand(SignInExecute);
             SkipLoginCommand = new DelegateCommand(SkipLoginExecute);
+
+            LoginButtonContent = "Login";
         }
 
         #endregion
@@ -29,16 +33,6 @@ namespace VirtualGuide.Mobile.ViewModel
         /// Occurs after successful signing into the system
         /// </summary>
         public event Action SignInSuccessful;
-
-        /// <summary>
-        /// Occurs when Signing in started
-        /// </summary>
-        public event Action SignInInProgress;
-
-        /// <summary>
-        /// Occurs when Singning in failed
-        /// </summary>
-        public event Action SignInFailed;
 
         /// <summary>
         /// Occurs when User skips login
@@ -56,12 +50,16 @@ namespace VirtualGuide.Mobile.ViewModel
         public string Username { get; set; }
       
         public string Password { get; set; }
-      
+
+        public string LoginButtonContent { get; set; }
+
         public bool LoginInProgress
         {
             get { return _loginInProgress = false; }
             set { _loginInProgress = value; }
         }
+
+        public bool ShowLoader { get; set; }
         
         #endregion
 
@@ -90,10 +88,8 @@ namespace VirtualGuide.Mobile.ViewModel
                 return;
             }
 
-            if (SignInInProgress != null)
-            {
-                SignInInProgress();
-            }
+            LoginButtonContent = "";
+            ShowLoader = true;
 
 
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
@@ -139,10 +135,9 @@ namespace VirtualGuide.Mobile.ViewModel
             {
                 SignInSuccessful();
             }
-            
         }
 
-        private async void SkipLoginExecute()
+        private void SkipLoginExecute()
         {
             if (SkipLogin != null)
             {
@@ -156,10 +151,8 @@ namespace VirtualGuide.Mobile.ViewModel
 
         private void TriggerSignInFailureEvent()
         {
-            if (SignInFailed != null)
-            {
-                SignInFailed();
-            }
+            ShowLoader = false;
+            LoginButtonContent = "Login";
         }
 
         #endregion
