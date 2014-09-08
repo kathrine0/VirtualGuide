@@ -18,6 +18,10 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         #region constructors
 
+        /// <summary>
+        /// ViewModel for Login Page
+        /// </summary>
+        /// <param name="nextPageType">Type of page to navigate to after login</param>
         public LoginViewModel(Type nextPageType)
         {
             SignInCommand = new DelegateCommand(SignInExecute);
@@ -58,12 +62,18 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         #region commands
 
+        /// <summary>
+        /// Check Username and Password and Log User in
+        /// </summary>
         public DelegateCommand SignInCommand
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Skip login and redirect to next page
+        /// </summary>
         public DelegateCommand SkipLoginCommand
         {
             get;
@@ -88,7 +98,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
             {
                 MessageBoxHelper.Show("Enter username and password", "");
-                TriggerSignInFailureEvent();
+                TurnOffLoader();
 
                 return;
             }
@@ -112,14 +122,14 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
                 {
                     MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
                 }
-                TriggerSignInFailureEvent();
+                TurnOffLoader();
 
                 return;
             }
             catch
             {
                 MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
-                TriggerSignInFailureEvent();
+                TurnOffLoader();
 
                 return;
             }
@@ -138,7 +148,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         #region private methods
 
-        private void TriggerSignInFailureEvent()
+        private void TurnOffLoader()
         {
             ShowLoader = false;
             LoginButtonContent = "Login";
