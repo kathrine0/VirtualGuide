@@ -9,7 +9,7 @@ using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.View;
 using Windows.UI.Xaml.Controls;
 
-namespace VirtualGuide.Mobile.ViewModel
+namespace VirtualGuide.Mobile.ViewModel.LoginPage
 {
     [ImplementPropertyChanged]
     public class LoginViewModel

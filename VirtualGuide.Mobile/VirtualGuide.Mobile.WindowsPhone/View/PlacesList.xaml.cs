@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Controls.Maps;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Helper;
 using Windows.UI.Core;
+using VirtualGuide.Mobile.ViewModel.GuideList;
+using VirtualGuide.Mobile.Model;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -23,7 +25,7 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class GuidePlaces : Page
     {
-        private BaseTravelViewModel _travel;
+        private TravelModel _travel;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
         private ListPlaceViewModel _placeViewModel = new ListPlaceViewModel();
@@ -73,7 +75,7 @@ namespace VirtualGuide.Mobile.View
             _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             var travelId = (int)e.NavigationParameter;
-            _travel = await _travelRepository.GetTravelByIdAsync<GuideListViewModel>(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
 
             _placeViewModel.Data = await _placeRepository.GetParentPlaces(travelId);
         }
@@ -182,7 +184,6 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {

@@ -1,14 +1,9 @@
 ﻿using VirtualGuide.Mobile.Common;
 using System;
-using System.Collections.Generic;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using VirtualGuide.Mobile.ViewModel;
-using System.Threading.Tasks;
-using VirtualGuide.Mobile.Repository;
-using System.Net.Http;
 using VirtualGuide.Mobile.Helper;
+using VirtualGuide.Mobile.ViewModel.GuideList;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 

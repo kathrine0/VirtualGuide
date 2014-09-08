@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
+using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using Windows.Devices.Geolocation;
@@ -37,7 +38,7 @@ namespace VirtualGuide.Mobile.View
         private PropertyRepository _propertyRepository = new PropertyRepository();
         private TravelRepository _travelRepository = new TravelRepository();
 
-        private GuideMainViewModel _travel;
+        private TravelModel _travel;
 
         public GuideMain()
         {
@@ -88,7 +89,7 @@ namespace VirtualGuide.Mobile.View
             var travelId = (int)e.NavigationParameter;
 
             _propertiesList = await _propertyRepository.GetSimpleProperties(travelId);
-            _travel = await _travelRepository.GetTravelByIdAsync<GuideMainViewModel>(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
 
             _propertiesListAll.AddRange(_propertiesList);
             this.DefaultViewModel["Properties"] = _propertiesListAll;

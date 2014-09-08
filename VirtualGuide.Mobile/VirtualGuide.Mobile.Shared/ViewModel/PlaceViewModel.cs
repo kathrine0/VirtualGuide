@@ -1,7 +1,6 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
-using VirtualGuide.Mobile.Model;
 using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Data;
@@ -9,6 +8,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using VirtualGuide.Mobile.Helper;
 using System.Collections.ObjectModel;
+using VirtualGuide.Mobile.DBModel;
 
 namespace VirtualGuide.Mobile.ViewModel
 {

@@ -1,5 +1,4 @@
-﻿using VirtualGuide.Mobile.ViewModel;
-using Windows.UI.Xaml;
+﻿using VirtualGuide.Mobile.ViewModel.LoginPage;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 

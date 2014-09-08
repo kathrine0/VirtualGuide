@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using VirtualGuide.Mobile.Helper;
-using VirtualGuide.Mobile.Model;
+using VirtualGuide.Mobile.DBModel;
 using VirtualGuide.Mobile.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
