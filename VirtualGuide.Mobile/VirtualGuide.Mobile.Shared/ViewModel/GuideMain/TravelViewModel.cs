@@ -8,10 +8,8 @@ using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.DBModel;
 using VirtualGuide.Mobile.Model;
 
-namespace VirtualGuide.Mobile.ViewModel
+namespace VirtualGuide.Mobile.ViewModel.GuideMain
 {
-
-    
 
     [ImplementPropertyChanged]
     public class GuideMainViewModel 

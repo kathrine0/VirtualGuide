@@ -42,6 +42,8 @@ namespace VirtualGuide.Mobile
         public static string GmapsToken = "AIzaSyBNBqnWyCp2fz0gSKTTK_n7uYQPxTdCQ_0";
         //public static string GmapsToken = "AtxbEfXDApZcBF2d2ngikWZxfUBuIpz82WF6btHwrts4Vx8_R_kvJFxw6YvXgt-a";
 
+        public static Frame RootFrame;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -67,17 +69,17 @@ namespace VirtualGuide.Mobile
             }
 #endif
 
-            Frame rootFrame = Window.Current.Content as Frame;
+            RootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
+            if (RootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+                RootFrame = new Frame();
 
                 // TODO: change this value to a cache size that is appropriate for your application
-                rootFrame.CacheSize = 1;
+                RootFrame.CacheSize = 1;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -85,24 +87,24 @@ namespace VirtualGuide.Mobile
                 }
 
                 // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+                Window.Current.Content = RootFrame;
             }
 
-            if (rootFrame.Content == null)
+            if (RootFrame.Content == null)
             {
 #if WINDOWS_PHONE_APP
                 // Removes the turnstile navigation for startup.
-                if (rootFrame.ContentTransitions != null)
+                if (RootFrame.ContentTransitions != null)
                 {
                     this.transitions = new TransitionCollection();
-                    foreach (var c in rootFrame.ContentTransitions)
+                    foreach (var c in RootFrame.ContentTransitions)
                     {
                         this.transitions.Add(c);
                     }
                 }
 
-                rootFrame.ContentTransitions = null;
-                rootFrame.Navigated += this.RootFrame_FirstNavigated;
+                RootFrame.ContentTransitions = null;
+                RootFrame.Navigated += this.RootFrame_FirstNavigated;
 #endif
 
                 // When the navigation stack isn't restored navigate to the first page,
@@ -116,7 +118,7 @@ namespace VirtualGuide.Mobile
                 }
                 
 
-                if (!rootFrame.Navigate(page, e.Arguments))
+                if (!RootFrame.Navigate(page, e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

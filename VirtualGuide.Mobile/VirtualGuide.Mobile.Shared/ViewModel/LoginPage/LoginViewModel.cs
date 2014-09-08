@@ -14,30 +14,23 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
     [ImplementPropertyChanged]
     public class LoginViewModel
     {
+        private readonly Type _nextPageType;
 
         #region constructors
 
-        public LoginViewModel()
+        public LoginViewModel(Type nextPageType)
         {
             SignInCommand = new DelegateCommand(SignInExecute);
             SkipLoginCommand = new DelegateCommand(SkipLoginExecute);
 
             LoginButtonContent = "Login";
+
+            _nextPageType = nextPageType;
         }
 
         #endregion
 
         #region events
-
-        /// <summary>
-        /// Occurs after successful signing into the system
-        /// </summary>
-        public event Action SignInSuccessful;
-
-        /// <summary>
-        /// Occurs when User skips login
-        /// </summary>
-        public event Action SkipLogin;
 
         #endregion
 
@@ -131,18 +124,14 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
                 return;
             }
 
-            if (SignInSuccessful != null)
-            {
-                SignInSuccessful();
-            }
+            if (_nextPageType != null)
+                App.RootFrame.Navigate(_nextPageType);
         }
 
         private void SkipLoginExecute()
         {
-            if (SkipLogin != null)
-            {
-                SkipLogin();
-            }
+            if (_nextPageType != null)
+                App.RootFrame.Navigate(_nextPageType);
         }
 
         #endregion

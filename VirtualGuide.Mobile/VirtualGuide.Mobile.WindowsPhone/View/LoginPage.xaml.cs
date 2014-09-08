@@ -11,16 +11,13 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class LoginPage : Page
     {
-        private LoginViewModel _viewModel = new LoginViewModel();
+        private LoginViewModel _viewModel = new LoginViewModel(typeof(GuideList));
 
         public LoginPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-
-            ViewModel.SignInSuccessful += NavigateToNextPage;
-            ViewModel.SkipLogin += NavigateToNextPage;
 
             this.SpinningAnimation.Begin();
         }
@@ -46,9 +43,5 @@ namespace VirtualGuide.Mobile.View
             // this event is handled for you.
         }
 
-        private void NavigateToNextPage()
-        {
-            Frame.Navigate(typeof(GuideList));
-        }
     }
 }

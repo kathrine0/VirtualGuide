@@ -45,16 +45,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideList\GuideListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\TravelViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LoginPage\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PropertyViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TravelViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Strings\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\MapView\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\" />
   </ItemGroup>
