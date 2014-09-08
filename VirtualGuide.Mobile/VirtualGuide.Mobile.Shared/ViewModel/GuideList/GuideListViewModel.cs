@@ -16,15 +16,22 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
     [ImplementPropertyChanged]
     public class GuideListViewModel
     {
+        #region readonly properties
+
+        private readonly Type _loginPage;
+        private readonly Type _guideMainPage;
+
+
+        #endregion
+
         #region constructors
 
-        public GuideListViewModel()
+        public GuideListViewModel(Type loginPage, Type guideMainPage)
         {
-            Initialize();
-        }
+            _loginPage = loginPage;
+            _guideMainPage = guideMainPage;
 
-        public GuideListViewModel(Travel travel) : this()
-        {
+            Initialize();
         }
 
         #endregion
@@ -40,14 +47,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         #endregion
 
         #region events
-
-        public event Action<int> OwnedItemClicked;
-
-        public event Action<int> NotOwnedItemClicked;
-
-        public event Action RefreshFailedNoIdentity;
-
-        public event Action LogoutSuccessful;
 
         #endregion
 
@@ -85,13 +84,14 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         public void TravelItemClickExecute(TravelModel item)
         {
-            if (item.IsOwned && OwnedItemClicked != null)
+            if (item.IsOwned && _guideMainPage != null)
             {
-                OwnedItemClicked(item.Id);
+                App.RootFrame.Navigate(_guideMainPage, item.Id);
             }
-            else if (!item.IsOwned && NotOwnedItemClicked != null)
+            else if (!item.IsOwned)
             {
-                NotOwnedItemClicked(item.Id);
+                //TODO
+                //App.RootFrame.Navigate(_storePage, item.Id);
             }
         }
 
@@ -116,10 +116,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 {
                     MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
 
-                    if (RefreshFailedNoIdentity != null)
-                    {
-                        RefreshFailedNoIdentity();
-                    }
+                    if (_loginPage != null)
+                        App.RootFrame.Navigate(_loginPage);
 
                 }
                 else
@@ -149,10 +147,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         {
             //TODO
 
-            if (LogoutSuccessful != null)
-            {
-                LogoutSuccessful();
-            }
+            if (_loginPage != null)
+                App.RootFrame.Navigate(_loginPage);
         }
 
         #endregion

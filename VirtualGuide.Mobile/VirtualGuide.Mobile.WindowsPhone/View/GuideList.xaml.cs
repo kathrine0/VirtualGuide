@@ -16,7 +16,7 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
 
-        private GuideListViewModel _viewModel = new GuideListViewModel();
+        private GuideListViewModel _viewModel = new GuideListViewModel(typeof(LoginPage), typeof(GuideMain));
 
         public GuideListViewModel ViewModel
         {
@@ -30,11 +30,6 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            ViewModel.OwnedItemClicked += NavigateToGuideMain;
-            ViewModel.NotOwnedItemClicked += NavigateToStore;
-            ViewModel.RefreshFailedNoIdentity += NavigateToLoginPage;
-            ViewModel.LogoutSuccessful += NavigateToLoginPage;
         }
 
 
@@ -103,19 +98,5 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        private void NavigateToGuideMain(int id)
-        {
-            Frame.Navigate(typeof(GuideMain), id);
-        }
-
-        private void NavigateToStore(int id)
-        {
-            //todo
-        }
-
-        private void NavigateToLoginPage()
-        {
-            Frame.Navigate(typeof(LoginPage));
-        }
     }
 }

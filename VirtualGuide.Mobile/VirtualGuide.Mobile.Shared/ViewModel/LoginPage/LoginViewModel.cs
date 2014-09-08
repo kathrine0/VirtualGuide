@@ -14,7 +14,11 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
     [ImplementPropertyChanged]
     public class LoginViewModel
     {
+        #region readonly properties
+
         private readonly Type _nextPageType;
+
+        #endregion
 
         #region constructors
 
