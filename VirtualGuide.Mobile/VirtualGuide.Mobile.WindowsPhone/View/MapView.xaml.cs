@@ -32,7 +32,7 @@ namespace VirtualGuide.Mobile.View
     
     public sealed partial class MapView : Page
     {
-        private TravelViewModel _travel = null;
+        private GuideListViewModel _travel = null;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
@@ -103,7 +103,7 @@ namespace VirtualGuide.Mobile.View
             await statusBar.HideAsync();
 
             var travelId = (int)e.NavigationParameter;
-            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync<GuideListViewModel>(travelId);
 
             _mapElement.MapPlaceViewModel.Data = await _placeRepository.GetPlacesForMap(travelId);
 

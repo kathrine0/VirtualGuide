@@ -23,7 +23,7 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class GuidePlaces : Page
     {
-        private TravelViewModel _travel;
+        private BaseTravelViewModel _travel;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
         private ListPlaceViewModel _placeViewModel = new ListPlaceViewModel();
@@ -73,7 +73,7 @@ namespace VirtualGuide.Mobile.View
             _geolocator.StatusChanged += new TypedEventHandler<Geolocator, StatusChangedEventArgs>(OnStatusChanged);
 
             var travelId = (int)e.NavigationParameter;
-            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync<GuideListViewModel>(travelId);
 
             _placeViewModel.Data = await _placeRepository.GetParentPlaces(travelId);
         }

@@ -81,7 +81,7 @@ namespace VirtualGuide.Mobile.ViewModel
 
         #endregion
 
-        #region methods
+        #region public methods
 
         private async void SignInExecute()
         {
@@ -152,7 +152,7 @@ namespace VirtualGuide.Mobile.ViewModel
 
         #endregion
 
-        #region private
+        #region private methods
 
         private void TriggerSignInFailureEvent()
         {

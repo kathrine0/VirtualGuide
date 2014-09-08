@@ -21,12 +21,11 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
 
-        private TravelRepository _travelRepository = new TravelRepository();
-        private TravelViewModel _travelViewModel = new TravelViewModel();
+        private GuideListViewModel _viewModel = new GuideListViewModel();
 
-        public TravelViewModel TravelViewModel
+        public GuideListViewModel ViewModel
         {
-            get { return this._travelViewModel; }
+            get { return this._viewModel; }
         }
 
         public GuideList()
@@ -36,7 +35,13 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            ViewModel.OwnedItemClicked += NavigateToGuideMain;
+            ViewModel.NotOwnedItemClicked += NavigateToStore;
+            ViewModel.RefreshFailedNoIdentity += NavigateToLoginPage;
+            ViewModel.LogoutSuccessful += NavigateToLoginPage;
         }
+
 
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
@@ -57,10 +62,9 @@ namespace VirtualGuide.Mobile.View
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            //TODO Check if token is still active
-            _travelViewModel.Data = new List<TravelViewModel>(await _travelRepository.GetAllTravelsAsync());
+            ViewModel.GetData();
         }
 
         /// <summary>
@@ -104,58 +108,18 @@ namespace VirtualGuide.Mobile.View
 
         #endregion
 
-        private void AllTravels_ItemClick(object sender, ItemClickEventArgs e)
+        private void NavigateToGuideMain(int id)
         {
-            var clicked = (e.ClickedItem as TravelViewModel);
-
-            if (clicked.IsOwned)
-            {
-                Frame.Navigate(typeof(GuideMain), clicked.Id);
-            }
-            else
-            {
-                //TODO navigate to store
-            }
+            Frame.Navigate(typeof(GuideMain), id);
         }
 
-        private async void RefreshAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void NavigateToStore(int id)
         {
-            if (LocalDataHelper.GetKeyValue<bool>("RefreshInProgress")) return;
-            LocalDataHelper.SetValue("RefreshInProgress", true);
-
-            try
-            {
-                ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Visible;
-
-                _travelViewModel.Data = await _travelRepository.DownloadAndSaveAllTravels();
-
-                ProgressBar.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            }
-            catch (HttpRequestException ex)
-            {
-                if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
-                {
-                    MessageBoxHelper.Show("Please check your internet connection.", "No Connection");
-                }
-                else if (ex.Message == System.Net.HttpStatusCode.Unauthorized.ToString())
-                {
-                    MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
-                    this.Frame.Navigate(typeof(LoginPage));
-                }
-                else
-                {
-                    MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
-
-                }
-            } finally
-            {
-                LocalDataHelper.SetValue("RefreshInProgress", false);
-            }
+            //todo
         }
 
-        private void LogoutAppBarButton_Click(object sender, RoutedEventArgs e)
+        private void NavigateToLoginPage()
         {
-            //TODO Logout
             Frame.Navigate(typeof(LoginPage));
         }
     }

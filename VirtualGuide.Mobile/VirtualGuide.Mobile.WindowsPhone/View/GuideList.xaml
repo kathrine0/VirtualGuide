@@ -5,16 +5,18 @@
     xmlns:local="using:VirtualGuide.Mobile.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Extensions="using:VirtualGuide.Mobile.Helper"
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding TravelViewModel, RelativeSource={RelativeSource Self}}"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
     >
 
     <Page.Resources>
 
         <converter:IsOwnedToOpacity x:Key="IsOwnedToOpacity" />
         <converter:IsOwnedToText x:Key="IsOwnedToText" />
+        <converter:TrueIsVisible x:Key="TrueIsVisible" />
 
         <DataTemplate x:Key="OwnedTravelsListItem">
             <Grid>
@@ -47,7 +49,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
+        <ProgressBar x:Name="ProgressBar" Visibility="{Binding Loading, Converter={StaticResource TrueIsVisible}}" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
 
         <!-- TitlePanel -->
         <StackPanel Grid.Row="0" Margin="24,17,0,28">
@@ -67,9 +69,10 @@
                 Grid.Row="0" 
                 Margin="0,0,0,30" 
                 IsItemClickEnabled="True" 
-                ItemClick="AllTravels_ItemClick"
                 ItemsSource="{Binding Collection.View}"
-                ItemTemplate="{StaticResource OwnedTravelsListItem}">
+                ItemTemplate="{StaticResource OwnedTravelsListItem}"
+                Extensions:ItemClickCommand.Command="{Binding TravelItemClickCommand}" >
+                
                 <ListView.GroupStyle>
                     <GroupStyle HidesIfEmpty="True" >
                         <GroupStyle.HeaderTemplate>
@@ -91,9 +94,9 @@
 
     <Page.BottomAppBar>
         <CommandBar Background="#7FB9B9B9">
-            <AppBarButton Label="Refresh" Icon="Refresh" Click="RefreshAppBarButton_Click"/>
+            <AppBarButton Label="Refresh" Icon="Refresh" Command="{Binding RefreshCommand}" />
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Logout" Click="LogoutAppBarButton_Click"/>
+                <AppBarButton Label="Logout" Command="{Binding LogoutExecute}"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

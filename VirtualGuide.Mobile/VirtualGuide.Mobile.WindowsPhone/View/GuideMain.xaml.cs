@@ -36,8 +36,8 @@ namespace VirtualGuide.Mobile.View
 
         private PropertyRepository _propertyRepository = new PropertyRepository();
         private TravelRepository _travelRepository = new TravelRepository();
-       
-        private TravelViewModel _travel;
+
+        private GuideMainViewModel _travel;
 
         public GuideMain()
         {
@@ -88,7 +88,7 @@ namespace VirtualGuide.Mobile.View
             var travelId = (int)e.NavigationParameter;
 
             _propertiesList = await _propertyRepository.GetSimpleProperties(travelId);
-            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync<GuideMainViewModel>(travelId);
 
             _propertiesListAll.AddRange(_propertiesList);
             this.DefaultViewModel["Properties"] = _propertiesListAll;
