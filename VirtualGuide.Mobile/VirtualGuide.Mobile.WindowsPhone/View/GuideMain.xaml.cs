@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
@@ -28,7 +29,7 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
 
-        private GuideMainViewModel _viewModel = new GuideMainViewModel(); 
+        private GuideMainViewModel _viewModel = new GuideMainViewModel(typeof(MapView));
 
         public GuideMain()
         {
@@ -38,6 +39,7 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            ViewModel.DataLoaded += CreateHubSections;
         }
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
@@ -79,8 +81,6 @@ namespace VirtualGuide.Mobile.View
             var travelId = (int)e.NavigationParameter;
 
             ViewModel.LoadData(travelId);
-
-            CreateHubSections();
         }
 
         /// <summary>
@@ -136,6 +136,9 @@ namespace VirtualGuide.Mobile.View
         {
             foreach (var property in ViewModel.Properties)
             {
+                if (property.Type != GuideMainPropertyBindingModel.Types.REGULAR)
+                    continue;
+
                 HubSection hubSection = new HubSection();
                 hubSection.Header = property.Symbol + property.Name;
                 hubSection.DataContext = property;
@@ -146,12 +149,6 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
-
-
-        private void MapImage_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            //Frame.Navigate(typeof(MapView), _travel.Id);
-        }
 
     }
 }

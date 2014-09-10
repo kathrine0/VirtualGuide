@@ -9,6 +9,8 @@ using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.BindingModel;
 using System.Collections.ObjectModel;
+using Microsoft.Practices.Prism.Commands;
+using Windows.UI.Xaml.Controls;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideMain
 {
@@ -16,18 +18,41 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
     [ImplementPropertyChanged]
     public class GuideMainViewModel
     {
+        #region readonly properties
+
+        private readonly Type _mapsPage;
+
+        #endregion
+
+        #region
+
+        public event Action DataLoaded;
+
+        #endregion
+
         #region constructors
-        public GuideMainViewModel()
+        public GuideMainViewModel(Type mapsPage)
         {
-            Travel = new GuideMainBindingModel();
+            if (Travel == null)
+            { 
+                Travel = new GuideMainBindingModel();
+            }
+
             Initialize();
+            _mapsPage = mapsPage;
         }
-        public GuideMainViewModel(Travel travel)
+        public GuideMainViewModel(Travel travel, Type mapsPage)
+            : this(mapsPage)
         {
             Travel = new GuideMainBindingModel(travel);
-            Initialize();
         }
 
+
+        #endregion
+
+        #region commands
+
+        public DelegateCommand NavigateToMapCommand { get; set; }
 
         #endregion
 
@@ -79,6 +104,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         private void Initialize()
         {
+            NavigateToMapCommand = new DelegateCommand(NavigateToMapExecute);
+
             var tours = new GuideMainPropertyBindingModel() {
                 Name = "Tours", 
                 Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, 
@@ -103,15 +130,25 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         {
             if (_travelId != 0 || (Travel != null && Travel.Id != 0))
             {
+                Travel = await _travelRepository.GetTravelByIdAsync<GuideMainBindingModel>(_travelId);
+             
                 var props = (await _propertyRepository.GetSimpleProperties<GuideMainPropertyBindingModel>(_travelId));
                 
                 foreach(var prop in props)
                 {
                     Properties.Add(prop);
-                }
-                    
-                Travel = await _travelRepository.GetTravelByIdAsync<GuideMainBindingModel>(_travelId);
+                }                   
             }
+
+            if (DataLoaded != null)
+            {
+                DataLoaded();
+            }
+        }
+
+        public void NavigateToMapExecute()
+        {
+            App.RootFrame.Navigate(_mapsPage, Travel.Id);
         }
 
         #endregion
