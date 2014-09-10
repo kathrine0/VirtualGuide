@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using VirtualGuide.Mobile.Helper;
 using System.Collections.ObjectModel;
-using VirtualGuide.Mobile.DBModel;
+using VirtualGuide.Mobile.Model;
 
 namespace VirtualGuide.Mobile.ViewModel
 {

@@ -2,26 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using VirtualGuide.Mobile.DBModel;
+using VirtualGuide.Mobile.Model;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace VirtualGuide.Mobile.Model
+namespace VirtualGuide.Mobile.BindingModel
 {
     [ImplementPropertyChanged]
-    public class TravelModel
+    public class GuideMainBindingModel : BaseTravelBindingModel
     {
         #region constructors
 
-        public TravelModel()
+        public GuideMainBindingModel() : base()
         {
 
         }
 
-        public TravelModel(Travel travel)
+        public GuideMainBindingModel(Travel travel) :base(travel)
         {
-            Id = travel.Id;
-            Name = travel.Name;
             Description = travel.Description;
             Price = travel.Price;
             Latitude = travel.Latitude;
@@ -35,15 +33,9 @@ namespace VirtualGuide.Mobile.Model
 
         #region properties
 
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
         public string Description { get; set; }
 
         public double Price { get; set; }
-
-        public List<Property> Properties { get; set; }
 
         public double Latitude { get; set; }
 

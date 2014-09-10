@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirtualGuide.Mobile.DBModel
+namespace VirtualGuide.Mobile.Model
 {
     public interface BaseImageModel : BaseModel
     {

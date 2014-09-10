@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
-using VirtualGuide.Mobile.DBModel;
 using VirtualGuide.Mobile.Helper;
+using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.ViewModel;
 
 namespace VirtualGuide.Mobile.Repository
@@ -18,11 +18,11 @@ namespace VirtualGuide.Mobile.Repository
             return properties;
         }
 
-        public async Task<List<PropertyViewModel>> GetSimpleProperties(int travelId)
+        public async Task<List<T>> GetSimpleProperties<T>(int travelId)
         {
             var properties = await GetPropertiesByTravelIdAsync(travelId);
 
-            return ModelHelper.ObjectToViewModel<PropertyViewModel, Property>(properties);
+            return ModelHelper.ObjectToViewModel<T, Property>(properties);
         }
     }
 }

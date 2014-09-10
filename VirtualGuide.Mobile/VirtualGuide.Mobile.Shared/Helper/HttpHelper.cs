@@ -5,8 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using VirtualGuide.Mobile.DBModel;
-using VirtualGuide.Mobile.DBModel;
+
+
+using VirtualGuide.Mobile.Model;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;

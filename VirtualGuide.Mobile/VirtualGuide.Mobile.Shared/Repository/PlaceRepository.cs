@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Common;
-using VirtualGuide.Mobile.DBModel;
 using VirtualGuide.Mobile.Helper;
+using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.ViewModel;
 
 namespace VirtualGuide.Mobile.Repository

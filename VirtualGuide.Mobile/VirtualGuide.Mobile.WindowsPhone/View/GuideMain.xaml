@@ -8,7 +8,7 @@
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Mode=Self}}"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
     >
 
     <Page.Resources>
@@ -33,7 +33,7 @@
 
         
 
-        <Hub Header="{Binding Title}" x:Name="MainHub">
+        <Hub Header="{Binding Travel.Name}" x:Name="MainHub">
             <HubSection x:Name="TheHub">
                 <DataTemplate>
                     <ScrollViewer>

@@ -3,26 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using Windows.UI.Xaml.Media;
 
-namespace VirtualGuide.Mobile.ViewModel
+namespace VirtualGuide.Mobile.BindingModel
 {
-
     [ImplementPropertyChanged]
-    public class PropertyViewModel
+    public class GuideMainPropertyBindingModel
     {
         public enum Types
         {
             MAPS, TOURS, REGULAR
         }
+        
+        #region constructors
+        public GuideMainPropertyBindingModel() { }
 
-        public PropertyViewModel() { }
-
-        public PropertyViewModel(Property property)
+        public GuideMainPropertyBindingModel(Property property)
         {
             Id = property.Id;
             Name = property.Title;
@@ -32,6 +30,11 @@ namespace VirtualGuide.Mobile.ViewModel
             Description = property.Description;
 
         }
+
+        #endregion
+
+        #region properties
+
         public int Id { get; set; }
 
         private string _name = string.Empty;
@@ -60,6 +63,7 @@ namespace VirtualGuide.Mobile.ViewModel
             }
         }
         public Types Type { get; set; }
-    }
 
+        #endregion
+    }
 }

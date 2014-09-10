@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using VirtualGuide.Mobile.Helper;
-using VirtualGuide.Mobile.DBModel;
+
 using VirtualGuide.Mobile.Repository;
 using Windows.UI.Xaml.Data;
 using VirtualGuide.Mobile.Model;
+using VirtualGuide.Mobile.BindingModel;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideList
 {
@@ -38,7 +39,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         #region commands
 
-        public DelegateCommand<TravelModel> TravelItemClickCommand { get; set; }
+        public DelegateCommand<GuideListBindingModel> TravelItemClickCommand { get; set; }
 
         public DelegateCommand RefreshCommand { get; set; }
 
@@ -54,7 +55,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         private TravelRepository _travelRepository = new TravelRepository();
 
-        public List<TravelModel> Data
+        public List<GuideListBindingModel> Data
         {
             get;
             set;
@@ -82,7 +83,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         #region public methods
 
-        public void TravelItemClickExecute(TravelModel item)
+        public void TravelItemClickExecute(GuideListBindingModel item)
         {
             if (item.IsOwned && _guideMainPage != null)
             {
@@ -104,7 +105,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 Loading = true;
 
-                Data = await _travelRepository.DownloadAndSaveAllTravels();
+                Data = await _travelRepository.DownloadAndSaveAllTravels<GuideListBindingModel>();
             }
             catch (HttpRequestException ex)
             {
@@ -134,14 +135,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
         }
 
-        public async void GetData()
-        {
-            Loading = true;
-            //TODO Check if token is still active
-            Data = new List<TravelModel>(await _travelRepository.GetAllTravelsAsync());
-
-            Loading = false;
-        }
 
         public void LogoutExecute()
         {
@@ -155,11 +148,15 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         #region private methods
 
-        private void Initialize()
+        private async void Initialize()
         {
-            TravelItemClickCommand = new DelegateCommand<TravelModel>(TravelItemClickExecute);
+            TravelItemClickCommand = new DelegateCommand<GuideListBindingModel>(TravelItemClickExecute);
             RefreshCommand = new DelegateCommand(RefreshExecute);
             LogoutCommand = new DelegateCommand(LogoutExecute);
+
+            Loading = true;
+            //TODO Check if token is still active
+            Data = new List<GuideListBindingModel>(await _travelRepository.GetAllTravelsAsync());
 
             Loading = false;
         }

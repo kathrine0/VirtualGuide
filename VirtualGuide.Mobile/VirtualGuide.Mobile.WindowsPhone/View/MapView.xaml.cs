@@ -23,6 +23,7 @@ using Windows.Phone.UI.Input;
 using System.Collections.ObjectModel;
 using VirtualGuide.Mobile.ViewModel.GuideList;
 using VirtualGuide.Mobile.Model;
+using VirtualGuide.Mobile.BindingModel;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -34,7 +35,7 @@ namespace VirtualGuide.Mobile.View
     
     public sealed partial class MapView : Page
     {
-        private TravelModel _travel = null;
+        private MapsBindingModel _travel = null;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
 
@@ -105,7 +106,7 @@ namespace VirtualGuide.Mobile.View
             await statusBar.HideAsync();
 
             var travelId = (int)e.NavigationParameter;
-            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
+            _travel = await _travelRepository.GetTravelByIdAsync<MapsBindingModel>(travelId);
 
             _mapElement.MapPlaceViewModel.Data = await _placeRepository.GetPlacesForMap(travelId);
 
@@ -362,7 +363,7 @@ namespace VirtualGuide.Mobile.View
 
         private void MenuPlaces_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(GuidePlaces), _travel.Id);
+            //Frame.Navigate(typeof(GuidePlaces), _travel.Id);
         }
 
         private void SetupGPSAndCompass()

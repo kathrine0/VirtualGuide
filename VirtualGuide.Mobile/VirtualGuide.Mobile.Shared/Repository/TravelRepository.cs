@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
-using VirtualGuide.Mobile.DBModel;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.ViewModel;
@@ -27,10 +27,10 @@ namespace VirtualGuide.Mobile.Repository
             return await HttpHelper.GetData<List<Travel>>("api/OwnedTravels");
         }
 
-        public async Task<List<TravelModel>> GetAvailableTravels()
+        public async Task<List<GuideMainBindingModel>> GetAvailableTravels()
         {
             var availableTravels = await LoadAvailableTravels();
-            var viewModels = ModelHelper.ObjectToViewModel<TravelModel, Travel>(availableTravels);
+            var viewModels = ModelHelper.ObjectToViewModel<GuideMainBindingModel, Travel>(availableTravels);
 
             foreach(var model in viewModels)
             {
@@ -45,13 +45,14 @@ namespace VirtualGuide.Mobile.Repository
         #region access database
 
         #region public methods
-        public async Task<List<TravelModel>> GetAllTravelsAsync() 
+        public async Task<List<GuideListBindingModel>> GetAllTravelsAsync() 
         {
             var travels = await App.Connection.QueryAsync<Travel>("Select * FROM Travel");
-            var viewModels = ModelHelper.ObjectToViewModel<TravelModel, Travel>(travels);
+            var viewModels = ModelHelper.ObjectToViewModel<GuideListBindingModel, Travel>(travels);
             return viewModels;
         }
-        public async Task<TravelModel> GetTravelByIdAsync(int id) 
+        public async Task<T> GetTravelByIdAsync<T>(int id) 
+            where T : BaseTravelBindingModel
         {
             var travel = await App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE Id=?", id);
 
@@ -60,14 +61,15 @@ namespace VirtualGuide.Mobile.Repository
                 throw new Exception("Entity not found");
             }
 
-            return new TravelModel(travel[0]); //(T)Activator.CreateInstance(typeof(T), travel[0]);
+            return (T) Activator.CreateInstance(typeof(T), travel[0]);
         }
-        public async Task<List<TravelModel>> DownloadAndSaveAllTravels() 
+        public async Task<List<T>> DownloadAndSaveAllTravels<T>()
+            where T : BaseTravelBindingModel
         {
-            var ownedTravelsTask = await DownloadAndSaveOwnedTravels();
-            var availableTravelsTask = await DownloadAndSaveAvailableTravels(ownedTravelsTask);
+            var ownedTravelsTask = await DownloadAndSaveOwnedTravels<T>();
+            var availableTravelsTask = await DownloadAndSaveAvailableTravels<T>(ownedTravelsTask);
 
-            var allTravels = new List<TravelModel>();
+            var allTravels = new List<T>();
             allTravels.AddRange(ownedTravelsTask);
             allTravels.AddRange(availableTravelsTask);
 
@@ -83,7 +85,7 @@ namespace VirtualGuide.Mobile.Repository
 
             return travels;
         }
-        private async Task<List<TravelModel>> DownloadAndSaveOwnedTravels() 
+        private async Task<List<T>> DownloadAndSaveOwnedTravels<T>() 
         {
             var travels = await LoadOwnedTravels();
             var downloadTask = new List<Task>();
@@ -103,11 +105,12 @@ namespace VirtualGuide.Mobile.Repository
 
             await Task.WhenAll(downloadTask);
 
-            var viewModels = ModelHelper.ObjectToViewModel<TravelModel, Travel>(travels);
+            var viewModels = ModelHelper.ObjectToViewModel<T, Travel>(travels);
             
             return viewModels;
         }
-        private async Task<List<TravelModel>> DownloadAndSaveAvailableTravels(List<TravelModel> ownedTravels)
+        private async Task<List<T>> DownloadAndSaveAvailableTravels<T>(List<T> ownedTravels)
+            where T : BaseTravelBindingModel
         {
             var travels = await LoadAvailableTravels();
             var newTravels = new List<Travel>();
@@ -124,7 +127,7 @@ namespace VirtualGuide.Mobile.Repository
 
             await HttpHelper.ImageDownloader<Travel>(newTravels);
 
-            var viewModels = ModelHelper.ObjectToViewModel<TravelModel, Travel>(newTravels);
+            var viewModels = ModelHelper.ObjectToViewModel<T, Travel>(newTravels);
 
             return viewModels;
         }

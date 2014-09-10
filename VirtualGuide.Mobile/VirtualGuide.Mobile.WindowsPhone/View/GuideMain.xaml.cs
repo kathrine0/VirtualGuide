@@ -7,6 +7,7 @@ using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
+using VirtualGuide.Mobile.ViewModel.GuideMain;
 using Windows.Devices.Geolocation;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
@@ -26,19 +27,8 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideMain : Page
     {
         private NavigationHelper navigationHelper;
-        private readonly ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        private List<PropertyViewModel> _propertiesListAll = new List<PropertyViewModel>() { 
-            new PropertyViewModel() {Name = "Places", Background=VirtualGuide.Mobile.Helper.ColorHelper.BLUE, Symbol="\uD83C\uDF0D", Type=PropertyViewModel.Types.MAPS},
-            new PropertyViewModel() {Name = "Tours", Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, Symbol="\uD83C\uDFF0", Type=PropertyViewModel.Types.TOURS},
-        };
-
-        private List<PropertyViewModel> _propertiesList;
-
-        private PropertyRepository _propertyRepository = new PropertyRepository();
-        private TravelRepository _travelRepository = new TravelRepository();
-
-        private TravelModel _travel;
+        private GuideMainViewModel _viewModel = new GuideMainViewModel(); 
 
         public GuideMain()
         {
@@ -68,9 +58,9 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        public ObservableDictionary DefaultViewModel
+        public GuideMainViewModel ViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return this._viewModel; }
         }
 
         /// <summary>
@@ -84,17 +74,11 @@ namespace VirtualGuide.Mobile.View
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             var travelId = (int)e.NavigationParameter;
 
-            _propertiesList = await _propertyRepository.GetSimpleProperties(travelId);
-            _travel = await _travelRepository.GetTravelByIdAsync(travelId);
-
-            _propertiesListAll.AddRange(_propertiesList);
-            this.DefaultViewModel["Properties"] = _propertiesListAll;
-            this.DefaultViewModel["Title"] = _travel.Name;
-            this.DefaultViewModel["MapImage"] = new BitmapImage(new Uri(String.Format("ms-appdata:///local/maps/{0}map.png", _travel.Name)));
+            ViewModel.LoadData(travelId);
 
             CreateHubSections();
         }
@@ -135,7 +119,7 @@ namespace VirtualGuide.Mobile.View
             switch(clickedItem.Type)
             {
                 case PropertyViewModel.Types.MAPS:
-                    Frame.Navigate(typeof(GuidePlaces), _travel.Id);
+                    //Frame.Navigate(typeof(GuidePlaces), _travel.Id);
                 break;
                 case PropertyViewModel.Types.TOURS:
                 break;
@@ -150,7 +134,7 @@ namespace VirtualGuide.Mobile.View
 
         private void CreateHubSections()
         {
-            foreach (var property in _propertiesList)
+            foreach (var property in ViewModel.Properties)
             {
                 HubSection hubSection = new HubSection();
                 hubSection.Header = property.Symbol + property.Name;
@@ -166,7 +150,7 @@ namespace VirtualGuide.Mobile.View
 
         private void MapImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MapView), _travel.Id);
+            //Frame.Navigate(typeof(MapView), _travel.Id);
         }
 
     }

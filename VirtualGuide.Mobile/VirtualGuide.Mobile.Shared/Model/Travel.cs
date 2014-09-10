@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirtualGuide.Mobile.DBModel
+namespace VirtualGuide.Mobile.Model
 {
     [Table("Travel")]
     public class Travel : BaseImageModel

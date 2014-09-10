@@ -15,6 +15,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Property\PropertyBindingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\GuideListBindingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\GuideMainBindingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\BaseTravelBindingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\MapsBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Converters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
@@ -29,13 +34,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UIHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DBModel\BaseImageModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DBModel\BaseModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DBModel\Place.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DBModel\Property.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DBModel\Travel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DBModel\User.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\TravelModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BaseImageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BaseModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Place.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Property.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Travel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\ExcursionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\PlaceRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\PropertyRepository.cs" />
@@ -45,7 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideList\GuideListViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\TravelViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\GuideMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LoginPage\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PropertyViewModel.cs" />
@@ -53,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)BindingModel\Base\" />
     <Folder Include="$(MSBuildThisFileDirectory)Strings\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\MapView\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\" />
