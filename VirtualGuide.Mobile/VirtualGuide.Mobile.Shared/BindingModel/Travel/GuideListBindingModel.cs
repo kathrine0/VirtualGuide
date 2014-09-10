@@ -20,6 +20,7 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public GuideListBindingModel(Travel travel) : base(travel)
         {
+            Description = travel.Description;
             Price = travel.Price;
             _imageSrc = travel.ImageSrc;
             IsOwned = travel.IsOwned;
@@ -28,6 +29,8 @@ namespace VirtualGuide.Mobile.BindingModel
         #endregion
 
         #region properties
+
+        public string Description { get; set; }
 
         public double Price { get; set; }
 
