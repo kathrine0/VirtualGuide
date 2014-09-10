@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Extensions="using:VirtualGuide.Mobile.Helper"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
@@ -56,7 +57,7 @@
                             <GridView Grid.Row="1"
                             x:Name="PropertiesView" 
                             IsItemClickEnabled="True" 
-                            ItemClick="PropertiesView_ItemClick"
+                            Extensions:ItemClickCommand.Command="{Binding PropertyClickCommand}"
                             ItemsSource="{Binding Properties}"
                             ItemTemplate="{StaticResource DetailsGrid}"
                                 />

@@ -24,9 +24,11 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         #endregion
 
-        #region
+        #region events
 
         public event Action DataLoaded;
+
+        public event Action<GuideMainPropertyBindingModel> ScrollRequested;
 
         #endregion
 
@@ -53,6 +55,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         #region commands
 
         public DelegateCommand NavigateToMapCommand { get; set; }
+
+        public DelegateCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
 
         #endregion
 
@@ -105,6 +109,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         private void Initialize()
         {
             NavigateToMapCommand = new DelegateCommand(NavigateToMapExecute);
+            PropertyClickCommand = new DelegateCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
 
             var tours = new GuideMainPropertyBindingModel() {
                 Name = "Tours", 
@@ -149,6 +154,24 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         public void NavigateToMapExecute()
         {
             App.RootFrame.Navigate(_mapsPage, Travel.Id);
+        }
+
+        public void PropertyClickExecute(GuideMainPropertyBindingModel item)
+        {
+
+            switch(item.Type)
+            {
+                case GuideMainPropertyBindingModel.Types.TOURS:
+                    //todo
+                break;
+                case GuideMainPropertyBindingModel.Types.REGULAR:
+                    if (ScrollRequested != null)
+                    {
+                        ScrollRequested(item);
+                    }
+                    
+                break;
+            }
         }
 
         #endregion

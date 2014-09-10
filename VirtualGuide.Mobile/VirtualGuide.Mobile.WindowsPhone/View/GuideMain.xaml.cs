@@ -40,17 +40,14 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
             ViewModel.DataLoaded += CreateHubSections;
+            ViewModel.ScrollRequested += ScrollToItem;
+        }
+        public GuideMainViewModel ViewModel
+        {
+            get { return this._viewModel; }
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
-        {
-            if (!MainHub.SectionsInView.First().Equals(MainHub.Sections.First()))
-            {
-                e.Handled = true;
-                //TODO ANIMATE me
-                MainHub.ScrollToSection(MainHub.Sections.First());
-            }
-        }
+        #region Navigation
 
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
@@ -60,10 +57,6 @@ namespace VirtualGuide.Mobile.View
             get { return this.navigationHelper; }
         }
 
-        public GuideMainViewModel ViewModel
-        {
-            get { return this._viewModel; }
-        }
 
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -112,25 +105,26 @@ namespace VirtualGuide.Mobile.View
 
         }
 
-        private void PropertiesView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var clickedItem = (PropertyViewModel) e.ClickedItem;
+        #endregion
 
-            switch(clickedItem.Type)
+        #region Event handling
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            if (!MainHub.SectionsInView.First().Equals(MainHub.Sections.First()))
             {
-                case PropertyViewModel.Types.MAPS:
-                    //Frame.Navigate(typeof(GuidePlaces), _travel.Id);
-                break;
-                case PropertyViewModel.Types.TOURS:
-                break;
-                case PropertyViewModel.Types.REGULAR:
-                    var hubElement = MainHub.Sections.Where(x => x.DataContext is PropertyViewModel && ((PropertyViewModel)x.DataContext).Id == clickedItem.Id).First();
-                    UIHelper.ScollHubToSection(hubElement, ref MainHub);
-                break;
+                e.Handled = true;
+                //TODO ANIMATE me
+                MainHub.ScrollToSection(MainHub.Sections.First());
             }
         }
 
-        #region Helper Methods
+        private void ScrollToItem(GuideMainPropertyBindingModel item)
+        {
+            if (item == null) return;
+
+            var hubElement = MainHub.Sections.Where(x => x.DataContext is GuideMainPropertyBindingModel && ((GuideMainPropertyBindingModel)x.DataContext).Id == item.Id).First();
+            UIHelper.ScollHubToSection(hubElement, ref MainHub);
+        }
 
         private void CreateHubSections()
         {
@@ -149,6 +143,5 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
-
     }
 }
