@@ -29,7 +29,7 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
 
-        private GuideMainViewModel _viewModel = new GuideMainViewModel(typeof(MapView));
+        private GuideMainViewModel _viewModel = new GuideMainViewModel(typeof(MapPage));
 
         public GuideMain()
         {

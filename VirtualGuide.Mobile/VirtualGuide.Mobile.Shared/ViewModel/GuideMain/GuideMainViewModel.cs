@@ -35,10 +35,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         #region constructors
         public GuideMainViewModel(Type mapsPage)
         {
-            if (Travel == null)
-            { 
-                Travel = new GuideMainBindingModel();
-            }
+
+            Travel = new GuideMainBindingModel();
 
             Initialize();
             _mapsPage = mapsPage;

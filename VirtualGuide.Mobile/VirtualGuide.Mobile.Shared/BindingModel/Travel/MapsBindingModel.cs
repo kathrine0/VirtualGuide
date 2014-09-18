@@ -8,16 +8,16 @@ using Windows.UI.Xaml.Media;
 namespace VirtualGuide.Mobile.BindingModel
 {
     [ImplementPropertyChanged]
-    public class MapsBindingModel : BaseTravelBindingModel
+    public class MapTravelBindingModel : BaseTravelBindingModel
     {
             #region constructors
 
-            public MapsBindingModel() : base()
+            public MapTravelBindingModel() : base()
             {
 
             }
 
-            public MapsBindingModel(Travel travel) : base(travel)
+            public MapTravelBindingModel(Travel travel) : base(travel)
             {
                 Latitude = travel.Latitude;
                 Longitude = travel.Longitude;

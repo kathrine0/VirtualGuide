@@ -11,25 +11,11 @@ namespace VirtualGuide.Mobile.Repository
 {
     class PlaceRepository
     {
-        private async Task<List<Place>> GetParentPlacesByTravelIdAsync(int TravelId)
+        public async Task<List<T>> GetParentPlacesByTravelIdAsync<T>(int travelId)
         {
-            var places = await App.Connection.QueryAsync<Place>("Select * FROM Place WHERE TravelId = ? AND (ParentId IS NULL OR ParentId = '' ) ORDER BY Latitude DESC", TravelId);
+            var places = await App.Connection.QueryAsync<Place>("Select * FROM Place WHERE TravelId = ? AND (ParentId IS NULL OR ParentId = '' ) ORDER BY Latitude DESC", travelId);
 
-            return places;
-        }
-
-        public async Task<List<MapPlaceViewModel>> GetPlacesForMap(int travelId)
-        {
-            var places = await GetParentPlacesByTravelIdAsync(travelId);
-
-            return ModelHelper.ObjectToViewModel<MapPlaceViewModel, Place>(places);
-        }
-
-        public async Task<List<ListPlaceViewModel>> GetParentPlaces(int travelId)
-        {
-            var places = await GetParentPlacesByTravelIdAsync(travelId);
-
-            return ModelHelper.ObjectToViewModel<ListPlaceViewModel, Place>(places);
+            return ModelHelper.ObjectToViewModel<T, Place>(places);
         }
 
         public async Task<PlaceViewModel> GetPlaceById(int placeId)
