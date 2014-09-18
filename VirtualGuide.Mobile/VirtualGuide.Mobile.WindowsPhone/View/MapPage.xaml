@@ -28,9 +28,9 @@
 					Source="{Binding Icon}" 
 					Stretch="Uniform"
 					Maps:MapControl.Location="{Binding Point}"
-					Margin="-25,-50,0,0"
+					Margin="-15,-36,0,0"
 					Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
-					Maps:MapControl.NormalizedAnchorPoint="0.5,0.5" 
+					Maps:MapControl.NormalizedAnchorPoint="1,0.5" 
 					Canvas.ZIndex="1" >
 
 					<Interactivity:Interaction.Behaviors>
@@ -50,7 +50,7 @@
 						Maps:MapControl.Location="{Binding Point}" 
 						Canvas.ZIndex="2"
 						Width="200" 
-                        Margin="-90,-95,0,0">
+                        Margin="-80,-80,0,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="60" />
