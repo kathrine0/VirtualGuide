@@ -22,7 +22,7 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
 using VirtualGuide.Services;
-namespace VirtualGuide.UI.Controllers
+namespace VirtualGuide.WebApi.Controllers
 {
     public partial class AccountController
     {
@@ -309,7 +309,7 @@ namespace VirtualGuide.UI.Controllers
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_AccountController : VirtualGuide.UI.Controllers.AccountController
+    public partial class T4MVC_AccountController : VirtualGuide.WebApi.Controllers.AccountController
     {
         public T4MVC_AccountController() : base(Dummy.Instance) { }
 
@@ -457,10 +457,10 @@ namespace VirtualGuide.UI.Controllers
         }
 
         [NonAction]
-        partial void ManageOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.UI.Controllers.AccountController.ManageMessageId? message);
+        partial void ManageOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, VirtualGuide.WebApi.Controllers.AccountController.ManageMessageId? message);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Manage(VirtualGuide.UI.Controllers.AccountController.ManageMessageId? message)
+        public override System.Web.Mvc.ActionResult Manage(VirtualGuide.WebApi.Controllers.AccountController.ManageMessageId? message)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Manage);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "message", message);

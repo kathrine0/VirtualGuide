@@ -25,9 +25,9 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
-    public static VirtualGuide.UI.Controllers.AccountController Account = new VirtualGuide.UI.Controllers.T4MVC_AccountController();
-    public static VirtualGuide.UI.Controllers.HomeController Home = new VirtualGuide.UI.Controllers.T4MVC_HomeController();
-    public static VirtualGuide.UI.Controllers.TravelsController Travels = new VirtualGuide.UI.Controllers.T4MVC_TravelsController();
+    public static VirtualGuide.WebApi.Controllers.AccountController Account = new VirtualGuide.WebApi.Controllers.T4MVC_AccountController();
+    public static VirtualGuide.WebApi.Controllers.HomeController Home = new VirtualGuide.WebApi.Controllers.T4MVC_HomeController();
+    public static VirtualGuide.WebApi.Controllers.TravelsController Travels = new VirtualGuide.WebApi.Controllers.T4MVC_TravelsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 

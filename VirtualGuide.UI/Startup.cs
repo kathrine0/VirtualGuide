@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(VirtualGuide.UI.Startup))]
-namespace VirtualGuide.UI
+[assembly: OwinStartupAttribute(typeof(VirtualGuide.WebApi.Startup))]
+namespace VirtualGuide.WebApi
 {
     public partial class Startup
     {

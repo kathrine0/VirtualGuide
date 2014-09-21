@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.UI", "VirtualGuide.UI\VirtualGuide.UI.csproj", "{673A9E2C-D3D5-4087-883F-F8AF771FCB1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.WebApi", "VirtualGuide.UI\VirtualGuide.WebApi.csproj", "{673A9E2C-D3D5-4087-883F-F8AF771FCB1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Models", "VirtualGuide.Models\VirtualGuide.Models.csproj", "{5CBB970A-9998-4F18-98F5-6C82F92FB3E0}"
 EndProject

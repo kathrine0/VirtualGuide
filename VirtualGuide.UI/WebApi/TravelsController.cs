@@ -14,7 +14,7 @@ using VirtualGuide.Models;
 using VirtualGuide.Services;
 using VirtualGuide.Services.Repository;
 
-namespace VirtualGuide.UI.WebApi
+namespace VirtualGuide.WebApi.WebApi
 {
     [Authorize]
     [RoutePrefix("api")]

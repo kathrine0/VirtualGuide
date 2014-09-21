@@ -13,7 +13,7 @@ using Owin;
 using VirtualGuide.Models;
 using VirtualGuide.Services;
 
-namespace VirtualGuide.UI.Controllers
+namespace VirtualGuide.WebApi.Controllers
 {
     [Authorize]
     public partial class AccountController : Controller

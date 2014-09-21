@@ -13,12 +13,12 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using VirtualGuide.UI.Providers;
-using VirtualGuide.UI.Results;
+using VirtualGuide.WebApi.Providers;
+using VirtualGuide.WebApi.Results;
 using VirtualGuide.Models;
 using VirtualGuide.Services;
 
-namespace VirtualGuide.UI.WebApi
+namespace VirtualGuide.WebApi.WebApi
 {
     [Authorize]
     [RoutePrefix("api/Account")]

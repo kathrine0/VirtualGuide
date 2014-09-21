@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VirtualGuide.UI
+namespace VirtualGuide.WebApi
 {
     using System;
     using System.Collections.Generic;

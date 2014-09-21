@@ -9,9 +9,9 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using VirtualGuide.Models;
-using VirtualGuide.UI.Providers;
+using VirtualGuide.WebApi.Providers;
 
-namespace VirtualGuide.UI
+namespace VirtualGuide.WebApi
 {
     public partial class Startup
     {

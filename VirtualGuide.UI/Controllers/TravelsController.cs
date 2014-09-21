@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using VirtualGuide.Models;
 using VirtualGuide.Services;
 
-namespace VirtualGuide.UI.Controllers
+namespace VirtualGuide.WebApi.Controllers
 {
     public partial class TravelsController : Controller
     {

@@ -21,7 +21,7 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace VirtualGuide.UI.Controllers
+namespace VirtualGuide.WebApi.Controllers
 {
     public partial class HomeController
     {
@@ -108,7 +108,7 @@ namespace VirtualGuide.UI.Controllers
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_HomeController : VirtualGuide.UI.Controllers.HomeController
+    public partial class T4MVC_HomeController : VirtualGuide.WebApi.Controllers.HomeController
     {
         public T4MVC_HomeController() : base(Dummy.Instance) { }
 

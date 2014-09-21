@@ -1,4 +1,4 @@
-namespace VirtualGuide.UI.Migrations
+namespace VirtualGuide.WebApi.Migrations
 {
     using System;
     using System.Data.Entity;

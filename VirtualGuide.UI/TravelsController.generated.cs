@@ -22,7 +22,7 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
 using VirtualGuide.Services;
-namespace VirtualGuide.UI.Controllers
+namespace VirtualGuide.WebApi.Controllers
 {
     public partial class TravelsController
     {
@@ -184,7 +184,7 @@ namespace VirtualGuide.UI.Controllers
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_TravelsController : VirtualGuide.UI.Controllers.TravelsController
+    public partial class T4MVC_TravelsController : VirtualGuide.WebApi.Controllers.TravelsController
     {
         public T4MVC_TravelsController() : base(Dummy.Instance) { }
 
