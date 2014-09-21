@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.WebApi", "VirtualGuide.UI\VirtualGuide.WebApi.csproj", "{673A9E2C-D3D5-4087-883F-F8AF771FCB1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.WebApi", "VirtualGuide.WebApi\VirtualGuide.WebApi.csproj", "{673A9E2C-D3D5-4087-883F-F8AF771FCB1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Models", "VirtualGuide.Models\VirtualGuide.Models.csproj", "{5CBB970A-9998-4F18-98F5-6C82F92FB3E0}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Mobile.WindowsPhone", "VirtualGuide.Mobile\VirtualGuide.Mobile.WindowsPhone\VirtualGuide.Mobile.WindowsPhone.csproj", "{0A7DAA03-9260-4CD7-852B-B0487A20ECF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Services", "VirtualGuide.Services\VirtualGuide.Services.csproj", "{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.UI", "VirtualGuide.UI\VirtualGuide.UI.csproj", "{945FD476-DCB7-4770-9FA5-134B61B7F912}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -149,6 +151,21 @@ Global
 		{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}.Release|ARM.ActiveCfg = Release|Any CPU
 		{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}.Release|x64.ActiveCfg = Release|Any CPU
 		{2AF51B16-5A98-42A0-9BF5-7422FCBBDAAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug_x86|Any CPU.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug_x86|Any CPU.Build.0 = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug_x86|ARM.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug_x86|x64.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug_x86|x86.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Release|ARM.ActiveCfg = Release|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Release|x64.ActiveCfg = Release|Any CPU
+		{945FD476-DCB7-4770-9FA5-134B61B7F912}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
