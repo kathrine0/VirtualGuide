@@ -15,7 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\ListPlaceBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\MapPlaceBindingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\PlaceMainBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Property\PropertyBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\GuideListBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\GuideMainBindingModel.cs" />
@@ -53,15 +55,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\GuideMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LoginPage\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapPage\MapViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PropertyViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\PlaceMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)BindingModel\Base\" />
     <Folder Include="$(MSBuildThisFileDirectory)Strings\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Common\CustomDictionary.xaml">

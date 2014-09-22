@@ -20,6 +20,8 @@ using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.ViewModel;
 using PropertyChanged;
 using System.Net;
+using VirtualGuide.Mobile.BindingModel;
+using VirtualGuide.Mobile.ViewModel.PlaceMain;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -31,17 +33,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class PlaceMain : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
-        private PlaceRepository _placeRepository = new PlaceRepository();
-        private PlaceViewModel _placeViewModel;
-
-        private List<PlaceMainOptions> _optionsList = new List<PlaceMainOptions>();
-
-        private enum OPTION
-        {
-            MAP, GALLERY, SUBPLACES, NAVIGATION
-        }
+        private PlaceMainViewModel _viewModel = new PlaceMainViewModel();
 
         public PlaceMain()
         {
@@ -50,11 +42,6 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
-            _optionsList.Add(new PlaceMainOptions("Map", OPTION.MAP, "&#x1f30d;", ColorHelper.BLUE));
-            _optionsList.Add(new PlaceMainOptions("Navigate", OPTION.NAVIGATION, "&#x27A4;", ColorHelper.RED));
-            _optionsList.Add(new PlaceMainOptions("Gallery", OPTION.GALLERY, "&#x1f4db;", ColorHelper.GREEN));
-            _optionsList.Add(new PlaceMainOptions("More", OPTION.SUBPLACES, "&#xe109;", ColorHelper.YELLOW));
         }
 
         /// <summary>
@@ -69,9 +56,9 @@ namespace VirtualGuide.Mobile.View
         /// Gets the view model for this <see cref="Page"/>.
         /// This can be changed to a strongly typed view model.
         /// </summary>
-        public ObservableDictionary DefaultViewModel
+        public PlaceMainViewModel ViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return this._viewModel; }
         }
 
         /// <summary>
@@ -85,18 +72,11 @@ namespace VirtualGuide.Mobile.View
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             var placeId = (int)e.NavigationParameter;
 
-            //TODO Handle element not found exception
-            _placeViewModel = await _placeRepository.GetPlaceById(placeId);
-
-            this.defaultViewModel["Place"] = _placeViewModel;
-            this.defaultViewModel["Options"] = _optionsList;
-
-            //TODO Handle place children here
-            //CreateHubSections();
+            ViewModel.LoadData(placeId);
         }
 
         /// <summary>
@@ -137,34 +117,5 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
-
-        [ImplementPropertyChanged]
-        private class PlaceMainOptions
-        {
-            public PlaceMainOptions(string name, OPTION type, string symbol, Brush color)
-            {
-                Symbol = symbol;
-                Name = name;
-                Background = color;
-                Type = type;
-            }
-
-            private string _symbol;
-            public string Symbol
-            {
-                get
-                {
-                    return WebUtility.HtmlDecode(_symbol);
-                }
-                set
-                {
-                    _symbol = value;
-                }
-            }
-            public Brush Background { get; set; }
-            public string Name { get; set; }
-
-            public OPTION Type { get; set; }
-        }
     }
 }

@@ -1,24 +1,20 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
+using VirtualGuide.Mobile.Model;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using VirtualGuide.Mobile.Helper;
-using System.Collections.ObjectModel;
-using VirtualGuide.Mobile.Model;
 
-namespace VirtualGuide.Mobile.ViewModel
+namespace VirtualGuide.Mobile.BindingModel
 {
 
-
     [ImplementPropertyChanged]
-    public class ListPlaceViewModel
+    public class ListPlaceBindingModel
     {
-        public ListPlaceViewModel() { }
-        public ListPlaceViewModel(Place place)
+        public ListPlaceBindingModel() { }
+        public ListPlaceBindingModel(Place place)
         {
             Id = place.Id;
             Name = place.Name;
@@ -38,7 +34,7 @@ namespace VirtualGuide.Mobile.ViewModel
 
         public string Category { get; set; }
 
-        public List<ListPlaceViewModel> Data
+        public List<ListPlaceBindingModel> Data
         {
             get;
             set;
@@ -95,56 +91,5 @@ namespace VirtualGuide.Mobile.ViewModel
             var distance = (earthRadius * expr2);
             this.Distance = distance * 1000;  // return results as meters
         }
-    }
-
-    [ImplementPropertyChanged]
-    public class PlaceViewModel
-    {
-        public PlaceViewModel() { }
-        public PlaceViewModel(Place place)
-        {
-            Id = place.Id;
-            Name = place.Name;
-            Category = place.Category;
-            Description = place.Description;
-            _placeLatitude = place.Latitude;
-            _placeLongitude = place.Longitude;
-            _imageSrc = place.ImageSrc;
-        }
-
-        private double _placeLatitude;
-        private double _placeLongitude;
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        private string _imageSrc;
-
-        private ImageSource _imagePath;
-        public ImageSource ImagePath
-        {
-            get
-            {
-                ImageSource bitmap = null;
-                Uri uri = null;
-                try
-                {
-                    uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
-                    bitmap = new BitmapImage(uri);
-                    _imagePath = bitmap;
-                }
-                catch (Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e.ToString());
-                }
-                return _imagePath;
-            }
-        }
-
-        public string Category { get; set; }
-
     }
 }

@@ -108,7 +108,7 @@
     <SDKReference Include="Microsoft.VCLibs, version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WinRT81, Version=3.8.5">
+    <SDKReference Include="SQLite.WinRT81, Version=3.8.6">
       <Name>SQLite for Windows Runtime %28Windows 8.1%29</Name>
     </SDKReference>
   </ItemGroup>
@@ -182,6 +182,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_x86|x86'">
     <OutputPath>bin\x86\Debug_x86\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_APP</DefineConstants>
+    <PlatformTarget>x86</PlatformTarget>
+    <NoWarn>;2008</NoWarn>
   </PropertyGroup>
   <Import Project="..\VirtualGuide.Mobile.Shared\VirtualGuide.Mobile.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
