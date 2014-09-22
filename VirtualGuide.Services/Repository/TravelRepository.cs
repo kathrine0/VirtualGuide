@@ -32,6 +32,9 @@ namespace VirtualGuide.Services.Repository
         {
 
             var user = userManager.FindByEmail(userEmail);
+
+            if (user == null) return null;
+
             var items = user.PurchasedTravels;
             var result = new List<ComplexReadTravelViewModel>();
 
