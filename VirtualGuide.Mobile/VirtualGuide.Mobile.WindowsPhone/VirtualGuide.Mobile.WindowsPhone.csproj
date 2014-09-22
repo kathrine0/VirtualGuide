@@ -203,9 +203,10 @@
     <OutputPath>bin\x86\Debug_x86\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
     <PlatformTarget>x86</PlatformTarget>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>;2008</NoWarn>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>

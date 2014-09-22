@@ -17,13 +17,13 @@
 
 	<Page.Resources>
 		<converter:TrueIsVisible x:Key="TrueIsVisible" />
-		<converter:FalseIsVisible x:Key="FalseIsVisible" />
+        <converter:FalseIsVisible x:Key="FalseIsVisible" />
 
         <!--Data T
         emplate for every place marker on the map-->
         
 		<DataTemplate x:Key="MapMarker">
-			<Canvas>
+            <Canvas>
 				<Image 
 					Source="{Binding Icon}" 
 					Stretch="Uniform"
@@ -31,7 +31,7 @@
 					Margin="-15,-36,0,0"
 					Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
 					Maps:MapControl.NormalizedAnchorPoint="1,0.5" 
-					Canvas.ZIndex="1" >
+					 >
 
 					<Interactivity:Interaction.Behaviors>
 						<Core:EventTriggerBehavior EventName="Tapped">
@@ -48,7 +48,6 @@
 						Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
 						Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
 						Maps:MapControl.Location="{Binding Point}" 
-						Canvas.ZIndex="2"
 						Width="200" 
                         Margin="-80,-80,0,0">
 					<Grid.ColumnDefinitions>

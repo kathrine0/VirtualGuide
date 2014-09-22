@@ -109,24 +109,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         public bool CalibrationInProgress { get; set; }
 
-        //public List<MapPlaceViewModel> Data
-        //{
-        //    get;
-        //    set;
-        //}
-
-        //public List<MapPlaceViewModel> FilteredData
-        //{
-        //    get
-        //    {
-        //        if (Categories == null) return null;
-
-        //        var visibleCategories = Categories.Where(x => x.Item1 == true).Select(x => x.Item2);
-
-        //        return Data.Where(x => visibleCategories.Contains(x.Category)).ToList();
-        //    }
-        //}
-
         public ObservableCollection<Tuple<bool, string>> Categories { get;set; }
 
         public bool FilterMode { get; set; }
@@ -249,7 +231,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                 {
                     ZoomingMapToPoint(center, zoomLevel);
                 }
-
             }
 
             //setup geolocation
@@ -274,6 +255,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             HideAllClouds();
 
             place.DetailsVisibility = true;
+
+            Places.Move(Places.IndexOf(place), Places.Count-1);
 
             _visibleDetailsPlaceId = place.Id;
             _markerTapped = true;
