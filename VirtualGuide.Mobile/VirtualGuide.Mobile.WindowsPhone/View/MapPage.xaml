@@ -225,14 +225,19 @@
               HorizontalAlignment="Right" 
               Background="#CC000000" 
               Visibility="{Binding FilterMode, Converter={StaticResource TrueIsVisible}}">
-			<TextBlock Foreground="White">Place Categories</TextBlock>
+			<TextBlock Foreground="White">Categories</TextBlock>
 
             <ListView
 				SelectionMode="Extended" 
-                ItemsSource="{Binding Categories, Mode=TwoWay}">
+                ItemsSource="{Binding Categories, Mode=TwoWay}" 
+                Margin="10"
+                >
                 <ListView.ItemTemplate>
 					<DataTemplate>
-						<CheckBox IsChecked="{Binding Item1, Mode=TwoWay}" Content="{Binding Item2}" Foreground="White" />
+						<CheckBox IsChecked="{Binding Item1, Mode=TwoWay}" 
+                                  Content="{Binding Item2}" 
+                                  Foreground="White" 
+                                  BorderBrush="White" Background="White" />
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
