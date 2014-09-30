@@ -57,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LoginPage\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapPage\MapViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\PlaceMainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\RegisterPage\RegisterViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>

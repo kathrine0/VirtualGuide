@@ -11,7 +11,7 @@ namespace VirtualGuide.Mobile.View
     /// </summary>
     public sealed partial class LoginPage : Page
     {
-        private LoginViewModel _viewModel = new LoginViewModel(typeof(GuideList));
+        private LoginViewModel _viewModel = new LoginViewModel(typeof(GuideList), typeof(RegisterPage));
 
         public LoginPage()
         {

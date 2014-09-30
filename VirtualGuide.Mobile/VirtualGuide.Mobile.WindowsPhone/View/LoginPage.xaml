@@ -51,8 +51,14 @@
            
 			<TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />
 			<StackPanel Orientation="Horizontal">
-				<TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource ThemeGreen}" />
-				<TextBlock x:Uid="or" Text="or" Margin="7,0" />
+                <TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource ThemeGreen}" >
+                    <Interactivity:Interaction.Behaviors>
+						<Core:EventTriggerBehavior EventName="Tapped">
+							<Core:InvokeCommandAction Command="{Binding RegisterCommand}"/>
+						</Core:EventTriggerBehavior>
+					</Interactivity:Interaction.Behaviors>
+                </TextBlock>
+                <TextBlock x:Uid="or" Text="or" Margin="7,0" />
 				<TextBlock x:Uid="SkipLogin" Text="Skip login" Foreground="{StaticResource ThemeGreen}" >
 					<Interactivity:Interaction.Behaviors>
 						<Core:EventTriggerBehavior EventName="Tapped">

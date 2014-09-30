@@ -17,6 +17,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         #region readonly properties
 
         private readonly Type _nextPageType;
+        private readonly Type _registerPageType;
 
         #endregion
 
@@ -26,14 +27,16 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         /// ViewModel for Login Page
         /// </summary>
         /// <param name="nextPageType">Type of page to navigate to after login</param>
-        public LoginViewModel(Type nextPageType)
+        public LoginViewModel(Type nextPageType, Type registerPageType)
         {
             SignInCommand = new DelegateCommand(SignInExecute);
             SkipLoginCommand = new DelegateCommand(SkipLoginExecute);
+            RegisterCommand = new DelegateCommand(RegisterExecute);
 
             LoginButtonContent = "Login";
 
             _nextPageType = nextPageType;
+            _registerPageType = registerPageType;
         }
 
         #endregion
@@ -82,6 +85,11 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         }
 
         /// <summary>
+        /// Navigate to Register page
+        /// </summary>
+        public DelegateCommand RegisterCommand { get; set; }
+
+        /// <summary>
         /// Skip login and redirect to next page
         /// </summary>
         public DelegateCommand SkipLoginCommand
@@ -92,7 +100,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         #endregion
 
-        #region public methods
+        #region private methods
 
         private async void SignInExecute()
         {
@@ -158,9 +166,11 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
                 App.RootFrame.Navigate(_nextPageType);
         }
 
-        #endregion
-
-        #region private methods
+        private void RegisterExecute()
+        {
+            if (_registerPageType != null)
+                App.RootFrame.Navigate(_registerPageType);
+        }
 
         private void TurnOffLoader()
         {
