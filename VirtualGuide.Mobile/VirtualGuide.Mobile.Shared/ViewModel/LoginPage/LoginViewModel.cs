@@ -42,12 +42,18 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         #endregion
 
-        #region properties
+        #region private properties
 
         private UserRepository _userRepository = new UserRepository();
        
         private bool _loginInProgress = false;
+
+        private LocalDataHelper localDataHelper = new LocalDataHelper();
+
+        #endregion
         
+        #region public propeties
+
         public string Username { get; set; }
       
         public string Password { get; set; }
@@ -139,7 +145,11 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
             }
 
             if (_nextPageType != null)
+            {
+                localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
                 App.RootFrame.Navigate(_nextPageType);
+            }
+
         }
 
         private void SkipLoginExecute()

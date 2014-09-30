@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.BindingModel;
@@ -15,6 +16,8 @@ namespace VirtualGuide.Mobile.Repository
 {
     public class TravelRepository
     {
+        private SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
+
         #region access webservice
 
         private async Task<List<Travel>> LoadAvailableTravels()
@@ -66,12 +69,18 @@ namespace VirtualGuide.Mobile.Repository
         public async Task<List<T>> DownloadAndSaveAllTravels<T>()
             where T : BaseTravelBindingModel
         {
-            var ownedTravelsTask = await DownloadAndSaveOwnedTravels<T>();
-            var availableTravelsTask = await DownloadAndSaveAvailableTravels<T>(ownedTravelsTask);
-
             var allTravels = new List<T>();
-            allTravels.AddRange(ownedTravelsTask);
-            allTravels.AddRange(availableTravelsTask);
+            List<T> ownedTravels = new List<T>();
+
+            //download owned travels, when user is logged in
+            if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
+            {
+                ownedTravels = await DownloadAndSaveOwnedTravels<T>();
+                allTravels.AddRange(ownedTravels);
+            }
+            var availableTravels = await DownloadAndSaveAvailableTravels<T>(ownedTravels);
+
+            allTravels.AddRange(availableTravels);
 
             return allTravels;
         }

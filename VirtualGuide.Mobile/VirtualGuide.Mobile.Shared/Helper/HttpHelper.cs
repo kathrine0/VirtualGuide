@@ -16,16 +16,18 @@ namespace VirtualGuide.Mobile.Helper
 {
     public class HttpHelper
     {
+        private static SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
+
         public static async Task<T> GetData<T>(string webPath)
         {
             HttpClient client = new HttpClient();
-            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            
             try
             {
                 //authenticate request
-                if (localSettings.Values["token"] != null)
+                if (settingsDataHelper.KeyExists(SettingsDataHelper.TOKEN))
                 {
-                    var token = (string) localSettings.Values["token"];
+                    var token = settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 }
 

@@ -5,7 +5,7 @@ namespace VirtualGuide.Mobile.Helper
 {
     class MessageBoxHelper
     {
-        private static ApplicationDataContainer _appSettings = ApplicationData.Current.LocalSettings;
+        private static LocalDataHelper localDataHelper = new LocalDataHelper();
        
         public static void Show(string content, string title)
         {
@@ -21,9 +21,9 @@ namespace VirtualGuide.Mobile.Helper
 
         public static void ShowNoLocation()
         {
-            if (!LocalDataHelper.KeyExists("locationMsg") || LocalDataHelper.GetKeyValue<bool>("locationMsg") == false)
+            if (!localDataHelper.KeyExists(LocalDataHelper.LOCATION_MSG) || localDataHelper.GetValue<bool>(LocalDataHelper.LOCATION_MSG) == false)
             {
-                LocalDataHelper.SetValue("locationMsg", true); 
+                localDataHelper.SetValue(LocalDataHelper.LOCATION_MSG, true); 
                 Show("Location feature is turned off");
             }
         }

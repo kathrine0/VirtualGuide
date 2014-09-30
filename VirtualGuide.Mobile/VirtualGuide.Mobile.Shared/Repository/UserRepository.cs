@@ -5,11 +5,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.Helper;
 
 namespace VirtualGuide.Mobile.Repository
 {
     public class UserRepository
     {
+        SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
         public async Task Login(string username, string password)
         {
             if (!String.IsNullOrEmpty(username) && !(String.IsNullOrEmpty(password)))
@@ -32,8 +34,7 @@ namespace VirtualGuide.Mobile.Repository
 
                         if (!result.ContainsKey("access_token")) throw new Exception();
 
-                        var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                        localSettings.Values["token"] = result["access_token"];
+                        settingsDataHelper.SetValue(SettingsDataHelper.TOKEN, result["access_token"]);
                     }
                     else
                     {

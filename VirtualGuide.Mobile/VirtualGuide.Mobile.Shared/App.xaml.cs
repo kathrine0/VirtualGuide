@@ -37,6 +37,8 @@ namespace VirtualGuide.Mobile
 
         public const string WebService = @"http://localhost/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
+        private LocalDataHelper localDataHelper = new LocalDataHelper();
+        private SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
         
         public static string MapToken = "6lLX1mlgjcbABymCCQ-y2w";
         public static string GmapsToken = "AIzaSyBNBqnWyCp2fz0gSKTTK_n7uYQPxTdCQ_0";
@@ -109,14 +111,12 @@ namespace VirtualGuide.Mobile
 
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
-                // parameter    
-                var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                // parameter                    
                 var page = typeof(LoginPage); 
-                if (localSettings.Values["token"] != null)
+                if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
                 {
                     page = typeof(GuideList);
-                }
-                
+                }               
 
                 if (!RootFrame.Navigate(page, e.Arguments))
                 {
@@ -128,9 +128,9 @@ namespace VirtualGuide.Mobile
             SetupDatabase();
 
             //Remove old runtime data
-            LocalDataHelper.DeleteContainer();
+            localDataHelper.DeleteContainer();
             //Create runtime data container
-            LocalDataHelper.CreateContainer();
+            localDataHelper.CreateContainer();
 
             // Ensure the current window is active
             Window.Current.Activate();
@@ -175,7 +175,7 @@ namespace VirtualGuide.Mobile
             SQLite.SQLiteConnectionPool.Shared.Reset();
             
             //Remove runtime data
-            LocalDataHelper.DeleteContainer();
+            localDataHelper.DeleteContainer();
 
             deferral.Complete();
         }

@@ -10,6 +10,7 @@ using VirtualGuide.Mobile.Repository;
 using Windows.UI.Xaml.Data;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.BindingModel;
+using System.Collections.ObjectModel;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideList
 {
@@ -51,11 +52,16 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         #endregion
 
-        #region properties
+        #region private properties
 
         private TravelRepository _travelRepository = new TravelRepository();
+        LocalDataHelper localDataHelper = new LocalDataHelper();
 
-        public List<GuideListBindingModel> Data
+        #endregion
+        
+        #region public properties
+
+        public ObservableCollection<GuideListBindingModel> Data
         {
             get;
             set;
@@ -98,14 +104,14 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         public async void RefreshExecute()
         {
-            if (LocalDataHelper.GetKeyValue<bool>("RefreshInProgress")) return;
-            LocalDataHelper.SetValue("RefreshInProgress", true);
+            if (localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS)) return;
+            localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, true);
 
             try
             {
                 Loading = true;
 
-                Data = await _travelRepository.DownloadAndSaveAllTravels<GuideListBindingModel>();
+                Data = new ObservableCollection<GuideListBindingModel>(await _travelRepository.DownloadAndSaveAllTravels<GuideListBindingModel>());
             }
             catch (HttpRequestException ex)
             {
@@ -124,17 +130,15 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 else
                 {
                     MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
-
                 }
             }
             finally
             {
-                LocalDataHelper.SetValue("RefreshInProgress", false);
+                localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, false);
 
                 Loading = false;
             }
         }
-
 
         public void LogoutExecute()
         {
@@ -156,7 +160,15 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
             Loading = true;
             //TODO Check if token is still active
-            Data = new List<GuideListBindingModel>(await _travelRepository.GetAllTravelsAsync());
+            Data = new ObservableCollection<GuideListBindingModel>(new List<GuideListBindingModel>(await _travelRepository.GetAllTravelsAsync()));
+
+            //check if just logged in or if data is empty
+            var shouldReload = localDataHelper.GetValue<bool>(LocalDataHelper.REFRESH_NOW);
+            if (Data.Count == 0 || shouldReload)
+            {
+                RefreshExecute();
+                localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, false);
+            }
 
             Loading = false;
         }
