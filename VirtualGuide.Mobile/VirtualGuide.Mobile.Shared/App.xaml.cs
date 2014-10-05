@@ -112,7 +112,7 @@ namespace VirtualGuide.Mobile
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter                    
-                var page = typeof(LoginPage); 
+                var page = typeof(LoginPage);
                 if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
                 {
                     page = typeof(GuideList);

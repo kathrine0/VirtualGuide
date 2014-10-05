@@ -125,6 +125,13 @@ namespace VirtualGuide.Mobile.Helper
             _appSettings.Containers[CONTAINER_NAME].Values[key] = value;
         }
 
+        public void RemoveValue(string key)
+        {
+            ContainerExists();
+
+            _appSettings.Containers[CONTAINER_NAME].Values.Remove(key);
+        }
+
         public void AddToValue<T>(string key, T value)
         {
             ContainerExists();

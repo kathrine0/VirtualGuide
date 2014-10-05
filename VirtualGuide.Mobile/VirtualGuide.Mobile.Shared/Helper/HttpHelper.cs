@@ -21,31 +21,21 @@ namespace VirtualGuide.Mobile.Helper
         public static async Task<T> GetData<T>(string webPath)
         {
             HttpClient client = new HttpClient();
+            HttpResponseMessage response = null;
+            T result = default(T);
             
             try
             {
-                //authenticate request
-                if (settingsDataHelper.KeyExists(SettingsDataHelper.TOKEN))
-                {
-                    var token = settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                }
+                AuthenticateRequest(ref client);                
 
-                var response = await client.GetAsync(App.WebService + webPath);
-
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var result = ParseData<T>(responseBody);
-                    return result;
-                }
-                else
-                {
-                    throw new HttpRequestException(response.StatusCode.ToString());
-                }
+                response = await client.GetAsync(App.WebService + webPath);
+                response.EnsureSuccessStatusCode();
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
+            {
+                throw new HttpRequestException(response.StatusCode.ToString(), ex);
+            }
+            catch (Exception)
             {
                 throw;
             }
@@ -53,6 +43,69 @@ namespace VirtualGuide.Mobile.Helper
             {
                 client.Dispose();
             }
+
+            //If no exception was thrown - proceed with returning result
+            if (response != null)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                result = ParseData<T>(responseBody);
+            }
+
+            return result;
+        }
+
+        public static async Task<T> PostData<T>(string webPath, object data)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = null;
+            T result = default(T);
+
+            try
+            {
+                AuthenticateRequest(ref client);
+
+                string json_data = string.Empty;
+                if (data is string)
+                {
+                    json_data = (string) data;
+                }
+                else if (data != null)
+                {
+                    json_data = JsonConvert.SerializeObject(data);
+                }
+                HttpContent content = new StringContent(json_data, Encoding.UTF8);
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                response = await client.PostAsync(App.WebService + webPath, content);
+                
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new HttpRequestException(response.StatusCode.ToString(), ex);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                client.Dispose();
+            }
+
+            //If no exception was thrown - proceed with returning result
+            if (response != null)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                if (!String.IsNullOrEmpty(responseBody))
+                {
+                    result = ParseData<T>(responseBody);
+                }                
+            }
+
+            return result;
+            
 
         }
 
@@ -66,6 +119,15 @@ namespace VirtualGuide.Mobile.Helper
             }
 
             throw new ArgumentNullException("Response Body is null or empty");
+        }
+
+        private static void AuthenticateRequest(ref HttpClient client)
+        {
+            if (settingsDataHelper.KeyExists(SettingsDataHelper.TOKEN))
+            {
+                var token = settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
         }
 
         public async static Task ImageDownloader<T>(List<T> items) where T : BaseImageModel

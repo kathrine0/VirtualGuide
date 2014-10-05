@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.ViewModel.GuideList;
+using Windows.Phone.UI.Input;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -30,8 +31,18 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
         }
 
+        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        {
+            //Quit application when no authentification is required
+            SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
+            if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
+            {
+                App.Current.Exit();
+            }  
+        }
 
         /// <summary>
         /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.

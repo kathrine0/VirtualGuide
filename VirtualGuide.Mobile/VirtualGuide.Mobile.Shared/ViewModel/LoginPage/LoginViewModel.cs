@@ -29,14 +29,16 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         /// <param name="nextPageType">Type of page to navigate to after login</param>
         public LoginViewModel(Type nextPageType, Type registerPageType)
         {
+            _nextPageType = nextPageType;
+            _registerPageType = registerPageType;
+
             SignInCommand = new DelegateCommand(SignInExecute);
             SkipLoginCommand = new DelegateCommand(SkipLoginExecute);
             RegisterCommand = new DelegateCommand(RegisterExecute);
 
             LoginButtonContent = "Login";
 
-            _nextPageType = nextPageType;
-            _registerPageType = registerPageType;
+
         }
 
         #endregion
@@ -52,6 +54,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         private bool _loginInProgress = false;
 
         private LocalDataHelper localDataHelper = new LocalDataHelper();
+        
 
         #endregion
         
@@ -172,7 +175,11 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
                 App.RootFrame.Navigate(_registerPageType);
         }
 
-        private void TurnOffLoader()
+        #endregion
+
+        #region public methods
+
+        public void TurnOffLoader()
         {
             ShowLoader = false;
             LoginButtonContent = "Login";

@@ -55,6 +55,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         #region private properties
 
         private TravelRepository _travelRepository = new TravelRepository();
+        private UserRepository _userRepository = new UserRepository();
         LocalDataHelper localDataHelper = new LocalDataHelper();
 
         #endregion
@@ -124,8 +125,9 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                     MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
 
                     if (_loginPage != null)
+                    {
                         App.RootFrame.Navigate(_loginPage);
-
+                    }
                 }
                 else
                 {
@@ -140,9 +142,9 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
         }
 
-        public void LogoutExecute()
+        public async void LogoutExecute()
         {
-            //TODO
+            await _userRepository.Logout();
 
             if (_loginPage != null)
                 App.RootFrame.Navigate(_loginPage);
