@@ -170,7 +170,10 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, false);
             }
 
-            Loading = false;
+            if (!localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS))
+            {
+                Loading = false;
+            }
         }
 
         #endregion

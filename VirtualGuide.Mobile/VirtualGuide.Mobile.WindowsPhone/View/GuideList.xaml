@@ -49,8 +49,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ProgressBar x:Name="ProgressBar" Visibility="{Binding Loading, Converter={StaticResource TrueIsVisible}}" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
-
+        <ProgressBar Visibility="{Binding Loading, Converter={StaticResource TrueIsVisible}}" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
         <!-- TitlePanel -->
         <StackPanel Grid.Row="0" Margin="24,17,0,28">
             <TextBlock Text="Guide list" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>

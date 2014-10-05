@@ -41,10 +41,6 @@ namespace VirtualGuide.Mobile.Repository
                         throw new HttpRequestException(response.StatusCode.ToString());
                     }
                 }
-                catch (HttpRequestException)
-                {
-                    throw;
-                }
                 catch
                 {
                     throw;
@@ -55,5 +51,49 @@ namespace VirtualGuide.Mobile.Repository
                 }
             }
         }
+
+        //public async Task Logout()
+        //{
+            
+        //    HttpClient client = new HttpClient();
+        //    try
+        //    {
+        //        var response = await client.PostAsync();
+
+        //        response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        //        //throw exception if status 400 or no connection
+        //        //TODO: different error when invalid login, different when no connection
+
+        //        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        //        {
+
+        //            string responseBody = await response.Content.ReadAsStringAsync();
+        //            var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseBody);
+
+        //            if (!result.ContainsKey("access_token")) throw new Exception();
+
+        //            settingsDataHelper.SetValue(SettingsDataHelper.TOKEN, result["access_token"]);
+        //        }
+        //        else
+        //        {
+        //            throw new HttpRequestException(response.StatusCode.ToString());
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        client.Dispose();
+        //    }
+            
+        //}
+
+        //public async Task Register()
+        //{
+
+        //}
     }
 }
