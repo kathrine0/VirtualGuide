@@ -50,9 +50,6 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         #region private properties
 
         private UserRepository _userRepository = new UserRepository();
-       
-        private bool _loginInProgress = false;
-
         private LocalDataHelper localDataHelper = new LocalDataHelper();
         
 
@@ -60,26 +57,20 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         
         #region public propeties
 
-        public string Username { get; set; }
+        public string Email { get; set; }
       
         public string Password { get; set; }
 
         public string LoginButtonContent { get; set; }
 
-        public bool LoginInProgress
-        {
-            get { return _loginInProgress = false; }
-            set { _loginInProgress = value; }
-        }
-
-        public bool ShowLoader { get; set; }
+        public bool LoginInProgress { get; set; }
         
         #endregion
 
         #region commands
 
         /// <summary>
-        /// Check Username and Password and Log User in
+        /// Check Email and Password and Log User in
         /// </summary>
         public DelegateCommand SignInCommand
         {
@@ -107,16 +98,16 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         private async void SignInExecute()
         {
-            if (_loginInProgress)
+            if (LoginInProgress)
             {
                 return;
             }
 
             LoginButtonContent = "";
-            ShowLoader = true;
+            LoginInProgress = true;
 
 
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
             {
                 MessageBoxHelper.Show("Enter username and password", "");
                 TurnOffLoader();
@@ -126,7 +117,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
             try
             {
-                await _userRepository.Login(Username, Password);
+                await _userRepository.Login(Email, Password);
 
             }
             catch (HttpRequestException ex)
@@ -181,7 +172,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         public void TurnOffLoader()
         {
-            ShowLoader = false;
+            LoginInProgress = false;
             LoginButtonContent = "Login";
         }
 

@@ -9,7 +9,8 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}">
 
     <Page.Resources>
         <converter:TrueIsVisible x:Key="TrueIsVisible" />
@@ -29,17 +30,17 @@
             <TextBlock Text="Create new account" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="0,12,0,0"/>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Margin="20,0">
-            <TextBlock x:Uid="UsernameLabel" Text="Username" />
-            <TextBox x:Name="Username" Text="{Binding Username, Mode=TwoWay}" />
+            <TextBlock x:Uid="EmailLabel" Text="Email" />
+            <TextBox Text="{Binding Email, Mode=TwoWay}" />
             <TextBlock x:Uid="PasswordLabel" Text="Password" />
-            <PasswordBox x:Name="Password" Password="{Binding Password, Mode=TwoWay}" />
+            <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
             <TextBlock x:Uid="PasswordRepeatLabel" Text="Repeat password" />
-            <PasswordBox x:Name="RepeatPassword" Password="{Binding Password, Mode=TwoWay}" />
+            <PasswordBox Password="{Binding RepeatPassword, Mode=TwoWay}" />
             <Grid>
-                <Button x:Name="LoginButton" Content="{Binding LoginButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding SignInCommand}"/>
+                <Button Content="{Binding RegisterButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>
                 <Image
 					x:Name="LoginProgress"
-					Visibility="{Binding ShowLoader, Converter={StaticResource TrueIsVisible}}"
+					Visibility="{Binding RegistrationInProgress, Converter={StaticResource TrueIsVisible}}"
 					Height="30"
 					Width="30"
 					Source="ms-appx:///Assets/Spinner.png"

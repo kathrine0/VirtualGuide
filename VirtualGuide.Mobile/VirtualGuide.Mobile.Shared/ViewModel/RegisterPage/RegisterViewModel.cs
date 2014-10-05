@@ -10,7 +10,7 @@ using VirtualGuide.Mobile.Repository;
 namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 {
     [ImplementPropertyChanged]
-    class RegisterViewModel
+    public class RegisterViewModel
     {
         #region readonly properties
 
@@ -37,16 +37,13 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
         #region private properties
 
         private UserRepository _userRepository = new UserRepository();
-
-        private bool _registerInProgress = false;
-
         private LocalDataHelper localDataHelper = new LocalDataHelper();
 
         #endregion
 
         #region public properties
 
-        public string Username { get; set; }
+        public string Email { get; set; }
 
         public string Password { get; set; }
 
@@ -55,8 +52,6 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
         public string RegisterButtonContent { get; set; }
 
         public bool RegistrationInProgress { get; set; }
-
-        public bool ShowLoader { get; set; }
 
         #endregion
 
@@ -77,15 +72,15 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 
         private async void RegisterExecute()
         {
-            if (_registerInProgress)
+            if (RegistrationInProgress)
             {
                 return;
             }
 
             RegisterButtonContent = "";
-            ShowLoader = true;
+            RegistrationInProgress = true;
 
-            if (string.IsNullOrEmpty(Username) || 
+            if (string.IsNullOrEmpty(Email) || 
                 string.IsNullOrEmpty(Password) ||
                 string.IsNullOrEmpty(RepeatPassword))
             {
@@ -95,15 +90,46 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
                 return;
             }
 
-            //TODO! Perform Register and login
-            //try
-            //{
-            //    await _userRepository.Login(Username, Password);
+            if (string.IsNullOrEmpty(Password) != string.IsNullOrEmpty(RepeatPassword))
+            {
+                MessageBoxHelper.Show("Passwords don't match", "");
+                TurnOffLoader();
 
-            //}
-            //catch (HttpRequestException ex)
-            //{
-            //}
+                return;
+            }
+
+            try
+            {
+                await _userRepository.Register(Email, Password, RepeatPassword);
+
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
+                {
+                    MessageBoxHelper.Show("No internet connection. Turn on Data Transfer or Wifi or skip login and work offline.", "No Connection");
+                }
+                else if (ex.Message == System.Net.HttpStatusCode.BadRequest.ToString())
+                {
+                    MessageBoxHelper.Show("Invalid username or password", "Error");
+                }
+                else
+                {
+                    MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                }
+
+                TurnOffLoader();
+                return;
+            }
+            catch
+            {
+                MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                TurnOffLoader();
+                return;
+            }
+
+            //authenticate user
+            await _userRepository.Login(Email, Password);
 
             if (_nextPageType != null)
             {
@@ -119,7 +145,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 
         private void TurnOffLoader()
         {
-            ShowLoader = false;
+            RegistrationInProgress = false;
             RegisterButtonContent = "Register";
         }
 

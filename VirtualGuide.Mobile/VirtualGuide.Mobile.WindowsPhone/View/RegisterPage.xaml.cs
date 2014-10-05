@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using VirtualGuide.Mobile.Helper;
+using VirtualGuide.Mobile.ViewModel.RegisterPage;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -27,7 +28,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class RegisterPage : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private RegisterViewModel _viewModel = new RegisterViewModel(typeof(GuideList));
 
         public RegisterPage()
         {
@@ -36,6 +37,8 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            this.SpinningAnimation.Begin();
         }
 
         /// <summary>
@@ -50,9 +53,9 @@ namespace VirtualGuide.Mobile.View
         /// Gets the view model for this <see cref="Page"/>.
         /// This can be changed to a strongly typed view model.
         /// </summary>
-        public ObservableDictionary DefaultViewModel
+        public RegisterViewModel ViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return this._viewModel; }
         }
 
         /// <summary>

@@ -12,11 +12,11 @@ namespace VirtualGuide.Mobile.Repository
     public class UserRepository
     {
         SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
-        public async Task Login(string username, string password)
+        public async Task Login(string email, string password)
         {
-            if (!String.IsNullOrEmpty(username) && !(String.IsNullOrEmpty(password)))
+            if (!String.IsNullOrEmpty(email) && !(String.IsNullOrEmpty(password)))
             {
-                var credentials = String.Format("grant_type=password&username={0}&password={1}", username, password);
+                var credentials = String.Format("grant_type=password&username={0}&password={1}", email, password);
 
                 var result = await HttpHelper.PostData<Dictionary<string, string>>("Token", credentials);
 
@@ -31,6 +31,18 @@ namespace VirtualGuide.Mobile.Repository
             await HttpHelper.PostData<object>("api/Account/Logout", null);
 
             settingsDataHelper.RemoveValue(SettingsDataHelper.TOKEN);
+        }
+
+        public async Task Register(string username, string password, string repeatPassword)
+        {
+            var data = new
+            {
+                Email = username,
+                Password = password,
+                ConfirmPassword = repeatPassword
+            };
+
+            var result = await HttpHelper.PostData<object>("api/Account/Register", data);
         }
     }
 }
