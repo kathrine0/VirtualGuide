@@ -23,7 +23,7 @@
         emplate for every place marker on the map-->
         
 		<DataTemplate x:Key="MapMarker">
-            <Canvas>
+            <Canvas Visibility="{Binding Visibility, Converter={StaticResource TrueIsVisible}}">
 				<Image 
 					Source="{Binding Icon}" 
 					Stretch="Uniform"

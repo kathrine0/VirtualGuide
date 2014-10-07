@@ -168,8 +168,18 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         private void Categories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //IEnumerable<string> visibileCategories = _categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
-            OnPropertyChanged("Places");
+            IEnumerable<string> visibileCategories = _categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
+
+            foreach (var place in _places)
+            {
+                if (visibileCategories.Contains(place.Category))
+                    place.Visibility = true;
+                else
+                    place.Visibility = false;
+            }
+            
+
+            //OnPropertyChanged("Places");
         }
 
         private void HideAllClouds()
