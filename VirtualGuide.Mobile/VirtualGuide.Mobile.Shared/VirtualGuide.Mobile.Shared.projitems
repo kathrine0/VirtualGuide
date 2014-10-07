@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\BaseTravelBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\MapsBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\User\LastLoggedUserSettingsModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ItemsChangeObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Converters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />

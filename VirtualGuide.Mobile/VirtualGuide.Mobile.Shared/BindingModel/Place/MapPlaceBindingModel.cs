@@ -36,6 +36,8 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public bool DetailsVisibility { get; set; }
 
+        public bool Visibility { get; set; }
+
         private string _iconName;
 
         private ImageSource _icon;

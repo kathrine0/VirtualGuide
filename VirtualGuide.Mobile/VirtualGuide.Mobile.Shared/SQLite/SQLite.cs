@@ -461,7 +461,7 @@ namespace SQLite
 
         /// <summary>
         /// Creates an index for the specified object place.
-        /// e.g. CreateIndex<Client>(c => c.Name);
+        /// e.places. CreateIndex<Client>(c => c.Name);
         /// </summary>
         /// <typeparam name="T">Type to reflect to a database table.</typeparam>
         /// <param name="place">Property to index</param>

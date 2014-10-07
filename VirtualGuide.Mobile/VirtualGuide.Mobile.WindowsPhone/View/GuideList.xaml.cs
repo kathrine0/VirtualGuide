@@ -31,7 +31,7 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            
         }
 
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
@@ -96,12 +96,16 @@ namespace VirtualGuide.Mobile.View
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+
             this.navigationHelper.OnNavigatedTo(e);
             
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+
             this.navigationHelper.OnNavigatedFrom(e);
 
         }

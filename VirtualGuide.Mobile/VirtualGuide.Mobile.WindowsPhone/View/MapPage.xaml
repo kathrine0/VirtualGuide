@@ -229,13 +229,13 @@
 
             <ListView
 				SelectionMode="Extended" 
-                ItemsSource="{Binding Categories, Mode=TwoWay}" 
+                ItemsSource="{Binding Categories}" 
                 Margin="10"
                 >
                 <ListView.ItemTemplate>
 					<DataTemplate>
-						<CheckBox IsChecked="{Binding Item1, Mode=TwoWay}" 
-                                  Content="{Binding Item2}" 
+                        <CheckBox IsChecked="{Binding Visibile, Mode=TwoWay}" 
+                                  Content="{Binding Name}" 
                                   Foreground="White" 
                                   BorderBrush="White" Background="White" />
 					</DataTemplate>
@@ -249,7 +249,7 @@
 	<Page.BottomAppBar>
 		<CommandBar x:Name="commandBar" Background="Black" Foreground="#DEFFFFFF">
 			<CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="Filter" Label="Filter Places" Command="{Binding ShowFilterScreenCommand}" Icon="Filter" />
+                <AppBarButton x:Name="Filter" Label="Filter Places" Command="{Binding ShowHideFilterScreenCommand}" Icon="Filter" />
 			</CommandBar.PrimaryCommands>
 		</CommandBar>
 	</Page.BottomAppBar>

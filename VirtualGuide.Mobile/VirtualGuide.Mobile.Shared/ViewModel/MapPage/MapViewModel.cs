@@ -1,10 +1,12 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using PropertyChanged;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.BindingModel;
+using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
@@ -13,11 +15,12 @@ using Windows.Devices.Sensors;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace VirtualGuide.Mobile.ViewModel.MapPage
 {
-    [ImplementPropertyChanged]
-    public class MapViewModel
+    public class MapViewModel : INotifyPropertyChanged
     {
         #region readonly properties
 
@@ -28,6 +31,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         #region events
 
         public event Action<Geopoint, double> ZoomingMapToPoint;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -49,8 +53,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             Initialize();
 
             Travel = new MapTravelBindingModel();
-            Places = new ObservableCollection<MapPlaceBindingModel>();
-            Categories = new ObservableCollection<Tuple<bool, string>>();
+           
             LocationEllipse = new LocationEllipseParams()
             {
                 Fill = new SolidColorBrush(Color.FromArgb(255, 83, 83, 83)),
@@ -73,7 +76,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         public DelegateCommand InitializeMapCommand { get; set; }
         public DelegateCommand HideDetailCloudsCommand { get; set; }
         public DelegateCommand LocateMeCommand { get; set; }
-        public DelegateCommand ShowFilterScreenCommand { get; set; }
+        public DelegateCommand ShowHideFilterScreenCommand { get; set; }
 
         #endregion
 
@@ -99,8 +102,10 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         public ObservableCollection<MapPlaceBindingModel> Places
         {
-            get;
-            private set;
+            get
+            {
+                return _places;
+            }
         }
 
         public LocationEllipseParams LocationEllipse { get; set; }
@@ -109,7 +114,17 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         public bool CalibrationInProgress { get; set; }
 
-        public ObservableCollection<Tuple<bool, string>> Categories { get;set; }
+        public ItemsChangeObservableCollection<CategoryVisibility> Categories 
+        { 
+            get
+            {
+                return _categories;
+            }
+            set
+            {
+                _categories = value;
+            }
+        }
 
         public bool FilterMode { get; set; }
 
@@ -120,6 +135,9 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         private int _travelId;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
+
+        private ItemsChangeObservableCollection<CategoryVisibility> _categories = new ItemsChangeObservableCollection<CategoryVisibility>();
+        private ObservableCollection<MapPlaceBindingModel> _places = new ObservableCollection<MapPlaceBindingModel>();
 
         private Compass _compass;
         private Geolocator _geolocator = null;
@@ -143,14 +161,22 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             InitializeMapCommand = new DelegateCommand(InitializeMapExecute);
             HideDetailCloudsCommand = new DelegateCommand(HideDetailCloudsExecute);
             LocateMeCommand = new DelegateCommand(LocateMeExecute);
-            ShowFilterScreenCommand = new DelegateCommand(ShowFilterScreenExecute);
+            ShowHideFilterScreenCommand = new DelegateCommand(ShowHideFilterScreenExecute);
+
+            Categories.CollectionChanged += Categories_CollectionChanged;
+        }
+
+        private void Categories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //IEnumerable<string> visibileCategories = _categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
+            OnPropertyChanged("Places");
         }
 
         private void HideAllClouds()
         {
             if (_visibleDetailsPlaceId != null)
             {
-                Places.Where(place => place.Id == _visibleDetailsPlaceId).All(x => x.DetailsVisibility = false);
+                _places.Where(place => place.Id == _visibleDetailsPlaceId).All(x => x.DetailsVisibility = false);
             }
 
             _visibleDetailsPlaceId = null;
@@ -204,12 +230,15 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                     place.ShowDetailCloudCommand = new DelegateCommand<MapPlaceBindingModel>(ShowDetailCloudExecute);
                     place.NavigateToPlaceDetailsCommand = new DelegateCommand<MapPlaceBindingModel>(NavigateToPlaceDetailsExecute);
 
-                    Places.Add(place);
+                    _places.Add(place);
                 }
 
-                var categories = Places.Select(x => x.Category).Distinct();
+                IEnumerable<string> categories = _places.Select(x => x.Category).Distinct();
 
-                Categories = new ObservableCollection<Tuple<bool, string>>(categories.Select(x => new Tuple<bool, string>(true, x)));
+                foreach (var category in categories)
+                {
+                    _categories.Add(new CategoryVisibility() { Visibile = true, Name = category });
+                }
             }
         }
 
@@ -256,7 +285,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
             place.DetailsVisibility = true;
 
-            Places.Move(Places.IndexOf(place), Places.Count-1);
+            _places.Move(_places.IndexOf(place), _places.Count - 1);
 
             _visibleDetailsPlaceId = place.Id;
             _markerTapped = true;
@@ -289,9 +318,18 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             }
         }
 
-        public void ShowFilterScreenExecute()
+        public void ShowHideFilterScreenExecute()
         {
-            FilterMode = true;
+            FilterMode = !FilterMode;
+        }
+
+        public virtual void OnPropertyChanged(string propertyName)
+        {
+            var propertyChanged = PropertyChanged;
+            if (propertyChanged != null)
+            {
+                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         #endregion
@@ -452,6 +490,23 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             public bool CompassMode { get; set; }
             public Brush Fill { get; set; }
+        }
+
+        public class CategoryVisibility : INotifyPropertyChanged
+        {
+            public bool Visibile
+            {
+                get;
+                set;
+            }
+
+            public string Name
+            {
+                get;
+                set;
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
         }
 
         #endregion
