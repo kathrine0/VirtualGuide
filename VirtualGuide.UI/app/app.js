@@ -1,5 +1,5 @@
 ﻿var app = angular.module('VirtualGuide', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
-
+// 'vgServices',
 app.config(function ($routeProvider) {
 
     var site_prefix = '/VirtualGuide.UI';
@@ -27,6 +27,10 @@ app.config(function ($routeProvider) {
     $routeProvider.otherwise({ redirectTo: "/home" });
 });
 
+app.run(function ($rootScope) {
+    $rootScope.webservice = 'http://localhost/VirtualGuide/'; //global variable
+});
+
 app.run(['authService', function (authService) {
     authService.fillAuthData();
 }]);
@@ -35,3 +39,4 @@ app.run(['authService', function (authService) {
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 });
+

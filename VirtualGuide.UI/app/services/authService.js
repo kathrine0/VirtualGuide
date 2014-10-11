@@ -1,7 +1,7 @@
 ﻿'use strict';
-app.factory('authService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
+app.factory('authService', ['$http', '$q', 'localStorageService', '$rootScope', function ($http, $q, localStorageService, $rootScope) {
 
-    var serviceBase = 'http://localhost/VirtualGuide/';
+    var serviceBase = $rootScope.webservice;
     var authServiceFactory = {};
 
     var _authentication = {
