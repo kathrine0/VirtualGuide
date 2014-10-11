@@ -1,4 +1,8 @@
 ﻿'use strict';
+
+///
+/// Adds Bearer Token to every request
+///
 app.factory('authInterceptorService', ['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
 
     var authInterceptorServiceFactory = {};

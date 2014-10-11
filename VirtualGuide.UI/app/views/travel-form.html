@@ -2,17 +2,25 @@
     <div class="box-header">
         <h3 class="box-title">Travel Add/Edit</h3>
     </div><!-- /.box-header -->
-    <div class="box-body">
-        <form role="form">
+    <form role="form">
+        <div class="box-body">
             <!-- text input -->
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter name for your guide"/>
+                <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="Enter name for your guide" />
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" rows="3" placeholder="Enter description"></textarea>
+                <textarea class="form-control" name="description" ng-model="travel.Description" rows="3" placeholder="Enter description"></textarea>
             </div>
-        </form>
-        </>
-    </div>  
+            <div class="form-group">
+                <label for="name">Price</label>
+                <input type="number" name="price" ng-model="travel.Price" class="form-control" placeholder="Enter price" />
+            </div>
+
+        </div>
+        <div class="box-footer">
+            <button ng-click="CreateNewTravel()" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

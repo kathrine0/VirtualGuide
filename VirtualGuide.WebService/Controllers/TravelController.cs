@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VirtualGuide.Models;
 using VirtualGuide.Services;
 using VirtualGuide.Services.Repository;
@@ -25,7 +26,9 @@ namespace VirtualGuide.WebService.Controllers
         {
             var travels = tr.GetApprovedTravelList();
 
-            if (travels == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (travels == null) 
+                Request.CreateResponse(HttpStatusCode.NotFound);
+
             return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
 
         }
@@ -37,7 +40,9 @@ namespace VirtualGuide.WebService.Controllers
             var userName = User.Identity.Name;
             var travels = tr.GetOwnedTravelList(userName);
 
-            if (travels == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (travels == null) 
+                Request.CreateResponse(HttpStatusCode.NotFound);
+
             return Request.CreateResponse<IList<ComplexReadTravelViewModel>>(HttpStatusCode.OK, travels);
         }
 
@@ -48,7 +53,9 @@ namespace VirtualGuide.WebService.Controllers
             var userName = User.Identity.Name;
             var travels = tr.GetCreatedTravelList(userName);
 
-            if (travels == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (travels == null) 
+                Request.CreateResponse(HttpStatusCode.NotFound);
+
             return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
         }
 
@@ -64,8 +71,27 @@ namespace VirtualGuide.WebService.Controllers
             var userName = User.Identity.Name;
             var travel = tr.GetOwnedTravelDetails(id, userName);
 
-            if (travel == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (travel == null) 
+                Request.CreateResponse(HttpStatusCode.NotFound);
+
             return Request.CreateResponse<BasicTravelViewModel>(HttpStatusCode.OK, travel);
+        }
+
+        //POST: api/Travels
+        [ResponseType(typeof(Travel))]
+        [Route("CreatedTravels")]
+        public HttpResponseMessage PostTravel(Travel travel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            db.Travels.Add(travel);
+            db.SaveChanges();
+
+            return Request.CreateResponse<BasicTravelViewModel>(HttpStatusCode.OK, null);
+
         }
 
         // PUT: api/Travels/5
@@ -103,7 +129,7 @@ namespace VirtualGuide.WebService.Controllers
         //    return StatusCode(HttpStatusCode.NoContent);
         //}
 
-        // POST: api/Travels
+        //POST: api/Travels
         //[ResponseType(typeof(Travel))]
         //public IHttpActionResult PostTravel(Travel travel)
         //{

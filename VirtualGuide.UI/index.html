@@ -221,6 +221,7 @@
     <script src="Scripts/angular-route.min.js"></script>
     <script src="Scripts/angular-local-storage.min.js"></script>
     <script src="Scripts/angular-resource.min.js"></script>
+    <script src="Scripts/angular-sanitize.min.js"></script>
 
     <!-- jQuery -->
     <script src="Scripts/jquery-2.1.1.min.js"></script>
@@ -231,14 +232,19 @@
     <script src="Scripts/bootstrap3-wysihtml5.all.min.js"></script>
     <script src="Scripts/daterangepicker.min.js"></script>
     <script src="Scripts/jquery.knob.js"></script>
-
     <script src="Scripts/loading-bar.min.js"></script>
+
     <!-- Load app main script -->
     <script src="app/app.js"></script>
+    <script src="app/routing.js"></script>
+    <script src="app/config.js"></script>
+
     <!-- Load services -->
     <script src="app/services/authInterceptorService.js"></script>
+    <script src="app/services/ErrorInterceptorService.js"></script>
     <script src="app/services/authService.js"></script>
     <script src="app/services/travelsServices.js"></script>
+
     <!-- Load controllers -->
     <script src="app/controllers/indexController.js"></script>
     <script src="app/controllers/homeController.js"></script>
@@ -246,8 +252,8 @@
     <script src="app/controllers/signupController.js"></script>
     <script src="app/controllers/travelsController.js"></script>
 
-
-
+    <!-- Load filters -->
+    <script src="app/filters/generalFilter.js"></script>
 
     <!-- Theme js -->
     <script src="Theme/js/app.js"></script>

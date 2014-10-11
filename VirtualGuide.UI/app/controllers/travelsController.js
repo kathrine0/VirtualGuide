@@ -1,5 +1,6 @@
 ﻿'use strict';
-app.controller('travelsController', ['$scope', 'CreatorTravelsService', function ($scope, CreatorTravelsService) {
+app.controller('travelsController', ['$scope', '$location', 'CreatorTravelsService',
+    function ($scope, $location, CreatorTravelsService) {
     
     //var successCallback = function (data, status, headers, config) {
     //    notificationFactory.success();
@@ -26,4 +27,32 @@ app.controller('travelsController', ['$scope', 'CreatorTravelsService', function
 
 
     $scope.travels = CreatorTravelsService.query();
+
+    $scope.editTravel = function(id)
+    {
+        $location.path($location.path('/travel-edit/' + id));
+    }
+
+    $scope.newTravel = function () {
+        $location.path('/travel-new');
+    };
+}]);
+
+app.controller('travelEditController', ['$scope', '$location', 'CreatorTravelsService',
+    function ($scope, $location, CreatorTravelsService) {
+
+}]);
+
+app.controller('travelNewController', ['$scope', '$location', 'CreatorTravelsService',
+    function ($scope, $location, CreatorTravelsService) {
+
+    $scope.CreateNewTravel = function () {
+
+        var travel = $scope.travel;
+        travel.Language = "pl_PL";
+
+        CreatorTravelsService.create(travel);
+        $location.path('/travels');
+    }
+
 }]);

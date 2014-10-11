@@ -950,6 +950,7 @@
     <Content Include="Scripts\jquery.knob.min.js.map">
       <DependentUpon>jquery.knob.min.js</DependentUpon>
     </Content>
+    <Content Include="Theme\less\images.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

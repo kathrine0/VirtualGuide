@@ -4,6 +4,8 @@ app.factory('CreatorTravelsService', ['$resource', '$rootScope', function ($reso
 
     var serviceBase = $rootScope.webservice;
 
+
+
     return $resource(serviceBase + 'api/CreatedTravels', {}, {
         query: { method: 'GET', isArray: true },
         create: { method: 'POST' }

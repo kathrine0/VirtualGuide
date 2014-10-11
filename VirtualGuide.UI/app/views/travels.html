@@ -3,27 +3,33 @@
         <h3 class="box-title">Responsive Hover Table</h3>
         <div class="box-tools">
             <div class="input-group">
-                <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />
+                <!--<input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" />-->
                 <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                    <a ng-click="newTravel()" class="btn btn-sm btn-primary">add new</a>
+                    <!--<button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>-->
                 </div>
             </div>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive">
             <tr>
+                <th>Image</th>
                 <th>Name</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Reason</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Approved</th>
+                <th>Action</th>
             </tr>
             <tr ng-repeat="travel in travels | orderBy:'Id':true">
+                <td class="col-md-3" ng-bind-html="travel.ImageSrc | imageSource:'thumbnail'"></td>
                 <td>{{travel.Name}}</td>
                 <td>{{travel.Description}}</td>
-                <td>11-7-2014</td>
+                <td>${{travel.Price}}</td>
                 <td><span class="label label-success">Approved</span></td>
+                <td><a ng-click="editTravel(travel.id)" class="btn btn-small btn-primary">edit</a></td>
             </tr>
         </table>
     </div><!-- /.box-body -->
+    
 </div><!-- /.box -->
