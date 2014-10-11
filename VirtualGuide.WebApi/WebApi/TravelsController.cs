@@ -47,6 +47,19 @@ namespace VirtualGuide.WebApi.WebApi
         }
 
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [Route("CreatedTravels")]
+        public HttpResponseMessage GetCreatedTravels()
+        {
+            var userName = User.Identity.Name;
+            var travels = tr.GetCreatedTravelList(userName);
+
+            if (travels == null) throw new HttpResponseException(HttpStatusCode.NotFound);
+            return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+        }
+        
+
+
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("Travel/{id}")]
         // GET: api/Travels/5
         //[ResponseType(typeof(Travel))]

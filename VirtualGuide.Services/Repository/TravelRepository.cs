@@ -46,6 +46,23 @@ namespace VirtualGuide.Services.Repository
             return result;
         }
 
+        public IList<BasicTravelViewModel> GetCreatedTravelList(string userEmail)
+        {
+            var user = userManager.FindByEmail(userEmail);
+
+            if (user == null) return null;
+
+            var items = db.Travels.Where(x => x.CreatorId == user.Id);
+            var result = new List<BasicTravelViewModel>();
+
+            foreach (var item in items)
+            {
+                result.Add(new BasicTravelViewModel(item));
+            }
+
+            return result;
+        }
+
         public BasicTravelViewModel GetOwnedTravelDetails(int id, string userEmail)
         {
             throw new NotImplementedException();

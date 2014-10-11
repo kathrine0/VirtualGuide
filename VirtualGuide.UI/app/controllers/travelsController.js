@@ -1,8 +1,6 @@
 ﻿'use strict';
-app.controller('travelsController', ['$scope', 'travelsService', function ($scope, travelsService) {
+app.controller('travelsController', ['$scope', 'CreatorTravelsService', function ($scope, CreatorTravelsService) {
     
-    $scope.travels = [];
-
     //var successCallback = function (data, status, headers, config) {
     //    notificationFactory.success();
 
@@ -16,44 +14,16 @@ app.controller('travelsController', ['$scope', 'travelsService', function ($scop
     //    });
     //};
 
-    var getTravelsSuccessCallback = function (data, status) {
-        $scope.travels = data;
-    };
-
-    var errorCallback = function (data, status, headers, config) {
-        console.log("error");
-        //notificationFactory.error(data.ExceptionMessage);
-    };
-
-    travelsService.getTravels().success(getTravelsSuccessCallback).error(errorCallback);
-
-
-    //$scope.AllTravels = travelsService.query();
-
-    //console.log($scope.AllTravels);
-
-    //$scope.loading = true;
-    //$scope.editMode = false;
-
-    //$http.get('/api/posts/').success(function (data) {
-    //    $scope.posts = data;
-    //    $scope.loading = false;
-    //})
-    //.error(function () {
-    //    $scope.error = "An Error has occured while loading posts!";
-    //    $scope.loading = false;
-    //});
-
-    //$scope.toggleEdit = function () {
-    //    $scope.editMode = !$scope.editMode;
+    //var getTravelsSuccessCallback = function (data, status) {
+    //    $scope.travels = data;
     //};
 
-    //$scope.save = function () {
-    //    $http.put('/api/posts/', $scope.posts).success(function (data) {
-    //        alert("Saved Successfully!!");
-    //    }).error(function (data) {
-    //        $scope.error = "An Error has occured while Saving posts! " + data;
-    //        $scope.loading = false;
-    //    });
+    //var errorCallback = function (data, status, headers, config) {
+    //    notificationFactory.error(data.ExceptionMessage);
     //};
+
+    //travelsService.getTravels().success(getTravelsSuccessCallback).error(errorCallback);
+
+
+    $scope.travels = CreatorTravelsService.query();
 }]);

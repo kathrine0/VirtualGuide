@@ -1,4 +1,4 @@
-﻿var app = angular.module('VirtualGuide', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+﻿var app = angular.module('VirtualGuide', ['ngRoute', 'ngResource', 'LocalStorageModule', 'angular-loading-bar']);
 // 'vgServices',
 app.config(function ($routeProvider) {
 

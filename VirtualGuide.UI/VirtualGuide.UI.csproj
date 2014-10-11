@@ -65,10 +65,12 @@
     <Content Include="app\controllers\travelsController.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
-    <Content Include="app\services\travelsService.js" />
+    <Content Include="app\services\travelsServices.js" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\travel-detail.html" />
+    <Content Include="app\views\travel-form.html" />
     <Content Include="app\views\travels.html" />
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
@@ -958,7 +960,6 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="packages.config" />
-    <Content Include="Views\index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
