@@ -19,7 +19,12 @@ namespace VirtualGuide.WebService.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private TravelRepository tr = new TravelRepository();
 
-        // GET: api/Travels
+        /// <summary>
+        /// All Travels in the system
+        /// Use: WebApp & Mobile
+        /// GET: api/Travels
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [Route("Travels")]
         public HttpResponseMessage GetTravels()
@@ -33,6 +38,11 @@ namespace VirtualGuide.WebService.Controllers
 
         }
 
+        /// <summary>
+        /// Travels owned by user
+        /// Use: WebApp & Mobile
+        /// </summary>
+        /// <returns></returns>
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("OwnedTravels")]
         public HttpResponseMessage GetOwnedTravels()
@@ -43,11 +53,16 @@ namespace VirtualGuide.WebService.Controllers
             if (travels == null) 
                 Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse<IList<ComplexReadTravelViewModel>>(HttpStatusCode.OK, travels);
+            return Request.CreateResponse<IList<CustomerTravelViewModel>>(HttpStatusCode.OK, travels);
         }
 
+        /// <summary>
+        /// Travels created by user
+        /// Use: WebApp
+        /// </summary>
+        /// <returns></returns>
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("CreatedTravels")]
+        [Route("CreatorTravel")]
         public HttpResponseMessage GetCreatedTravels()
         {
             var userName = User.Identity.Name;
@@ -60,26 +75,30 @@ namespace VirtualGuide.WebService.Controllers
         }
 
 
-
+        /// <summary>
+        /// Get travel detail for Creator
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("Travel/{id}")]
+        [Route("CreatorTravel/{id}")]
         // GET: api/Travels/5
         //[ResponseType(typeof(Travel))]
         public HttpResponseMessage GetTravel(int id)
         {
-
             var userName = User.Identity.Name;
-            var travel = tr.GetOwnedTravelDetails(id, userName);
+
+            var travel = tr.GetTravelDetailsForCreator(id, userName);
 
             if (travel == null) 
                 Request.CreateResponse(HttpStatusCode.NotFound);
 
-            return Request.CreateResponse<BasicTravelViewModel>(HttpStatusCode.OK, travel);
+            return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.OK, travel);
         }
 
         //POST: api/Travels
         [ResponseType(typeof(Travel))]
-        [Route("CreatedTravels")]
+        [Route("CreatorTravel")]
         public HttpResponseMessage PostTravel(Travel travel)
         {
             if (!ModelState.IsValid)

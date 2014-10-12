@@ -18,7 +18,7 @@
     });
 
     $routeProvider.when("/travels", {
-        controller: "travelsController",
+        controller: "getTravelsAction",
         templateUrl: site_prefix + "/app/views/travels.html"
     });
 
@@ -26,7 +26,7 @@
         controller: "travelEditController",
         templateUrl: site_prefix + "/app/views/travel-form.html"
     });
-
+    
     $routeProvider.when("/travel-new", {
         controller: "travelNewController",
         templateUrl: site_prefix + "/app/views/travel-form.html"

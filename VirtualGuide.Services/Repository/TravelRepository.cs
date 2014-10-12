@@ -28,7 +28,7 @@ namespace VirtualGuide.Services.Repository
             return result;
         }
 
-        public IList<ComplexReadTravelViewModel> GetOwnedTravelList(string userEmail)
+        public IList<CustomerTravelViewModel> GetOwnedTravelList(string userEmail)
         {
 
             var user = userManager.FindByEmail(userEmail);
@@ -36,11 +36,11 @@ namespace VirtualGuide.Services.Repository
             if (user == null) return null;
 
             var items = user.PurchasedTravels;
-            var result = new List<ComplexReadTravelViewModel>();
+            var result = new List<CustomerTravelViewModel>();
 
             foreach(var item in items)
             {
-                result.Add(new ComplexReadTravelViewModel(item.Travel));
+                result.Add(new CustomerTravelViewModel(item.Travel));
             }
 
             return result;
@@ -63,9 +63,42 @@ namespace VirtualGuide.Services.Repository
             return result;
         }
 
-        public BasicTravelViewModel GetOwnedTravelDetails(int id, string userEmail)
+        public CreatorTravelViewModel GetTravelDetailsForCreator(int id, string userEmail)
         {
-            throw new NotImplementedException();
+            var user = userManager.FindByEmail(userEmail);
+            var travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+
+            if (travel == null)
+            {
+                return null;
+            }
+
+            if (travel.CreatorId != user.Id && travel.ApproverId != user.Id)
+            {
+                return null;
+            }
+
+            return new CreatorTravelViewModel(travel);
+        }
+
+        public CustomerTravelViewModel GetTravelDetailsForCustomer(int id, string userEmail)
+        {
+            var user = userManager.FindByEmail(userEmail);
+            var travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+
+            if (travel == null)
+            {
+                return null;
+            }
+
+            var isPurchased = user.PurchasedTravels.Where(x => x.TravelId == travel.Id).Count();
+
+            if (isPurchased == 0)
+            {
+                return null;
+            }
+
+            return new CustomerTravelViewModel(travel);
         }
     }
 }
