@@ -202,7 +202,20 @@
             </section>
             <!-- /.sidebar -->
         </aside>
-        <aside class="right-side" ng-view></aside>
+        <aside class="right-side">
+            <section class="content-header">
+                <h1 ng-bind="title"></h1>
+                <!--<ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li><a href="#">Forms</a></li>
+                    <li class="active">General Elements</li>
+                </ol>-->
+            </section>
+            <section class="content">
+                <div class="row" ng-view></div>
+            </section>
+
+        </aside>
     </div>
     <hr />
     <div id="footer">
@@ -233,6 +246,9 @@
     <script src="Scripts/daterangepicker.min.js"></script>
     <script src="Scripts/jquery.knob.js"></script>
     <script src="Scripts/loading-bar.min.js"></script>
+    <script src="Scripts/lodash.compat.min.js"></script>
+    <script src="Scripts/bluebird.min.js"></script>
+    <script src="Scripts/angular-google-maps.min.js"></script>
 
     <!-- Load app main script -->
     <script src="app/app.js"></script>

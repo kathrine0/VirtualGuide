@@ -2,41 +2,39 @@
 
 app.factory('travelService', ['travelRepository', function (travelRepository) {
 
-
+    var travelService = {};
     
-    var _getAllForCreator = function ()
+    travelService.getAllForCreator = function ()
     {
         return travelRepository.query();
     }
 
-    var _getItem = function(id)
+    travelService.getItem = function (id)
     {
-        return travelRepository.show({id: id});
+        return travelRepository.show({id: id}, 
+            function success(item) {
+            },
+            function error(item) {
+            });
     }
 
-    var _createItem = function(travel)
+    travelService.createItem = function (travel)
     {
         travel.Language = 'pl_PL';
 
         travelRepository.create(travel);
     }
 
-    var _updateItem = function(travel)
+    travelService.updateItem = function (travel)
     {
         travelRepository.update(travel)
     }
 
-    var _deleteItem = function()
+    travelService.deleteItem = function ()
     {
 
     }
 
-    return {
-        getAllForCreator: _getAllForCreator,
-        createItem: _createItem,
-        getItem: _getItem,
-        updateItem: _updateItem
-    }
-
+    return travelService;
 
 }]);

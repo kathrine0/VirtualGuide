@@ -1,26 +1,40 @@
-﻿<div class="box">
-    <div class="box-header">
-        <h3 class="box-title">{{title}}</h3>
-    </div><!-- /.box-header -->
-    <form role="form">
-        <div class="box-body">
-            <!-- text input -->
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="Enter name for your guide" />
+﻿<div class="col-md-6">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">{{title}}</h3>
+        </div><!-- /.box-header -->
+        <form role="form">
+            <div class="box-body">
+                <!-- text input -->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="Enter name for your guide" />
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" name="location" ng-blur="searchPlace()" placeholder="Enter the destination"/>
+                    <ui-gmap-search-box template="searchbox.template" position="searchbox.position"></ui-gmap-search-box>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" name="description" ng-model="travel.Description" rows="3" placeholder="Enter description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="name">Price</label>
+                    <input type="number" name="price" ng-model="travel.Price" class="form-control" placeholder="Enter price" />
+                </div>
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" name="description" ng-model="travel.Description" rows="3" placeholder="Enter description"></textarea>
+            <div class="box-footer">
+                <button ng-click="createNewTravel()" class="btn btn-primary">{{submit}}</button>
             </div>
-            <div class="form-group">
-                <label for="name">Price</label>
-                <input type="number" name="price" ng-model="travel.Price" class="form-control" placeholder="Enter price" />
-            </div>
+        </form>
+    </div>
 
-        </div>
-        <div class="box-footer">
-            <button ng-click="CreateNewTravel()" class="btn btn-primary">{{submit}}</button>
-        </div>
-    </form>
+</div>
+<div class="col-md-6">
+    <script type="text/ng-template" id="searchbox.tpl.html">
+        <input type="text" placeholder="Search">
+    </script>
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
+</ui-gmap-google-map>
 </div>

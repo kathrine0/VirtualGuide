@@ -65,11 +65,11 @@
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\travelController.js" />
     <Content Include="app\filters\generalFilter.js" />
+    <Content Include="app\repositories\travelRepository.js" />
     <Content Include="app\routing.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\errorInterceptorService.js" />
-    <Content Include="app\repositories\travelRepository.js" />
     <Content Include="app\services\travelService.js" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
@@ -136,6 +136,7 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-google-maps.min.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
@@ -151,6 +152,10 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bluebird.js" />
+    <Content Include="Scripts\bluebird.min.js">
+      <DependentUpon>bluebird.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap3-wysihtml5.all.min.js" />
@@ -895,6 +900,9 @@
     <Content Include="Scripts\daterangepicker.min.js.map">
       <DependentUpon>daterangepicker.min.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\bluebird.min.js.map">
+      <DependentUpon>bluebird.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -905,6 +913,7 @@
       <DependentUpon>jquery.knob.js</DependentUpon>
     </Content>
     <Content Include="Scripts\loading-bar.min.js" />
+    <Content Include="Scripts\lodash.compat.min.js" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -949,13 +958,13 @@
     <Content Include="Theme\less\small-box.less" />
     <Content Include="Theme\less\timeline.less" />
     <Content Include="Theme\less\vars.less" />
-    <Content Include="Theme\less\AdminLTE.css.map">
-      <DependentUpon>AdminLTE.css</DependentUpon>
-    </Content>
     <Content Include="Scripts\jquery.knob.min.js.map">
       <DependentUpon>jquery.knob.min.js</DependentUpon>
     </Content>
-    <Content Include="Theme\less\images.less" />
+    <Content Include="Theme\less\maps.less" />
+    <Content Include="Theme\less\AdminLTE.css.map">
+      <DependentUpon>AdminLTE.css</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

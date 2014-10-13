@@ -37,11 +37,18 @@ app.controller('getTravelsAction', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('travelEditController', ['$scope', '$location', '$routeParams', 'travelService',
-    function ($scope, $location, $routeParams, travelService) {
+app.controller('travelEditController', ['$scope', '$location', '$routeParams', 'GoogleMapApi'.ns(), 'travelService',
+    function ($scope, $location, $routeParams, GoogleMapApi, travelService) {
 
         $scope.submit = "Edit";
-        $scope.title = "Edit Travel";
+        
+        $scope.map = {
+            center: {
+                latitude: 45,
+                longitude: -73
+            },
+            zoom: 8
+        };
 
         var travel = travelService.getItem($routeParams.id);
         $scope.travel = travel;
@@ -52,11 +59,36 @@ app.controller('travelNewController', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
 
         $scope.submit = "Create";
-        $scope.title = "Create Travel";
+        
+        $scope.travel = {};
+        $scope.map = {
+            center: {
+                latitude: 51.5,
+                longitude: 0
+            },
+            zoom: 10,
+            options: {
+                scrollwheel: false
+            }
+            
+        };
 
-        $scope.CreateNewTravel = function () {
+
+        $scope.searchbox = { template: 'searchbox.tpl.html', position: 'top-left' };
+
+        $scope.createNewTravel = function () {
+            $scope.travel.ZoomLevel = $scope.map.zoom;
+            $scope.travel.Latitude = $scope.map.latitude;
+            $scope.travel.Longitude = $scope.map.longitude;
+
             travelService.createItem($scope.travel);
             $location.path('/travels');
         }
 
+        $scope.searchPlace = function(e)
+        {
+
+        }
+
+        $scope.markers = [];
 }]);
