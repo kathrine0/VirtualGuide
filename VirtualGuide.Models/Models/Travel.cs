@@ -26,6 +26,7 @@ namespace VirtualGuide.Models
             CreatorId = travel.CreatorId;
             ApproverId = travel.ApproverId;
             ApprovalStatus = travel.ApprovalStatus;
+            ImageSrc = travel.ImageSrc;
             //TODO - copy contructors 
             //Places = travel.Places;
             //Excursions = travel.Excursions;
@@ -82,8 +83,7 @@ namespace VirtualGuide.Models
         /// <summary>
         /// Language code in format of pl_PL
         /// </summary>
-        [Required]
-        
+        [Required]     
         public string Language { get; set; }
 
         public double Latitude { get; set; }

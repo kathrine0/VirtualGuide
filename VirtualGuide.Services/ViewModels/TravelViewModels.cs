@@ -125,5 +125,24 @@ namespace VirtualGuide.Services
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double ZoomLevel { get; set; }
+
+
+        public Travel ToModel()
+        {
+            return new Travel()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price,
+                Language = this.Language,
+                Latitude = this.Latitude,
+                Longitude = this.Longitude,
+                ZoomLevel = this.ZoomLevel,
+                ImageSrc = this.ImageSrc
+            };
+        }
     }
+
+
 }

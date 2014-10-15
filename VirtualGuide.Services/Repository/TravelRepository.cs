@@ -6,35 +6,35 @@ using System.Threading.Tasks;
 using VirtualGuide.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Core;
 
 namespace VirtualGuide.Services.Repository
 {
-    public class TravelRepository
+    public class TravelRepository : BaseRepository
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        UserManager<User> userManager = new UserManager<User>(new UserStore<User>(new ApplicationDbContext()));
 
-        
+
         public IList<BasicTravelViewModel> GetApprovedTravelList()
         {
-            var items = db.Travels.Where(x => x.ApprovalStatus == true);
-            var result = new List<BasicTravelViewModel>();
-
-            foreach (var item in items)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                result.Add(new BasicTravelViewModel(item));
+                IQueryable<Travel> items = db.Travels.Where(x => x.ApprovalStatus == true);
+            
+                var result = new List<BasicTravelViewModel>();
+
+                foreach (var item in items)
+                {
+                    result.Add(new BasicTravelViewModel(item));
+                }
+
+                return result;
             }
 
-            return result;
         }
 
         public IList<CustomerTravelViewModel> GetOwnedTravelList(string userEmail)
         {
-
-            var user = userManager.FindByEmail(userEmail);
-
-            if (user == null) return null;
-
+            User user = findUserByEmail(userEmail);
             var items = user.PurchasedTravels;
             var result = new List<CustomerTravelViewModel>();
 
@@ -48,57 +48,70 @@ namespace VirtualGuide.Services.Repository
 
         public IList<BasicTravelViewModel> GetCreatedTravelList(string userEmail)
         {
-            var user = userManager.FindByEmail(userEmail);
-
-            if (user == null) return null;
-
-            var items = db.Travels.Where(x => x.CreatorId == user.Id);
-            var result = new List<BasicTravelViewModel>();
-
-            foreach (var item in items)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                result.Add(new BasicTravelViewModel(item));
+                User user = findUserByEmail(userEmail);
+                IQueryable<Travel> items = db.Travels.Where(x => x.CreatorId == user.Id);
+                
+                var result = new List<BasicTravelViewModel>();
+                foreach (var item in items)
+                {
+                    result.Add(new BasicTravelViewModel(item));
+                }
+
+                return result;
             }
 
-            return result;
         }
 
         public CreatorTravelViewModel GetTravelDetailsForCreator(int id, string userEmail)
         {
-            var user = userManager.FindByEmail(userEmail);
-            var travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
-
-            if (travel == null)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return null;
+                User user = findUserByEmail(userEmail);
+                Travel travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+            
+                if (travel == null || (travel.CreatorId != user.Id && travel.ApproverId != user.Id))
+                {
+                    throw new ObjectNotFoundException("Travel not found");
+                }
+
+                return new CreatorTravelViewModel(travel);
             }
 
-            if (travel.CreatorId != user.Id && travel.ApproverId != user.Id)
-            {
-                return null;
-            }
-
-            return new CreatorTravelViewModel(travel);
         }
 
         public CustomerTravelViewModel GetTravelDetailsForCustomer(int id, string userEmail)
         {
-            var user = userManager.FindByEmail(userEmail);
-            var travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
-
-            if (travel == null)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return null;
+                User user = userManager.FindByEmail(userEmail);
+                Travel travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+            
+                if (travel == null)
+                {
+                    throw new ObjectNotFoundException("Travel not found");
+                }
+
+                int isPurchased = user.PurchasedTravels.Where(x => x.TravelId == travel.Id).Count();
+
+                if (isPurchased == 0)
+                {
+                    throw new UnauthorizedAccessException("This user is not authorised to see the details");
+                }
+
+                return new CustomerTravelViewModel(travel);
             }
+            
+        }
 
-            var isPurchased = user.PurchasedTravels.Where(x => x.TravelId == travel.Id).Count();
-
-            if (isPurchased == 0)
+        public void Add(CreatorTravelViewModel item)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return null;
+                db.Travels.Add(item.ToModel());
+                db.SaveChanges();
             }
-
-            return new CustomerTravelViewModel(travel);
         }
     }
 }

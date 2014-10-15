@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using VirtualGuide.Models;
+using System.Web.Http.ModelBinding;
 using VirtualGuide.Services;
 using VirtualGuide.Services.Repository;
 
@@ -16,7 +17,6 @@ namespace VirtualGuide.WebService.Controllers
     [RoutePrefix("api")]
     public class TravelController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         private TravelRepository tr = new TravelRepository();
 
         /// <summary>
@@ -28,14 +28,16 @@ namespace VirtualGuide.WebService.Controllers
         [AllowAnonymous]
         [Route("Travels")]
         public HttpResponseMessage GetTravels()
-        {
-            var travels = tr.GetApprovedTravelList();
-
-            if (travels == null) 
-                Request.CreateResponse(HttpStatusCode.NotFound);
-
-            return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
-
+        {         
+            try
+            {
+                IList<BasicTravelViewModel> travels = tr.GetApprovedTravelList();
+                return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+            } 
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
 
         /// <summary>
@@ -47,17 +49,21 @@ namespace VirtualGuide.WebService.Controllers
         [Route("OwnedTravels")]
         public HttpResponseMessage GetOwnedTravels()
         {
-            var userName = User.Identity.Name;
-            var travels = tr.GetOwnedTravelList(userName);
-
-            if (travels == null) 
-                Request.CreateResponse(HttpStatusCode.NotFound);
-
-            return Request.CreateResponse<IList<CustomerTravelViewModel>>(HttpStatusCode.OK, travels);
+            try
+            {
+                string userName = User.Identity.Name;
+                IList<CustomerTravelViewModel> travels = tr.GetOwnedTravelList(userName);
+    
+                return Request.CreateResponse<IList<CustomerTravelViewModel>>(HttpStatusCode.OK, travels);
+            } 
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
 
         /// <summary>
-        /// Travels created by user
+        /// Listr of travels created by user
         /// Use: WebApp
         /// </summary>
         /// <returns></returns>
@@ -65,13 +71,17 @@ namespace VirtualGuide.WebService.Controllers
         [Route("CreatorTravel")]
         public HttpResponseMessage GetCreatedTravels()
         {
-            var userName = User.Identity.Name;
-            var travels = tr.GetCreatedTravelList(userName);
+            try
+            {
+                string userName = User.Identity.Name;
+                IList<BasicTravelViewModel> travels = tr.GetCreatedTravelList(userName);
 
-            if (travels == null) 
-                Request.CreateResponse(HttpStatusCode.NotFound);
-
-            return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+                return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
 
 
@@ -86,32 +96,63 @@ namespace VirtualGuide.WebService.Controllers
         //[ResponseType(typeof(Travel))]
         public HttpResponseMessage GetTravel(int id)
         {
-            var userName = User.Identity.Name;
+            try
+            {
+                string userName = User.Identity.Name;
+                CreatorTravelViewModel travel = tr.GetTravelDetailsForCreator(id, userName);
 
-            var travel = tr.GetTravelDetailsForCreator(id, userName);
-
-            if (travel == null) 
-                Request.CreateResponse(HttpStatusCode.NotFound);
-
-            return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.OK, travel);
+                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.OK, travel);
+            }
+            catch (ObjectNotFoundException)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
 
         //POST: api/Travels
-        [ResponseType(typeof(Travel))]
         [Route("CreatorTravel")]
-        public HttpResponseMessage PostTravel(Travel travel)
+        public HttpResponseMessage PostTravel(CreatorTravelViewModel travel)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Travels.Add(travel);
-            db.SaveChanges();
-
-            return Request.CreateResponse<BasicTravelViewModel>(HttpStatusCode.OK, null);
-
+            try
+            {
+                tr.Add(travel);
+                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
+            } 
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
+
+
+        //TODO
+        //[Route("CreatorTravel")]
+        //public HttpResponseMessage PutTravel(CreatorTravelViewModel travel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+        //    }
+
+        //    try
+        //    {
+        //        tr.Add(travel);
+        //        return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
+        //    }
+        //    catch
+        //    {
+        //        throw new HttpResponseException(HttpStatusCode.BadRequest);
+        //    }
+        //}
 
         // PUT: api/Travels/5
         //[ResponseType(typeof(void))]
@@ -179,18 +220,6 @@ namespace VirtualGuide.WebService.Controllers
         //    return Ok(travel);
         //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
-        private bool TravelExists(int id)
-        {
-            return db.Travels.Count(e => e.Id == id) > 0;
-        }
     }
 }
