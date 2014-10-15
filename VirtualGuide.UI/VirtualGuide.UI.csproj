@@ -64,6 +64,7 @@
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\travelController.js" />
+    <Content Include="app\controllers\uploadController.js" />
     <Content Include="app\filters\generalFilter.js" />
     <Content Include="app\repositories\travelRepository.js" />
     <Content Include="app\routing.js" />
@@ -139,6 +140,14 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-file-upload-shim.js" />
+    <Content Include="Scripts\angular-file-upload-shim.min.js">
+      <DependentUpon>angular-file-upload-shim.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-file-upload.js" />
+    <Content Include="Scripts\angular-file-upload.min.js">
+      <DependentUpon>angular-file-upload.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular-google-maps.min.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
@@ -905,6 +914,12 @@
     </Content>
     <Content Include="Scripts\bluebird.min.js.map">
       <DependentUpon>bluebird.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-file-upload.min.js.map">
+      <DependentUpon>angular-file-upload.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-file-upload-shim.min.js.map">
+      <DependentUpon>angular-file-upload-shim.min.js</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
