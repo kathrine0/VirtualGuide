@@ -18,11 +18,18 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
             });
     }
 
-    travelService.createItem = function (travel)
+    travelService.createItem = function (travel, successCallback, errorCallback)
     {
         travel.Language = 'pl_PL';
 
-        travelRepository.create(travel);
+        travelRepository.create(travel, 
+            function success(item) {
+                successCallback(item);
+            }, 
+            function error(item)
+            {
+                //TODO
+            });
     }
 
     travelService.updateItem = function (travel)

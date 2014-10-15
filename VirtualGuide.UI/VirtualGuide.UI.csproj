@@ -77,6 +77,9 @@
     <Content Include="app\views\travel-detail.html" />
     <Content Include="app\views\travel-form.html" />
     <Content Include="app\views\travels.html" />
+    <Content Include="app\views\travel\travel-wizard-general.html" />
+    <Content Include="app\views\travel\travel-wizzard-places.html" />
+    <Content Include="app\views\travel\travel-wizzard-properties.html" />
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />

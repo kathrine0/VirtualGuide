@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('getTravelsAction', ['$scope', '$location', 'travelService',
+app.controller('getTravels', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
     
     //var successCallback = function (data, status, headers, config) {
@@ -55,12 +55,25 @@ app.controller('travelEditController', ['$scope', '$location', '$routeParams', '
         
 }]);
 
-app.controller('travelNewController', ['$scope', '$location', 'travelService',
+app.controller('newTravel', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
 
-        $scope.submit = "Create";
         
         $scope.travel = {};
+
+        $scope.searchbox = { template: 'searchbox.tpl.html', position: 'top-left' };
+
+        $scope.createNewTravel = function () {
+            $scope.travel.ZoomLevel = $scope.map.zoom;
+            $scope.travel.Latitude = $scope.map.latitude;
+            $scope.travel.Longitude = $scope.map.longitude;
+
+            travelService.createItem($scope.travel, function (travel) {
+                $location.path('/travel-new2/' + travel.Id);
+            });
+        }
+
+        //TODO
         $scope.map = {
             center: {
                 latitude: 51.5,
@@ -73,22 +86,36 @@ app.controller('travelNewController', ['$scope', '$location', 'travelService',
             
         };
 
-
-        $scope.searchbox = { template: 'searchbox.tpl.html', position: 'top-left' };
-
-        $scope.createNewTravel = function () {
-            $scope.travel.ZoomLevel = $scope.map.zoom;
-            $scope.travel.Latitude = $scope.map.latitude;
-            $scope.travel.Longitude = $scope.map.longitude;
-
-            travelService.createItem($scope.travel);
-            $location.path('/travels');
-        }
-
-        $scope.searchPlace = function(e)
-        {
-
-        }
-
-        $scope.markers = [];
 }]);
+
+
+app.controller('newTravelProperties', ['$scope', '$location', 'travelService',
+    function ($scope, $location, travelService) {
+
+        $scope.properties = [];
+
+        $scope.travel.properties.push({
+            Title: 'Historia',
+            Description: '',
+            Symbol: ''
+        });
+
+
+        //$scope.addProperty = function () {
+        //    $scope.travel.properties.push({
+        //        Title: '',
+        //        Description: '',
+        //        Symbol: ''
+        //    });
+        //};
+
+        //$scope.removeProperty = function (index) {
+        //    $scope.travel.properties.splice(index, 1);
+        //};
+
+    }]);
+
+app.controller('newTravelPlaces', ['$scope', '$location', 'travelService',
+    function ($scope, $location, travelService) {
+
+    }]);

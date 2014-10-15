@@ -22,7 +22,7 @@
 
     $routeProvider.when("/travels", {
         title: "Travels",
-        controller: "getTravelsAction",
+        controller: "getTravels",
         templateUrl: site_prefix + "/app/views/travels.html"
     });
 
@@ -34,8 +34,20 @@
     
     $routeProvider.when("/travel-new", {
         title: "Create travel",
-        controller: "travelNewController",
-        templateUrl: site_prefix + "/app/views/travel-form.html"
+        controller: "newTravel",
+        templateUrl: site_prefix + "/app/views/travel/travel-wizard-general.html"
+    });
+
+    $routeProvider.when("/travel-new2/:id", {
+        title: "Create travel",
+        controller: "newTravelProperties",
+        templateUrl: site_prefix + "/app/views/travel/travel-wizzard-properties.html"
+    });
+
+    $routeProvider.when("/travel-new3/:id", {
+        title: "Create travel",
+        controller: "newTravelPlaces",
+        templateUrl: site_prefix + "/app/views/traveltravel-wizzard-places.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/home" });
