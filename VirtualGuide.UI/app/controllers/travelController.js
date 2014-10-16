@@ -37,8 +37,8 @@ app.controller('getTravels', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('travelEditController', ['$scope', '$location', '$routeParams', 'GoogleMapApi'.ns(), 'travelService',
-    function ($scope, $location, $routeParams, GoogleMapApi, travelService) {
+app.controller('travelEditController', ['$scope', '$location', '$routeParams', 'travelService',
+    function ($scope, $location, $routeParams, travelService) {
 
         $scope.submit = "Edit";
         
@@ -55,13 +55,10 @@ app.controller('travelEditController', ['$scope', '$location', '$routeParams', '
         
 }]);
 
-app.controller('newTravel', ['$scope', '$location', 'travelService',
-    function ($scope, $location, travelService) {
+app.controller('newTravel', ['$scope', '$rootScope', '$location', 'travelService',
+    function ($scope, $rootScope, $location, travelService) {
 
-        
         $scope.travel = {};
-
-        $scope.searchbox = { template: 'searchbox.tpl.html', position: 'top-left' };
 
         $scope.createNewTravel = function () {
             $scope.travel.ZoomLevel = $scope.map.zoom;
@@ -73,19 +70,10 @@ app.controller('newTravel', ['$scope', '$location', 'travelService',
             });
         }
 
-        //TODO
-        $scope.map = {
-            center: {
-                latitude: 51.5,
-                longitude: 0
-            },
-            zoom: 10,
-            options: {
-                scrollwheel: false
-            }
-            
-        };
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        $rootScope.map.addTo(map);
 
+        var marker = L.marker([51.5, -0.09]).addTo(map);
 }]);
 
 

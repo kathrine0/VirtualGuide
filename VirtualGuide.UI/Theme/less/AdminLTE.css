@@ -2252,7 +2252,7 @@ Component: timeline
     component: Maps
 -------------------------
 */
-.angular-google-map-container {
+#map {
   height: 400px;
   width: 100%;
 }
