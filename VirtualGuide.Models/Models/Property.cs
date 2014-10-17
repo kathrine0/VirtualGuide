@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,9 @@ namespace VirtualGuide.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public int Order { get; set; }
+        public int? TravelId { get; set; }
+        
+        [ForeignKey("TravelId")]
         public virtual Travel Travel { get; set; }
         public string Symbol { get; set; }
         public string ImageSrc { get; set; }
