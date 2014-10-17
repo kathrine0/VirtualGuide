@@ -66,11 +66,13 @@
     <Content Include="app\controllers\travelController.js" />
     <Content Include="app\controllers\uploadController.js" />
     <Content Include="app\filters\generalFilter.js" />
+    <Content Include="app\repositories\propertyRepository.js" />
     <Content Include="app\repositories\travelRepository.js" />
     <Content Include="app\routing.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\errorInterceptorService.js" />
+    <Content Include="app\services\propertyService.js" />
     <Content Include="app\services\travelService.js" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login\login.html" />
@@ -78,8 +80,8 @@
     <Content Include="app\views\travel\travel-detail.html" />
     <Content Include="app\views\travel\travels.html" />
     <Content Include="app\views\travel\travel-wizard-general.html" />
-    <Content Include="app\views\travel\travel-wizzard-places.html" />
-    <Content Include="app\views\travel\travel-wizzard-properties.html" />
+    <Content Include="app\views\travel\travel-wizard-places.html" />
+    <Content Include="app\views\travel\travel-wizard-properties.html" />
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />

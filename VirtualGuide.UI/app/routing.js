@@ -33,21 +33,21 @@
     });
     
     $routeProvider.when("/travel/new", {
-        title: "Create travel",
+        title: "Guide Wizard",
         controller: "newTravelController",
         templateUrl: site_prefix + "/app/views/travel/travel-wizard-general.html"
     });
 
     $routeProvider.when("/travel/new/properties/:id", {
-        title: "Create travel",
+        title: "Guide Wizard",
         controller: "newTravelPropertiesController",
-        templateUrl: site_prefix + "/app/views/travel/travel-wizzard-properties.html"
+        templateUrl: site_prefix + "/app/views/travel/travel-wizard-properties.html"
     });
 
     $routeProvider.when("/travel/new/places/:id", {
-        title: "Create travel",
+        title: "Guide Wizard",
         controller: "newTravelPlacesController",
-        templateUrl: site_prefix + "/app/views/traveltravel-wizzard-places.html"
+        templateUrl: site_prefix + "/app/views/traveltravel-wizard-places.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/home" });

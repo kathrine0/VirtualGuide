@@ -93,24 +93,29 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', 'travelS
 
         $scope.properties = [];
 
-        $scope.travel.properties.push({
+        $scope.properties.push({
             Title: 'Historia',
             Description: '',
             Symbol: ''
         });
 
 
-        //$scope.addProperty = function () {
-        //    $scope.travel.properties.push({
-        //        Title: '',
-        //        Description: '',
-        //        Symbol: ''
-        //    });
-        //};
+        $scope.addProperty = function () {
+            $scope.properties.push({
+                Title: '',
+                Description: '',
+                Symbol: ''
+            });
+        };
 
-        //$scope.removeProperty = function (index) {
-        //    $scope.travel.properties.splice(index, 1);
-        //};
+        $scope.removeProperty = function (index) {
+            $scope.properties.splice(index, 1);
+        };
+
+        $scope.saveProperties = function ()
+        {
+
+        }
 
     }]);
 
