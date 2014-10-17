@@ -42,6 +42,24 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
 
     }
 
+    travelService.manageMarkers = function(markers, lat, lng)
+    {
+        if (markers.length == 0) {
+            var marker = {
+                lat: lat,
+                lng: lng,
+                focus: true,
+                draggable: true
+            };
+            markers.push(marker);
+        } else {
+            markers[0].lat = lat;
+            markers[0].lng = lng;
+        }
+
+        return markers;
+    }
+
     return travelService;
 
 }]);

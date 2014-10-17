@@ -75,40 +75,14 @@ app.controller('newTravel', ['$scope', '$rootScope', '$location', 'travelService
         }
 
         $scope.$on('leafletDirectiveMap.geosearch_showlocation', function (jsEvent, leafletEvent) {
-
             var location = leafletEvent.leafletEvent.Location;
-            console.log(location);
-            if ($scope.markers.length == 0) {
-                var marker = {
-                    lat: parseFloat(location.Y),
-                    lng: parseFloat(location.X),
-                    focus: true,
-                    draggable: true
-                };
-                $scope.markers.push(marker);
-            } else {
-                $scope.markers[0].lat = parseFloat(location.Y);
-                $scope.markers[0].lng = parseFloat(location.X);
-            }
+            $scope.markers = travelService.manageMarkers($scope.markers, parseFloat(location.Y), parseFloat(location.X));
         });
 
         $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {
-
             var location = leafletEvent.leafletEvent.latlng;
-            console.log(location);
-            if ($scope.markers.length == 0)
-            {
-                var marker = {
-                    lat: location.lat,
-                    lng: location.lng,
-                    focus: true,
-                    draggable: true
-                };
-                $scope.markers.push(marker);
-            } else {
-                $scope.markers[0].lat = location.lat;
-                $scope.markers[0].lng = location.lng;
-            }
+            $scope.markers = travelService.manageMarkers($scope.markers, location.lat, location.lng);
+
         });
 }]);
 
