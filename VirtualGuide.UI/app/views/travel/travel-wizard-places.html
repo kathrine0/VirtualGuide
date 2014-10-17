@@ -1,9 +1,63 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Add Places</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <p>
+                    Now it's time to add some places worth seeing in the location. Start adding by clicking
+                    or tapping a place on the map
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <leaflet id="map" tiles="$root.tiles" markers="markers" controls="$root.controls" center="$root.center"></leaflet>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <form role="form">
+                <div class="box-body">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" ng-model="activeMarker.place.Name" ng-change="nameChange()" ng-disabled="activeMarker == null" class="form-control" placeholder="Enter name for your guide" />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" ng-blur="descriptionChanged()" ng-model="activeMarker.place.Description"
+                                  ng-disabled="activeMarker == null" rows="3" placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Category</label>
+                        <select class="form-control" ng-model="activeMarker.place.Category" ng-change="categoryChnaged()" ng-disabled="activeMarker == null"></select>
+                        
+                    </div>
+                    <div ng-controller="uploadController">
+                        <input type="file" ng-file-select="onFileSelect($files)" multiple>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button ng-click="createNewTravel()" class="btn btn-success">Save and continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <ul class="list-group">
+                <li ng-repeat="marker in markers" class="list-group-item">
+                    <span ng-bind="marker.place.Name"></span>
+                    <button type="button" ng-click="removeMarker($index)" class="close">×</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

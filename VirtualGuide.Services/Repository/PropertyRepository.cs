@@ -11,21 +11,20 @@ namespace VirtualGuide.Services.Repository
     {
         public IList<BasicPropertyViewModel> GetPropertiesList(int travelId)
         {
-            IQueryable<Property> items;
             
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                items = db.Properties.Where(x => x.Travel.Id == travelId);
-            }
-            
-            var result = new List<BasicPropertyViewModel>();
+                IQueryable<Property> items = db.Properties.Where(x => x.Travel.Id == travelId);
+           
+                var result = new List<BasicPropertyViewModel>();
 
-            foreach (var item in items)
-            {
-                result.Add(new BasicPropertyViewModel(item));
-            }
+                foreach (var item in items)
+                {
+                    result.Add(new BasicPropertyViewModel(item));
+                }
 
-            return result;
+                return result;
+            }
         }
 
         public void AddMany(IList<BasicPropertyViewModel> items, int travelId)

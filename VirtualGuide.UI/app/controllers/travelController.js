@@ -124,4 +124,39 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
 app.controller('newTravelPlacesController', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
 
+        var editMode = false;
+        $scope.activeMarker = null;
+        $scope.markers = [];
+
+        $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {           
+            var location = leafletEvent.leafletEvent.latlng;
+            
+            //TODO - more Angular style
+            var searchValue = $("#leaflet-control-geosearch-qry").val();
+            $("#leaflet-control-geosearch-qry").val("");
+            
+            $scope.activeMarker = {
+                lat: location.lat,
+                lng: location.lng,
+                focus: true,
+                draggable: true,
+                place: {
+                    Name: searchValue,
+                    Description: " ",
+                    Category: 0
+                }
+            };
+
+            $scope.markers.push($scope.activeMarker);
+
+            editMode = true;
+
+        });
+
+
+        $scope.removeMarker = function (index) {
+            $scope.activeMarker = null;
+            $scope.markers.splice(index, 1);
+        }
+
     }]);

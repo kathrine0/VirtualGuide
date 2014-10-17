@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using VirtualGuide.Services;
 using VirtualGuide.Services.Repository;
-using VirtualGuide.WebService.Models;
 
 namespace VirtualGuide.WebService.Controllers
 {
@@ -15,7 +12,6 @@ namespace VirtualGuide.WebService.Controllers
     [RoutePrefix("api")]
     public class PropertyController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         private PropertyRepository pr = new PropertyRepository();
   
         
@@ -30,11 +26,7 @@ namespace VirtualGuide.WebService.Controllers
         {
             var properties = pr.GetPropertiesList(travelId);
 
-            if (properties == null)
-                Request.CreateResponse(HttpStatusCode.NotFound);
-
             return Request.CreateResponse<IList<BasicPropertyViewModel>>(HttpStatusCode.OK, properties);
-
         }
 
 
