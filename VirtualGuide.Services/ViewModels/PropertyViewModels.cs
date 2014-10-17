@@ -9,6 +9,10 @@ namespace VirtualGuide.Services
 {
     public class BasicPropertyViewModel
     {
+        public BasicPropertyViewModel()
+        {
+
+        }
         public BasicPropertyViewModel(Property property)
         {
             Id = property.Id;
@@ -19,7 +23,6 @@ namespace VirtualGuide.Services
             Symbol = property.Symbol;
         }
 
-        
 
         public int Id { get; set; }
         public string Title { get; set; }
@@ -27,5 +30,18 @@ namespace VirtualGuide.Services
         public int TravelId { get; set; }
         public int Order { get; set; }
         public string Symbol { get; set; }
+
+        public Property ToModel()
+        {
+            return new Property()
+            {
+                Id = this.Id,
+                Title = this.Title,
+                Description = this.Description,
+                TravelId = this.TravelId,
+                Order = this.Order,
+                Symbol = this.Symbol
+            };
+        }
     }
 }

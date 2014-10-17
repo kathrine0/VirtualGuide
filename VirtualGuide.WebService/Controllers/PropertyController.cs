@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using VirtualGuide.Services;
 using VirtualGuide.Services.Repository;
 using VirtualGuide.WebService.Models;
@@ -19,13 +20,12 @@ namespace VirtualGuide.WebService.Controllers
   
         
         /// <summary>
-        /// All Travels in the system
-        /// Use: WebApp & Mobile
-        /// GET: api/Travels
+        /// Properties of travel
+        /// Use: WebApp 
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
         [Route("Properties")]
+        [HttpGet]
         public HttpResponseMessage GetProperties(int travelId)
         {
             var properties = pr.GetPropertiesList(travelId);
@@ -34,6 +34,34 @@ namespace VirtualGuide.WebService.Controllers
                 Request.CreateResponse(HttpStatusCode.NotFound);
 
             return Request.CreateResponse<IList<BasicPropertyViewModel>>(HttpStatusCode.OK, properties);
+
+        }
+
+
+        /// <summary>
+        /// Properties of travel
+        /// Use: WebApp 
+        /// </summary>
+        /// <returns></returns>
+        [Route("Properties")]
+        [HttpPost]
+        public HttpResponseMessage PostProperties(IList<BasicPropertyViewModel> properties)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+            }
+
+
+            try
+            {
+                pr.AddMany(properties);
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
         }
     }

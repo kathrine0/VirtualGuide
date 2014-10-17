@@ -205,10 +205,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201410112208020_a.cs" />
-    <Compile Include="Migrations\201410112208020_a.Designer.cs">
-      <DependentUpon>201410112208020_a.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -289,11 +285,6 @@
       <Project>{2af51b16-5a98-42a0-9bf5-7422fcbbdaab}</Project>
       <Name>VirtualGuide.Services</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410112208020_a.resx">
-      <DependentUpon>201410112208020_a.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

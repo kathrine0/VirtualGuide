@@ -27,5 +27,22 @@ namespace VirtualGuide.Services.Repository
 
             return result;
         }
+
+        public void AddMany(IList<BasicPropertyViewModel> items)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var properties = new List<Property>();
+
+                foreach (var item in items)
+                {
+                    properties.Add(item.ToModel());
+                }
+
+                db.Properties.AddRange(properties);
+                db.SaveChanges();
+
+            }
+        }
     }
 }
