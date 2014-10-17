@@ -115,6 +115,8 @@ namespace VirtualGuide.WebService.Controllers
             }
         }
 
+
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("CreatorTravel")]
         [HttpPost]
         public HttpResponseMessage PostTravel(CreatorTravelViewModel travel)
@@ -126,8 +128,8 @@ namespace VirtualGuide.WebService.Controllers
 
             try
             {
-                tr.Add(travel);
-                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
+                CreatorTravelViewModel item = tr.Add(travel);
+                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, item);
             } 
             catch
             {

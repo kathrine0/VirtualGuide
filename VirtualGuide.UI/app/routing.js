@@ -11,7 +11,7 @@
     $routeProvider.when("/login", {
         title: "Login",
         controller: "loginController",
-        templateUrl: site_prefix + "/app/views/login.html"
+        templateUrl: site_prefix + "/app/views/login/login.html"
     });
 
     $routeProvider.when("/signup", {
@@ -22,31 +22,31 @@
 
     $routeProvider.when("/travels", {
         title: "Travels",
-        controller: "getTravels",
-        templateUrl: site_prefix + "/app/views/travels.html"
+        controller: "getTravelsController",
+        templateUrl: site_prefix + "/app/views/travel/travels.html"
     });
 
-    $routeProvider.when("/travel-edit/:id", {
+    $routeProvider.when("/travel/edit/:id", {
         title: "Edit travel",
-        controller: "travelEditController",
+        controller: "editTravelController",
         templateUrl: site_prefix + "/app/views/travel-form.html"
     });
     
-    $routeProvider.when("/travel-new", {
+    $routeProvider.when("/travel/new", {
         title: "Create travel",
-        controller: "newTravel",
+        controller: "newTravelController",
         templateUrl: site_prefix + "/app/views/travel/travel-wizard-general.html"
     });
 
-    $routeProvider.when("/travel-new2/:id", {
+    $routeProvider.when("/travel/new/properties/:id", {
         title: "Create travel",
-        controller: "newTravelProperties",
+        controller: "newTravelPropertiesController",
         templateUrl: site_prefix + "/app/views/travel/travel-wizzard-properties.html"
     });
 
-    $routeProvider.when("/travel-new3/:id", {
+    $routeProvider.when("/travel/new/places/:id", {
         title: "Create travel",
-        controller: "newTravelPlaces",
+        controller: "newTravelPlacesController",
         templateUrl: site_prefix + "/app/views/traveltravel-wizzard-places.html"
     });
 

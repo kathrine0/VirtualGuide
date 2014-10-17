@@ -89,6 +89,11 @@ namespace VirtualGuide.Services
     /// </summary>
     public class CreatorTravelViewModel
     {
+        public CreatorTravelViewModel()
+        {
+
+        }
+        
         public CreatorTravelViewModel(Travel travel)
         {
             Id = travel.Id;
@@ -126,7 +131,6 @@ namespace VirtualGuide.Services
         public double Longitude { get; set; }
         public double ZoomLevel { get; set; }
 
-
         public Travel ToModel()
         {
             return new Travel()
@@ -143,6 +147,5 @@ namespace VirtualGuide.Services
             };
         }
     }
-
 
 }

@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('getTravels', ['$scope', '$location', 'travelService',
+app.controller('getTravelsController', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
     
     //var successCallback = function (data, status, headers, config) {
@@ -29,15 +29,15 @@ app.controller('getTravels', ['$scope', '$location', 'travelService',
         $scope.travels = travelService.getAllForCreator()
 
         $scope.editTravel = function(id) {
-            $location.path('/travel-edit/' + id);
+            $location.path('/travel/edit/' + id);
         }
 
         $scope.newTravel = function () {
-            $location.path('/travel-new');
+            $location.path('/travel/new');
         };
 }]);
 
-app.controller('travelEditController', ['$scope', '$location', '$routeParams', 'travelService',
+app.controller('editTravelController', ['$scope', '$location', '$routeParams', 'travelService',
     function ($scope, $location, $routeParams, travelService) {
 
         $scope.submit = "Edit";
@@ -55,7 +55,7 @@ app.controller('travelEditController', ['$scope', '$location', '$routeParams', '
         
 }]);
 
-app.controller('newTravel', ['$scope', '$rootScope', '$location', 'travelService',
+app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'travelService',
     function ($scope, $rootScope, $location, travelService) {
 
         $scope.travel = {};
@@ -63,14 +63,15 @@ app.controller('newTravel', ['$scope', '$rootScope', '$location', 'travelService
         $scope.markers = [];
 
         $scope.createNewTravel = function () {
-            console.log($scope.markers);
             var travel = $scope.travel;
             travel.ZoomLevel = 8;
             travel.Latitude = $scope.markers[0].lat;
             travel.Longitude = $scope.markers[0].lng;
+            travel.ImageSrc = "";
+
 
             travelService.createItem(travel, function (newtravel) {
-                $location.path('/travel-new2/' + newtravel.Id);
+                $location.path('/travel/new/properties/' + newtravel.Id);
             });
         }
 
@@ -87,7 +88,7 @@ app.controller('newTravel', ['$scope', '$rootScope', '$location', 'travelService
 }]);
 
 
-app.controller('newTravelProperties', ['$scope', '$location', 'travelService',
+app.controller('newTravelPropertiesController', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
 
         $scope.properties = [];
@@ -113,7 +114,7 @@ app.controller('newTravelProperties', ['$scope', '$location', 'travelService',
 
     }]);
 
-app.controller('newTravelPlaces', ['$scope', '$location', 'travelService',
+app.controller('newTravelPlacesController', ['$scope', '$location', 'travelService',
     function ($scope, $location, travelService) {
 
     }]);

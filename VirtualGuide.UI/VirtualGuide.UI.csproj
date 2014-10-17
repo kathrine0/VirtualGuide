@@ -73,11 +73,10 @@
     <Content Include="app\services\errorInterceptorService.js" />
     <Content Include="app\services\travelService.js" />
     <Content Include="app\views\home.html" />
-    <Content Include="app\views\login.html" />
+    <Content Include="app\views\login\login.html" />
     <Content Include="app\views\signup.html" />
-    <Content Include="app\views\travel-detail.html" />
-    <Content Include="app\views\travel-form.html" />
-    <Content Include="app\views\travels.html" />
+    <Content Include="app\views\travel\travel-detail.html" />
+    <Content Include="app\views\travel\travels.html" />
     <Content Include="app\views\travel\travel-wizard-general.html" />
     <Content Include="app\views\travel\travel-wizzard-places.html" />
     <Content Include="app\views\travel\travel-wizzard-properties.html" />
@@ -149,7 +148,10 @@
       <DependentUpon>angular-file-upload.js</DependentUpon>
     </Content>
     <Content Include="Scripts\angular-google-maps.min.js" />
-    <Content Include="Scripts\angular-leaflet-directive.min.js" />
+    <Content Include="Scripts\angular-leaflet-directive.js" />
+    <Content Include="Scripts\angular-leaflet-directive.min.js">
+      <DependentUpon>angular-leaflet-directive.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
@@ -922,6 +924,9 @@
     <Content Include="Scripts\angular-file-upload-shim.min.js.map">
       <DependentUpon>angular-file-upload-shim.min.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\angular-leaflet-directive.min.js.map">
+      <DependentUpon>angular-leaflet-directive.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -930,6 +935,14 @@
     <Content Include="Scripts\jquery.knob.js" />
     <Content Include="Scripts\jquery.knob.min.js">
       <DependentUpon>jquery.knob.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\l.control.geosearch.js" />
+    <Content Include="Scripts\l.control.geosearch.min.js">
+      <DependentUpon>l.control.geosearch.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\l.geosearch.provider.openstreetmap.js" />
+    <Content Include="Scripts\l.geosearch.provider.openstreetmap.min.js">
+      <DependentUpon>l.geosearch.provider.openstreetmap.js</DependentUpon>
     </Content>
     <Content Include="Scripts\loading-bar.min.js" />
     <Content Include="Scripts\lodash.compat.min.js" />
@@ -983,6 +996,12 @@
     <Content Include="Theme\less\maps.less" />
     <Content Include="Theme\less\AdminLTE.css.map">
       <DependentUpon>AdminLTE.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\l.geosearch.provider.openstreetmap.min.js.map">
+      <DependentUpon>l.geosearch.provider.openstreetmap.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\l.control.geosearch.min.js.map">
+      <DependentUpon>l.control.geosearch.min.js</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -105,12 +105,16 @@ namespace VirtualGuide.Services.Repository
             
         }
 
-        public void Add(CreatorTravelViewModel item)
+        public CreatorTravelViewModel Add(CreatorTravelViewModel item)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                db.Travels.Add(item.ToModel());
+                Travel travel = item.ToModel();
+
+                db.Travels.Add(travel);
                 db.SaveChanges();
+
+                return new CreatorTravelViewModel(travel);
             }
         }
     }
