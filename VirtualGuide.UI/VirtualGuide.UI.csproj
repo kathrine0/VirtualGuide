@@ -149,6 +149,7 @@
       <DependentUpon>angular-file-upload.js</DependentUpon>
     </Content>
     <Content Include="Scripts\angular-google-maps.min.js" />
+    <Content Include="Scripts\angular-leaflet-directive.min.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />

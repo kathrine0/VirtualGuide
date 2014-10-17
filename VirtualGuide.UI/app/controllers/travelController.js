@@ -60,20 +60,56 @@ app.controller('newTravel', ['$scope', '$rootScope', '$location', 'travelService
 
         $scope.travel = {};
 
-        $scope.createNewTravel = function () {
-            $scope.travel.ZoomLevel = $scope.map.zoom;
-            $scope.travel.Latitude = $scope.map.latitude;
-            $scope.travel.Longitude = $scope.map.longitude;
+        $scope.markers = [];
 
-            travelService.createItem($scope.travel, function (travel) {
-                $location.path('/travel-new2/' + travel.Id);
+        $scope.createNewTravel = function () {
+            console.log($scope.markers);
+            var travel = $scope.travel;
+            travel.ZoomLevel = 8;
+            travel.Latitude = $scope.markers[0].lat;
+            travel.Longitude = $scope.markers[0].lng;
+
+            travelService.createItem(travel, function (newtravel) {
+                $location.path('/travel-new2/' + newtravel.Id);
             });
         }
 
-        var map = L.map('map').setView([51.505, -0.09], 13);
-        $rootScope.map.addTo(map);
+        $scope.$on('leafletDirectiveMap.geosearch_showlocation', function (jsEvent, leafletEvent) {
 
-        var marker = L.marker([51.5, -0.09]).addTo(map);
+            var location = leafletEvent.leafletEvent.Location;
+            console.log(location);
+            if ($scope.markers.length == 0) {
+                var marker = {
+                    lat: parseFloat(location.Y),
+                    lng: parseFloat(location.X),
+                    focus: true,
+                    draggable: true
+                };
+                $scope.markers.push(marker);
+            } else {
+                $scope.markers[0].lat = parseFloat(location.Y);
+                $scope.markers[0].lng = parseFloat(location.X);
+            }
+        });
+
+        $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {
+
+            var location = leafletEvent.leafletEvent.latlng;
+            console.log(location);
+            if ($scope.markers.length == 0)
+            {
+                var marker = {
+                    lat: location.lat,
+                    lng: location.lng,
+                    focus: true,
+                    draggable: true
+                };
+                $scope.markers.push(marker);
+            } else {
+                $scope.markers[0].lat = location.lat;
+                $scope.markers[0].lng = location.lng;
+            }
+        });
 }]);
 
 

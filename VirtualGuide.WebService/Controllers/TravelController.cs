@@ -27,6 +27,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [Route("Travels")]
+        [HttpGet]
         public HttpResponseMessage GetTravels()
         {         
             try
@@ -47,6 +48,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("OwnedTravels")]
+        [HttpGet]
         public HttpResponseMessage GetOwnedTravels()
         {
             try
@@ -69,6 +71,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("CreatorTravel")]
+        [HttpGet]
         public HttpResponseMessage GetCreatedTravels()
         {
             try
@@ -92,8 +95,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("CreatorTravel/{id}")]
-        // GET: api/Travels/5
-        //[ResponseType(typeof(Travel))]
+        [HttpGet]
         public HttpResponseMessage GetTravel(int id)
         {
             try
@@ -113,8 +115,8 @@ namespace VirtualGuide.WebService.Controllers
             }
         }
 
-        //POST: api/Travels
         [Route("CreatorTravel")]
+        [HttpPost]
         public HttpResponseMessage PostTravel(CreatorTravelViewModel travel)
         {
             if (!ModelState.IsValid)
