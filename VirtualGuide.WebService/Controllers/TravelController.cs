@@ -46,7 +46,6 @@ namespace VirtualGuide.WebService.Controllers
         /// Use: WebApp & Mobile
         /// </summary>
         /// <returns></returns>
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("OwnedTravels")]
         [HttpGet]
         public HttpResponseMessage GetOwnedTravels()
@@ -69,7 +68,6 @@ namespace VirtualGuide.WebService.Controllers
         /// Use: WebApp
         /// </summary>
         /// <returns></returns>
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("CreatorTravel")]
         [HttpGet]
         public HttpResponseMessage GetCreatedTravels()
@@ -93,7 +91,6 @@ namespace VirtualGuide.WebService.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("CreatorTravel/{id}")]
         [HttpGet]
         public HttpResponseMessage GetTravel(int id)
@@ -116,7 +113,6 @@ namespace VirtualGuide.WebService.Controllers
         }
 
 
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("CreatorTravel")]
         [HttpPost]
         public HttpResponseMessage PostTravel(CreatorTravelViewModel travel)
