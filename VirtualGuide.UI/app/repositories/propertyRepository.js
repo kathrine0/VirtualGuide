@@ -4,10 +4,10 @@ app.factory('propertyRepository', ['$resource', '$rootScope', function ($resourc
 
     var serviceBase = $rootScope.webservice;
 
-    return $resource(serviceBase + 'api/CreatorTravel/:id', {}, {
+    return $resource(serviceBase + 'api/Properties/:id', {}, {
         query: { method: 'GET', isArray: true },
-        show: { method: 'GET' },
-        create: { method: 'POST' },
+        show: { method: 'GET', isArray: true },
+        create: { method: 'POST', params: { id: '@id' } },
         update: { method: 'PUT', params: { id: '@id' } },
         delete: { method: 'DELETE', params: { id: '@id' } }
     });

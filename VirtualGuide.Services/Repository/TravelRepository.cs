@@ -107,6 +107,7 @@ namespace VirtualGuide.Services.Repository
 
         public CreatorTravelViewModel Add(CreatorTravelViewModel item)
         {
+            //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Travel travel = item.ToModel();

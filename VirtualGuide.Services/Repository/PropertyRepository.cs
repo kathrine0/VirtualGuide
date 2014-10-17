@@ -28,14 +28,17 @@ namespace VirtualGuide.Services.Repository
             return result;
         }
 
-        public void AddMany(IList<BasicPropertyViewModel> items)
+        public void AddMany(IList<BasicPropertyViewModel> items, int travelId)
         {
+            //todo validate against is user owner of the travel
+
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var properties = new List<Property>();
 
                 foreach (var item in items)
                 {
+                    item.TravelId = travelId;
                     properties.Add(item.ToModel());
                 }
 

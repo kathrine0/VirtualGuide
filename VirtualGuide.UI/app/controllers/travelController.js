@@ -88,8 +88,8 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
 }]);
 
 
-app.controller('newTravelPropertiesController', ['$scope', '$location', 'travelService',
-    function ($scope, $location, travelService) {
+app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeParams', 'propertyService',
+    function ($scope, $location, $routeParams, propertyService) {
 
         $scope.properties = [];
 
@@ -114,7 +114,9 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', 'travelS
 
         $scope.saveProperties = function ()
         {
-
+            propertyService.createItems($scope.properties, $routeParams.id, function () {
+                $location.path('/travel/new/places/' + $routeParams.id);
+            });
         }
 
     }]);

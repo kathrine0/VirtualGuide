@@ -47,7 +47,7 @@
     $routeProvider.when("/travel/new/places/:id", {
         title: "Guide Wizard",
         controller: "newTravelPlacesController",
-        templateUrl: site_prefix + "/app/views/traveltravel-wizard-places.html"
+        templateUrl: site_prefix + "/app/views/travel/travel-wizard-places.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/home" });
