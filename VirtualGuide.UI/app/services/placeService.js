@@ -10,16 +10,27 @@ app.factory('placeService', ['placeRepository', 'placeCategoryRepository', funct
 
     }
 
-    //placeService.createItems = function (properties, travelId, successCallback, errorCallback) {
+    placeService.createItems = function (markers, travelId, successCallback, errorCallback) {
 
-    //    travelRepository.create({ id: travelId }, properties,
-    //        function success() {
-    //            successCallback();
-    //        },
-    //        function error() {
-    //            errorCallback();
-    //        });
-    //}
+        var places = [];
+
+        markers.forEach(function (marker) {
+
+            var place = marker.place;
+            place.Latitude = marker.lat;
+            place.Longitude = marker.lng;
+
+            places.push(marker.place);
+        });
+
+        placeRepository.create({ id: travelId }, places,
+            function success() {
+                successCallback();
+            },
+            function error() {
+                //errorCallback();
+            });
+    }
 
     return placeService;
 

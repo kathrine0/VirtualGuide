@@ -9,7 +9,7 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
         return travelRepository.query();
     }
 
-    travelService.getItem = function (id)
+    travelService.getTravelForCreator = function (id)
     {
         return travelRepository.show({id: id}, 
             function success(item) {

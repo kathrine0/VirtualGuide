@@ -1,0 +1,81 @@
+﻿<div class="row">
+    <div class="col-md-7">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title" ng-bind="travel.Name"></h3>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+                <!-- text input -->
+                <p ng-bind="travel.Description"></p>
+                <p ng-bind="travel.Price"></p>
+            </div>
+            <div class="box-footer">
+                <!--<button ng-click="createNewTravel()" class="btn btn-success">Save and continue</button>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="box box-primary" ng-bind-html="travel.ImageSrc | imageSource:'thumbnail'"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6" ng-repeat="property in travel.Properties">
+        <div class="box box-success">
+            <div class="box-header">
+                 <h3 class="box-title">
+                     <span ng-bind="property.Symbol"></span>
+                     <span ng-bind="property.Title"></span>
+                </h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <p ng-bind="property.Description"></p>
+            </div>
+            <div class="box-footer">
+                <!--<button class="btn btn-danger" ng-click="removeProperty($index)">Remove this property</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <leaflet id="map" tiles="$root.tiles" center="$root.center"></leaflet>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <h3 class="box-title">Places</h3>
+            </div>
+            <div class="box-body">
+                <div class="box-group" id="accordion">
+                    <div class="panel box box-success" ng-repeat="place in travel.Places">
+                        <div class="box-header">
+                            <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   data-target="#collapse{{$index}}" ng-bind="place.Name"></a>
+                            </h4>
+                        </div>
+                        <div id="collapse{{$index}}" class="panel-collapse collapse">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-2" ng-bind-html="place.ImageSrc | imageSource:'thumbnail'"></div>
+                                    <div class="col-md-10">
+                                        <p ng-bind="place.Description"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

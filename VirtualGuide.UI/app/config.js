@@ -1,4 +1,6 @@
-﻿//global variables
+﻿'use strict';
+
+//global variables
 app.run(function ($rootScope) {
 
     //WS config

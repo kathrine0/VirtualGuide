@@ -28,8 +28,8 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         
         $scope.travels = travelService.getAllForCreator()
 
-        $scope.editTravel = function(id) {
-            $location.path('/travel/edit/' + id);
+        $scope.showTravel = function(id) {
+            $location.path('/travel/' + id);
         }
 
         $scope.newTravel = function () {
@@ -37,22 +37,12 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('editTravelController', ['$scope', '$location', '$routeParams', 'travelService',
-    function ($scope, $location, $routeParams, travelService) {
+app.controller('getTravelController', ['$scope', '$routeParams', 'travelService',
+    function ($scope, $routeParams, travelService) {
 
-        $scope.submit = "Edit";
-        
-        $scope.map = {
-            center: {
-                latitude: 45,
-                longitude: -73
-            },
-            zoom: 8
-        };
 
-        var travel = travelService.getItem($routeParams.id);
-        $scope.travel = travel;
-        
+        $scope.travel = travelService.getTravelForCreator($routeParams.id);
+
 }]);
 
 app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'travelService',
@@ -92,7 +82,6 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
         //end scope events
 }]);
 
-
 app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeParams', 'propertyService',
     function ($scope, $location, $routeParams, propertyService) {
 
@@ -129,8 +118,8 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
 
     }]);
 
-app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', 'placeService',
-    function ($scope, $location, $filter, placeService) {
+app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '$routeParams', 'placeService',
+    function ($scope, $location, $filter, $routeParams, placeService) {
 
         //local variables
         var editMode = false;
@@ -183,7 +172,7 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
                         return value;
                     },
                     Description: " ",
-                    Category: 0
+                    CategoryId: 0
                 }
             };
             
@@ -204,5 +193,11 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
         $scope.focusMarker = function (index) {
             $scope.markers[index].focus = true;
         };
+
+        $scope.savePlaces = function () {
+            placeService.createItems($scope.markers, $routeParams.id, function () {
+                $location.path('/travel/' + $routeParams.id);
+            });
+        }
         //end scope actions
     }]);

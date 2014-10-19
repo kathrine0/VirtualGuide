@@ -1,4 +1,6 @@
-﻿app.config(function ($routeProvider) {
+﻿'use strict';
+
+app.config(function ($routeProvider) {
 
     var site_prefix = '/VirtualGuide.UI';
 
@@ -26,12 +28,12 @@
         templateUrl: site_prefix + "/app/views/travel/travels.html"
     });
 
-    $routeProvider.when("/travel/edit/:id", {
-        title: "Edit travel",
-        controller: "editTravelController",
-        templateUrl: site_prefix + "/app/views/travel-form.html"
+    $routeProvider.when("/travel/:id", {
+        title: "Travel",
+        controller: "getTravelController",
+        templateUrl: site_prefix + "/app/views/travel/travel.html"
     });
-    
+
     $routeProvider.when("/travel/new", {
         title: "Guide Wizard",
         controller: "newTravelController",

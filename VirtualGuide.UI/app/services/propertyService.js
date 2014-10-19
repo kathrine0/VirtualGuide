@@ -11,7 +11,7 @@ app.factory('propertyService', ['propertyRepository', function (propertyReposito
                 successCallback();
             },
             function error() {
-                errorCallback();
+                //errorCallback();
             });
     }
 
