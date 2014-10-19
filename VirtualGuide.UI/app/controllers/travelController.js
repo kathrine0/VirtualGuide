@@ -58,10 +58,12 @@ app.controller('editTravelController', ['$scope', '$location', '$routeParams', '
 app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'travelService',
     function ($scope, $rootScope, $location, travelService) {
 
+        //scope variables
         $scope.travel = {};
-
         $scope.markers = [];
+        //end scope variables
 
+        //scope actions
         $scope.createNewTravel = function () {
             var travel = $scope.travel;
             travel.ZoomLevel = 8;
@@ -74,7 +76,9 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
                 $location.path('/travel/new/properties/' + newtravel.Id);
             });
         }
+        //end scope actions
 
+        //scope events
         $scope.$on('leafletDirectiveMap.geosearch_showlocation', function (jsEvent, leafletEvent) {
             var location = leafletEvent.leafletEvent.Location;
             $scope.markers = travelService.manageMarkers($scope.markers, parseFloat(location.Y), parseFloat(location.X));
@@ -85,21 +89,24 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
             $scope.markers = travelService.manageMarkers($scope.markers, location.lat, location.lng);
 
         });
+        //end scope events
 }]);
 
 
 app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeParams', 'propertyService',
     function ($scope, $location, $routeParams, propertyService) {
 
+        //scope variables
         $scope.properties = [];
-
         $scope.properties.push({
             Title: 'Historia',
             Description: '',
             Symbol: ''
         });
 
+        //end scope variables
 
+        //scope actions
         $scope.addProperty = function () {
             $scope.properties.push({
                 Title: '',
@@ -118,21 +125,31 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
                 $location.path('/travel/new/places/' + $routeParams.id);
             });
         }
+        //end scope actions
 
     }]);
 
-app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', 'travelService',
-    function ($scope, $location, $filter, travelService) {
+app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', 'placeService',
+    function ($scope, $location, $filter, placeService) {
 
+        //local variables
         var editMode = false;
+        var id = 0;
+        //end local variables
+
+        //scope variables
         $scope.activeMarker = null;
         $scope.markers = [];
-        var id = 0;
+        $scope.categories = placeService.getCategories();
+        //end scope variables
 
-
+        //scope events
         $scope.$on('marker.focus', function(jsEvent, leafletEvent) {
-
             $scope.activeMarker = $filter('getByProperty')('id', leafletEvent.target.options.id, $scope.markers);
+        });
+
+        $scope.$on('marker.lostFocus', function (jsEvent, leafletEvent) {
+            $scope.activeMarker = null;
         });
 
         $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {           
@@ -161,7 +178,7 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
                     get Name() {
                         var value = this._name;
                         if (value == null || value == "") {
-                            value = '\u00A0\u00A0';
+                            value = '\u00A0\u00A0'; //just space symbol for preservation of styles
                         }
                         return value;
                     },
@@ -176,8 +193,9 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
             editMode = true;
 
         });
+        //end scope events
 
-
+        //scope actions
         $scope.removeMarker = function (index) {
             $scope.activeMarker = null;
             $scope.markers.splice(index, 1);
@@ -186,4 +204,5 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
         $scope.focusMarker = function (index) {
             $scope.markers[index].focus = true;
         };
+        //end scope actions
     }]);

@@ -66,12 +66,14 @@
     <Content Include="app\controllers\travelController.js" />
     <Content Include="app\controllers\uploadController.js" />
     <Content Include="app\filters\generalFilter.js" />
+    <Content Include="app\repositories\placeRepository.js" />
     <Content Include="app\repositories\propertyRepository.js" />
     <Content Include="app\repositories\travelRepository.js" />
     <Content Include="app\routing.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\errorInterceptorService.js" />
+    <Content Include="app\services\placeService.js" />
     <Content Include="app\services\propertyService.js" />
     <Content Include="app\services\travelService.js" />
     <Content Include="app\views\home.html" />

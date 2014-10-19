@@ -3145,7 +3145,7 @@
                 marker.on("popupclose", function (e) {
                     safeApply(leafletScope, function () {
                         markerData.focus = false;
-                        $rootScope.$broadcast('marker.focusLost', e);
+                        $rootScope.$broadcast('marker.lostFocus', e);
                     });
                 });
             },

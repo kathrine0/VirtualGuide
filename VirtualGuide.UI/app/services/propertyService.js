@@ -1,12 +1,12 @@
 ﻿'use strict';
 
-app.factory('propertyService', ['propertyRepository', function (travelRepository) {
+app.factory('propertyService', ['propertyRepository', function (propertyRepository) {
 
     var propertyService = {};
 
     propertyService.createItems = function (properties, travelId, successCallback, errorCallback) {
 
-        travelRepository.create({ id: travelId }, properties,
+        propertyRepository.create({ id: travelId }, properties,
             function success() {
                 successCallback();
             },
