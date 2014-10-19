@@ -7,15 +7,15 @@ using VirtualGuide.Models;
 
 namespace VirtualGuide.Services
 {
-    public class BasicPlaceViewModel
+    public class MobilePlaceViewModel
     {
-        public BasicPlaceViewModel()
+        public MobilePlaceViewModel()
         {
             Properties = new List<BasicPropertyViewModel>();
-            Children = new List<BasicPlaceViewModel>();
+            Children = new List<MobilePlaceViewModel>();
         }
 
-        public BasicPlaceViewModel(Place place)
+        public MobilePlaceViewModel(Place place)
         {
             Id = place.Id;
             Name = place.Name;
@@ -27,7 +27,7 @@ namespace VirtualGuide.Services
             IconName = place.Category == null ? string.Empty : place.Category.IconName;
 
             Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(place.Properties);
-            Children = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(place.Children);
+            Children = ServicesHelper.CreateViewModelListFromModel<MobilePlaceViewModel, Place>(place.Children);
 
             ParentId = place.ParentId;
             TravelId = place.Travel.Id;
@@ -51,9 +51,61 @@ namespace VirtualGuide.Services
 
         public IList<BasicPropertyViewModel> Properties { get; set; }
 
-        public virtual IList<BasicPlaceViewModel> Children { get; set; }
+        public virtual IList<MobilePlaceViewModel> Children { get; set; }
 
         public int? ParentId { get; set; }
         public int TravelId { get; set; }
+    }
+
+    public class BasicPlaceViewModel
+    {
+        public BasicPlaceViewModel()
+        {
+        }
+
+        public BasicPlaceViewModel(Place place)
+        {
+            Id = place.Id;
+            Name = place.Name;
+            Description = place.Description;
+            Latitude = place.Latitude;
+            Longitude = place.Longitude;
+            ImageSrc = place.ImageSrc;
+            CategoryId = place.CategoryId;
+            Category = place.Category;
+            TravelId = place.TravelId;
+
+        }
+
+        public int Id { get; set; }
+
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public string ImageSrc { get; set; }
+        public int CategoryId {get;set;}
+
+        public PlaceCategory Category { get; set; }
+        
+        public int TravelId { get; set; }
+
+        public Place ToModel()
+        {
+            return new Place()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Description = this.Description,
+                Latitude = this.Latitude,
+                Longitude = this.Longitude,
+                ImageSrc = this.ImageSrc,
+                CategoryId = this.CategoryId,
+                TravelId = this.TravelId
+            };
+        }
     }
 }

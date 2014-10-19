@@ -44,7 +44,7 @@ namespace VirtualGuide.Models
 
             modelBuilder.Entity<Travel>()
                 .HasMany(i => i.Places)
-                .WithOptional()
+                .WithRequired()
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Travel>()

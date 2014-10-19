@@ -23,7 +23,10 @@ namespace VirtualGuide.Models
 
         public string Description { get; set; }
 
+        [Required]
         public double Latitude { get; set; }
+
+        [Required]
         public double Longitude { get; set; }
 
         public IList<Property> Properties { get; set; }
@@ -33,9 +36,17 @@ namespace VirtualGuide.Models
         public virtual Place Parent { get; set; }
         public int? ParentId { get; set; }
 
+        //[Required]
+        [ForeignKey("TravelId")]
         public virtual Travel Travel { get; set; }
+        
+        public int TravelId { get; set; }
 
+        //[Required]
+        [ForeignKey("CategoryId")]
         public virtual PlaceCategory Category { get; set; }
+
+        public int CategoryId { get; set; }
 
         public string ImageSrc { get; set; }
 

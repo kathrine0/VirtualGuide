@@ -54,7 +54,7 @@ namespace VirtualGuide.Services
             Id = travel.Id;
             Name = travel.Name;
             Description = travel.Description;
-            Places = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(travel.Places);
+            Places = ServicesHelper.CreateViewModelListFromModel<MobilePlaceViewModel, Place>(travel.Places);
             //TODO Excursions =
             Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(travel.Properties);
             Language = travel.Language;
@@ -71,7 +71,7 @@ namespace VirtualGuide.Services
 
         public string Description { get; set; }
 
-        public virtual IList<BasicPlaceViewModel> Places { get; set; }
+        public virtual IList<MobilePlaceViewModel> Places { get; set; }
 
         public virtual IList<BasicExcursionViewModel> Excursions { get; set; }
 

@@ -29,7 +29,6 @@ namespace VirtualGuide.WebService.Controllers
             return Request.CreateResponse<IList<BasicPropertyViewModel>>(HttpStatusCode.OK, properties);
         }
 
-
         /// <summary>
         /// Properties of travel
         /// Use: WebApp 

@@ -27,5 +27,24 @@ namespace VirtualGuide.Services.Repository
             }
     
         }
+
+        public void AddMany(IList<BasicPlaceViewModel> items, int travelId)
+        {
+            //todo validate against is user owner of the travel
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var places = new List<Place>();
+
+                foreach (var item in items)
+                {
+                    item.TravelId = travelId;
+                    places.Add(item.ToModel());
+                }
+
+                db.Places.AddRange(places);
+                db.SaveChanges();
+            }
+        }
     }
 }
