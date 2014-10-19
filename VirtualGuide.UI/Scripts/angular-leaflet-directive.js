@@ -3136,14 +3136,16 @@
             },
 
             listenMarkerEvents: function (marker, markerData, leafletScope) {
-                marker.on("popupopen", function (/* event */) {
+                marker.on("popupopen", function (e) {
                     safeApply(leafletScope, function () {
                         markerData.focus = true;
+                        $rootScope.$broadcast('marker.focus', e);
                     });
                 });
-                marker.on("popupclose", function (/* event */) {
+                marker.on("popupclose", function (e) {
                     safeApply(leafletScope, function () {
                         markerData.focus = false;
+                        $rootScope.$broadcast('marker.focusLost', e);
                     });
                 });
             },

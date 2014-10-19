@@ -121,12 +121,19 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
 
     }]);
 
-app.controller('newTravelPlacesController', ['$scope', '$location', 'travelService',
-    function ($scope, $location, travelService) {
+app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', 'travelService',
+    function ($scope, $location, $filter, travelService) {
 
         var editMode = false;
         $scope.activeMarker = null;
         $scope.markers = [];
+        var id = 0;
+
+
+        $scope.$on('marker.focus', function(jsEvent, leafletEvent) {
+
+            $scope.activeMarker = $filter('getByProperty')('id', leafletEvent.target.options.id, $scope.markers);
+        });
 
         $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {           
             var location = leafletEvent.leafletEvent.latlng;
@@ -135,7 +142,9 @@ app.controller('newTravelPlacesController', ['$scope', '$location', 'travelServi
             var searchValue = $("#leaflet-control-geosearch-qry").val();
             $("#leaflet-control-geosearch-qry").val("");
             
-            $scope.activeMarker = {
+            id++;
+            var marker = {
+                id: id,
                 lat: location.lat,
                 lng: location.lng,
                 focus: true,
@@ -160,10 +169,9 @@ app.controller('newTravelPlacesController', ['$scope', '$location', 'travelServi
                     Category: 0
                 }
             };
-
             
-
-            $scope.markers.push($scope.activeMarker);
+            $scope.activeMarker = marker;
+            $scope.markers.push(marker);
 
             editMode = true;
 
@@ -178,5 +186,4 @@ app.controller('newTravelPlacesController', ['$scope', '$location', 'travelServi
         $scope.focusMarker = function (index) {
             $scope.markers[index].focus = true;
         };
-
     }]);
