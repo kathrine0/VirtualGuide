@@ -29,7 +29,7 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         $scope.travels = travelService.getAllForCreator()
 
         $scope.showTravel = function(id) {
-            $location.path('/travel/' + id);
+            $location.path('/travel/show/' + id);
         }
 
         $scope.newTravel = function () {
@@ -249,7 +249,7 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
 
         $scope.savePlaces = function () {
             placeService.createItems($scope.markers, $routeParams.id, function () {
-                $location.path('/travel/' + $routeParams.id);
+                $location.path('/travel/show/' + $routeParams.id);
             });
         }
         //end scope actions

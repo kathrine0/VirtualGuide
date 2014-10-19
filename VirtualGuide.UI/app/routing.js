@@ -28,7 +28,7 @@ app.config(function ($routeProvider) {
         templateUrl: site_prefix + "/app/views/travel/travels.html"
     });
 
-    $routeProvider.when("/travel/:id", {
+    $routeProvider.when("/travel/show/:id", {
         title: "Travel",
         controller: "getTravelController",
         templateUrl: site_prefix + "/app/views/travel/travel.html"
