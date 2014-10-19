@@ -53,7 +53,7 @@
     <div class="col-md-6">
         <div class="box box-primary">
             <ul class="list-group">
-                <li ng-repeat="marker in markers" class="list-group-item">
+                <li ng-repeat="marker in markers" class="list-group-item ng-class: {'active': marker.focus};" ng-click="focusMarker($index)">
                     <span ng-bind="marker.place.Name"></span>
                     <button type="button" ng-click="removeMarker($index)" class="close">×</button>
                 </li>

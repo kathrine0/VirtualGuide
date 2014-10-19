@@ -140,12 +140,28 @@ app.controller('newTravelPlacesController', ['$scope', '$location', 'travelServi
                 lng: location.lng,
                 focus: true,
                 draggable: true,
+                get message() {
+                    return this.place.Name;
+                },
                 place: {
-                    Name: searchValue,
+                    _name: searchValue,
+                    set Name(value)
+                    {
+                        this._name = value;
+                    },
+                    get Name() {
+                        var value = this._name;
+                        if (value == null || value == "") {
+                            value = '\u00A0\u00A0';
+                        }
+                        return value;
+                    },
                     Description: " ",
                     Category: 0
                 }
             };
+
+            
 
             $scope.markers.push($scope.activeMarker);
 
@@ -158,5 +174,9 @@ app.controller('newTravelPlacesController', ['$scope', '$location', 'travelServi
             $scope.activeMarker = null;
             $scope.markers.splice(index, 1);
         }
+
+        $scope.focusMarker = function (index) {
+            $scope.markers[index].focus = true;
+        };
 
     }]);
