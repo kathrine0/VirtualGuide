@@ -10,6 +10,41 @@ app.factory('placeService', ['placeRepository', 'placeCategoryRepository', funct
 
     }
 
+    placeService.placesToMarkers = function(places)
+    {
+        var markers = [];
+        places.forEach(function (place) {
+            var marker = {
+                lat: place.Latitude,
+                lng: place.Longitude,
+                focus: false,
+                draggable: false,
+                get message() {
+                    return this.place.Name;
+                },
+                place: {
+                    _name: place.Name,
+                    set Name(value) {
+                        this._name = value;
+                    },
+                    get Name() {
+                        var value = this._name;
+                        if (value == null || value == "") {
+                            value = '\u00A0\u00A0'; //just space symbol for preservation of styles
+                        }
+                        return value;
+                    },
+                    Description: place.Description,
+                    CategoryId: place.CategoryId
+                }
+            };
+
+            markers.push(marker);
+        });
+
+        return markers;
+    }
+
     placeService.createItems = function (markers, travelId, successCallback, errorCallback) {
 
         var places = [];
@@ -31,6 +66,7 @@ app.factory('placeService', ['placeRepository', 'placeCategoryRepository', funct
                 //errorCallback();
             });
     }
+
 
     return placeService;
 

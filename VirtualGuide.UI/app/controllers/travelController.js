@@ -37,11 +37,33 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$routeParams', 'travelService',
-    function ($scope, $routeParams, travelService) {
+app.controller('getTravelController', ['$scope', '$routeParams', 'travelService', 'placeService',
+    function ($scope, $routeParams, travelService, placeService) {
 
+        $scope.map =
+            {
+                markers: [],
+                center: {
+                    lat: 0,
+                    lng: 0,
+                    zoom: 1
+                },
+                defaults: {
+                    scrollWheelZoom: false
+                }
 
-        $scope.travel = travelService.getTravelForCreator($routeParams.id);
+            }
+        $scope.travel = travelService.getTravelForCreator($routeParams.id, function (travel)
+        {
+            $scope.map.center = {
+                lat: travel.Latitude,
+                lng: travel.Longitude,
+                zoom: travel.ZoomLevel
+            };
+
+            $scope.map.markers = placeService.placesToMarkers(travel.Places);
+        });
+
 
 }]);
 

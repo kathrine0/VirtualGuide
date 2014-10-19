@@ -9,10 +9,14 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
         return travelRepository.query();
     }
 
-    travelService.getTravelForCreator = function (id)
+    travelService.getTravelForCreator = function (id, successCallback)
     {
         return travelRepository.show({id: id}, 
             function success(item) {
+                if (successCallback != undefined)
+                {
+                    successCallback(item);
+                }
             },
             function error(item) {
             });
@@ -24,7 +28,10 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
 
         travelRepository.create(travel, 
             function success(item) {
-                successCallback(item);
+                if (ssuccessCallback != undefined)
+                {
+                    successCallback(item);
+                }
             }, 
             function error(item)
             {
