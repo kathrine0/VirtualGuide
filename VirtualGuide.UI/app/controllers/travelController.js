@@ -41,18 +41,21 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
     function ($scope, $routeParams, travelService, placeService) {
 
         $scope.map =
-            {
-                markers: [],
-                center: {
-                    lat: 0,
-                    lng: 0,
-                    zoom: 1
-                },
-                defaults: {
-                    scrollWheelZoom: false
-                }
-
+        {
+            markers: [],
+            center: {
+                lat: 0,
+                lng: 0,
+                zoom: 1
+            },
+            defaults: {
+                scrollWheelZoom: false
             }
+
+        }
+
+        $scope.categories = placeService.getCategories();
+
         $scope.travel = travelService.getTravelForCreator($routeParams.id, function (travel)
         {
             $scope.map.center = {
@@ -63,6 +66,34 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
 
             $scope.map.markers = placeService.placesToMarkers(travel.Places);
         });
+
+        $scope.travel.editMode = false;
+
+        $scope.editTravel = function()
+        {
+            $scope.travel.editMode = true;
+        }
+
+        $scope.saveTravel = function()
+        {
+            //todo save
+            $scope.travel.editMode = false;
+        }
+
+        $scope.editProperty = function(index)
+        {
+            $scope.travel.Properties[index].editMode = true;
+        }
+
+        $scope.saveProperty = function (index) {
+            //todo save
+            $scope.travel.Properties[index].editMode = false;
+        }
+
+        $scope.removeProperty = function (index) {
+            //todo remove on server
+            $scope.travel.Properties.splice(index, 1);
+        }
 
 
 }]);

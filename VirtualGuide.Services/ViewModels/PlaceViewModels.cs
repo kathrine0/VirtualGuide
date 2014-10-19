@@ -72,7 +72,7 @@ namespace VirtualGuide.Services
             Longitude = place.Longitude;
             ImageSrc = place.ImageSrc;
             CategoryId = place.CategoryId;
-            Category = place.Category;
+            CategoryName = place.Category.Name;
             TravelId = place.TravelId;
 
         }
@@ -89,7 +89,7 @@ namespace VirtualGuide.Services
         public string ImageSrc { get; set; }
         public int CategoryId {get;set;}
 
-        public PlaceCategory Category { get; set; }
+        public string CategoryName { get; set; }
         
         public int TravelId { get; set; }
 

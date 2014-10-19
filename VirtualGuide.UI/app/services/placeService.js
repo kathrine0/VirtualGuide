@@ -35,7 +35,9 @@ app.factory('placeService', ['placeRepository', 'placeCategoryRepository', funct
                         return value;
                     },
                     Description: place.Description,
-                    CategoryId: place.CategoryId
+                    CategoryId: place.CategoryId,
+                    CategoryName: place.CategoryName,
+                    ImageSrc: place.ImageSrc
                 }
             };
 

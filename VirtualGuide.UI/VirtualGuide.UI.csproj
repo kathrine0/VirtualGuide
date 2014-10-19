@@ -79,7 +79,7 @@
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login\login.html" />
     <Content Include="app\views\signup.html" />
-    <Content Include="app\views\travel\travel-detail.html" />
+    <Content Include="app\views\travel\travel.html" />
     <Content Include="app\views\travel\travels.html" />
     <Content Include="app\views\travel\travel-wizard-general.html" />
     <Content Include="app\views\travel\travel-wizard-places.html" />
