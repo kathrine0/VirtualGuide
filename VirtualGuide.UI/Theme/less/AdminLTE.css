@@ -3580,4 +3580,7 @@ fieldset[disabled] .btn-vk.active {
   color: #587ea3;
   background-color: #ffffff;
 }
+.dragover {
+  opacity: 0.3;
+}
 /*# sourceMappingURL=AdminLTE.css.map */

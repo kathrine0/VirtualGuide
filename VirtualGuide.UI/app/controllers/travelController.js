@@ -98,12 +98,18 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
 
 }]);
 
-app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'travelService',
-    function ($scope, $rootScope, $location, travelService) {
+app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'travelService', 'uploadService',
+    function ($scope, $rootScope, $location, travelService, uploadService) {
+
+        //local variables
+        var imageToUpload = null;
+        var placeholder = "http://fpoimg.com/1000x300?text=Place%20your%20image%20here";
+        //end local variables
 
         //scope variables
         $scope.travel = {};
         $scope.markers = [];
+        $scope.image = placeholder;
         //end scope variables
 
         //scope actions
@@ -112,13 +118,28 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
             travel.ZoomLevel = 8;
             travel.Latitude = $scope.markers[0].lat;
             travel.Longitude = $scope.markers[0].lng;
-            travel.ImageSrc = "";
+
+            if (imageToUpload != null)
+            {
+                var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);
+                travel.ImageSrc = randomName;
+                uploadService.upload(imageToUpload, randomName);
+            }
 
 
             travelService.createItem(travel, function (newtravel) {
                 $location.path('/travel/new/properties/' + newtravel.Id);
             });
         }
+
+        //todo add remove image option
+        $scope.onFileSelect = function ($files) {
+            uploadService.decodeImage($files[0], function (image) {
+                $scope.image = image;
+                imageToUpload = $files[0];
+            });
+        }
+
         //end scope actions
 
         //scope events

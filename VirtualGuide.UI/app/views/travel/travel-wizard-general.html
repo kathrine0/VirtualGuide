@@ -19,9 +19,17 @@
                         <label for="name">Price</label>
                         <input type="number" name="price" ng-model="travel.Price" class="form-control" placeholder="Enter price" />
                     </div>
-                    <div ng-controller="uploadController">
-                        <input type="file" ng-file-select="onFileSelect($files)" multiple>
+                    <div class="form-group">
+                        <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="dragover">
+                            <img ng-src="{{image}}" class="thumbnail">
+                        </div>
                     </div>
+
+
+                    <div>
+                        <input type="file" ng-file-select="onFileSelect($files)">
+                    </div>
+
                 </div>
                 <div class="box-footer">
                     <button ng-click="createNewTravel()" class="btn btn-success">Save and continue</button>

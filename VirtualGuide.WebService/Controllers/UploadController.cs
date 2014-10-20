@@ -30,11 +30,18 @@ namespace VirtualGuide.WebService.Controllers
 
             // On upload, files are given a generic name like "BodyPart_26d6abe1-3ae1-416a-9429-b35f15e6e5d5"
             // so this is how you can get the original file name
-            var originalFileName = GetDeserializedFileName(result.FileData.First());
+            //var fileName = GetDeserializedFileName(result.FileData.First());
+            var fileName = result.FormData["filename"];
+            if (String.IsNullOrEmpty(fileName))
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
             // uploadedFileInfo object will give you some additional stuff like file length,
             // creation time, directory name, a few filesystem methods etc..
             var uploadedFileInfo = new FileInfo(result.FileData.First().LocalFileName);
+            var newFilePath = Path.Combine(uploadedFileInfo.Directory.ToString(), Path.GetFileName(fileName));
+            uploadedFileInfo.MoveTo(newFilePath);
 
             // Remove this line as well as GetFormData method if you're not
             // sending any form data with your upload request
@@ -43,8 +50,7 @@ namespace VirtualGuide.WebService.Controllers
             // Through the request response you can return an object to the Angular controller
             // You will be able to access this in the .success callback through its data attribute
             // If you want to send something to the .error callback, use the HttpStatusCode.BadRequest instead
-            var returnData = "ReturnTest";
-            return this.Request.CreateResponse(HttpStatusCode.OK, new { returnData });
+            return this.Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // You could extract these two private methods to a separate utility class since

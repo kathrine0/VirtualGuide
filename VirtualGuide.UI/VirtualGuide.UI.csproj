@@ -69,6 +69,7 @@
     <Content Include="app\repositories\placeRepository.js" />
     <Content Include="app\repositories\propertyRepository.js" />
     <Content Include="app\repositories\travelRepository.js" />
+    <Content Include="app\repositories\uploadRepository.js" />
     <Content Include="app\routing.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
@@ -76,6 +77,7 @@
     <Content Include="app\services\placeService.js" />
     <Content Include="app\services\propertyService.js" />
     <Content Include="app\services\travelService.js" />
+    <Content Include="app\services\uploadService.js" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login\login.html" />
     <Content Include="app\views\signup.html" />
@@ -1007,6 +1009,7 @@
     <Content Include="Scripts\l.control.geosearch.min.js.map">
       <DependentUpon>l.control.geosearch.min.js</DependentUpon>
     </Content>
+    <Content Include="Theme\less\custom.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
