@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +47,28 @@ namespace VirtualGuide.Services.Repository
                 db.SaveChanges();
 
             }
+        }
+
+        public void Update(int id, BasicPropertyViewModel item)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Property property = item.ToModel();
+
+                var entry = db.Entry(property);
+                entry.State = EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    //todo check if exists
+                    throw;
+                }
+            }
+
         }
     }
 }

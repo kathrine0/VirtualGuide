@@ -133,26 +133,25 @@ namespace VirtualGuide.WebService.Controllers
             }
         }
 
+        [Route("CreatorTravel/{id}")]
+        [HttpPut]
+        public HttpResponseMessage PutTravel(int id, CreatorTravelViewModel travel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+            }
 
-        //TODO
-        //[Route("CreatorTravel")]
-        //public HttpResponseMessage PutTravel(CreatorTravelViewModel travel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
-        //    }
-
-        //    try
-        //    {
-        //        tr.Add(travel);
-        //        return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
-        //    }
-        //    catch
-        //    {
-        //        throw new HttpResponseException(HttpStatusCode.BadRequest);
-        //    }
-        //}
+            try
+            {
+                tr.Update(id, travel);
+                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+        }
 
         // PUT: api/Travels/5
         //[ResponseType(typeof(void))]

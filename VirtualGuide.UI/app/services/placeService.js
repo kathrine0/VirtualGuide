@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-app.factory('placeService', ['placeRepository', 'placeCategoryRepository', function (placeRepository, placeCategoryRepository) {
+app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository', function (placesRepository, placeRepository, placeCategoryRepository) {
 
     var placeService = {};
 
@@ -60,9 +60,28 @@ app.factory('placeService', ['placeRepository', 'placeCategoryRepository', funct
             places.push(marker.place);
         });
 
-        placeRepository.create({ id: travelId }, places,
+        placesRepository.create({ id: travelId }, places,
             function success() {
-                successCallback();
+                if (successCallback != undefined) {
+                    successCallback();
+                }
+            },
+            function error() {
+                //errorCallback();
+            });
+    }
+
+    placeRepository.updateItem = function (marker, successCallback, errorCallback) {
+
+        var place = marker.place;
+        place.Latitude = marker.lat;
+        place.Longitude = marker.lng;
+
+        propertyRepository.update({ id: place.Id }, place,
+            function success() {
+                if (successCallback != undefined) {
+                    successCallback();
+                }
             },
             function error() {
                 //errorCallback();

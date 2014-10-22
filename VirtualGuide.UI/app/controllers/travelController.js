@@ -37,8 +37,8 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$routeParams', 'travelService', 'placeService',
-    function ($scope, $routeParams, travelService, placeService) {
+app.controller('getTravelController', ['$scope', '$routeParams', 'travelService', 'propertyService', 'placeService',
+    function ($scope, $routeParams, travelService, propertyService, placeService) {
 
         $scope.map =
         {
@@ -76,7 +76,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
 
         $scope.saveTravel = function()
         {
-            //todo save
+            travelService.updateItem($scope.travel);
             $scope.travel.editMode = false;
         }
 
@@ -86,7 +86,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
         }
 
         $scope.saveProperty = function (index) {
-            //todo save
+            propertyService.updateItem($scope.travel.Properties[index]);
             $scope.travel.Properties[index].editMode = false;
         }
 
@@ -115,7 +115,7 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
         //scope actions
         $scope.createNewTravel = function () {
             var travel = $scope.travel;
-            travel.ZoomLevel = 8;
+            travel.ZoomLevel = 12;
             travel.Latitude = $scope.markers[0].lat;
             travel.Longitude = $scope.markers[0].lng;
 

@@ -26,9 +26,9 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
     {
         travel.Language = 'pl_PL';
 
-        travelRepository.create(travel, 
+        travelRepository.create(travel,
             function success(item) {
-                if (successCallback != undefined)
+                if (successCallback != undefined, successCallback, errorCallback)
                 {
                     successCallback(item);
                 }
@@ -39,9 +39,17 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
             });
     }
 
-    travelService.updateItem = function (travel)
+    travelService.updateItem = function (travel, successCallback, errorCallback)
     {
-        travelRepository.update(travel)
+        travelRepository.update({ id: travel.Id }, travel,
+            function success(item) {
+            if (successCallback != undefined)
+            {
+                successCallback(item);
+            }
+        }, function error(item) {
+
+        });
     }
 
     travelService.deleteItem = function ()

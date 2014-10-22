@@ -145,7 +145,7 @@ namespace VirtualGuide.Services
                 ZoomLevel = this.ZoomLevel,
                 ImageSrc = this.ImageSrc
             };
-        }
+        }       
     }
 
 }

@@ -55,6 +55,26 @@ namespace VirtualGuide.WebService.Controllers
             }
 
         }
+
+        [Route("Property/{id}")]
+        [HttpPut]
+        public HttpResponseMessage PutProperty(int id, BasicPropertyViewModel property)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            try
+            {
+                pr.Update(id, property);
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+        }
     }
 
 }

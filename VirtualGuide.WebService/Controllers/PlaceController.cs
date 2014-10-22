@@ -51,6 +51,26 @@ namespace VirtualGuide.WebService.Controllers
             }
 
         }
+
+        [Route("Place/{id}")]
+        [HttpPut]
+        public HttpResponseMessage PutPlace(int id, BasicPlaceViewModel place)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            try
+            {
+                pr.Update(id, place);
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+        }
     }
 
 }
