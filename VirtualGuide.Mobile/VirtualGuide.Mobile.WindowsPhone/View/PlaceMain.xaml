@@ -20,24 +20,26 @@
         <Hub Header="{Binding Place.Name, Mode=OneWay}" >
             <HubSection>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,5,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
                         
-                        <Grid Grid.Row="0" Margin="0,0,0,20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Stretch="UniformToFill" Height="100" Width="100" Grid.Column="0" 
-                                   Source="{Binding Place.ImagePath, Mode=OneWay}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Place.Name, Mode=OneWay}"  
-                                       TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" Margin="10,0,0,0"/>
+                            <Grid Grid.Row="0" Margin="0,0,0,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Stretch="UniformToFill" Height="100" Width="100" Grid.Column="0" 
+                                       Source="{Binding Place.ImagePath, Mode=OneWay}" />
+                                <TextBlock Grid.Column="1" Text="{Binding Place.Name, Mode=OneWay}"  
+                                           TextWrapping="WrapWholeWords" Style="{StaticResource SubheaderTextBlockStyle}" Margin="10,0,0,0"/>
+                            </Grid>
+                                <TextBlock Text="{Binding Place.Description, Mode=OneWay}" Grid.Row="1" Style="{StaticResource BaseTextBlock}"/>
                         </Grid>
-                        <TextBlock Text="{Binding Place.Description, Mode=OneWay}" Grid.Row="1" Style="{StaticResource BaseTextBlock}"/>
-                    </Grid>
+                    </ScrollViewer>
                 </DataTemplate>
             </HubSection>
             <HubSection>

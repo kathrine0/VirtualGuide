@@ -36,9 +36,9 @@
     <div class="col-md-6" ng-repeat="property in travel.Properties">
         <div class="box box-success">
             <div class="box-header" ng-hide="property.editMode">
-                 <h3 class="box-title">
-                     <span ng-bind="property.Symbol"></span>
-                     <span ng-bind="property.Title"></span>
+                <h3 class="box-title">
+                    <span ng-bind="property.Symbol"></span>
+                    <span ng-bind="property.Title"></span>
                 </h3>
             </div><!-- /.box-header -->
             <div class="box-body" ng-hide="property.editMode">
@@ -80,7 +80,9 @@
                         <div id="collapse{{$index}}" class="panel-collapse collapse">
                             <div class="box-body" ng-hide="marker.editMode">
                                 <div class="row">
-                                    <div class="col-md-4" ng-bind-html="marker.place.ImageSrc | imageSource:'thumbnail'"></div>
+                                    <div class="col-md-4">
+                                        <img ng-src="{{marker.place.Image}}" class="thumbnail">
+                                    </div>
                                     <div class="col-md-8">
                                         <p ng-bind="marker.place.Description"></p>
                                         <p><strong>Category: </strong><span ng-bind="marker.place.CategoryName"></span></p>
@@ -88,20 +90,37 @@
                                 </div>
                             </div>
                             <div class="box-body" ng-show="marker.editMode">
-                                <div class="form-group">
-                                    <input type="text" ng-model="marker.place.Name"
-                                           class="form-control" placeholder="Enter name for your guide" required />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" ng-model="marker.place.Name"
+                                                   class="form-control" placeholder="Enter name for your guide" required />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <textarea class="form-control"
-                                              ng-model="marker.place.Description"
-                                              rows="3" placeholder="Enter description" required></textarea>
+                                <div class="row">
+                                    <div ng-file-drop="onFileSelect($files, $index)" ng-file-drag-over-class="dragover" class="col-md-4">
+                                        <img ng-src="{{marker.place.Image}}" class="thumbnail">
+                                    </div>
+                                    <div class="col-md-8">
+                                        
+                                        <div class="form-group">
+                                            <textarea class="form-control"
+                                                      ng-model="marker.place.Description"
+                                                      rows="3" placeholder="Enter description" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="marker.place.CategoryId"
+                                                    ng-options="category.Id as category.Name for category in categories"
+                                                    required></select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="marker.place.CategoryId"
-                                            ng-options="category.Id as category.Name for category in categories"
-                                            required></select>
-                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <button class="btn btn-success" ng-click="editPlace($index)" ng-hide="marker.editMode">Edit</button>
+                                <button class="btn btn-success" ng-click="savePlace($index)" ng-show="marker.editMode">Save</button>
+                                <button class="btn btn-danger" ng-click="removePlace($index)" ng-show="marker.editMode">Delete</button>
                             </div>
                         </div>
                     </div>

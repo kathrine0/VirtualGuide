@@ -1,6 +1,7 @@
 ﻿'use strict';
 
-app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository', function (placesRepository, placeRepository, placeCategoryRepository) {
+app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository', '$rootScope',
+    function (placesRepository, placeRepository, placeCategoryRepository, $rootScope) {
 
     var placeService = {};
 
@@ -10,7 +11,7 @@ app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCatego
 
     }
 
-    placeService.placesToMarkers = function(places)
+    placeService.placesToMarkers = function(places, placeholder)
     {
         var markers = [];
         places.forEach(function (place) {
@@ -37,7 +38,19 @@ app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCatego
                     Description: place.Description,
                     CategoryId: place.CategoryId,
                     CategoryName: place.CategoryName,
-                    ImageSrc: place.ImageSrc
+                    ImageSrc: place.ImageSrc,
+                    _image: placeholder,
+                    set Image(value) 
+                    {
+                        this._image = value;
+                    },
+                    get Image() {
+                        if (this.ImageSrc) {
+                            return $rootScope.webservice + this.ImageSrc;
+                        } else {
+                            return placeholder
+                        }
+                    }
                 }
             };
 

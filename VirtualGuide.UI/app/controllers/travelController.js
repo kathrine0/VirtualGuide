@@ -37,8 +37,15 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$routeParams', 'travelService', 'propertyService', 'placeService',
-    function ($scope, $routeParams, travelService, propertyService, placeService) {
+app.controller('getTravelController', ['$scope', '$routeParams', 'travelService', 'propertyService', 'placeService', 'uploadService',
+    function ($scope, $routeParams, travelService, propertyService, placeService, uploadService ) {
+
+        //local variables
+
+        var imagesToUpload = [];
+        var placeholder = "http://fpoimg.com/300x300?text=Place%20your%20image%20here";
+
+        //end local variables
 
         $scope.map =
         {
@@ -64,7 +71,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
                 zoom: travel.ZoomLevel
             };
 
-            $scope.map.markers = placeService.placesToMarkers(travel.Places);
+            $scope.map.markers = placeService.placesToMarkers(travel.Places, placeholder);
         });
 
         $scope.travel.editMode = false;
@@ -93,6 +100,27 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
         $scope.removeProperty = function (index) {
             //todo remove on server
             $scope.travel.Properties.splice(index, 1);
+        }
+
+        $scope.editPlace = function (index) {
+            $scope.map.markers[index].editMode = true;
+        }
+
+        $scope.savePlace = function (index) {
+            propertyService.updateItem($scope.travel.Properties[index]);
+            $scope.map.markers[index].editMode = false;
+        }
+
+        $scope.removePlace = function (index) {
+            //todo remove on server
+            $scope.map.markers.splice(index, 1);
+        }
+
+        $scope.onFileSelect = function ($files, index) {
+            uploadService.decodeImage($files[0], function (image) {
+                $scope.map.markers[index].place.image = image;
+                imagesToUpload.push($files[0]);
+            });
         }
 
 
