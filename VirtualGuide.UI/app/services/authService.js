@@ -1,7 +1,6 @@
 ﻿'use strict';
 app.factory('authService', ['$http', '$q', 'localStorageService', '$rootScope', function ($http, $q, localStorageService, $rootScope) {
 
-    var serviceBase = $rootScope.webservice;
     var authServiceFactory = {};
 
     var _authentication = {
@@ -11,6 +10,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', '$rootScope', 
 
     var _saveRegistration = function (registration) {
 
+        var serviceBase = $rootScope.webservice;
         _logOut();
 
         return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
@@ -21,13 +21,19 @@ app.factory('authService', ['$http', '$q', 'localStorageService', '$rootScope', 
 
     var _login = function (loginData) {
 
+        var serviceBase = $rootScope.webservice;
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
         var deferred = $q.defer();
+        console.log(serviceBase);
+        $http.post(serviceBase + 'token', data, {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).success(function (response) {
 
-        $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-
-            localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
+            localStorageService.set('authorizationData', {
+                token: response.access_token,
+                userName: loginData.userName
+            });
 
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;

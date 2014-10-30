@@ -31,15 +31,17 @@
                     </div>
 
                 </div>
-                <div class="box-footer">
-                    <button ng-click="createNewTravel()" class="btn btn-success">Save and continue</button>
-                </div>
             </form>
         </div>
     </div>
     <div class="col-md-6">
         <div class="box box-primary">
-            <leaflet id="map" tiles="$root.tiles" markers="markers" controls="$root.controls" center="$root.center"></leaflet>
+            <div class="box-body">
+                <leaflet id="map" tiles="$root.tiles" markers="markers" controls="$root.controls" center="$root.center"></leaflet>
+            </div>
+            <div class="box-footer">
+                <button ng-click="createNewTravel()" class="btn btn-success">Save and continue</button>
+            </div>
         </div>
     </div>
 </div>

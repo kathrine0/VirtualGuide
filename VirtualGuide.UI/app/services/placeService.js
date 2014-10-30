@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository', '$rootScope',
-    function (placesRepository, placeRepository, placeCategoryRepository, $rootScope) {
+app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository',
+    function (placesRepository, placeRepository, placeCategoryRepository) {
 
     var placeService = {};
 

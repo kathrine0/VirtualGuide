@@ -28,7 +28,7 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
 
         travelRepository.create(travel,
             function success(item) {
-                if (successCallback != undefined, successCallback, errorCallback)
+                if (successCallback != undefined)
                 {
                     successCallback(item);
                 }
