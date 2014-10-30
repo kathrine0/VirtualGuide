@@ -50,3 +50,6 @@ _ReSharper*/
 
 # NCrunch
 *ncrunch*
+
+#Uploads folder
+VirtualGuide.WebService/Uploads/*
