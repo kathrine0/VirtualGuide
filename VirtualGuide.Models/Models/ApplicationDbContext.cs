@@ -31,6 +31,7 @@ namespace VirtualGuide.Models
         public DbSet<Place_Excursion> Place_Excursions { get; set; }
         public DbSet<User_Purchased_Travel> User_Purchased_Travels { get; set; }
         public DbSet<PlaceCategory> PlaceCategory { get; set; }
+        public DbSet<Icon> Icon { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

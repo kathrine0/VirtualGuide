@@ -29,7 +29,7 @@ namespace VirtualGuide.Services
         public string Description { get; set; }
         public int TravelId { get; set; }
         public int Order { get; set; }
-        public string Symbol { get; set; }
+        public Icon Symbol { get; set; }
 
         public Property ToModel()
         {
@@ -40,7 +40,7 @@ namespace VirtualGuide.Services
                 Description = this.Description,
                 TravelId = this.TravelId,
                 Order = this.Order,
-                Symbol = this.Symbol
+                SymbolId = this.Symbol.Id
             };
         }
     }

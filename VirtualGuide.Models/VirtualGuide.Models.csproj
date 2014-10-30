@@ -66,6 +66,7 @@
     <Compile Include="Models\PlaceCategory.cs" />
     <Compile Include="Models\Place_Excursion.cs" />
     <Compile Include="Models\Property.cs" />
+    <Compile Include="Models\Icon.cs" />
     <Compile Include="Models\Travel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\User_Purchased_Travel.cs" />
