@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using VirtualGuide.Services;
 using VirtualGuide.WebService.Models;
 
 namespace VirtualGuide.WebService
@@ -20,6 +21,8 @@ namespace VirtualGuide.WebService
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AutoMapperConfig.Configure();
         }
     }
 }
