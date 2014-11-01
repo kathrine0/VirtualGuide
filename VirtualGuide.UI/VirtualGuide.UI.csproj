@@ -68,6 +68,7 @@
     <Content Include="app\filters\generalFilter.js" />
     <Content Include="app\repositories\placeRepository.js" />
     <Content Include="app\repositories\propertyRepository.js" />
+    <Content Include="app\repositories\iconRepository.js" />
     <Content Include="app\repositories\travelRepository.js" />
     <Content Include="app\repositories\uploadRepository.js" />
     <Content Include="app\routing.js" />

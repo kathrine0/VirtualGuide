@@ -3583,4 +3583,8 @@ fieldset[disabled] .btn-vk.active {
 .dragover {
   opacity: 0.3;
 }
+.icon-small {
+  width: 50px;
+  height: 50px;
+}
 /*# sourceMappingURL=AdminLTE.css.map */

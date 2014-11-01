@@ -1,5 +1,8 @@
 ﻿'use strict';
 
+///
+/// Get properties for travel by ID
+///
 app.factory('propertiesRepository', ['$resource', '$rootScope', function ($resource, $rootScope) {
 
     var serviceBase = $rootScope.webservice;

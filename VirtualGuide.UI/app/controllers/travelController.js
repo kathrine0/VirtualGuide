@@ -195,9 +195,21 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
             Symbol: ''
         });
 
+        $scope.currentProperty = -1;
+        $scope.icons = propertyService.getIcons();
+
         //end scope variables
 
         //scope actions
+
+        $scope.setIcon = function(iconIndex)
+        {
+            if (currentProperty != -1)
+            {
+                $scope.properties[currentProperty].Symbol = 
+            }
+        }
+
         $scope.addProperty = function () {
             $scope.properties.push({
                 Title: '',

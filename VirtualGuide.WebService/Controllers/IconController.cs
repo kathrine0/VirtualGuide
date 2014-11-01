@@ -15,7 +15,7 @@ namespace VirtualGuide.WebService.Controllers
     {
         private IconRepository ir = new IconRepository();
 
-        [Route("Icons")]
+        [Route("Icon")]
         [HttpGet]
         public HttpResponseMessage GetIcons()
         {

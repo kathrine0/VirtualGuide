@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-app.factory('propertyService', ['propertiesRepository', 'propertyRepository', function (propertiesRepository, propertyRepository) {
+app.factory('propertyService', ['propertiesRepository', 'propertyRepository', 'iconRepository', function (propertiesRepository, propertyRepository, iconRepository) {
 
     var propertyService = {};
 
@@ -27,6 +27,23 @@ app.factory('propertyService', ['propertiesRepository', 'propertyRepository', fu
             function error() {
                 //errorCallback();
             });
+    }
+
+    ///
+    /// Get available icons to choose from for the property
+    ///
+    propertyService.getIcons = function(successCallback, errorCallback)
+    {
+        return iconRepository.query(
+            function success() {
+                if (successCallback != undefined) {
+                    successCallback();
+                }
+            },
+            function error() {
+                //errorCallback();
+            }
+        );
     }
 
     return propertyService;

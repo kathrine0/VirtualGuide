@@ -23,10 +23,10 @@ namespace VirtualGuide.Models
         
         [ForeignKey("TravelId")]
         public virtual Travel Travel { get; set; }
-        public int? SymbolId { get; set; }
-        [ForeignKey("SymbolId")]
+        public int? IconId { get; set; }
+        [ForeignKey("IconId")]
 
-        public Icon Symbol { get; set; }
+        public Icon Icon { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
