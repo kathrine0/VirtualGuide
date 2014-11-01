@@ -134,7 +134,7 @@ namespace VirtualGuide.Mobile.View
                     continue;
 
                 HubSection hubSection = new HubSection();
-                hubSection.Header = property.Symbol + property.Name;
+                hubSection.Header = property.Icon + property.Name;
                 hubSection.DataContext = property;
                 hubSection.ContentTemplate = (DataTemplate) this.Resources["PropertyContentTemplate"];
 

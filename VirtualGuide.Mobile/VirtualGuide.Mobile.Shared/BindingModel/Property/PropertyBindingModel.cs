@@ -24,7 +24,7 @@ namespace VirtualGuide.Mobile.BindingModel
         {
             Id = property.Id;
             Name = property.Title;
-            Symbol = property.Symbol;
+            Icon = property.Icon;
             Background = ColorHelper.YELLOW;
             Type = Types.REGULAR;
             Description = property.Description;
@@ -51,15 +51,15 @@ namespace VirtualGuide.Mobile.BindingModel
         public string Description { get; set; }
         public Brush Background { get; set; }
 
-        private string _symbol = string.Empty;
-        public string Symbol { 
+        private string _icon = string.Empty;
+        public string Icon { 
             get
             {
-                return WebUtility.HtmlDecode(_symbol);
+                return WebUtility.HtmlDecode(_icon);
             }
             set
             {
-                _symbol = value;
+                _icon = value;
             }
         }
         public Types Type { get; set; }

@@ -118,24 +118,24 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
         [ImplementPropertyChanged]
         public class PlaceMainOptions
         {
-            public PlaceMainOptions(string name, OPTION type, string symbol, Brush color)
+            public PlaceMainOptions(string name, OPTION type, string icon, Brush color)
             {
-                Symbol = symbol;
+                Icon = icon;
                 Name = name;
                 Background = color;
                 Type = type;
             }
 
-            private string _symbol;
-            public string Symbol
+            private string _icon;
+            public string Icon
             {
                 get
                 {
-                    return WebUtility.HtmlDecode(_symbol);
+                    return WebUtility.HtmlDecode(_icon);
                 }
                 set
                 {
-                    _symbol = value;
+                    _icon = value;
                 }
             }
             public Brush Background { get; set; }

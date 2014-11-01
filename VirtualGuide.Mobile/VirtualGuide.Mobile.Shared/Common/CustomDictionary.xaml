@@ -78,7 +78,7 @@
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding Symbol}" Foreground="{Binding Background}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"  />
+            <TextBlock Grid.Column="0" Text="{Binding Icon}" Foreground="{Binding Background}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"  />
             <TextBlock Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Margin="10,0" TextWrapping="Wrap" />
         </Grid>
     </DataTemplate>

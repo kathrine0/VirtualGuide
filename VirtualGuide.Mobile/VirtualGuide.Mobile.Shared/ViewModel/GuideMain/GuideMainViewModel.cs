@@ -112,7 +112,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             var tours = new GuideMainPropertyBindingModel() {
                 Name = "Tours", 
                 Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, 
-                Symbol="\uD83C\uDFF0", 
+                Icon="\uD83C\uDFF0", 
                 Type=GuideMainPropertyBindingModel.Types.TOURS};
 
             Properties = new ObservableCollection<GuideMainPropertyBindingModel>();
