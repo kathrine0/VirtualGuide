@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -22,7 +23,7 @@ namespace VirtualGuide.Services.Repository
 
                 foreach (var item in items)
                 {
-                    result.Add(new BasicPropertyViewModel(item));
+                    result.Add(Mapper.Map<BasicPropertyViewModel>(item));
                 }
 
                 return result;
@@ -40,7 +41,7 @@ namespace VirtualGuide.Services.Repository
                 foreach (var item in items)
                 {
                     item.TravelId = travelId;
-                    properties.Add(item.ToModel());
+                    properties.Add(Mapper.Map<Property>(item));
                 }
 
                 db.Properties.AddRange(properties);
@@ -53,7 +54,7 @@ namespace VirtualGuide.Services.Repository
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Property property = item.ToModel();
+                Property property = Mapper.Map<Property>(item);
 
                 var entry = db.Entry(property);
                 entry.State = EntityState.Modified;

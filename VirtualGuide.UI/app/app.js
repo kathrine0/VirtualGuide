@@ -1,4 +1,4 @@
-﻿var app = angular.module('VirtualGuide', ['ngRoute', 'ngResource', 'ngSanitize', 'LocalStorageModule', 'angular-loading-bar', 'angularFileUpload', 'leaflet-directive']);
+﻿var app = angular.module('VirtualGuide', ['ngRoute', 'ngResource', 'ngSanitize', 'LocalStorageModule', 'angular-loading-bar', 'angularFileUpload', 'leaflet-directive', 'ui.bootstrap']);
 // 'vgServices',
 
 app.run(['authService', function (authService) {

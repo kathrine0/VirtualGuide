@@ -184,37 +184,54 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
         //end scope events
 }]);
 
-app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeParams', 'propertyService',
-    function ($scope, $location, $routeParams, propertyService) {
+app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeParams', '$modal', 'propertyService',
+    function ($scope, $location, $routeParams, $modal, propertyService) {
 
         //scope variables
         $scope.properties = [];
         $scope.properties.push({
             Title: 'Historia',
             Description: '',
-            Symbol: ''
+            Icon: null,
+            IconId: null
         });
 
-        $scope.currentProperty = -1;
         $scope.icons = propertyService.getIcons();
 
         //end scope variables
 
         //scope actions
+        $scope.chooseIcon = function ($index) {
 
-        $scope.setIcon = function(iconIndex)
-        {
-            if (currentProperty != -1)
-            {
-                $scope.properties[currentProperty].Symbol = 
-            }
-        }
+            var currentProperty = $index
+
+            var modalInstance = $modal.open({
+                templateUrl: 'iconModalContent.html',
+                controller: 'IconModalController',
+                resolve: {
+                    icons: function () {
+                        return $scope.icons
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (iconIndex) {
+                if (currentProperty != -1) {
+                    $scope.properties[currentProperty].Icon = $scope.icons[iconIndex];
+                    $scope.properties[currentProperty].IconId = $scope.icons[iconIndex].Id;
+
+                }
+            }, function () {
+                //nothing happens
+            });
+        };
 
         $scope.addProperty = function () {
             $scope.properties.push({
                 Title: '',
                 Description: '',
-                Symbol: ''
+                Icon: '',
+                IconId: null
             });
         };
 
@@ -231,6 +248,20 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
         //end scope actions
 
     }]);
+
+app.controller('IconModalController', ['$scope', '$modalInstance', 'icons',
+    function ($scope, $modalInstance, icons) {
+
+    $scope.icons = icons;
+
+    $scope.setIcon = function ($index) {
+        $modalInstance.close($index);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+}]);
 
 app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '$routeParams', 'placeService',
     function ($scope, $location, $filter, $routeParams, placeService) {

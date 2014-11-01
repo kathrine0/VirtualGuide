@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -101,7 +102,8 @@ namespace VirtualGuide.Services
             Description = travel.Description;
             Places = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(travel.Places);
             //TODO Excursions =
-            Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(travel.Properties);
+            //Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(travel.Properties);
+            Properties = Mapper.Map<IList<BasicPropertyViewModel>>(travel.Properties);
             Language = travel.Language;
             Latitude = travel.Latitude;
             Longitude = travel.Longitude;

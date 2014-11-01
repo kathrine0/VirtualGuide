@@ -12,6 +12,11 @@ namespace VirtualGuide.Services
     {
         public static void Configure()
         {
+            ///Property
+            Mapper.CreateMap<Property, BasicPropertyViewModel>();
+            Mapper.CreateMap<BasicPropertyViewModel, Property>();
+
+            ///Icon
             Mapper.CreateMap<Icon, IconViewModel>();
         }
     }
