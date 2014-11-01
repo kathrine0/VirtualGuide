@@ -37,7 +37,7 @@
         <div class="box box-success">
             <div class="box-header" ng-hide="property.editMode">
                 <h3 class="box-title">
-                    <span ng-bind="property.Symbol"></span>
+                    <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
                     <span ng-bind="property.Title"></span>
                 </h3>
             </div><!-- /.box-header -->
