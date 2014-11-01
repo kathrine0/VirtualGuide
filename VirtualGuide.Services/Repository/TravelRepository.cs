@@ -9,27 +9,19 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.Core;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using AutoMapper;
 
 namespace VirtualGuide.Services.Repository
 {
     public class TravelRepository : BaseRepository
     {
-
-
         public IList<BasicTravelViewModel> GetApprovedTravelList()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                IQueryable<Travel> items = db.Travels.Where(x => x.ApprovalStatus == true);
+                IList<Travel> items = db.Travels.Where(x => x.ApprovalStatus == true).ToList();
             
-                var result = new List<BasicTravelViewModel>();
-
-                foreach (var item in items)
-                {
-                    result.Add(new BasicTravelViewModel(item));
-                }
-
-                return result;
+                return Mapper.Map<IList<BasicTravelViewModel>>(items);
             }
 
         }
@@ -37,15 +29,17 @@ namespace VirtualGuide.Services.Repository
         public IList<CustomerTravelViewModel> GetOwnedTravelList(string userEmail)
         {
             User user = findUserByEmail(userEmail);
-            var items = user.PurchasedTravels;
+            ICollection<User_Purchased_Travel> items = user.PurchasedTravels;
+
             var result = new List<CustomerTravelViewModel>();
 
-            foreach(var item in items)
+            foreach (var item in items)
             {
-                result.Add(new CustomerTravelViewModel(item.Travel));
+                result.Add(Mapper.Map<CustomerTravelViewModel>(item.Travel));
             }
 
             return result;
+
         }
 
         public IList<BasicTravelViewModel> GetCreatedTravelList(string userEmail)
@@ -53,15 +47,9 @@ namespace VirtualGuide.Services.Repository
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 User user = findUserByEmail(userEmail);
-                IQueryable<Travel> items = db.Travels.Where(x => x.CreatorId == user.Id);
+                IList<Travel> items = db.Travels.Where(x => x.CreatorId == user.Id).ToList();
                 
-                var result = new List<BasicTravelViewModel>();
-                foreach (var item in items)
-                {
-                    result.Add(new BasicTravelViewModel(item));
-                }
-
-                return result;
+                return Mapper.Map<IList<BasicTravelViewModel>>(items);
             }
 
         }
@@ -78,7 +66,7 @@ namespace VirtualGuide.Services.Repository
                     throw new ObjectNotFoundException("Travel not found");
                 }
 
-                return new CreatorTravelViewModel(travel);
+                return Mapper.Map<CreatorTravelViewModel>(travel);
             }
 
         }
@@ -102,7 +90,7 @@ namespace VirtualGuide.Services.Repository
                     throw new UnauthorizedAccessException("This user is not authorised to see the details");
                 }
 
-                return new CustomerTravelViewModel(travel);
+                return Mapper.Map<CustomerTravelViewModel>(travel);
             }
             
         }
@@ -112,32 +100,21 @@ namespace VirtualGuide.Services.Repository
             //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Travel travel = item.ToModel();
+                Travel travel = Mapper.Map<Travel>(item);
 
                 db.Travels.Add(travel);
                 db.SaveChanges();
 
-                return new CreatorTravelViewModel(travel);
+                return Mapper.Map<CreatorTravelViewModel>(travel);
             }
         }
 
         public CreatorTravelViewModel Update(int id, CreatorTravelViewModel item)
         {
-            //using (ApplicationDbContext db = new ApplicationDbContext())
-            //{
-            //    //Travel oldTravel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
-
-            //    //if (oldTravel == null)
-            //    //{
-            //    //    throw new ObjectNotFoundException("travel not found");
-            //    //}
-
-            //}
-
             //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Travel travel = item.ToModel();
+                Travel travel = Mapper.Map<Travel>(item);
                 var entry = db.Entry(travel);
                 entry.State = EntityState.Modified;
 
@@ -155,7 +132,7 @@ namespace VirtualGuide.Services.Repository
                     throw;
                 }
 
-                return new CreatorTravelViewModel(travel);
+                return Mapper.Map<CreatorTravelViewModel>(travel);
             }
         }
     }

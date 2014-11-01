@@ -13,19 +13,6 @@ namespace VirtualGuide.Services
     /// </summary>
     public class BasicTravelViewModel
     {
-        public BasicTravelViewModel()
-        {
-
-        }
-        public BasicTravelViewModel(Travel travel)
-        {
-            Id = travel.Id;
-            Name = travel.Name;
-            Description = travel.Description;
-            Price = travel.Price;
-            ImageSrc = travel.ImageSrc;
-        }
-
         public int Id { get; set; }
 
         [Required]
@@ -50,22 +37,6 @@ namespace VirtualGuide.Services
     /// </summary>
     public class CustomerTravelViewModel
     {
-        public CustomerTravelViewModel(Travel travel)
-        {
-            Id = travel.Id;
-            Name = travel.Name;
-            Description = travel.Description;
-            Places = ServicesHelper.CreateViewModelListFromModel<MobilePlaceViewModel, Place>(travel.Places);
-            //TODO Excursions =
-            Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(travel.Properties);
-            Language = travel.Language;
-            Latitude = travel.Latitude;
-            Longitude = travel.Longitude;
-            ZoomLevel = travel.ZoomLevel;
-            ImageSrc = travel.ImageSrc;
-
-        }
-
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -90,29 +61,6 @@ namespace VirtualGuide.Services
     /// </summary>
     public class CreatorTravelViewModel
     {
-        public CreatorTravelViewModel()
-        {
-
-        }
-        
-        public CreatorTravelViewModel(Travel travel)
-        {
-            Id = travel.Id;
-            Name = travel.Name;
-            Description = travel.Description;
-            Places = ServicesHelper.CreateViewModelListFromModel<BasicPlaceViewModel, Place>(travel.Places);
-            //TODO Excursions =
-            //Properties = ServicesHelper.CreateViewModelListFromModel<BasicPropertyViewModel, Property>(travel.Properties);
-            Properties = Mapper.Map<IList<BasicPropertyViewModel>>(travel.Properties);
-            Language = travel.Language;
-            Latitude = travel.Latitude;
-            Longitude = travel.Longitude;
-            ZoomLevel = travel.ZoomLevel;
-            ImageSrc = travel.ImageSrc;
-            Price = travel.Price;
-
-        }
-
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -132,22 +80,7 @@ namespace VirtualGuide.Services
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double ZoomLevel { get; set; }
-
-        public Travel ToModel()
-        {
-            return new Travel()
-            {
-                Id = this.Id,
-                Name = this.Name,
-                Description = this.Description,
-                Price = this.Price,
-                Language = this.Language,
-                Latitude = this.Latitude,
-                Longitude = this.Longitude,
-                ZoomLevel = this.ZoomLevel,
-                ImageSrc = this.ImageSrc
-            };
-        }       
+     
     }
 
 }

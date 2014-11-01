@@ -14,8 +14,7 @@ namespace VirtualGuide.Services
         public string Description { get; set; }
         public int TravelId { get; set; }
         public int Order { get; set; }
-        public Icon Icon { get; set; }
-
+        public IconViewModel Icon { get; set; }
         public int? IconId { get; set; }
     }
 }

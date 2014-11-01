@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -16,16 +17,9 @@ namespace VirtualGuide.Services.Repository
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                IQueryable<PlaceCategory> categories = db.PlaceCategory.Where(x => x.Language == language);
+                IList<PlaceCategory> categories = db.PlaceCategory.Where(x => x.Language == language).ToList();
 
-                var result = new List<PlaceCategoryViewModel>();
-
-                foreach (var category in categories)
-                {
-                    result.Add(new PlaceCategoryViewModel(category));
-                }
-
-                return result;
+                return Mapper.Map<IList<PlaceCategoryViewModel>>(categories);
             }
     
         }
@@ -41,7 +35,7 @@ namespace VirtualGuide.Services.Repository
                 foreach (var item in items)
                 {
                     item.TravelId = travelId;
-                    places.Add(item.ToModel());
+                    places.Add(Mapper.Map<Place>(item));
                 }
 
                 db.Places.AddRange(places);
@@ -53,7 +47,7 @@ namespace VirtualGuide.Services.Repository
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Place property = item.ToModel();
+                Place property = Mapper.Map<Place>(item);
 
                 var entry = db.Entry(property);
                 entry.State = EntityState.Modified;
