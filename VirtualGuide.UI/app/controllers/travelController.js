@@ -91,22 +91,28 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
         $scope.editProperty = function(index)
         {
+            $scope.travel.Properties[index].oldValue = {};
+            angular.copy($scope.travel.Properties[index], $scope.travel.Properties[index].oldValue);
             $scope.travel.Properties[index].editMode = true;
         }
 
         $scope.saveProperty = function (index) {
             propertyService.updateItem($scope.travel.Properties[index]);
             $scope.travel.Properties[index].editMode = false;
+            delete $scope.travel.Properties[index].oldValue;
         }
 
         $scope.cancelPropertyEdit = function(index)
         {
+            angular.copy($scope.travel.Properties[index].oldValue, $scope.travel.Properties[index]);
+            delete $scope.travel.Properties[index].oldValue;
             $scope.travel.Properties[index].editMode = false;
         }
 
         $scope.removeProperty = function (index) {
             //todo remove on server
             $scope.travel.Properties.splice(index, 1);
+            delete $scope.travel.Properties[index].oldValue;
         }
 
         $scope.editPlace = function (index) {
