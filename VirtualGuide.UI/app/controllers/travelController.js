@@ -37,8 +37,8 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$routeParams', 'travelService', 'propertyService', 'placeService', 'uploadService',
-    function ($scope, $routeParams, travelService, propertyService, placeService, uploadService ) {
+app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'travelService', 'propertyService', 'placeService', 'uploadService',
+    function ($scope, $routeParams, $modal, travelService, propertyService, placeService, uploadService) {
 
         //local variables
 
@@ -60,6 +60,8 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
             }
 
         }
+
+        $scope.icons = propertyService.getIcons();
 
         $scope.categories = placeService.getCategories();
 
@@ -97,6 +99,11 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
             $scope.travel.Properties[index].editMode = false;
         }
 
+        $scope.cancelPropertyEdit = function(index)
+        {
+            $scope.travel.Properties[index].editMode = false;
+        }
+
         $scope.removeProperty = function (index) {
             //todo remove on server
             $scope.travel.Properties.splice(index, 1);
@@ -115,6 +122,31 @@ app.controller('getTravelController', ['$scope', '$routeParams', 'travelService'
             //todo remove on server
             $scope.map.markers.splice(index, 1);
         }
+
+        $scope.chooseIcon = function ($index) {
+
+            var currentProperty = $index
+
+            var modalInstance = $modal.open({
+                templateUrl: 'app/views/travel/icon-modal-content.html',
+                controller: 'IconModalController',
+                resolve: {
+                    icons: function () {
+                        return $scope.icons
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (iconIndex) {
+                if (currentProperty != -1) {
+                    $scope.travel.Properties[currentProperty].Icon = $scope.icons[iconIndex];
+                    $scope.travel.Properties[currentProperty].IconId = $scope.icons[iconIndex].Id;
+
+                }
+            }, function () {
+                //nothing happens
+            });
+        };
 
         $scope.onFileSelect = function ($files, index) {
             uploadService.decodeImage($files[0], function (image) {
@@ -206,7 +238,7 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
             var currentProperty = $index
 
             var modalInstance = $modal.open({
-                templateUrl: 'iconModalContent.html',
+                templateUrl: 'app/views/travel/icon-modal-content.html',
                 controller: 'IconModalController',
                 resolve: {
                     icons: function () {

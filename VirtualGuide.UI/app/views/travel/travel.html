@@ -45,7 +45,10 @@
                 <p ng-bind="property.Description"></p>
             </div>
             <div class="box-body" ng-show="property.editMode">
-                <div class="form-group">
+                <div class="form-group form-inline">
+                    <button class="btn btn-default" ng-click="chooseIcon($index)">
+                        <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
+                    </button>
                     <input type="text" ng-model="property.Title" class="form-control" placeholder="Enter title" />
                 </div>
                 <div class="form-group">
@@ -55,6 +58,7 @@
             <div class="box-footer">
                 <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode">Edit</button>
                 <button class="btn btn-success" ng-click="saveProperty($index)" ng-show="property.editMode">Save</button>
+                <button class="btn btn-warning" ng-click="cancelPropertyEdit($index)" ng-show="property.editMode">Cancel</button>
                 <button class="btn btn-danger" ng-click="removeProperty($index)" ng-show="property.editMode">Delete</button>
             </div>
         </div>

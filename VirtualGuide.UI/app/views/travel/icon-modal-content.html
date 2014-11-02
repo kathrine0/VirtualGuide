@@ -1,0 +1,14 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title">Choose symbol</h4>
+</div>
+<div class="modal-body">
+    <div data-toggle="buttons">
+        <label class="btn btn-default" ng-repeat="icon in icons">
+            <input type="radio" name="icons" id="{{ 'icon' + $index }}" autocomplete="off" ng-click="setIcon($index)"><span ng-bind-html="icon.Path | imageSource: 'icon-small'"></span>
+        </label>
+    </div>
+</div>
