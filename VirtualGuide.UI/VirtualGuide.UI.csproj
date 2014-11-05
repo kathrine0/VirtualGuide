@@ -97,6 +97,11 @@
     <Content Include="Content\css\daterangepicker-bs3.min.css">
       <DependentUpon>daterangepicker-bs3.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\leaflet.css" />
+    <Content Include="Content\css\leaflet.min.css">
+      <DependentUpon>leaflet.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\loading-bar.min.css" />
     <Content Include="Content\fonts\ionicons.svg" />
     <Content Include="Content\images\avatar3.png" />
@@ -956,6 +961,7 @@
     <Content Include="Scripts\l.geosearch.provider.openstreetmap.min.js">
       <DependentUpon>l.geosearch.provider.openstreetmap.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\leaflet.js" />
     <Content Include="Scripts\loading-bar.min.js" />
     <Content Include="Scripts\lodash.compat.min.js" />
     <Content Include="Scripts\version.json" />

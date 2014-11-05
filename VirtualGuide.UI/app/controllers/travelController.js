@@ -42,7 +42,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
         //local variables
 
-        var imagesToUpload = [];
+        var imageToUpload = null;
         var placeholder = "http://fpoimg.com/300x300?text=Place%20your%20image%20here";
 
         //end local variables
@@ -78,14 +78,47 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
         $scope.travel.editMode = false;
 
+        $scope.onTravelImageSelect = function ($files) {
+            uploadService.decodeImage($files[0], function (image) {
+                $scope.travel.Image = image;
+                imageToUpload = $files[0];
+            });
+        }
+
         $scope.editTravel = function()
         {
+            $scope.travel.oldValue = {
+                Name: $scope.travel.Name,
+                Description: $scope.travel.Description,
+                Price: $scope.travel.Price,
+                Image: $scope.travel.Image
+            };
+            
             $scope.travel.editMode = true;
         }
 
         $scope.saveTravel = function()
         {
             travelService.updateItem($scope.travel);
+            $scope.travel.editMode = false;
+
+            if (imageToUpload != null) {
+                var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);
+                $scope.travel.ImageSrc = randomName;
+                uploadService.upload(imageToUpload, randomName);
+                imageToUpload = null;
+            }
+        }
+
+        $scope.cancelTravelEdit = function ()
+        {
+            $scope.travel = {
+                Name: $scope.travel.oldValue.Name,
+                Description: $scope.travel.oldValue.Description,
+                Price: $scope.travel.oldValue.Price,
+                Image: $scope.travel.oldValue.Image
+            };
+
             $scope.travel.editMode = false;
         }
 
@@ -198,7 +231,6 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
             });
         }
 
-        //todo add remove image option
         $scope.onFileSelect = function ($files) {
             uploadService.decodeImage($files[0], function (image) {
                 $scope.image = image;
