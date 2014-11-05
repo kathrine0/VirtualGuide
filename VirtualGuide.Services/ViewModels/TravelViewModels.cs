@@ -82,11 +82,17 @@ namespace VirtualGuide.Services
         { 
             get
             {
-                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImageSrc.Replace('/', '\\'));
-                byte[] imageArray = System.IO.File.ReadAllBytes(path);
-                var mime = ImageUtilities.GetImageMimeType(imageArray);
-                string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-                return String.Format("data:{0};base64,{1}", mime, base64ImageRepresentation);
+                try
+                {
+                    string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImageSrc.Replace('/', '\\'));
+                    byte[] imageArray = System.IO.File.ReadAllBytes(path);
+                    var mime = ImageUtilities.GetImageMimeType(imageArray);
+                    string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                    return String.Format("data:{0};base64,{1}", mime, base64ImageRepresentation);
+                } catch
+                {
+                    return string.Empty;
+                }
             }
         }
         public double Latitude { get; set; }

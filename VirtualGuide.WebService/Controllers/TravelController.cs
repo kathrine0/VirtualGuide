@@ -35,6 +35,10 @@ namespace VirtualGuide.WebService.Controllers
                 IList<BasicTravelViewModel> travels = tr.GetApprovedTravelList();
                 return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
             } 
+            catch(HttpResponseException)
+            {
+                throw;
+            }
             catch
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -57,6 +61,10 @@ namespace VirtualGuide.WebService.Controllers
     
                 return Request.CreateResponse<IList<CustomerTravelViewModel>>(HttpStatusCode.OK, travels);
             } 
+            catch(HttpResponseException)
+            {
+                throw;
+            }
             catch
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -78,6 +86,10 @@ namespace VirtualGuide.WebService.Controllers
                 IList<BasicTravelViewModel> travels = tr.GetCreatedTravelList(userName);
 
                 return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+            }
+            catch (HttpResponseException)
+            {
+                throw;
             }
             catch
             {
@@ -101,6 +113,10 @@ namespace VirtualGuide.WebService.Controllers
                 CreatorTravelViewModel travel = tr.GetTravelDetailsForCreator(id, userName);
 
                 return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.OK, travel);
+            }
+            catch (HttpResponseException)
+            {
+                throw;
             }
             catch (ObjectNotFoundException)
             {
@@ -126,7 +142,11 @@ namespace VirtualGuide.WebService.Controllers
             {
                 CreatorTravelViewModel item = tr.Add(travel);
                 return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, item);
-            } 
+            }
+            catch (HttpResponseException)
+            {
+                throw;
+            }
             catch
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -146,6 +166,10 @@ namespace VirtualGuide.WebService.Controllers
             {
                 tr.Update(id, travel);
                 return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
+            }
+            catch (HttpResponseException)
+            {
+                throw;
             }
             catch
             {
