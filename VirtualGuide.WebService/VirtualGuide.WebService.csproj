@@ -283,6 +283,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtualGuide.Common\VirtualGuide.Common.csproj">
+      <Project>{863d678d-7271-4c1e-8c23-d4182a2b98b8}</Project>
+      <Name>VirtualGuide.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualGuide.Services\VirtualGuide.Services.csproj">
       <Project>{2af51b16-5a98-42a0-9bf5-7422fcbbdaab}</Project>
       <Name>VirtualGuide.Services</Name>

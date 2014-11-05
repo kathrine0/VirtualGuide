@@ -61,7 +61,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,7 +75,6 @@
     <Compile Include="Repository\PlaceRepository.cs" />
     <Compile Include="Repository\PropertyRepository.cs" />
     <Compile Include="Repository\TravelRepository.cs" />
-    <Compile Include="ImageUtilities.cs" />
     <Compile Include="ViewModels\AccountBindingModels.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\ExcursionViewModels.cs" />
@@ -87,6 +85,10 @@
     <Compile Include="ViewModels\TravelViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtualGuide.Common\VirtualGuide.Common.csproj">
+      <Project>{863d678d-7271-4c1e-8c23-d4182a2b98b8}</Project>
+      <Name>VirtualGuide.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualGuide.Models\VirtualGuide.Models.csproj">
       <Project>{5cbb970a-9998-4f18-98f5-6c82f92fb3e0}</Project>
       <Name>VirtualGuide.Models</Name>
