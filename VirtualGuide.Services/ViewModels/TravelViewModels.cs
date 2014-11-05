@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LanLordz.SiteTools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -77,6 +78,17 @@ namespace VirtualGuide.Services
 
         public string Language { get; set; }
         public string ImageSrc { get; set; }
+        public string Image 
+        { 
+            get
+            {
+                string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImageSrc.Replace('/', '\\'));
+                byte[] imageArray = System.IO.File.ReadAllBytes(path);
+                var mime = ImageUtilities.GetImageMimeType(imageArray);
+                string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                return String.Format("data:{0};base64,{1}", mime, base64ImageRepresentation);
+            }
+        }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double ZoomLevel { get; set; }
