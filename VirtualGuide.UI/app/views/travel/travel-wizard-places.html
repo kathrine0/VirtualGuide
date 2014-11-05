@@ -18,6 +18,16 @@
         <div class="box box-primary">
             <leaflet id="map" tiles="$root.tiles" markers="markers" controls="$root.controls" center="$root.center"></leaflet>
         </div>
+
+        <div class="box box-primary">
+            <ul class="list-group">
+                <li ng-repeat="marker in markers" class="list-group-item ng-class: {'active': marker.focus};" ng-click="focusMarker($index)">
+                    <span ng-bind="marker.place.Name"></span>
+                    <button type="button" ng-click="removeMarker($index)" class="close">×</button>
+                </li>
+            </ul>
+        </div>
+
     </div>
     <div class="col-md-6">
         <div class="box box-primary">
@@ -44,26 +54,16 @@
                                 ng-disabled="activeMarker == null" required></select>
                         
                     </div>
-                    <div ng-controller="uploadController">
-                        <input type="file" ng-file-select="onFileSelect($files)" multiple>
+                    <div class="form-group">
+                        <div ng-file-drop="onImageSelect($files)" ng-file-drag-over-class="dragover">
+                            <img ng-src="{{activeMarker.image}}" class="thumbnail">
+                        </div>
                     </div>
                 </div>
                 <div class="box-footer">
                     <button ng-click="savePlaces()" class="btn btn-success">Save and continue</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="box box-primary">
-            <ul class="list-group">
-                <li ng-repeat="marker in markers" class="list-group-item ng-class: {'active': marker.focus};" ng-click="focusMarker($index)">
-                    <span ng-bind="marker.place.Name"></span>
-                    <button type="button" ng-click="removeMarker($index)" class="close">×</button>
-                </li>
-            </ul>
         </div>
     </div>
 </div>

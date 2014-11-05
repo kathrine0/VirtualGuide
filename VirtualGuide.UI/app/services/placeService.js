@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository',
-    function (placesRepository, placeRepository, placeCategoryRepository) {
+app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCategoryRepository', 'uploadService',
+    function (placesRepository, placeRepository, placeCategoryRepository, uploadService) {
 
     var placeService = {};
 
@@ -69,6 +69,14 @@ app.factory('placeService', ['placesRepository', 'placeRepository', 'placeCatego
             var place = marker.place;
             place.Latitude = marker.lat;
             place.Longitude = marker.lng;
+
+            if (marker.imageToUpload != null)
+            {
+                var randomName = uploadService.randomName(place.Name, marker.imageToUpload.name);
+                place.ImageSrc = randomName;
+                uploadService.upload(marker.imageToUpload, randomName);
+                marker.imageToUpload = null;
+            }
 
             places.push(marker.place);
         });

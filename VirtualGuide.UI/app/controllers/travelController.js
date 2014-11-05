@@ -99,15 +99,16 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
         $scope.saveTravel = function()
         {
-            travelService.updateItem($scope.travel);
-            $scope.travel.editMode = false;
-
             if (imageToUpload != null) {
                 var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);
                 $scope.travel.ImageSrc = randomName;
                 uploadService.upload(imageToUpload, randomName);
                 imageToUpload = null;
             }
+
+            travelService.updateItem($scope.travel);
+            $scope.travel.editMode = false;
+
         }
 
         $scope.cancelTravelEdit = function ()
@@ -333,12 +334,13 @@ app.controller('IconModalController', ['$scope', '$modalInstance', 'icons',
     };
 }]);
 
-app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '$routeParams', 'placeService',
-    function ($scope, $location, $filter, $routeParams, placeService) {
+app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '$routeParams', 'placeService', 'uploadService',
+function ($scope, $location, $filter, $routeParams, placeService, uploadService) {
 
         //local variables
         var editMode = false;
         var id = 0;
+        var placeholder = "http://fpoimg.com/300x300?text=Place%20your%20image%20here";
         //end local variables
 
         //scope variables
@@ -388,7 +390,9 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
                     },
                     Description: " ",
                     CategoryId: 0
-                }
+                },
+                image: placeholder,
+                imageToUpload: null
             };
             
             $scope.activeMarker = marker;
@@ -410,8 +414,17 @@ app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '
         };
 
         $scope.savePlaces = function () {
+
             placeService.createItems($scope.markers, $routeParams.id, function () {
                 $location.path('/travel/show/' + $routeParams.id);
+            });
+        }
+
+        $scope.onImageSelect = function($files)
+        {
+            uploadService.decodeImage($files[0], function (image) {
+                $scope.activeMarker.image = image;
+                $scope.activeMarker.imageToUpload = $files[0];
             });
         }
         //end scope actions
