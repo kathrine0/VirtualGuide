@@ -24,6 +24,7 @@ app.factory('placeService', ['$rootScope', 'placesRepository', 'placeRepository'
                     return this.place.Name;
                 },
                 place: {
+                    Id: place.Id,
                     _name: place.Name,
                     set Name(value) {
                         this._name = value;
@@ -39,18 +40,24 @@ app.factory('placeService', ['$rootScope', 'placesRepository', 'placeRepository'
                     CategoryId: place.CategoryId,
                     CategoryName: place.CategoryName,
                     ImageSrc: place.ImageSrc,
+                    ImageBase64: null,
                     _image: placeholder,
                     set Image(value) 
                     {
                         this._image = value;
                     },
                     get Image() {
-                        if (this.ImageSrc) {
+                        if (this.ImageBase64 != null)
+                        {
+                            return this.ImageBase64;
+                        }
+                        else if (this.ImageSrc) {
                             return $rootScope.webservice + this.ImageSrc;
                         } else {
                             return placeholder
                         }
-                    }
+                    },
+                    TravelId: place.TravelId
                 }
             };
 
@@ -92,13 +99,13 @@ app.factory('placeService', ['$rootScope', 'placesRepository', 'placeRepository'
             });
     }
 
-    placeRepository.updateItem = function (marker, successCallback, errorCallback) {
+    placeService.updateItem = function (marker, successCallback, errorCallback) {
 
         var place = marker.place;
         place.Latitude = marker.lat;
         place.Longitude = marker.lng;
 
-        propertyRepository.update({ id: place.Id }, place,
+        placeRepository.update({ id: place.Id }, place,
             function success() {
                 if (successCallback != undefined) {
                     successCallback();

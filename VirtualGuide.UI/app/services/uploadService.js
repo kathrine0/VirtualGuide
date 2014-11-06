@@ -36,15 +36,21 @@ app.factory('uploadService', ['$timeout', 'uploadRepository', function ($timeout
         uploadRepository.upload(fileUploadObj, filename);
     }
 
-    uploadService.randomName = function (base, original) {
+    uploadService.randomName = function (base, original, additional) {
 
         var extension = original.split('.').pop();
-        var stripped = base.replace(/(<([^>] +)>)/ig, "");
+        var strippedBase = base.replace(/(<([^>] +)>)/ig, "");
+        var strippedAdd = additional.replace(/(<([^>] +)>)/ig, "");
 
-        if (stripped.lenght > 6) {
-            stripped = stripped.substring(0, 6);
+        if (strippedBase.length > 6) {
+            strippedBase = strippedBase.substring(0, 6);
         }
-        return "Uploads/" + stripped + getRandomInt(10000, 99999) + "." + extension;
+
+        if (strippedAdd.length > 6) {
+            strippedAdd = strippedAdd.substring(0, 6);
+        }
+
+        return "Uploads/" + strippedBase + "_" + strippedAdd + getRandomInt(10000, 99999) + "." + extension;
     }
 
     return uploadService;

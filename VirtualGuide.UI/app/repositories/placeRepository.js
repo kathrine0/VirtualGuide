@@ -29,7 +29,7 @@ app.factory('placeRepository', ['$resource', '$rootScope', function ($resource, 
 
     var serviceBase = $rootScope.webservice;
 
-    return $resource(serviceBase + 'api/Places/:id', {}, {
+    return $resource(serviceBase + 'api/Place/:id', {}, {
         show: { method: 'GET'},
         create: { method: 'POST', params: { id: '@id' } },
         update: { method: 'PUT', params: { id: '@id' } },

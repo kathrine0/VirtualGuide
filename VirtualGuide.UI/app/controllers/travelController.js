@@ -115,6 +115,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
             $scope.travel.editMode = false;
 
         };
+
         $scope.cancelTravelEdit = function () {
             $scope.travel = {
                 Name: $scope.travel.oldValue.Name,
@@ -207,7 +208,16 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
             };
 
             $scope.savePlace = function (index) {
-                propertyService.updateItem($scope.travel.Properties[index]);
+
+                if ($scope.map.markers[index].place.imageToUpload != null)
+                {
+                    var randomName = uploadService.randomName($scope.travel.Name, $scope.map.markers[index].place.imageToUpload.name, $scope.map.markers[index].place.Name);
+                    $scope.map.markers[index].place.ImageSrc = randomName;
+                    uploadService.upload($scope.map.markers[index].place.imageToUpload, randomName);
+                    $scope.map.markers[index].place.imageToUpload = null;
+                }
+
+                placeService.updateItem($scope.map.markers[index]);
                 $scope.map.markers[index].editMode = false;
             };
 
@@ -216,10 +226,10 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
                 $scope.map.markers.splice(index, 1);
             };
 
-            $scope.onFileSelect = function ($files, index) {
+            $scope.onPlaceImageSelect = function ($files, index) {
                 uploadService.decodeImage($files[0], function (image) {
-                    $scope.map.markers[index].place.image = image;
-                    imagesToUpload.push($files[0]);
+                    $scope.map.markers[index].place.ImageBase64 = image;
+                    $scope.map.markers[index].place.imageToUpload = $files[0];
                 });
             };
 

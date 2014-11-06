@@ -52,6 +52,9 @@ namespace VirtualGuide.Services.Repository
                 var entry = db.Entry(property);
                 entry.State = EntityState.Modified;
 
+                entry.Property(e => e.TravelId).IsModified = false;
+                entry.Property(e => e.ParentId).IsModified = false;
+
                 try
                 {
                     db.SaveChanges();
