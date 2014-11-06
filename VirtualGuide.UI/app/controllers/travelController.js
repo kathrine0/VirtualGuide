@@ -26,11 +26,11 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
     //travelsService.getTravels().success(getTravelsSuccessCallback).error(errorCallback);
 
         
-        $scope.travels = travelService.getAllForCreator()
+        $scope.travels = travelService.getAllForCreator();
 
-        $scope.showTravel = function(id) {
+        $scope.showTravel = function (id) {
             $location.path('/travel/show/' + id);
-        }
+        };
 
         $scope.newTravel = function () {
             $location.path('/travel/new');
@@ -60,7 +60,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
             defaults: {
                 //scrollWheelZoom: false
             }
-        }
+        };
 
         $scope.icons = propertyService.getIcons();
 
@@ -85,50 +85,46 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
         //#region scope travel actions
 
-            $scope.onTravelImageSelect = function ($files) {
-                uploadService.decodeImage($files[0], function (image) {
-                    $scope.travel.Image = image;
-                    imageToUpload = $files[0];
-                });
+        $scope.onTravelImageSelect = function ($files) {
+            uploadService.decodeImage($files[0], function (image) {
+                $scope.travel.Image = image;
+                imageToUpload = $files[0];
+            });
+        };
+
+        $scope.editTravel = function () {
+            $scope.travel.oldValue = {
+                Name: $scope.travel.Name,
+                Description: $scope.travel.Description,
+                Price: $scope.travel.Price,
+                Image: $scope.travel.Image
+            };
+
+            $scope.travel.editMode = true;
+        };
+
+        $scope.saveTravel = function () {
+            if (imageToUpload !== null) {
+                var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);
+                $scope.travel.ImageSrc = randomName;
+                uploadService.upload(imageToUpload, randomName);
+                imageToUpload = null;
             }
 
-            $scope.editTravel = function()
-            {
-                $scope.travel.oldValue = {
-                    Name: $scope.travel.Name,
-                    Description: $scope.travel.Description,
-                    Price: $scope.travel.Price,
-                    Image: $scope.travel.Image
-                };
-            
-                $scope.travel.editMode = true;
-            }
+            travelService.updateItem($scope.travel);
+            $scope.travel.editMode = false;
 
-            $scope.saveTravel = function()
-            {
-                if (imageToUpload != null) {
-                    var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);
-                    $scope.travel.ImageSrc = randomName;
-                    uploadService.upload(imageToUpload, randomName);
-                    imageToUpload = null;
-                }
+        };
+        $scope.cancelTravelEdit = function () {
+            $scope.travel = {
+                Name: $scope.travel.oldValue.Name,
+                Description: $scope.travel.oldValue.Description,
+                Price: $scope.travel.oldValue.Price,
+                Image: $scope.travel.oldValue.Image
+            };
 
-                travelService.updateItem($scope.travel);
-                $scope.travel.editMode = false;
-
-            }
-
-            $scope.cancelTravelEdit = function ()
-            {
-                $scope.travel = {
-                    Name: $scope.travel.oldValue.Name,
-                    Description: $scope.travel.oldValue.Description,
-                    Price: $scope.travel.oldValue.Price,
-                    Image: $scope.travel.oldValue.Image
-                };
-
-                $scope.travel.editMode = false;
-            }
+            $scope.travel.editMode = false;
+        };
 
         //#endregion scope travel actions
             
@@ -146,12 +142,11 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
                 });
             };
 
-            $scope.editProperty = function(index)
-            {
+            $scope.editProperty = function (index) {
                 $scope.travel.Properties[index].oldValue = {};
                 angular.copy($scope.travel.Properties[index], $scope.travel.Properties[index].oldValue);
                 $scope.travel.Properties[index].editMode = true;
-            }
+            };
 
             $scope.saveProperty = function (index) {
 
@@ -164,38 +159,37 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
                 $scope.travel.Properties[index].editMode = false;
                 delete $scope.travel.Properties[index].oldValue;
-            }
+            };
 
-            $scope.cancelPropertyEdit = function(index)
-            {
+            $scope.cancelPropertyEdit = function (index) {
                 angular.copy($scope.travel.Properties[index].oldValue, $scope.travel.Properties[index]);
                 delete $scope.travel.Properties[index].oldValue;
                 $scope.travel.Properties[index].editMode = false;
-            }
+            };
 
             $scope.removeProperty = function (index) {
-                    //todo remove on server
-                    delete $scope.travel.Properties[index].oldValue;
-                    $scope.travel.Properties.splice(index, 1);
-            
-                }
+                //todo remove on server
+                delete $scope.travel.Properties[index].oldValue;
+                $scope.travel.Properties.splice(index, 1);
+
+            };
 
             $scope.chooseIcon = function ($index) {
 
-            var currentProperty = $index
+                var currentProperty = $index;
 
             var modalInstance = $modal.open({
                 templateUrl: 'app/views/travel/icon-modal-content.html',
                 controller: 'IconModalController',
                 resolve: {
                     icons: function () {
-                        return $scope.icons
+                        return $scope.icons;
                     }
                 }
             });
 
             modalInstance.result.then(function (iconIndex) {
-                if (currentProperty != -1) {
+                if (currentProperty !== -1) {
                     $scope.travel.Properties[currentProperty].Icon = $scope.icons[iconIndex];
                     $scope.travel.Properties[currentProperty].IconId = $scope.icons[iconIndex].Id;
 
@@ -210,24 +204,24 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
             $scope.editPlace = function (index) {
                 $scope.map.markers[index].editMode = true;
-            }
+            };
 
             $scope.savePlace = function (index) {
                 propertyService.updateItem($scope.travel.Properties[index]);
                 $scope.map.markers[index].editMode = false;
-            }
+            };
 
             $scope.removePlace = function (index) {
                 //todo remove on server
                 $scope.map.markers.splice(index, 1);
-            }
+            };
 
             $scope.onFileSelect = function ($files, index) {
                 uploadService.decodeImage($files[0], function (image) {
                     $scope.map.markers[index].place.image = image;
                     imagesToUpload.push($files[0]);
                 });
-            }
+            };
 
         //#endregion place actions
 
@@ -259,8 +253,7 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
             travel.Latitude = $scope.markers[0].lat;
             travel.Longitude = $scope.markers[0].lng;
 
-            if (imageToUpload != null)
-            {
+            if (imageToUpload !== null) {
                 var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);
                 travel.ImageSrc = randomName;
                 uploadService.upload(imageToUpload, randomName);
@@ -270,15 +263,15 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
             travelService.createItem(travel, function (newtravel) {
                 $location.path('/travel/new/properties/' + newtravel.Id);
             });
-        }
+        };
 
         $scope.onFileSelect = function ($files) {
             uploadService.decodeImage($files[0], function (image) {
                 $scope.image = image;
                 imageToUpload = $files[0];
             });
-        }
-
+        };
+        
         //#endregion scope actions
 
         //#region scope events
@@ -314,20 +307,20 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
         //#region scope actions
         $scope.chooseIcon = function ($index) {
 
-            var currentProperty = $index
+            var currentProperty = $index;
 
             var modalInstance = $modal.open({
                 templateUrl: 'app/views/travel/icon-modal-content.html',
                 controller: 'IconModalController',
                 resolve: {
                     icons: function () {
-                        return $scope.icons
+                        return $scope.icons;
                     }
                 }
             });
 
             modalInstance.result.then(function (iconIndex) {
-                if (currentProperty != -1) {
+                if (currentProperty !== -1) {
                     $scope.properties[currentProperty].Icon = $scope.icons[iconIndex];
                     $scope.properties[currentProperty].IconId = $scope.icons[iconIndex].Id;
 
@@ -350,12 +343,11 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
             $scope.properties.splice(index, 1);
         };
 
-        $scope.saveProperties = function ()
-        {
+        $scope.saveProperties = function () {
             propertyService.createItems($scope.properties, $routeParams.id, function () {
                 $location.path('/travel/new/places/' + $routeParams.id);
             });
-        }
+        };
         //#endregion scope actions
 
     }]);
@@ -409,7 +401,7 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
                 },
                 get Name() {
                     var value = this._name;
-                    if (value == null || value == "") {
+                    if (value === null || value === "") {
                         value = '\u00A0\u00A0'; //just space symbol for preservation of styles
                     }
                     return value;
@@ -433,7 +425,7 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
     $scope.removeMarker = function (index) {
         $scope.activeMarker = null;
         $scope.markers.splice(index, 1);
-    }
+    };
 
     $scope.focusMarker = function (index) {
         $scope.markers[index].focus = true;
@@ -444,15 +436,14 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
         placeService.createItems($scope.markers, $routeParams.id, function () {
             $location.path('/travel/show/' + $routeParams.id);
         });
-    }
+    };
 
-    $scope.onImageSelect = function($files)
-    {
+    $scope.onImageSelect = function ($files) {
         uploadService.decodeImage($files[0], function (image) {
             $scope.activeMarker.image = image;
             $scope.activeMarker.imageToUpload = $files[0];
         });
-    }
+    };
     //#endregion scope actions
 }]);
 
