@@ -1,4 +1,4 @@
-﻿<div class="row">
+﻿<div class="row" id="Travel">
     <div class="col-md-7">
         <div class="box box-primary">
             <div class="box-header" ng-hide="travel.editMode">
@@ -35,57 +35,69 @@
             <img class="thumbnail" ng-src="{{travel.Image}}" />
         </div>
         <div class="box box-primary" ng-show="travel.editMode">
-            <div><!--ng-bind-html="travel.ImageSrc | imageSource:'thumbnail'"-->
+            <div>
+                <!--ng-bind-html="travel.ImageSrc | imageSource:'thumbnail'"-->
                 <div style="width:100%;height:100%" ng-file-drop="onTravelImageSelect($files)" ng-file-drag-over-class="dragover">
                     <img ng-src="{{travel.Image}}" class="thumbnail">
                 </div>
             </div>
-            <input type="file" ng-file-select="onTravelImageSelect($files)">
+            <span class="btn btn-primary btn-file">
+                Browse <input type="file" ng-file-select="onTravelImageSelect($files)">
+            </span>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6" ng-repeat="property in travel.Properties">
-        <div class="box box-success">
-            <div class="box-header" ng-hide="property.editMode">
-                <h3 class="box-title">
-                    <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
-                    <span ng-bind="property.Title"></span>
-                </h3>
-            </div><!-- /.box-header -->
+<div id="Properties">
+    <div class="row pin-wrapper" >
+        <div ng-repeat="property in travel.Properties">
+            <div class="box box-success">
+                <div class="box-header" ng-hide="property.editMode">
+                    <h3 class="box-title">
+                        <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
+                        <span ng-bind="property.Title"></span>
+                    </h3>
+                </div><!-- /.box-header -->
 
-            <div class="box-body" ng-hide="property.editMode">
-                <p ng-bind="property.Description"></p>
-            </div>
-            <div class="box-body" ng-show="property.editMode">
-                <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" ng-click="cancelPropertyEdit($index)" data-original-title="cancel"><i class="fa fa-times"></i></button>
+                <div class="box-body" ng-hide="property.editMode">
+                    <p ng-bind="property.Description"></p>
                 </div>
-                <div class="form-group form-inline">
-                    <div class="form-group">
-                        <button class="btn btn-default" ng-click="chooseIcon($index)">
-                            <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
-                        </button>
+                <div class="box-body" ng-show="property.editMode">
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-default btn-sm" ng-click="property.isNew ? removeProperty($index) : cancelPropertyEdit($index)" data-original-title="cancel"><i class="fa fa-times"></i></button>
+                    </div>
+                    <div class="form-group form-inline">
+                        <div class="form-group">
+                            <button class="btn btn-default choose-icon-btn" ng-click="chooseIcon($index)">
+                                <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" style="width:250px" maxlength="30" ng-model="property.Title" class="form-control" placeholder="Enter title" />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" style="width:250px" maxlength="30" ng-model="property.Title" class="form-control" placeholder="Enter title" />
+                        <textarea class="form-control" ng-model="property.Description" rows="8" placeholder="Enter description"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <textarea class="form-control" ng-model="property.Description" rows="8" placeholder="Enter description"></textarea>
+                <div class="box-footer">
+                    <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode">Edit</button>
+                    <button class="btn btn-success" ng-click="saveProperty($index)" ng-show="property.editMode">Save</button>
+                    <button class="btn btn-danger" ng-click="removeProperty($index)" ng-show="property.editMode">Delete</button>
                 </div>
             </div>
-            <div class="box-footer">
-                <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode">Edit</button>
-                <button class="btn btn-success" ng-click="saveProperty($index)" ng-show="property.editMode">Save</button>
-                <button class="btn btn-danger" ng-click="removeProperty($index)" ng-show="property.editMode">Delete</button>
+        </div>
+        <div>
+            <div class="box box-default">
+                <div class="box-body">
+                    <button class="btn btn-primary btn-large" ng-click="addProperty()">Add property</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="Places">
 
     <div class="col-md-6">
         <div class="box box-warning">
@@ -93,7 +105,6 @@
                 <h3 class="box-title">Places</h3>
             </div>
             <div class="box-body">
-
                 <accordion class="box-group" id="accordion" close-others="false">
                     <accordion-group class="panel box box-success" ng-repeat="marker in map.markers">
                         <accordion-heading>
@@ -147,63 +158,6 @@
                         </div>
                     </accordion-group>
                 </accordion>
-
-                <!--<div class="box-group" id="accordion">
-                    <div class="panel box box-success" ng-repeat="marker in map.markers">
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           data-target="#collapse{{$index}}">
-                            <div class="box-header" ng-hide="marker.editMode">
-                                <h4 class="box-title" ng-bind="marker.place.Name"></h4>
-                            </div>
-                        </a>
-                        <div id="collapse{{$index}}" class="panel-collapse collapse">
-                            <div class="box-body" ng-hide="marker.editMode">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img ng-src="{{marker.place.Image}}" class="thumbnail">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <p ng-bind="marker.place.Description"></p>
-                                        <p><strong>Category: </strong><span ng-bind="marker.place.CategoryName"></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-body" ng-show="marker.editMode">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" ng-model="marker.place.Name"
-                                                   class="form-control" placeholder="Enter name for your guide" required />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div ng-file-drop="onFileSelect($files, $index)" ng-file-drag-over-class="dragover" class="col-md-4">
-                                        <img ng-src="{{marker.place.Image}}" class="thumbnail">
-                                    </div>
-                                    <div class="col-md-8">
-                                        
-                                        <div class="form-group">
-                                            <textarea class="form-control"
-                                                      ng-model="marker.place.Description"
-                                                      rows="3" placeholder="Enter description" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control" ng-model="marker.place.CategoryId"
-                                                    ng-options="category.Id as category.Name for category in categories"
-                                                    required></select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-footer">
-                                <button class="btn btn-success" ng-click="editPlace($index)" ng-hide="marker.editMode">Edit</button>
-                                <button class="btn btn-success" ng-click="savePlace($index)" ng-show="marker.editMode">Save</button>
-                                <button class="btn btn-danger" ng-click="removePlace($index)" ng-show="marker.editMode">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
     </div>

@@ -3591,10 +3591,56 @@ fieldset[disabled] .btn-vk.active {
   width: 25px;
   height: 25px;
 }
+#Properties .choose-icon-btn {
+  width: 51px;
+  height: 39px;
+}
+#Places .panel-heading {
+  padding: 0;
+}
 .nav,
 .pagination,
 .carousel,
 .panel-title a {
   cursor: pointer;
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+.pin-wrapper {
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+  column-fill: auto;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+}
+.pin-wrapper > div {
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+}
+@media (max-width: 767px) {
+  .pin-wrapper {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+  }
 }
 /*# sourceMappingURL=AdminLTE.css.map */

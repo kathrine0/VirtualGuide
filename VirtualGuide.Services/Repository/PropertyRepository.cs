@@ -49,6 +49,17 @@ namespace VirtualGuide.Services.Repository
 
             }
         }
+        
+        public void Create(BasicPropertyViewModel item)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Property property = Mapper.Map<Property>(item);
+
+                db.Properties.Add(property);
+                db.SaveChanges();
+            }
+        }
 
         public void Update(int id, BasicPropertyViewModel item)
         {

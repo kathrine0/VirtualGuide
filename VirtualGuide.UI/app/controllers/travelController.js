@@ -123,6 +123,18 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
             $scope.travel.editMode = false;
         }
 
+        $scope.addProperty = function () {
+            $scope.travel.Properties.push({
+                TravelId: $scope.travel.Id,
+                Title: '',
+                Description: '',
+                Icon: '',
+                IconId: null,
+                editMode: true,
+                isNew: true
+            });
+        };
+
         $scope.editProperty = function(index)
         {
             $scope.travel.Properties[index].oldValue = {};
@@ -131,7 +143,14 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
         }
 
         $scope.saveProperty = function (index) {
-            propertyService.updateItem($scope.travel.Properties[index]);
+
+            if ($scope.travel.Properties[index].isNew) {
+                propertyService.createItem($scope.travel.Properties[index]);
+                $scope.travel.Properties[index].isNew = false;
+            } else {
+                propertyService.updateItem($scope.travel.Properties[index]);
+            }
+
             $scope.travel.Properties[index].editMode = false;
             delete $scope.travel.Properties[index].oldValue;
         }
@@ -145,8 +164,9 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
 
         $scope.removeProperty = function (index) {
             //todo remove on server
-            $scope.travel.Properties.splice(index, 1);
             delete $scope.travel.Properties[index].oldValue;
+            $scope.travel.Properties.splice(index, 1);
+            
         }
 
         $scope.editPlace = function (index) {

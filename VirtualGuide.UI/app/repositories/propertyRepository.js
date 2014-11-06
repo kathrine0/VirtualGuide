@@ -20,7 +20,7 @@ app.factory('propertyRepository', ['$resource', '$rootScope', function ($resourc
 
     return $resource(serviceBase + 'api/Property/:id', {}, {
         show: { method: 'GET', isArray: true },
-        create: { method: 'POST', params: { id: '@id' } },
+        create: { method: 'POST' },
         update: { method: 'PUT', params: { id: '@id' } },
         delete: { method: 'DELETE', params: { id: '@id' } }
     });
