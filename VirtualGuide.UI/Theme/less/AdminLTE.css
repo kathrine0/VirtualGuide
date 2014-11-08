@@ -3598,6 +3598,9 @@ fieldset[disabled] .btn-vk.active {
 #Places .panel-heading {
   padding: 0;
 }
+.leaflet-popup-content a {
+  cursor: pointer;
+}
 .nav,
 .pagination,
 .carousel,

@@ -37,8 +37,8 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'travelService', 'propertyService', 'placeService', 'uploadService',
-    function ($scope, $routeParams, $modal, travelService, propertyService, placeService, uploadService) {
+app.controller('getTravelController', ['$scope', '$routeParams', '$modal', '$filter', 'travelService', 'propertyService', 'placeService', 'uploadService',
+    function ($scope, $routeParams, $modal, $filter, travelService, propertyService, placeService, uploadService) {
 
         //#region local variables
 
@@ -233,9 +233,38 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', 'trav
                 });
             };
 
+            $scope.showOnMap = function (index)
+            {
+                $scope.map.markers[index].focus = true;
+                $scope.map.center = {
+                    lat: $scope.map.markers[index].lat,
+                    lng: $scope.map.markers[index].lng,
+                    zoom: 15
+                };
+                //var marker = $filter('getByProperty')('id', $scope.travel.Places, $scope.map.markers);
+            }
+
+            $scope.markerClick = function(id)
+            {
+
+                var marker = $filter('getByProperty')('id', id, $scope.map.markers);
+                marker.isOpen = true;
+                console.log(marker);
+            }
+
         //#endregion place actions
 
         //#endregion scope action
+
+        //#region scope events
+
+            $scope.$on('marker.focus', function (jsEvent, leafletEvent) {
+                var marker = $filter('getByProperty')('id', leafletEvent.target.options.id, $scope.map.markers);
+                marker.isOpen = true;
+        });
+
+
+        //#endregion scope events
 
 
 }]);

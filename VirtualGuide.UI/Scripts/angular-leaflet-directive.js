@@ -3148,6 +3148,11 @@
                         $rootScope.$broadcast('marker.lostFocus', e);
                     });
                 });
+                marker.on("click", function (e) {
+                    safeApply(leafletScope, function () {
+                        $rootScope.$broadcast('marker.click', e);
+                    });
+                })
             },
 
             addMarkerWatcher: function (marker, name, leafletScope, layers, map) {

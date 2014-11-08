@@ -106,7 +106,7 @@
             </div>
             <div class="box-body">
                 <accordion class="box-group" id="accordion" close-others="false">
-                    <accordion-group class="panel box box-success" ng-repeat="marker in map.markers">
+                    <accordion-group class="panel box box-success" ng-repeat="marker in map.markers" is-open="marker.isOpen">
                         <accordion-heading>
                             <div class="box-header" ng-hide="marker.editMode">
                                 <h4 class="box-title" ng-bind="marker.place.Name"></h4>
@@ -153,6 +153,7 @@
                         </div>
                         <div class="box-footer">
                             <button class="btn btn-success" ng-click="editPlace($index)" ng-hide="marker.editMode">Edit</button>
+                            <button class="btn btn-default" ng-click="showOnMap($index)">Show on Map</button>
                             <button class="btn btn-success" ng-click="savePlace($index)" ng-show="marker.editMode">Save</button>
                             <button class="btn btn-danger" ng-click="removePlace($index)" ng-show="marker.editMode">Delete</button>
                         </div>

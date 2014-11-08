@@ -16,6 +16,7 @@ app.factory('placeService', ['$rootScope', 'placesRepository', 'placeRepository'
         var markers = [];
         places.forEach(function (place) {
             var marker = {
+                id: place.Id,
                 lat: place.Latitude,
                 lng: place.Longitude,
                 focus: false,
