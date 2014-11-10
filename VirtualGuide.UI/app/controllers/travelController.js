@@ -37,8 +37,8 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$routeParams', '$modal', '$filter', 'travelService', 'propertyService', 'placeService', 'uploadService',
-    function ($scope, $routeParams, $modal, $filter, travelService, propertyService, placeService, uploadService) {
+app.controller('getTravelController', ['$scope', '$location', '$routeParams', '$modal', '$filter', '$anchorScroll', 'travelService', 'propertyService', 'placeService', 'uploadService', 'anchorSmoothScroll',
+function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, travelService, propertyService, placeService, uploadService, anchorSmoothScroll) {
 
         //#region local variables
 
@@ -58,7 +58,7 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', '$fil
                 zoom: 1
             },
             defaults: {
-                //scrollWheelZoom: false
+                scrollWheelZoom: false
             }
         };
 
@@ -241,6 +241,9 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', '$fil
                     lng: $scope.map.markers[index].lng,
                     zoom: 15
                 };
+
+                $scope.scrollTo('Map')
+
                 //var marker = $filter('getByProperty')('id', $scope.travel.Places, $scope.map.markers);
             }
 
@@ -253,6 +256,11 @@ app.controller('getTravelController', ['$scope', '$routeParams', '$modal', '$fil
             }
 
         //#endregion place actions
+
+        $scope.scrollTo = function (id) {
+            $location.hash(id);
+            anchorSmoothScroll.scrollTo(id);
+        }
 
         //#endregion scope action
 

@@ -79,6 +79,7 @@
     <Content Include="app\services\errorInterceptorService.js" />
     <Content Include="app\services\placeService.js" />
     <Content Include="app\services\propertyService.js" />
+    <Content Include="app\services\smoothScrollService.js" />
     <Content Include="app\services\travelService.js" />
     <Content Include="app\services\uploadService.js" />
     <Content Include="app\views\home.html" />
@@ -945,6 +946,9 @@
     </Content>
     <Content Include="Scripts\angular-leaflet-directive.min.js.map">
       <DependentUpon>angular-leaflet-directive.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js.map">
+      <DependentUpon>ui-bootstrap-tpls.min.js</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

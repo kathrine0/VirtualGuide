@@ -97,80 +97,75 @@
     </div>
 </div>
 
-<div class="row" id="Places">
+<div class="row" id="Map">
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-header">
-                <h3 class="box-title">Places</h3>
-            </div>
-            <div class="box-body">
-                <accordion class="box-group" id="accordion" close-others="false">
-                    <accordion-group class="panel box box-success" ng-repeat="marker in map.markers" is-open="marker.isOpen">
-                        <accordion-heading>
-                            <div class="box-header" ng-hide="marker.editMode">
-                                <h4 class="box-title" ng-bind="marker.place.Name"></h4>
-                            </div>
-                        </accordion-heading>
-                        <div class="box-body" ng-hide="marker.editMode">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img ng-src="{{marker.place.Image}}" class="thumbnail">
-                                </div>
-                                <div class="col-md-8">
-                                    <p ng-bind="marker.place.Description"></p>
-                                    <p><strong>Category: </strong><span ng-bind="marker.place.CategoryName"></span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-body" ng-show="marker.editMode">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" ng-model="marker.place.Name"
-                                               class="form-control" placeholder="Enter name for your guide" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div ng-file-drop="onPlaceImageSelect($files, $index)" ng-file-drag-over-class="dragover" class="col-md-4">
-                                    <img ng-src="{{marker.place.Image}}" class="thumbnail">
-                                </div>
-                                <div class="col-md-8">
-
-                                    <div class="form-group">
-                                        <textarea class="form-control"
-                                                  ng-model="marker.place.Description"
-                                                  rows="3" placeholder="Enter description" required></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" ng-model="marker.place.CategoryId"
-                                                ng-options="category.Id as category.Name for category in categories"
-                                                required></select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <button class="btn btn-success" ng-click="editPlace($index)" ng-hide="marker.editMode">Edit</button>
-                            <button class="btn btn-default" ng-click="showOnMap($index)">Show on Map</button>
-                            <button class="btn btn-success" ng-click="savePlace($index)" ng-show="marker.editMode">Save</button>
-                            <button class="btn btn-danger" ng-click="removePlace($index)" ng-show="marker.editMode">Delete</button>
-                        </div>
-                    </accordion-group>
-                </accordion>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="box box-warning">
-            <div class="box-header">
-                <h3 class="box-title">Places</h3>
+                <h3 class="box-title" app-anchor="Map">Places</h3>
             </div>
             <div class="box-body">
                 <leaflet id="map" tiles="$root.tiles" markers="map.markers" defaults="map.defaults" center="map.center" controls="$root.controls"></leaflet>
             </div>
         </div>
+    </div>
+</div>
+<div class="row" id="Places">
+    <div class="col-md-12">
+        <accordion class="box-group" id="accordion" close-others="false">
+            <accordion-group id="place{{marker.id}}" class="panel box box-success" ng-repeat="marker in map.markers" is-open="marker.isOpen">
+                <accordion-heading>
+                    <div class="box-header" ng-hide="marker.editMode">
+                        <h4 class="box-title" ng-bind="marker.place.Name"></h4>
+                    </div>
+                </accordion-heading>
+                <div class="box-body" ng-hide="marker.editMode">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img ng-src="{{marker.place.Image}}" class="thumbnail">
+                        </div>
+                        <div class="col-md-8">
+                            <p ng-bind="marker.place.Description"></p>
+                            <p><strong>Category: </strong><span ng-bind="marker.place.CategoryName"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body" ng-show="marker.editMode">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" ng-model="marker.place.Name"
+                                        class="form-control" placeholder="Enter name for your guide" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div ng-file-drop="onPlaceImageSelect($files, $index)" ng-file-drag-over-class="dragover" class="col-md-4">
+                            <img ng-src="{{marker.place.Image}}" class="thumbnail">
+                        </div>
+                        <div class="col-md-8">
+
+                            <div class="form-group">
+                                <textarea class="form-control"
+                                            ng-model="marker.place.Description"
+                                            rows="3" placeholder="Enter description" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" ng-model="marker.place.CategoryId"
+                                        ng-options="category.Id as category.Name for category in categories"
+                                        required></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-success" ng-click="editPlace($index)" ng-hide="marker.editMode">Edit</button>
+                    <button class="btn btn-default" ng-click="showOnMap($index)">Show on Map</button>
+                    <button class="btn btn-success" ng-click="savePlace($index)" ng-show="marker.editMode">Save</button>
+                    <button class="btn btn-danger" ng-click="removePlace($index)" ng-show="marker.editMode">Delete</button>
+                </div>
+            </accordion-group>
+        </accordion>
     </div>
 </div>
 

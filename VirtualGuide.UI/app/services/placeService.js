@@ -22,6 +22,8 @@ app.factory('placeService', ['$rootScope', 'placesRepository', 'placeRepository'
                 focus: false,
                 draggable: false,
                 get message() {
+                    //TODO - make anchor scroll to place (modify library)
+                    //return '<a app-anchor="place'+this.id+'">' + this.place.Name + '</a>';
                     return this.place.Name;
                 },
                 place: {
