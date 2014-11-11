@@ -16,9 +16,9 @@ app.factory('propertyService', ['propertiesRepository', 'propertyRepository', 'i
             });
     }
 
-    propertyService.createItems = function (properties, travelId, successCallback, errorCallback) {
-
-        propertiesRepository.create({ id: travelId }, properties,
+    propertyService.createItems = function (properties, successCallback, errorCallback) {
+        
+        propertiesRepository.create(properties,
             function success() {
                 successCallback();
             },

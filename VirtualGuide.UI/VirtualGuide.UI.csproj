@@ -107,6 +107,7 @@
     </Content>
     <Content Include="Content\css\loading-bar.min.css" />
     <Content Include="Content\fonts\ionicons.svg" />
+    <Content Include="Content\images\activeMarker.png" />
     <Content Include="Content\images\avatar3.png" />
     <Content Include="Content\ionicons\ionicons.less" />
     <Content Include="Content\ionicons\_ionicons-variables.less" />

@@ -3152,7 +3152,22 @@
                     safeApply(leafletScope, function () {
                         $rootScope.$broadcast('marker.click', e);
                     });
-                })
+                });
+                marker.on("dragstart", function (e) {
+                    safeApply(leafletScope, function () {
+                        $rootScope.$broadcast('marker.dragstart', e);
+                    });
+                });
+                marker.on("drag", function (e) {
+                    safeApply(leafletScope, function () {
+                        $rootScope.$broadcast('marker.drag', e);
+                    });
+                });
+                marker.on("dragend", function (e) {
+                    safeApply(leafletScope, function () {
+                        $rootScope.$broadcast('marker.dragend', e);
+                    });
+                });
             },
 
             addMarkerWatcher: function (marker, name, leafletScope, layers, map) {

@@ -24,7 +24,47 @@ namespace VirtualGuide.Services.Repository
     
         }
 
-        public void AddMany(IList<BasicPlaceViewModel> items, int travelId)
+        public IList<BasicPlaceViewModel> GetAllForTravel(int travelId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                IList<Place> items = db.Places.Where(x => x.TravelId == travelId).ToList();
+
+                IList<BasicPlaceViewModel> result = Mapper.Map<List<BasicPlaceViewModel>>(items);
+
+                return result;
+            }
+        }
+
+        public void AddMany(IList<BasicPlaceViewModel> items)
+        {
+            //todo validate against is user owner of the travel
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                IList<Place> places = Mapper.Map<IList<Place>>(items);
+
+                db.Places.AddRange(places);
+                db.SaveChanges();
+            }
+        }
+
+        public BasicPlaceViewModel Add(BasicPlaceViewModel item)
+        {
+            //todo validate against is user owner of the travel
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Place place = Mapper.Map<Place>(item);
+
+                db.Places.Add(place);
+                db.SaveChanges();
+
+                return Mapper.Map<BasicPlaceViewModel>(place);
+            }
+        }
+
+        public void UpdateMany(IList<BasicPlaceViewModel> items)
         {
             //todo validate against is user owner of the travel
 
@@ -34,17 +74,18 @@ namespace VirtualGuide.Services.Repository
 
                 foreach (var item in items)
                 {
-                    item.TravelId = travelId;
-                    places.Add(Mapper.Map<Place>(item));
+                    var entry = db.Entry(Mapper.Map<Place>(item));
+                    entry.State = EntityState.Modified;
                 }
 
-                db.Places.AddRange(places);
                 db.SaveChanges();
             }
         }
 
         public void Update(int id, BasicPlaceViewModel item)
         {
+            //todo validate against is user owner of the travel
+
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Place property = Mapper.Map<Place>(item);

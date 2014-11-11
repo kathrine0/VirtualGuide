@@ -45,6 +45,8 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
         var imageToUpload = null;
         var placeholder = "http://fpoimg.com/300x300?text=Place%20your%20image%20here";
 
+        var markerOldValues = [];
+
         //#endregion local variables
 
         //#region scope variables
@@ -58,7 +60,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
                 zoom: 1
             },
             defaults: {
-                scrollWheelZoom: false
+                scrollWheelZoom: false,
             }
         };
 
@@ -78,6 +80,9 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
         });
 
         $scope.travel.editMode = false;
+
+        $scope.PlaceAddMode = false;
+    
 
         //#endregion scope variables
 
@@ -203,57 +208,58 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
 
         //#regionscope place actions
 
-            $scope.editPlace = function (index) {
-                $scope.map.markers[index].editMode = true;
-            };
 
-            $scope.savePlace = function (index) {
+            $scope.savePlace = function (marker) {
 
-                if ($scope.map.markers[index].place.imageToUpload != null)
+                if (marker.place.imageToUpload != null)
                 {
-                    var randomName = uploadService.randomName($scope.travel.Name, $scope.map.markers[index].place.imageToUpload.name, $scope.map.markers[index].place.Name);
-                    $scope.map.markers[index].place.ImageSrc = randomName;
-                    uploadService.upload($scope.map.markers[index].place.imageToUpload, randomName);
-                    $scope.map.markers[index].place.imageToUpload = null;
+                    var randomName = uploadService.randomName($scope.travel.Name, marker.place.imageToUpload.name, marker.place.Name);
+                    marker.place.ImageSrc = randomName;
+                    uploadService.upload(marker.place.imageToUpload, randomName);
+                    marker.place.imageToUpload = null;
                 }
 
-                placeService.updateItem($scope.map.markers[index]);
-                $scope.map.markers[index].editMode = false;
+                if (marker.id == 0)
+                {
+                    placeService.createItem(marker, function (newplace) {
+                        marker.place = newplace;
+                        marker.id = newplace.Id;
+                    });
+
+                    marker.icon = {};
+                }
+                else {
+                    placeService.updateItem(marker);
+                }
+
+                marker.editMode = false;
             };
 
-            $scope.removePlace = function (index) {
+            $scope.removePlace = function (marker) {
                 //todo remove on server
+                var index = $scope.map.markers.indexOf(marker);
                 $scope.map.markers.splice(index, 1);
             };
 
-            $scope.onPlaceImageSelect = function ($files, index) {
+            $scope.onPlaceImageSelect = function ($files, marker) {
                 uploadService.decodeImage($files[0], function (image) {
-                    $scope.map.markers[index].place.ImageBase64 = image;
-                    $scope.map.markers[index].place.imageToUpload = $files[0];
+                    marker.place.ImageBase64 = image;
+                    marker.place.imageToUpload = $files[0];
                 });
             };
 
-            $scope.showOnMap = function (index)
+            $scope.showOnMap = function (marker)
             {
-                $scope.map.markers[index].focus = true;
-                $scope.map.center = {
-                    lat: $scope.map.markers[index].lat,
-                    lng: $scope.map.markers[index].lng,
-                    zoom: 15
-                };
-
                 $scope.scrollTo('Map')
 
-                //var marker = $filter('getByProperty')('id', $scope.travel.Places, $scope.map.markers);
+                marker.focus = true;
+                $scope.map.center = {
+                    lat: marker.lat,
+                    lng: marker.lng,
+                    zoom: 15
+                };
             }
 
-            $scope.markerClick = function(id)
-            {
-
-                var marker = $filter('getByProperty')('id', id, $scope.map.markers);
-                marker.isOpen = true;
-                console.log(marker);
-            }
 
         //#endregion place actions
 
@@ -266,14 +272,54 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
 
         //#region scope events
 
-            $scope.$on('marker.focus', function (jsEvent, leafletEvent) {
-                var marker = $filter('getByProperty')('id', leafletEvent.target.options.id, $scope.map.markers);
-                marker.isOpen = true;
+        $scope.$on('marker.focus', function (jsEvent, leafletEvent) {
+            var marker = $filter('getByProperty')('id', leafletEvent.target.options.id, $scope.map.markers);
+            marker.isOpen = true;
         });
 
+        $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {
 
+            if ($scope.PlaceAddMode)
+            {
+                var location = leafletEvent.leafletEvent.latlng;
+
+                var searchValue = $("#leaflet-control-geosearch-qry").val();
+                $("#leaflet-control-geosearch-qry").val("");
+
+                var marker = createMarker(location, searchValue, placeholder);
+                $scope.map.markers.push(marker);
+                $scope.PlaceAddMode = 'input';
+            }
+
+        });
+
+        
+        var createMarker = function (location, searchValue, placeholder)
+        {
+            return  {
+                id: 0,
+                lat: location.lat,
+                lng: location.lng,
+                focus: false,
+                draggable: true,
+                icon: placeService.activeIcon(),
+                get message() {
+                    return this.place.Name;
+                },
+                editMode: true,
+                isOpen: true,
+                place: {
+                    Name: searchValue,
+                    Description: "",
+                    CategoryId: 0,
+                    Image: placeholder,
+                    TravelId: $scope.travel.Id,
+                },
+                image: placeholder,
+                imageToUpload: null
+            };
+        }
         //#endregion scope events
-
 
 }]);
 
@@ -382,7 +428,8 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
                 Title: '',
                 Description: '',
                 Icon: '',
-                IconId: null
+                IconId: null,
+                TravelId: $routeParams.id
             });
         };
 
@@ -391,7 +438,7 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
         };
 
         $scope.saveProperties = function () {
-            propertyService.createItems($scope.properties, $routeParams.id, function () {
+            propertyService.createItems($scope.properties, function () {
                 $location.path('/travel/new/places/' + $routeParams.id);
             });
         };
@@ -454,7 +501,8 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
                     return value;
                 },
                 Description: " ",
-                CategoryId: 0
+                CategoryId: 0,
+                TravelId: $routeParams.id,
             },
             image: placeholder,
             imageToUpload: null
@@ -480,7 +528,7 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
 
     $scope.savePlaces = function () {
 
-        placeService.createItems($scope.markers, $routeParams.id, function () {
+        placeService.createItems($scope.markers, function () {
             $location.path('/travel/show/' + $routeParams.id);
         });
     };

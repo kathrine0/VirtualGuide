@@ -34,9 +34,9 @@ namespace VirtualGuide.WebService.Controllers
         /// Use: WebApp 
         /// </summary>
         /// <returns></returns>
-        [Route("Properties/{travelId}")]
+        [Route("Properties")]
         [HttpPost]
-        public HttpResponseMessage PostProperties(int travelId, IList<BasicPropertyViewModel> properties)
+        public HttpResponseMessage PostProperties(IList<BasicPropertyViewModel> properties)
         {
             if (!ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace VirtualGuide.WebService.Controllers
 
             try
             {
-                pr.AddMany(properties, travelId);
+                pr.AddMany(properties);
                 return Request.CreateResponse(HttpStatusCode.Created);
             }
             catch
@@ -67,8 +67,8 @@ namespace VirtualGuide.WebService.Controllers
 
             try
             {
-                pr.Create(property);
-                return Request.CreateResponse(HttpStatusCode.Created);
+                var item = pr.Add(property);
+                return Request.CreateResponse(HttpStatusCode.Created, item);
             }
             catch
             {

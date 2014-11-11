@@ -14,7 +14,7 @@ namespace VirtualGuide.Services.Repository
     {
         public IList<BasicPropertyViewModel> GetPropertiesList(int travelId)
         {
-            
+            //todo check if user is permitted
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 IQueryable<Property> items = db.Properties.Where(x => x.Travel.Id == travelId);
@@ -30,27 +30,21 @@ namespace VirtualGuide.Services.Repository
             }
         }
 
-        public void AddMany(IList<BasicPropertyViewModel> items, int travelId)
+        public void AddMany(IList<BasicPropertyViewModel> items)
         {
             //todo validate against is user owner of the travel
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var properties = new List<Property>();
-
-                foreach (var item in items)
-                {
-                    item.TravelId = travelId;
-                    properties.Add(Mapper.Map<Property>(item));
-                }
+                IList<Property> properties = Mapper.Map<IList<Property>>(items);
 
                 db.Properties.AddRange(properties);
                 db.SaveChanges();
 
             }
         }
-        
-        public void Create(BasicPropertyViewModel item)
+
+        public BasicPropertyViewModel Add(BasicPropertyViewModel item)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -58,6 +52,8 @@ namespace VirtualGuide.Services.Repository
 
                 db.Properties.Add(property);
                 db.SaveChanges();
+
+                return Mapper.Map<BasicPropertyViewModel>(property);
             }
         }
 
