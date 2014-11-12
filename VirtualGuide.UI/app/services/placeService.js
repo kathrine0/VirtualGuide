@@ -14,9 +14,10 @@ app.factory('placeService', ['$rootScope', '$q', 'placesRepository', 'placeRepos
     placeService.placesToMarkers = function (places, placeholder)
     {
         var markers = [];
+        var id = 0;
         places.forEach(function (place) {
             var marker = {
-                id: place.Id,
+                id: id++,
                 lat: place.Latitude,
                 lng: place.Longitude,
                 focus: false,

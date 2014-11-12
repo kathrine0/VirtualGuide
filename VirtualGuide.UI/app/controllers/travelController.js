@@ -46,6 +46,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
         var placeholder = "http://fpoimg.com/300x300?text=Place%20your%20image%20here";
 
         var markerOldValues = [];
+        var lastPlaceId = 0;
 
         //#endregion local variables
 
@@ -77,6 +78,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
             };
 
             $scope.map.markers = placeService.placesToMarkers(travel.Places, placeholder);
+            lastPlaceId = $scope.map.markers.length;
         });
 
         $scope.travel.editMode = false;
@@ -219,14 +221,16 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
                     marker.place.imageToUpload = null;
                 }
 
-                if (marker.id == 0)
+                if (marker.isNew)
                 {
                     placeService.createItem(marker, function (newplace) {
                         marker.place = newplace;
-                        marker.id = newplace.Id;
+                        delete marker.draggable;
+                        delete marker.icon;
+                        marker.isNew = false;
+                        marker.draggable = false;
+                        $scope.PlaceAddMode = false;
                     });
-
-                    marker.icon = {};
                 }
                 else {
                     placeService.updateItem(marker);
@@ -279,7 +283,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
 
         $scope.$on('leafletDirectiveMap.click', function (jsEvent, leafletEvent) {
 
-            if ($scope.PlaceAddMode)
+            if ($scope.PlaceAddMode == 'marker')
             {
                 var location = leafletEvent.leafletEvent.latlng;
 
@@ -297,7 +301,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
         var createMarker = function (location, searchValue, placeholder)
         {
             return  {
-                id: 0,
+                id: lastPlaceId++,
                 lat: location.lat,
                 lng: location.lng,
                 focus: false,
@@ -308,7 +312,9 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
                 },
                 editMode: true,
                 isOpen: true,
+                isNew: true,
                 place: {
+                    Id: 0,
                     Name: searchValue,
                     Description: "",
                     CategoryId: 0,

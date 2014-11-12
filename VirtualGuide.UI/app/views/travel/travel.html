@@ -126,7 +126,7 @@
 <div class="row" id="Places">
     <div class="col-md-12">
         <accordion class="box-group" id="accordion" close-others="false">
-            <accordion-group id="place{{marker.id}}" class="panel box box-success" ng-repeat="marker in map.markers | orderBy:'id'" is-open="marker.isOpen">
+            <accordion-group id="place{{marker.id}}" class="panel box box-success" ng-repeat="marker in map.markers | orderBy:'id':true " is-open="marker.isOpen">
                 <accordion-heading>
                     <div class="box-header" ng-hide="marker.editMode">
                         <h4 class="box-title" ng-bind="marker.place.Name"></h4>
@@ -150,7 +150,7 @@
                                 <input type="text" 
                                         ng-model="marker.place.Name"
                                         class="form-control" 
-                                        placeholder="Enter name for your guide" 
+                                        placeholder="Enter name for this place" 
                                         required />
                             </div>
                         </div>
