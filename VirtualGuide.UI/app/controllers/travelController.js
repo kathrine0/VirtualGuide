@@ -213,6 +213,13 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
 
         //#regionscope place actions
 
+            $scope.editPlace = function(marker)
+            {
+                marker.place.Image = placeholder;
+                marker.editMode = true;
+                marker.icon = placeService.activeIcon();
+                marker.draggable = true;
+            }
 
             $scope.savePlace = function (marker) {
 
@@ -300,6 +307,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
 
         });
 
+        //#endregion scope events
         
         var createMarker = function (location, searchValue, placeholder)
         {
@@ -321,14 +329,14 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
                     Name: searchValue,
                     Description: "",
                     CategoryId: 0,
-                    Image: placeholder,
                     TravelId: $scope.travel.Id,
+                    ImageSrc: null,
+                    Image: placeholder
                 },
                 image: placeholder,
                 imageToUpload: null
             };
         }
-        //#endregion scope events
 
 }]);
 

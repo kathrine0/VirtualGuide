@@ -25,7 +25,7 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
         travel._image = null;
         travel.__defineGetter__("Image", function () {
             if (this._image != null) {
-                return _image;
+                return this._image;
             }
             else if (this.ImageSrc != null) {
                 return $rootScope.webservice + this.ImageSrc;

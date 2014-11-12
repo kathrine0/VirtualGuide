@@ -178,7 +178,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button class="btn btn-success" ng-click="marker.editMode = true" ng-hide="marker.editMode">Edit</button>
+                    <button class="btn btn-success" ng-click="editPlace(marker)" ng-hide="marker.editMode">Edit</button>
                     <button class="btn btn-default" ng-click="showOnMap(marker)">Show on Map</button>
                     <button class="btn btn-success" ng-click="savePlace(marker)" ng-show="marker.editMode">Save</button>
                     <button class="btn btn-danger" ng-click="removePlace(marker)" ng-show="marker.editMode">Delete</button>
