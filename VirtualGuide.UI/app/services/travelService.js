@@ -9,9 +9,9 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
         return travelRepository.query();
     }
 
-    travelService.getTravelForCreator = function (id, successCallback)
+    travelService.getTravelForCreator = function (id, placeholder, successCallback)
     {
-        return travelRepository.show({id: id}, 
+        var travel = travelRepository.show({id: id}, 
             function success(item) {
                 if (successCallback != undefined)
                 {
@@ -20,6 +20,24 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
             },
             function error(item) {
             });
+
+
+        travel._image = null;
+        travel.__defineGetter__("Image", function () {
+            if (this._image != null) {
+                return _image;
+            }
+            else if (this.ImageSrc != null) {
+                return $rootScope.webservice + this.ImageSrc;
+            } else {
+                return placeholder;
+            }
+        });
+        travel.__defineSetter__("Image", function (value) {
+            this._image = value;
+        });
+
+        return travel;
     }
 
     travelService.createItem = function (travel, successCallback, errorCallback)

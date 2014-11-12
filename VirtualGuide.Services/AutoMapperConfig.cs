@@ -16,6 +16,8 @@ namespace VirtualGuide.Services
             Mapper.CreateMap<Travel, BasicTravelViewModel>();
             Mapper.CreateMap<Travel, CreatorTravelViewModel>();
             Mapper.CreateMap<CreatorTravelViewModel, Travel>();
+            Mapper.CreateMap<Travel, SimpleCreatorTravelViewModel>();
+            Mapper.CreateMap<SimpleCreatorTravelViewModel, Travel>();
             Mapper.CreateMap<Travel, CustomerTravelViewModel>();
 
             ///Place

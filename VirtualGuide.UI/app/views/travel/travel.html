@@ -31,9 +31,7 @@
         </div>
     </div>
     <div class="col-md-5">
-        <div class="box box-primary" ng-hide="travel.editMode">
-            <img class="thumbnail" ng-src="{{travel.Image}}" />
-        </div>
+        <div class="box box-primary" ng-hide="travel.editMode" ng-bind-html="travel.ImageSrc | imageSource:'thumbnail'"></div>
         <div class="box box-primary" ng-show="travel.editMode">
             <div>
                 <!--ng-bind-html="travel.ImageSrc | imageSource:'thumbnail'"-->

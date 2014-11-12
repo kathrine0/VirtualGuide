@@ -69,26 +69,8 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
 
         $scope.categories = placeService.getCategories();
 
-        $scope.travel = travelService.getTravelForCreator($routeParams.id, function (travel)
+        $scope.travel = travelService.getTravelForCreator($routeParams.id, placeholder, function (travel)
         {
-            if (travel.ImageSrc != null)
-            {
-
-                //TODO - move it to model
-                $scope.travel._image = placeholder;
-                $scope.travel.__defineGetter__("Image", function () {
-                    if (this.ImageSrc) {
-                        return $rootScope.webservice + this.ImageSrc;
-                    } else {
-                        return placeholder;
-                    }
-                });
-                $scope.travel.__defineSetter__("Image", function () {
-                    this._image = value;
-                });
-                    
-            }
-
             $scope.map.center = {
                 lat: travel.Latitude,
                 lng: travel.Longitude,
@@ -124,7 +106,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
                 Price: $scope.travel.Price,
                 Image: $scope.travel.Image
             };
-
+            $scope.travel.Image = placeholder;
             $scope.travel.editMode = true;
         };
 
@@ -136,18 +118,21 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
                 imageToUpload = null;
             }
 
+            delete $scope.travel.oldValue;
+
             travelService.updateItem($scope.travel);
             $scope.travel.editMode = false;
 
         };
 
         $scope.cancelTravelEdit = function () {
-            $scope.travel = {
-                Name: $scope.travel.oldValue.Name,
-                Description: $scope.travel.oldValue.Description,
-                Price: $scope.travel.oldValue.Price,
-                Image: $scope.travel.oldValue.Image
-            };
+
+            $scope.travel.Name = $scope.travel.oldValue.Name,
+            $scope.travel.Description = $scope.travel.oldValue.Description,
+            $scope.travel.Price = $scope.travel.oldValue.Price,
+            $scope.travel.ImageUrl = $scope.travel.oldValue.ImageUrl
+
+            delete $scope.travel.oldValue;
 
             $scope.travel.editMode = false;
         };
