@@ -37,8 +37,8 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$location', '$routeParams', '$modal', '$filter', '$anchorScroll', 'travelService', 'propertyService', 'placeService', 'uploadService', 'anchorSmoothScroll',
-function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, travelService, propertyService, placeService, uploadService, anchorSmoothScroll) {
+app.controller('getTravelController', ['$scope', '$location', '$routeParams', '$modal', '$filter', '$anchorScroll', '$rootScope', 'travelService', 'propertyService', 'placeService', 'uploadService', 'anchorSmoothScroll',
+function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $rootScope, travelService, propertyService, placeService, uploadService, anchorSmoothScroll) {
 
         //#region local variables
 
@@ -71,6 +71,24 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
 
         $scope.travel = travelService.getTravelForCreator($routeParams.id, function (travel)
         {
+            if (travel.ImageSrc != null)
+            {
+
+                //TODO - move it to model
+                $scope.travel._image = placeholder;
+                $scope.travel.__defineGetter__("Image", function () {
+                    if (this.ImageSrc) {
+                        return $rootScope.webservice + this.ImageSrc;
+                    } else {
+                        return placeholder;
+                    }
+                });
+                $scope.travel.__defineSetter__("Image", function () {
+                    this._image = value;
+                });
+                    
+            }
+
             $scope.map.center = {
                 lat: travel.Latitude,
                 lng: travel.Longitude,
@@ -247,7 +265,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, trave
 
             $scope.onPlaceImageSelect = function ($files, marker) {
                 uploadService.decodeImage($files[0], function (image) {
-                    marker.place.ImageBase64 = image;
+                    marker.place.Image = image;
                     marker.place.imageToUpload = $files[0];
                 });
             };

@@ -44,18 +44,13 @@ app.factory('placeService', ['$rootScope', '$q', 'placesRepository', 'placeRepos
                     CategoryId: place.CategoryId,
                     CategoryName: place.CategoryName,
                     ImageSrc: place.ImageSrc,
-                    ImageBase64: null,
                     _image: placeholder,
                     set Image(value) 
                     {
                         this._image = value;
                     },
                     get Image() {
-                        if (this.ImageBase64 != null)
-                        {
-                            return this.ImageBase64;
-                        }
-                        else if (this.ImageSrc) {
+                        if (this.ImageSrc) {
                             return $rootScope.webservice + this.ImageSrc;
                         } else {
                             return placeholder

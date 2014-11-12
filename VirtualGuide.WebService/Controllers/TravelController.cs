@@ -155,7 +155,7 @@ namespace VirtualGuide.WebService.Controllers
 
         [Route("CreatorTravel/{id}")]
         [HttpPut]
-        public HttpResponseMessage PutTravel(int id, CreatorTravelViewModel travel)
+        public HttpResponseMessage PutTravel(int id, SimpleCreatorTravelViewModel travel)
         {
             if (!ModelState.IsValid)
             {
@@ -165,7 +165,7 @@ namespace VirtualGuide.WebService.Controllers
             try
             {
                 tr.Update(id, travel);
-                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, travel);
+                return Request.CreateResponse<SimpleCreatorTravelViewModel>(HttpStatusCode.Created, travel);
             }
             catch (HttpResponseException)
             {

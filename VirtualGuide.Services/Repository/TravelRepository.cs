@@ -109,7 +109,7 @@ namespace VirtualGuide.Services.Repository
             }
         }
 
-        public CreatorTravelViewModel Update(int id, CreatorTravelViewModel item)
+        public CreatorTravelViewModel Update(int id, SimpleCreatorTravelViewModel item)
         {
             //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -120,7 +120,10 @@ namespace VirtualGuide.Services.Repository
 
                 entry.Property(e => e.ApproverId).IsModified = false;
                 entry.Property(e => e.CreatorId).IsModified = false;
-                entry.Property(e => e.ApprovalStatus).IsModified = false;   
+                entry.Property(e => e.ApprovalStatus).IsModified = false;
+
+                //entry.Property(e => e.Properties).IsModified = false;
+                //entry.Property(e => e.Places).IsModified = false;
 
                 try
                 {

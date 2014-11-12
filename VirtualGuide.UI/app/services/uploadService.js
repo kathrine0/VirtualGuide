@@ -10,7 +10,7 @@ app.factory('uploadService', ['$timeout', 'uploadRepository', function ($timeout
 
     uploadService.decodeImage = function(selectedFile, successCallback, errorCallback)
     {
-        if (selectedFile.type.indexOf('image') > -1) {
+        if (selectedFile != undefined && selectedFile.type.indexOf('image') > -1) {
             var fileReader = new FileReader();
             fileReader.readAsDataURL(selectedFile);
             var loadFile = function (fileReader) {
@@ -40,14 +40,18 @@ app.factory('uploadService', ['$timeout', 'uploadRepository', function ($timeout
 
         var extension = original.split('.').pop();
         var strippedBase = base.replace(/(<([^>] +)>)/ig, "");
-        var strippedAdd = additional.replace(/(<([^>] +)>)/ig, "");
+        var strippedAdd = "";
 
         if (strippedBase.length > 6) {
             strippedBase = strippedBase.substring(0, 6);
         }
 
-        if (strippedAdd.length > 6) {
-            strippedAdd = strippedAdd.substring(0, 6);
+        if (additional != undefined)
+        {
+            strippedAdd = additional.replace(/(<([^>] +)>)/ig, "");
+            if (strippedAdd.length > 6) {
+                strippedAdd = strippedAdd.substring(0, 6);
+            }
         }
 
         return "Uploads/" + strippedBase + "_" + strippedAdd + getRandomInt(10000, 99999) + "." + extension;
