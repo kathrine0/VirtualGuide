@@ -22,6 +22,12 @@ app.config(function ($routeProvider) {
         templateUrl: site_prefix + "/app/views/signup.html"
     });
 
+    $routeProvider.when("/profile", {
+        title: "Profile",
+        controller: "profileController",
+        templateUrl: site_prefix + "/app/views/profile.html"
+    });
+
     $routeProvider.when("/travels", {
         title: "Travels",
         controller: "getTravelsController",
