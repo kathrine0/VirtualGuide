@@ -18,9 +18,10 @@ namespace VirtualGuide.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(50)]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         [Required]
@@ -36,16 +37,16 @@ namespace VirtualGuide.Models
         public virtual Place Parent { get; set; }
         public int? ParentId { get; set; }
 
-        //[Required]
         [ForeignKey("TravelId")]
         public virtual Travel Travel { get; set; }
         
+        [Required]
         public int TravelId { get; set; }
 
-        //[Required]
         [ForeignKey("CategoryId")]
         public virtual PlaceCategory Category { get; set; }
 
+        [Required]
         public int CategoryId { get; set; }
 
         public string ImageSrc { get; set; }

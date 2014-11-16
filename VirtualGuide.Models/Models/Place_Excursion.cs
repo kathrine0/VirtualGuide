@@ -17,7 +17,6 @@ namespace VirtualGuide.Models
 
         public int Order { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public Place Place { get; set; }

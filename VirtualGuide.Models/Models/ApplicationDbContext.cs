@@ -40,7 +40,7 @@ namespace VirtualGuide.Models
             //cascade delete for Travel children
             modelBuilder.Entity<Travel>()
                 .HasMany(i => i.Properties)
-                .WithOptional()
+                .WithRequired()
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Travel>()

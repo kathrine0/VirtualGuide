@@ -12,18 +12,20 @@ namespace VirtualGuide.Models
         public int Id { get; set; }
         
         [Required]
-        [StringLength(100)]
+        [StringLength(35)]
         public string Title { get; set; }
         
         [Required]
-        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public int Order { get; set; }
-        public int? TravelId { get; set; }
+        [Required]
+        public int TravelId { get; set; }
         
         [ForeignKey("TravelId")]
         public virtual Travel Travel { get; set; }
-        public int? IconId { get; set; }
+        
+        [Required]
+        public int IconId { get; set; }
         
         [ForeignKey("IconId")]
         public virtual Icon Icon { get; set; }
