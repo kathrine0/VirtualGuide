@@ -1,6 +1,9 @@
 namespace VirtualGuide.Models.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -14,18 +17,58 @@ namespace VirtualGuide.Models.Migrations
 
         protected override void Seed(VirtualGuide.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var UserManager = new UserManager<User>(new UserStore<User>(context));
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            UserManager.UserValidator = new UserValidator<User>(UserManager) { AllowOnlyAlphanumericUserNames = false };
+
+            var roles = new List<string>()
+            {
+                "Administrator", "Creator", "Approver", "User"
+            };
+
+            var users = new List<User>()
+            {
+                new User() {
+                    UserName = "Admin@example.com",
+                    Firstname = "Damian",
+                    Lastname = "Adminowski"
+                },
+                new User() {
+                    UserName = "Creator@example.com",
+                    Firstname = "Anna",
+                    Lastname = "Pisarka"
+                },
+                new User() {
+                    UserName = "Approver@example.com",
+                    Firstname = "Beata",
+                    Lastname = "Aprobuj¹ca"
+                },
+                new User() {
+                    UserName = "User@example.com",
+                    Firstname = "Waldek",
+                    Lastname = "Podró¿nik"
+                }
+            };
+
+            foreach (var role in roles)
+            {
+                if (!RoleManager.RoleExists(role))
+                {
+                    RoleManager.Create(new IdentityRole(role));
+                }
+            }
+
+            var i = 0;
+            foreach (var user in users)
+            {
+                user.Email = user.UserName;
+                UserManager.Create(user, user.UserName);
+                UserManager.AddToRole(user.Id, roles[i++]);
+            }
+
+
+            base.Seed(context);
         }
     }
 }
