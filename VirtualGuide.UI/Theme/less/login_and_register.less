@@ -2,6 +2,23 @@
     Page: register and login
 */
 
+#body {
+    &.login {
+        background-image: url(../../Content/images/loginbgsmall.jpg);
+
+        @media (min-width: @screen-sm) {
+            background-image: url(../../Content/images/loginbg.jpg);
+        }
+
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: #464646;
+
+    }
+}
+
 .form-box {    
     width: 360px;
     margin: 90px auto 0 auto;

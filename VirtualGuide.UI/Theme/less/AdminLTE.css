@@ -20,6 +20,8 @@ body {
 }
 #body {
   min-height: 100%;
+  width: 100%;
+  position: absolute;
 }
 a {
   color: #5cb0d7;
@@ -2447,6 +2449,19 @@ Component: timeline
 /* 
     Page: register and login
 */
+#body.login {
+  background-image: url(../../Content/images/loginbgsmall.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+}
+@media (min-width: 767px) {
+  #body.login {
+    background-image: url(../../Content/images/loginbg.jpg);
+  }
+}
 .form-box {
   width: 360px;
   margin: 90px auto 0 auto;
