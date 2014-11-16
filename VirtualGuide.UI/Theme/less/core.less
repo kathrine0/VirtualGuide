@@ -3,12 +3,16 @@
 ----------------------------
 */
 
-html, body {
+html, body{
     overflow-x: hidden!important;
     font-family: 'Source Sans Pro', sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100%;
     background: @body-bg;
+}
+
+#body {
+    min-height: 100%;
 }
 
 a {
@@ -26,7 +30,7 @@ a:hover, a:active, a:focus {
 }
 
 /* Header */
-body > .header {
+#body > .header {
     position: absolute;
     top: 0;
     left: 0;
@@ -77,10 +81,10 @@ body > .header {
 }
 
 /*
-    By default the layout is not fixed but if you add the class .fixed to the body element
+    By default the layout is not fixed but if you add the class .fixed to the #body element
     the sidebar and the navbar will automatically become poisitioned fixed
 */
-body.fixed {
+#body.fixed, body.fixed {
     > .header, .left-side, .navbar {
         position: fixed;
     }
