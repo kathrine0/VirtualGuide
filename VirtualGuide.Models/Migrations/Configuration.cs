@@ -62,9 +62,16 @@ namespace VirtualGuide.Models.Migrations
             var i = 0;
             foreach (var user in users)
             {
-                user.Email = user.UserName;
-                UserManager.Create(user, user.UserName);
-                UserManager.AddToRole(user.Id, roles[i++]);
+                if (UserManager.FindByName(user.UserName) == null)
+                {
+                    user.Email = user.UserName;
+                    UserManager.Create(user, user.UserName);
+                    UserManager.AddToRole(user.Id, roles[i++]);
+                }
+                else
+                {
+                    i++;
+                }
             }
 
 
