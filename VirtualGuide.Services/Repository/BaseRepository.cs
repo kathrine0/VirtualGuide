@@ -12,8 +12,8 @@ namespace VirtualGuide.Services.Repository
 {
     public abstract class BaseRepository
     {
-        
-        protected UserManager<User> userManager = new UserManager<User>(new UserStore<User>(new ApplicationDbContext()));
+
+        protected VGUserManager userManager = new VGUserManager();
 
         protected User findUserByEmail(string userEmail)
         {

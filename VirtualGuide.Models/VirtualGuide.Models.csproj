@@ -74,6 +74,7 @@
     <Compile Include="Models\User_Purchased_Travel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Manager\VGUserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
