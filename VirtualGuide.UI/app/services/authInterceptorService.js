@@ -3,7 +3,7 @@
 ///
 /// Adds Bearer Token to every request
 ///
-app.factory('authInterceptorService', ['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
+app.factory('authInterceptorService', ['$q', '$injector', 'localStorageService', function ($q, $injector, localStorageService) {
 
     var authInterceptorServiceFactory = {};
 
@@ -21,7 +21,7 @@ app.factory('authInterceptorService', ['$q', '$location', 'localStorageService',
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-            $location.path('/login');
+            $injector.get('$state').transitionTo('login');
         }
         return $q.reject(rejection);
     }

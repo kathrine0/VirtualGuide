@@ -64,6 +64,7 @@
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
+    <Content Include="app\controllers\profileController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\travelController.js" />
     <Content Include="app\controllers\uploadController.js" />
@@ -84,6 +85,7 @@
     <Content Include="app\services\uploadService.js" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login\login.html" />
+    <Content Include="app\views\profile.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="app\views\travel\icon-modal-content.html" />
     <Content Include="app\views\travel\travel.html" />
@@ -109,6 +111,7 @@
     <Content Include="Content\fonts\ionicons.svg" />
     <Content Include="Content\images\activeMarker.png" />
     <Content Include="Content\images\avatar3.png" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Content\ionicons\ionicons.less" />
     <Content Include="Content\ionicons\_ionicons-variables.less" />
     <Content Include="Content\ionicons\_ionicons-icons.less" />

@@ -1,6 +1,6 @@
 ﻿'use strict';
-app.controller('getTravelsController', ['$scope', '$location', 'travelService',
-    function ($scope, $location, travelService) {
+app.controller('getTravelsController', ['$scope', '$state', 'travelService',
+    function ($scope, $state, travelService) {
     
     //var successCallback = function (data, status, headers, config) {
     //    notificationFactory.success();
@@ -29,16 +29,16 @@ app.controller('getTravelsController', ['$scope', '$location', 'travelService',
         $scope.travels = travelService.getAllForCreator();
 
         $scope.showTravel = function (id) {
-            $location.path('/travel/show/' + id);
+            $state.go('admin.travelshow', {id: id});
         };
 
         $scope.newTravel = function () {
-            $location.path('/travel/new');
+            $state.go('admin.travelnew');
         };
 }]);
 
-app.controller('getTravelController', ['$scope', '$location', '$routeParams', '$modal', '$filter', '$anchorScroll', '$rootScope', 'travelService', 'propertyService', 'placeService', 'uploadService', 'anchorSmoothScroll',
-function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $rootScope, travelService, propertyService, placeService, uploadService, anchorSmoothScroll) {
+app.controller('getTravelController', ['$scope', '$state', '$modal', '$filter', '$location', '$anchorScroll', '$rootScope', 'travelService', 'propertyService', 'placeService', 'uploadService', 'anchorSmoothScroll',
+function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope, travelService, propertyService, placeService, uploadService, anchorSmoothScroll) {
 
         //#region local variables
 
@@ -69,7 +69,7 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
 
         $scope.categories = placeService.getCategories();
 
-        $scope.travel = travelService.getTravelForCreator($routeParams.id, placeholder, function (travel)
+        $scope.travel = travelService.getTravelForCreator($state.params.id, placeholder, function (travel)
         {
             $scope.map.center = {
                 lat: travel.Latitude,
@@ -342,8 +342,8 @@ function ($scope, $location, $routeParams, $modal, $filter, $anchorScroll, $root
 
 //#region Travel Wizard
 
-app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'travelService', 'uploadService',
-    function ($scope, $rootScope, $location, travelService, uploadService) {
+app.controller('newTravelController', ['$scope', '$rootScope', '$state', 'travelService', 'uploadService',
+    function ($scope, $rootScope, $state, travelService, uploadService) {
 
         //#region local variables
         var imageToUpload = null;
@@ -371,7 +371,7 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
 
 
             travelService.createItem(travel, function (newtravel) {
-                $location.path('/travel/new/properties/' + newtravel.Id);
+                $state.go('admin.travelproperties/', { id: newtravel.Id });
             });
         };
 
@@ -398,8 +398,8 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$location', 'tra
         //#endregion scope events
 }]);
 
-app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeParams', '$modal', 'propertyService',
-    function ($scope, $location, $routeParams, $modal, propertyService) {
+app.controller('newTravelPropertiesController', ['$scope', '$state', '$modal', 'propertyService',
+    function ($scope, $state, $modal, propertyService) {
 
         //#region scope variables
         $scope.properties = [];
@@ -446,7 +446,7 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
                 Description: '',
                 Icon: '',
                 IconId: null,
-                TravelId: $routeParams.id
+                TravelId: $state.params.id
             });
         };
 
@@ -456,15 +456,15 @@ app.controller('newTravelPropertiesController', ['$scope', '$location', '$routeP
 
         $scope.saveProperties = function () {
             propertyService.createItems($scope.properties, function () {
-                $location.path('/travel/new/places/' + $routeParams.id);
+                $state.go('admin.travelplaces', { id: $state.params.id });
             });
         };
         //#endregion scope actions
 
     }]);
 
-app.controller('newTravelPlacesController', ['$scope', '$location', '$filter', '$routeParams', 'placeService', 'uploadService',
-function ($scope, $location, $filter, $routeParams, placeService, uploadService) {
+app.controller('newTravelPlacesController', ['$scope', '$state', '$filter', 'placeService', 'uploadService',
+function ($scope, $state, $filter, placeService, uploadService) {
 
     //#region local variables
     var editMode = false;
@@ -519,7 +519,7 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
                 },
                 Description: " ",
                 CategoryId: 0,
-                TravelId: $routeParams.id,
+                TravelId: $state.params.id,
             },
             image: placeholder,
             imageToUpload: null
@@ -546,7 +546,7 @@ function ($scope, $location, $filter, $routeParams, placeService, uploadService)
     $scope.savePlaces = function () {
 
         placeService.createItems($scope.markers, function () {
-            $location.path('/travel/show/' + $routeParams.id);
+            $state.go('admin.travelshow', { id: $state.params.id });
         });
     };
 

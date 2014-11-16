@@ -1,0 +1,152 @@
+﻿        <header class="header skin-black">
+            <a href="#/" class="logo">
+                <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                <img src="Content/images/logo.png" class="icon" />
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li data-ng-hide="authentication.isAuth">
+                            <a ui-sref="login">Login</a>
+                        </li>
+                        <li data-ng-hide="authentication.isAuth">
+                            <a ui-sref="signup">Sign Up</a>
+                        </li>
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu" data-ng-hide="!authentication.isAuth">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="glyphicon glyphicon-user"></i>
+                                <span ng-bind="authentication.userName"><i class="caret"></i></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header bg-light-blue">
+                                    <img src="Content/images/avatar3.png" class="img-circle" alt="User Image" />
+                                    <p>
+                                        <span ng-bind="authentication.userName"></span>
+                                        <!--<small>Member since Nov. 2012</small>-->
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <!--<li class="user-body">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </li>-->
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a ui-sref="profile" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="" data-ng-click="logOut()" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div class="wrapper row-offcanvas row-offcanvas-left skin-black">
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="left-side sidebar-offcanvas">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="Content/images/avatar3.png" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p>Hello, <span ng-bind="authentication.userName"></span></p>
+
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- search form -->
+                    <!--<form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..." />
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>-->
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu">
+                    <!--  class="active" -->
+                    
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Travels</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li ui-sref-active="active"><a ui-sref="admin.travels"><i class="fa fa-angle-double-right"></i> Show</a></li>
+                                <li ui-sref-active="active"><a ui-sref="admin.travelnew"><i class="fa fa-angle-double-right"></i> Add</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Profile</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li ui-sref-active="active"><a ui-sref="admin.profile"><i class="fa fa-angle-double-right"></i> My profile</a></li>
+                                <li ui-sref-active="active"><a ui-sref="admin.profile"><i class="fa fa-angle-double-right"></i> Change password</a></li>
+                            </ul>
+                        </li>
+
+                        <li ui-sref-active="active">
+                            <a ui-sref="admin.profile">
+                                <i class="fa fa-bar-chart-o"></i> <span>Statistics</span>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <aside class="right-side">
+                <section class="content-header">
+                    <h1 ng-bind="title"></h1>
+                    <!--<ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#">Forms</a></li>
+                        <li class="active">General Elements</li>
+                    </ol>-->
+                </section>
+                <section class="content" ui-view></section>
+
+            </aside>
+        </div>
+        <hr />
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-muted">Copyright (c) Virtual Guide 2014</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>

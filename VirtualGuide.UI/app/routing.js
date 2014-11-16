@@ -1,68 +1,86 @@
 ﻿'use strict';
 
-app.config(function ($routeProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
 
     var site_prefix = '/VirtualGuide.UI';
 
-    $routeProvider.when("/home", {
-        title: "Home",
-        controller: "homeController",
-        templateUrl: site_prefix + "/app/views/home.html"
-    });
+    $urlRouterProvider.otherwise("/admin/travels");
 
-    $routeProvider.when("/login", {
-        title: "Login",
-        controller: "loginController",
-        templateUrl: site_prefix + "/app/views/login/login.html"
-    });
-
-    $routeProvider.when("/signup", {
-        title: "Signup",
-        controller: "signupController",
-        templateUrl: site_prefix + "/app/views/signup.html"
-    });
-
-    $routeProvider.when("/profile", {
+    $stateProvider
+    .state('admin', {
+        url: "/admin",
+        controller: function ($scope, $rootScope) {
+            $scope.$on('$viewContentLoaded', 
+                function (event) {
+                    if (!$rootScope.isAdminJSRegistered)
+                    {
+                        loadAdmin();
+                        $rootScope.isAdminJSRegistered = true;
+                    }
+                });
+        },
+        templateUrl: site_prefix + "/app/views/templates/admin.html"
+    })
+    .state('admin.profile', {
+        url: "/profile",
         title: "Profile",
         controller: "profileController",
         templateUrl: site_prefix + "/app/views/profile.html"
-    });
-
-    $routeProvider.when("/travels", {
+    })
+    .state('admin.home', {
+        url: "/home",
+        title: "Home",
+        controller: "homeController",
+        templateUrl: site_prefix + "/app/views/home.html"
+    })
+    .state('admin.travels', {
+        url: "/travels",
         title: "Travels",
         controller: "getTravelsController",
         templateUrl: site_prefix + "/app/views/travel/travels.html"
-    });
+    })
 
-    $routeProvider.when("/travel/show/:id", {
+    .state('admin.travelshow', {
+        url: "/travel/show/:id",
         title: "Travel",
         controller: "getTravelController",
         templateUrl: site_prefix + "/app/views/travel/travel.html"
-    });
-
-    $routeProvider.when("/travel/new", {
+    })
+    .state('admin.travelnew', {
+        url: "/travel/new",
         title: "Guide Wizard",
         controller: "newTravelController",
         templateUrl: site_prefix + "/app/views/travel/travel-wizard-general.html"
-    });
-
-    $routeProvider.when("/travel/new/properties/:id", {
+    })
+    .state('admin.travelproperties', {
+        url: "/travel/properties/:id",
         title: "Guide Wizard",
         controller: "newTravelPropertiesController",
         templateUrl: site_prefix + "/app/views/travel/travel-wizard-properties.html"
-    });
-
-    $routeProvider.when("/travel/new/places/:id", {
+    })
+    .state('admin.travelplaces', {
+        url: "/travel/places/:id",
         title: "Guide Wizard",
         controller: "newTravelPlacesController",
         templateUrl: site_prefix + "/app/views/travel/travel-wizard-places.html"
-    });
+    })
 
-    $routeProvider.otherwise({ redirectTo: "/home" });
+    .state('login', {
+        url: "/login",
+        controller: "loginController",
+        templateUrl: site_prefix + "/app/views/login/login.html"
+    })
 });
 
+//    $routeProvider.when("/signup", {
+//        title: "Signup",
+//        controller: "signupController",
+//        templateUrl: site_prefix + "/app/views/signup.html"
+//    });
+
+
 app.run(['$location', '$rootScope', function ($location, $rootScope) {
-    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-        $rootScope.title = current.$$route.title;
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        $rootScope.title = toState.title ? toState.title : "";
     });
 }]);
