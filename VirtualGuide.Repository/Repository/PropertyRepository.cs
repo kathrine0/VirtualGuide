@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Models;
+using VirtualGuide.ViewModels;
 
-namespace VirtualGuide.Services.Repository
+namespace VirtualGuide.Repository
 {
     public class PropertyRepository : BaseRepository
     {

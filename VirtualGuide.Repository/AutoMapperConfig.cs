@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Models;
+using VirtualGuide.ViewModels;
 
-namespace VirtualGuide.Services
+namespace VirtualGuide.Repository
 {
     public static class AutoMapperConfig
     {

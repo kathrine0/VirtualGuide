@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace VirtualGuide.Models
 {
-    public class VGUserManager : UserManager<User>
+    public class BaseVGUserManager : UserManager<User>
     {
-        public VGUserManager(): base(new UserStore<User>(new ApplicationDbContext()))
+        public BaseVGUserManager(): base(new UserStore<User>(new ApplicationDbContext()))
         {
             UserValidator = new UserValidator<User>(this)
             { 
@@ -30,19 +30,6 @@ namespace VirtualGuide.Models
             //UserLockoutEnabledByDefault = true;
             //DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             //MaxFailedAccessAttemptsBeforeLockout = 5;
-    
         }
-
-        //public static VGUserManager Create(IdentityFactoryOptions<VGUserManager> options, IOwinContext context)
-        //{
-        //    var manager = new VGUserManager();
-
-        //    var dataProtectionProvider = options.DataProtectionProvider;
-        //    if (dataProtectionProvider != null)
-        //    {
-        //        manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
-        //    }
-        //    return manager;
-        //}
     }
 }

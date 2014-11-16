@@ -7,7 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using VirtualGuide.Services;
+using VirtualGuide.Repository;
 using VirtualGuide.WebService.Models;
 
 namespace VirtualGuide.WebService

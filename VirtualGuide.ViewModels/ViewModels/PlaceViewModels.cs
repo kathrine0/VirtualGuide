@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VirtualGuide.Models;
 
-namespace VirtualGuide.Services
+namespace VirtualGuide.ViewModels
 {
     //TODO Automapper!
     public class MobilePlaceViewModel

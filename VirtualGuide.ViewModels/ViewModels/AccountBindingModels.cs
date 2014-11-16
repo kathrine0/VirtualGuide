@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
 
-namespace VirtualGuide.Services
+namespace VirtualGuide.ViewModels
 {
     // Models used as parameters to AccountController actions.
 

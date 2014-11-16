@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace VirtualGuide.Services
+namespace VirtualGuide.ViewModels
 {
     public class ExternalLoginViewModel
     {

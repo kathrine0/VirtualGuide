@@ -16,6 +16,8 @@ using Microsoft.Owin.Security.OAuth;
 using VirtualGuide.WebService.Models;
 using VirtualGuide.WebService.Providers;
 using VirtualGuide.WebService.Results;
+using VirtualGuide.Services.Managers;
+using VirtualGuide.Models;
 
 namespace VirtualGuide.WebService.Controllers
 {
@@ -24,24 +26,24 @@ namespace VirtualGuide.WebService.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-        private ApplicationUserManager _userManager;
+        private VGUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager,
+        public AccountController(VGUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
 
-        public ApplicationUserManager UserManager
+        public VGUserManager UserManager
         {
             get
             {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? Request.GetOwinContext().GetUserManager<VGUserManager>();
             }
             private set
             {
@@ -250,7 +252,7 @@ namespace VirtualGuide.WebService.Controllers
                 return new ChallengeResult(provider, this);
             }
 
-            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -328,7 +330,7 @@ namespace VirtualGuide.WebService.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -357,7 +359,7 @@ namespace VirtualGuide.WebService.Controllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user);
             if (!result.Succeeded)

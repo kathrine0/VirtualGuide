@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VirtualGuide.Models;
 
-namespace VirtualGuide.Services
+namespace VirtualGuide.ViewModels
 {
     public class PlaceCategoryViewModel
     {

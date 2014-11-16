@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Models;
 
-namespace VirtualGuide.Services.Repository
+namespace VirtualGuide.Repository
 {
     public abstract class BaseRepository
     {
 
-        protected VGUserManager userManager = new VGUserManager();
+        protected BaseVGUserManager userManager = new BaseVGUserManager();
 
         protected User findUserByEmail(string userEmail)
         {

@@ -5,8 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using VirtualGuide.Services;
-using VirtualGuide.Services.Repository;
+using VirtualGuide.Repository;
+using VirtualGuide.ViewModels;
 
 namespace VirtualGuide.WebService.Controllers
 {

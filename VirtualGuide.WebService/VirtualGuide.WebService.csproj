@@ -166,7 +166,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -289,9 +288,21 @@
       <Project>{863d678d-7271-4c1e-8c23-d4182a2b98b8}</Project>
       <Name>VirtualGuide.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VirtualGuide.Models\VirtualGuide.Models.csproj">
+      <Project>{5cbb970a-9998-4f18-98f5-6c82f92fb3e0}</Project>
+      <Name>VirtualGuide.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualGuide.Repository\VirtualGuide.Repository.csproj">
+      <Project>{90aa56e0-5fa4-4a69-ae8c-e19f267da916}</Project>
+      <Name>VirtualGuide.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualGuide.Services\VirtualGuide.Services.csproj">
       <Project>{2af51b16-5a98-42a0-9bf5-7422fcbbdaab}</Project>
       <Name>VirtualGuide.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualGuide.ViewModels\VirtualGuide.ViewModels.csproj">
+      <Project>{f09b06d7-58cf-4999-aef6-995f22ee63a7}</Project>
+      <Name>VirtualGuide.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

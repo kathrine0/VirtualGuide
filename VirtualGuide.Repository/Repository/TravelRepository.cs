@@ -10,8 +10,9 @@ using System.Data.Entity.Core;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using AutoMapper;
+using VirtualGuide.ViewModels;
 
-namespace VirtualGuide.Services.Repository
+namespace VirtualGuide.Repository
 {
     public class TravelRepository : BaseRepository
     {

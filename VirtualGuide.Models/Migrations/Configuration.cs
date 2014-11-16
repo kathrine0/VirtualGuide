@@ -18,7 +18,7 @@ namespace VirtualGuide.Models.Migrations
         protected override void Seed(VirtualGuide.Models.ApplicationDbContext context)
         {
 
-            var UserManager = new VGUserManager();
+            var UserManager = new BaseVGUserManager();
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
             var roles = new List<string>()

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VirtualGuide.Services
+namespace VirtualGuide.ViewModels
 {
     public class IconViewModel
     {

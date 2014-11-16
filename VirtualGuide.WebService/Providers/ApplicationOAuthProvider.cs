@@ -10,6 +10,8 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using VirtualGuide.WebService.Models;
+using VirtualGuide.Models;
+using VirtualGuide.Services.Managers;
 
 namespace VirtualGuide.WebService.Providers
 {
@@ -29,9 +31,9 @@ namespace VirtualGuide.WebService.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var userManager = context.OwinContext.GetUserManager<VGUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            User user = await userManager.FindAsync(context.UserName, context.Password);
 
             if (user == null)
             {
