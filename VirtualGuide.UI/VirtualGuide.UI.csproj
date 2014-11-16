@@ -83,10 +83,13 @@
     <Content Include="app\services\smoothScrollService.js" />
     <Content Include="app\services\travelService.js" />
     <Content Include="app\services\uploadService.js" />
+    <Content Include="app\translate.js" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login\login.html" />
     <Content Include="app\views\profile.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\templates\admin.html" />
+    <Content Include="app\views\templates\front.html" />
     <Content Include="app\views\travel\icon-modal-content.html" />
     <Content Include="app\views\travel\travel.html" />
     <Content Include="app\views\travel\travels.html" />
@@ -111,6 +114,8 @@
     <Content Include="Content\fonts\ionicons.svg" />
     <Content Include="Content\images\activeMarker.png" />
     <Content Include="Content\images\avatar3.png" />
+    <Content Include="Content\images\loginbg.jpg" />
+    <Content Include="Content\images\loginbgsmall.jpg" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\ionicons\ionicons.less" />
     <Content Include="Content\ionicons\_ionicons-variables.less" />
@@ -185,6 +190,8 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-translate.js" />
+    <Content Include="Scripts\angular-translate.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />

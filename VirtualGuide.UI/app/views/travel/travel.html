@@ -15,18 +15,18 @@
                     <button class="btn btn-default btn-sm" ng-click="cancelTravelEdit()" data-original-title="cancel"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="Enter name for your guide" />
+                    <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="{{'Enter name for your guide' | translate }}" />
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" ng-model="travel.Description" rows="3" placeholder="Enter description"></textarea>
+                    <textarea class="form-control" ng-model="travel.Description" rows="3" placeholder="{{'Enter short description' | translate}}"></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="number" ng-model="travel.Price" class="form-control" placeholder="Enter price" />
+                    <input type="number" ng-model="travel.Price" class="form-control" placeholder="{{'Enter price' | translate}}" />
                 </div>
             </div>
             <div class="box-footer">
-                <button ng-click="editTravel()" class="btn btn-success" ng-hide="travel.editMode">Edit</button>
-                <button ng-click="saveTravel()" class="btn btn-success" ng-show="travel.editMode">Save</button>
+                <button ng-click="editTravel()" class="btn btn-success" ng-hide="travel.editMode" translate>Edit</button>
+                <button ng-click="saveTravel()" class="btn btn-success" ng-show="travel.editMode" translate>Save</button>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <span class="btn btn-primary btn-file">
-                Browse <input type="file" ng-file-select="onTravelImageSelect($files)">
+                <span translate>Browse</span> <input type="file" ng-file-select="onTravelImageSelect($files)">
             </span>
         </div>
     </div>
@@ -71,24 +71,24 @@
                             </button>
                         </div>
                         <div class="form-group">
-                            <input type="text" style="width:250px" maxlength="30" ng-model="property.Title" class="form-control" placeholder="Enter title" />
+                            <input type="text" style="width:250px" maxlength="30" ng-model="property.Title" class="form-control" placeholder="{{'Enter title' | translate}}" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" ng-model="property.Description" rows="8" placeholder="Enter description"></textarea>
+                        <textarea class="form-control" ng-model="property.Description" rows="8" placeholder="{{'Enter description' | translate}}"></textarea>
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode">Edit</button>
-                    <button class="btn btn-success" ng-click="saveProperty($index)" ng-show="property.editMode">Save</button>
-                    <button class="btn btn-danger" ng-click="removeProperty($index)" ng-show="property.editMode">Delete</button>
+                    <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode" translate>Edit</button>
+                    <button class="btn btn-success" ng-click="saveProperty($index)" ng-show="property.editMode" translate>Save</button>
+                    <button class="btn btn-danger" ng-click="removeProperty($index)" ng-show="property.editMode" translate>Delete</button>
                 </div>
             </div>
         </div>
         <div>
             <div class="box box-default">
                 <div class="box-body">
-                    <button class="btn btn-primary btn-large" ng-click="addProperty()">Add property</button>
+                    <button class="btn btn-primary btn-large" ng-click="addProperty()" translate>Add property</button>
                 </div>
             </div>
         </div>
@@ -100,21 +100,21 @@
     <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-header">
-                <h3 class="box-title" app-anchor="Map">Places</h3>
+                <h3 class="box-title" app-anchor="Map" translate>Places</h3>
             </div>
             <div class="box-body">
                 <leaflet id="map" tiles="$root.tiles" markers="map.markers" defaults="map.defaults" center="map.center" controls="$root.controls"></leaflet>
             </div>
             <div class="box-footer">
                 <div ng-show="PlaceAddMode == false">
-                    <button class="btn btn-primary" ng-click="PlaceAddMode = 'marker'" >Add place</button>
+                    <button class="btn btn-primary" ng-click="PlaceAddMode = 'marker'" translate>Add place</button>
                 </div>
                 <div ng-show="PlaceAddMode == 'marker'">
-                    <p>Click on the map to add new place</p>
-                    <button class="btn btn-default" ng-click="PlaceAddMode = false">Cancel</button>
+                    <p translate>Click on the map to add new place</p>
+                    <button class="btn btn-default" ng-click="PlaceAddMode = false" translate>Cancel</button>
                 </div>
                 <div ng-show="PlaceAddMode == 'input'">
-                    <p>Now, fill the information about the place below</p>
+                    <p translate>Now, fill the information about the place below</p>
                 </div>
 
             </div>
@@ -137,7 +137,7 @@
                         </div>
                         <div class="col-md-8">
                             <p ng-bind="marker.place.Description"></p>
-                            <p><strong>Category: </strong><span ng-bind="marker.place.CategoryName"></span></p>
+                            <p><strong><span translate>Category</span>: </strong><span ng-bind="marker.place.CategoryName"></span></p>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                                 <input type="text" 
                                         ng-model="marker.place.Name"
                                         class="form-control" 
-                                        placeholder="Enter name for this place" 
+                                        placeholder="{{'Enter name for this place' | translate}}" 
                                         required />
                             </div>
                         </div>
@@ -161,7 +161,7 @@
 
                             <div class="form-group">
                                 <textarea   class="form-control"
-                                            placeholder="Enter description about the place such as history or interesting facts"
+                                            placeholder="{{'Enter description about the place such as history or interesting facts' | translate}}"
                                             ng-model="marker.place.Description"
                                             rows="3" 
                                             required></textarea>
@@ -171,17 +171,17 @@
                                         ng-model="marker.place.CategoryId"
                                         ng-options="category.Id as category.Name for category in categories"
                                         required>
-                                        <option value='' disabled selected style='display:none;'>Choose category</option>
+                                        <option value='' disabled selected style='display:none;'>{{'Choose category' | translate}}</option>
                                         </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button class="btn btn-success" ng-click="editPlace(marker)" ng-hide="marker.editMode">Edit</button>
-                    <button class="btn btn-default" ng-click="showOnMap(marker)">Show on Map</button>
-                    <button class="btn btn-success" ng-click="savePlace(marker)" ng-show="marker.editMode">Save</button>
-                    <button class="btn btn-danger" ng-click="removePlace(marker)" ng-show="marker.editMode">Delete</button>
+                    <button class="btn btn-success" ng-click="editPlace(marker)" ng-hide="marker.editMode" translate>Edit</button>
+                    <button class="btn btn-default" ng-click="showOnMap(marker)" translate>Show on Map</button>
+                    <button class="btn btn-success" ng-click="savePlace(marker)" ng-show="marker.editMode" translate>Save</button>
+                    <button class="btn btn-danger" ng-click="removePlace(marker)" ng-show="marker.editMode" translate>Delete</button>
                 </div>
             </accordion-group>
         </accordion>

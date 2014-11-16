@@ -29,20 +29,20 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     })
     .state('admin.home', {
         url: "/home",
-        title: "Home",
+        title: "Start",
         controller: "homeController",
         templateUrl: site_prefix + "/app/views/home.html"
     })
     .state('admin.travels', {
         url: "/travels",
-        title: "Travels",
+        title: "Guides",
         controller: "getTravelsController",
         templateUrl: site_prefix + "/app/views/travel/travels.html"
     })
 
     .state('admin.travelshow', {
         url: "/travel/show/:id",
-        title: "Travel",
+        title: "Guide",
         controller: "getTravelController",
         templateUrl: site_prefix + "/app/views/travel/travel.html"
     })

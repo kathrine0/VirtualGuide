@@ -2,12 +2,11 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">Add Places</h3>
+                <h3 class="box-title" translate>Add Places</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <p>
-                    Now it's time to add some places worth seeing in the location. Start adding by clicking
-                    or tapping a place on the map
+                    
                 </p>
             </div>
         </div>
@@ -35,23 +34,27 @@
                 <div class="box-body">
                     <!-- text input -->
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name" translate>Name</label>
                         <input type="text" name="name" ng-model="activeMarker.place.Name" 
                                ng-disabled="activeMarker == null" class="form-control"
-                               placeholder="Enter name for your guide" required />
+                               placeholder="{{'Enter name for this place' | translate}}" required />
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
+                        <label for="description" translate>Description</label>
                         <textarea class="form-control" name="description" 
                                   ng-model="activeMarker.place.Description"
                                   ng-disabled="activeMarker == null" rows="3" 
-                                  placeholder="Enter description" required></textarea>
+                                  placeholder="{{'Enter description about the place such as history or interesting facts' | translate}}" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="name">Category</label>
-                        <select class="form-control" ng-model="activeMarker.place.CategoryId"
+                        <select class="form-control" 
+                                ng-model="activeMarker.place.CategoryId"
                                 ng-options="category.Id as category.Name for category in categories"
-                                ng-disabled="activeMarker == null" required></select>
+                                ng-disabled="activeMarker == null" required>
+                                <option value='' disabled selected style='display:none;'>{{'Choose category' | translate}}</option>
+                         </select>
+                            </div>
                         
                     </div>
                     <div class="form-group">
@@ -61,7 +64,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button ng-click="savePlaces()" class="btn btn-success">Save and continue</button>
+                    <button ng-click="savePlaces()" class="btn btn-success" translate>Save and continue</button>
                 </div>
             </form>
         </div>

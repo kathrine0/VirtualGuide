@@ -2,15 +2,15 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header" ng-hide="travel.editMode">
-                <h3 class="box-title">Hello</h3>
+                <h3 class="box-title"><span translate>Hello</span>!</h3>
             </div><!-- /.box-header -->
 
             <div class="box-body" ng-hide="travel.editMode">
-                <p>In this panel you can add and review your guides.</p>
+                <p>{{'HelloNote' | translate}}</p>
             </div>
 
             <div class="box-footer">
-                <button class="btn btn-primary" ui-sref="admin.travels">View Travels</button>
+                <button class="btn btn-primary" ui-sref="admin.travels" translate>View Travels</button>
             </div>
         </div>
     </div>
