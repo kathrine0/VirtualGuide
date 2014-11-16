@@ -1,6 +1,16 @@
 ﻿'use strict';
 app.controller('loginController', ['$scope', '$state', 'authService', function ($scope, $state, authService) {
 
+    var init = function()
+    {
+        if (authService.authentication.isAuth)
+        {
+            $state.go("admin.home");
+        }
+    }
+
+    init();
+
     $scope.loginData = {
         userName: "",
         password: ""

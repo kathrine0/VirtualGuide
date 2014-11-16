@@ -4,7 +4,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
     var site_prefix = '/VirtualGuide.UI';
 
-    $urlRouterProvider.otherwise("/admin/travels");
+    $urlRouterProvider.otherwise("/admin/home");
 
     $stateProvider
     .state('admin', {
