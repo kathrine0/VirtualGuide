@@ -8,10 +8,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using VirtualGuide.WebService.Providers;
-using VirtualGuide.WebService.Models;
 using VirtualGuide.Models;
 using VirtualGuide.Services.Managers;
+using VirtualGuide.Services.Providers;
 
 namespace VirtualGuide.WebService
 {

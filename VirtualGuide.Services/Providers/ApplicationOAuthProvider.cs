@@ -9,11 +9,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using VirtualGuide.WebService.Models;
 using VirtualGuide.Models;
 using VirtualGuide.Services.Managers;
 
-namespace VirtualGuide.WebService.Providers
+namespace VirtualGuide.Services.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
