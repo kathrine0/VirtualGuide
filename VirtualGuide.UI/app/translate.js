@@ -57,7 +57,7 @@
         'Remove this property': 'Remove this property',
         'Add Places': 'Add Places',
         'CongratulationsPlaces': 'Now it\'s time to add some places worth seeing in the location. Start adding by clicking or tapping a place on the map. You can also use the search box.',
-
+        'NoTravelsMsg': 'It\'s lonely here. Add a new guide using the add guide button.',
 
     });
 
@@ -119,7 +119,7 @@
         'Remove this property': 'Usuń ten atrybut',
         'Add Places': 'Dodaj miejsca',
         'CongratulationsPlaces': 'Teraz dodaj warte zobaczenia miejsca. Rozpocznij klikając w odpowiednie miejsce na mapie. Możesz też skorzystać z wyszukiwarki.',
-
+        'NoTravelsMsg': 'Pusto tutaj. Dodaj nowy przewodnik korzystając z przycisku na górze strony',
 
     });
 

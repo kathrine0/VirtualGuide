@@ -21,7 +21,7 @@
         </div>
     </div><!-- /.box-header -->
     <div class="box-body table-responsive">
-        <table class="table table-hover table-responsive">
+        <table class="table table-hover table-responsive" ng-show="travels.length">
             <tr>
                 <th translate>Icon</th>
                 <th translate>Name</th>
@@ -39,6 +39,7 @@
                 <td><button ng-click="showTravel(travel.Id)" class="btn btn-small btn-primary" translate>Show</button></td>
             </tr>
         </table>
+        <p ng-hide="travels.length" translate="NoTravelsMsg"></p>
     </div><!-- /.box-body -->
     
 </div><!-- /.box -->
