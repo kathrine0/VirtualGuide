@@ -66,7 +66,9 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
                 successCallback(item);
             }
         }, function error(item) {
-
+            if (errorCallback != undefined) {
+                errorCallback(item);
+            }
         });
     }
 

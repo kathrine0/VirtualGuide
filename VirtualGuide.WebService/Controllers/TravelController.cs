@@ -130,18 +130,21 @@ namespace VirtualGuide.WebService.Controllers
 
 
         [Route("CreatorTravel")]
+        [ResponseType(typeof(CreatorTravelViewModel))]
         [HttpPost]
-        public HttpResponseMessage PostTravel(CreatorTravelViewModel travel)
+        public IHttpActionResult PostTravel(CreatorTravelViewModel travel)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                //return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
 
             try
             {
                 CreatorTravelViewModel item = tr.Add(travel);
-                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, item);
+                //return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, item);
+                return CreatedAtRoute("CreatorTravel", new { id = item.Id }, item);
             }
             catch (HttpResponseException)
             {
@@ -155,17 +158,22 @@ namespace VirtualGuide.WebService.Controllers
 
         [Route("CreatorTravel/{id}")]
         [HttpPut]
-        public HttpResponseMessage PutTravel(int id, SimpleCreatorTravelViewModel travel)
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutTravel(int id, SimpleCreatorTravelViewModel travel)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
+            }
+            if (id != travel.Id)
+            {
+                return BadRequest();
             }
 
             try
             {
                 tr.Update(id, travel);
-                return Request.CreateResponse<SimpleCreatorTravelViewModel>(HttpStatusCode.Created, travel);
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch (HttpResponseException)
             {
@@ -173,7 +181,7 @@ namespace VirtualGuide.WebService.Controllers
             }
             catch
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
         }
 

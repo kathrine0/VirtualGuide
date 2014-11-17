@@ -118,10 +118,12 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 imageToUpload = null;
             }
 
-            delete $scope.travel.oldValue;
 
-            travelService.updateItem($scope.travel);
-            $scope.travel.editMode = false;
+            travelService.updateItem($scope.travel,
+                function (item) { //success
+                    delete $scope.travel.oldValue;
+                    $scope.travel.editMode = false;
+                });
 
         };
 
@@ -306,6 +308,12 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
             }
 
         });
+
+        //$rootScope.$on('errors', function handler(obj) {
+        //    //handle error
+        //    console.log("error:", obj)
+
+        //});
 
         //#endregion scope events
         

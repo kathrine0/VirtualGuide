@@ -17,7 +17,11 @@
                 <div class="form-group">
                     <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="{{'Enter name for your guide' | translate }}" />
                 </div>
-                <div class="form-group">
+                <div ng-class="$root.errors['travel.Description'] ? 'has-error form-group' : 'form-group' ">
+                    <label ng-show="$root.errors['travel.Description']">
+                        <i class="fa fa-times-circle-o"></i>
+                        <span ng-bind="$root.errors['travel.Description'][0]"></span>
+                    </label>
                     <textarea class="form-control" ng-model="travel.Description" rows="3" placeholder="{{'Enter short description' | translate}}"></textarea>
                 </div>
                 <div class="form-group">
