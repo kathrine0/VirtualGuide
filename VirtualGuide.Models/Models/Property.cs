@@ -17,6 +17,7 @@ namespace VirtualGuide.Models
         
         [Required]
         public string Description { get; set; }
+
         public int Order { get; set; }
         [Required]
         public int TravelId { get; set; }

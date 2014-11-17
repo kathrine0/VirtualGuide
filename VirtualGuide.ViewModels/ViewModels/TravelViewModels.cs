@@ -14,18 +14,21 @@ namespace VirtualGuide.ViewModels
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(30)]
         public string Name { get; set; }
 
         [Required]
-        [DataType(DataType.MultilineText)]
+        [StringLength(100)]
         public string Description { get; set; }
 
         [Required]
-        //[RegularExpression(@"^[a-z]{2}-[A-Z]{2}$")]
+        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
         public string Language { get; set; }
 
+        [Required]
         public double Price { get; set; }
+
+        [Required]
         public string ImageSrc { get; set; }
 
     }
@@ -37,8 +40,12 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(30)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(100)]
         public string Description { get; set; }
 
         public virtual IList<MobilePlaceViewModel> Places { get; set; }
@@ -47,10 +54,20 @@ namespace VirtualGuide.ViewModels
 
         public virtual IList<BasicPropertyViewModel> Properties { get; set; }
 
+        [Required]
+        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
         public string Language { get; set; }
+
+        [Required]
         public string ImageSrc { get; set; }
+
+        [Required]
         public double Latitude { get; set; }
+
+        [Required]
         public double Longitude { get; set; }
+
+        [Required]
         public double ZoomLevel { get; set; }
     }
 
@@ -61,8 +78,12 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(30)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(100)]
         public string Description { get; set; }
 
         public virtual IList<BasicPlaceViewModel> Places { get; set; }
@@ -71,12 +92,23 @@ namespace VirtualGuide.ViewModels
 
         public virtual IList<BasicPropertyViewModel> Properties { get; set; }
 
+        [Required]
         public double Price { get; set; }
 
+        [Required]
+        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
         public string Language { get; set; }
+
+        [Required]
         public string ImageSrc { get; set; }
+
+        [Required]
         public double Latitude { get; set; }
+
+        [Required]
         public double Longitude { get; set; }
+
+        [Required]
         public double ZoomLevel { get; set; }
      
     }
@@ -87,13 +119,32 @@ namespace VirtualGuide.ViewModels
     public class SimpleCreatorTravelViewModel
     {
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(30)]
         public string Name { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Description { get; set; }
+
+        [Required]
         public double Price { get; set; }
+
+        [Required]
+        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
         public string Language { get; set; }
+
+        [Required]
         public string ImageSrc { get; set; }
+
+        [Required]
         public double Latitude { get; set; }
+
+        [Required]
         public double Longitude { get; set; }
+
+        [Required]
         public double ZoomLevel { get; set; }
 
     }
