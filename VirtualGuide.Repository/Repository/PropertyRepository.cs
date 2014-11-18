@@ -18,16 +18,9 @@ namespace VirtualGuide.Repository
             //todo check if user is permitted
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                IQueryable<Property> items = db.Properties.Where(x => x.Travel.Id == travelId);
+                IList<Property> items = db.Properties.Where(x => x.Travel.Id == travelId).ToList();
            
-                var result = new List<BasicPropertyViewModel>();
-
-                foreach (var item in items)
-                {
-                    result.Add(Mapper.Map<BasicPropertyViewModel>(item));
-                }
-
-                return result;
+                return Mapper.Map <IList<BasicPropertyViewModel>>(items);
             }
         }
 

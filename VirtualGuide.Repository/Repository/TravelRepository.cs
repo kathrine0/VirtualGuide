@@ -21,7 +21,7 @@ namespace VirtualGuide.Repository
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 IList<Travel> items = db.Travels.Where(x => x.ApprovalStatus == true).ToList();
-            
+
                 return Mapper.Map<IList<BasicTravelViewModel>>(items);
             }
 
@@ -30,16 +30,9 @@ namespace VirtualGuide.Repository
         public IList<CustomerTravelViewModel> GetOwnedTravelList(string userEmail)
         {
             User user = findUserByEmail(userEmail);
-            ICollection<User_Purchased_Travel> items = user.PurchasedTravels;
+            IList<User_Purchased_Travel> items = user.PurchasedTravels.ToList();
 
-            var result = new List<CustomerTravelViewModel>();
-
-            foreach (var item in items)
-            {
-                result.Add(Mapper.Map<CustomerTravelViewModel>(item.Travel));
-            }
-
-            return result;
+            return Mapper.Map<IList<CustomerTravelViewModel>>(items);
 
         }
 
@@ -49,7 +42,7 @@ namespace VirtualGuide.Repository
             {
                 User user = findUserByEmail(userEmail);
                 IList<Travel> items = db.Travels.Where(x => x.CreatorId == user.Id).ToList();
-                
+
                 return Mapper.Map<IList<BasicTravelViewModel>>(items);
             }
 
@@ -115,7 +108,10 @@ namespace VirtualGuide.Repository
             //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Travel travel = Mapper.Map<Travel>(item);
+                Travel oldTravel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+
+                Travel travel = Mapper.Map<SimpleCreatorTravelViewModel, Travel>(item, oldTravel);
+                //Travel travel = Mapper.Map<Travel>(item);
                 var entry = db.Entry(travel);
                 entry.State = EntityState.Modified;
 

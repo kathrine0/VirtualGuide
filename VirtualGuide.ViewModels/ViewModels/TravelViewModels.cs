@@ -13,22 +13,24 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(30, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(100, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Description { get; set; }
 
-        [Required]
-        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [RegularExpression("^[a-z]{2}_[A-Z]{2}$",
+            ErrorMessageResourceName = "InvalidLanguageFormat",
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Language { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string ImageSrc { get; set; }
 
     }
@@ -40,12 +42,12 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(30, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(100, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Description { get; set; }
 
         public virtual IList<MobilePlaceViewModel> Places { get; set; }
@@ -54,20 +56,22 @@ namespace VirtualGuide.ViewModels
 
         public virtual IList<BasicPropertyViewModel> Properties { get; set; }
 
-        [Required]
-        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [RegularExpression("^[a-z]{2}_[A-Z]{2}$",
+            ErrorMessageResourceName = "InvalidLanguageFormat",
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Language { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string ImageSrc { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Latitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Longitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double ZoomLevel { get; set; }
     }
 
@@ -78,12 +82,12 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(30, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(100, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Description { get; set; }
 
         public virtual IList<BasicPlaceViewModel> Places { get; set; }
@@ -92,23 +96,25 @@ namespace VirtualGuide.ViewModels
 
         public virtual IList<BasicPropertyViewModel> Properties { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Price { get; set; }
 
-        [Required]
-        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [RegularExpression("^[a-z]{2}_[A-Z]{2}$",
+            ErrorMessageResourceName = "InvalidLanguageFormat",
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Language { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string ImageSrc { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Latitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Longitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double ZoomLevel { get; set; }
      
     }
@@ -120,31 +126,41 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(30)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(30, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessageResourceName = "ValueNotNull",
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(100, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Price { get; set; }
 
-        [Required]
-        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [RegularExpression("^[a-z]{2}_[A-Z]{2}$", 
+            ErrorMessageResourceName="InvalidLanguageFormat",
+            ErrorMessageResourceType=typeof(Common.Translation.Resources))]
         public string Language { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string ImageSrc { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Latitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Longitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", 
+            ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double ZoomLevel { get; set; }
 
     }

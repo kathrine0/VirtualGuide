@@ -47,7 +47,6 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
 
         var markerOldValues = [];
         var lastPlaceId = 0;
-
         //#endregion local variables
 
         //#region scope variables
@@ -64,6 +63,8 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 scrollWheelZoom: false,
             }
         };
+
+        $scope.anyEditInProgress = false;
 
         $scope.icons = propertyService.getIcons();
 
@@ -108,6 +109,8 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
             };
             $scope.travel.Image = placeholder;
             $scope.travel.editMode = true;
+            $scope.anyEditInProgress = true;
+            $rootScope.errors = {};
         };
 
         $scope.saveTravel = function () {
@@ -123,6 +126,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 function (item) { //success
                     delete $scope.travel.oldValue;
                     $scope.travel.editMode = false;
+                    $scope.anyEditInProgress = false;
                 });
 
         };
@@ -137,6 +141,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
             delete $scope.travel.oldValue;
 
             $scope.travel.editMode = false;
+            $scope.anyEditInProgress = false;
         };
 
         //#endregion scope travel actions
@@ -159,25 +164,34 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 $scope.travel.Properties[index].oldValue = {};
                 angular.copy($scope.travel.Properties[index], $scope.travel.Properties[index].oldValue);
                 $scope.travel.Properties[index].editMode = true;
+                $scope.anyEditInProgress = true;
+                $rootScope.errors = {};
             };
 
             $scope.saveProperty = function (index) {
 
                 if ($scope.travel.Properties[index].isNew) {
-                    propertyService.createItem($scope.travel.Properties[index]);
-                    $scope.travel.Properties[index].isNew = false;
+                    propertyService.createItem($scope.travel.Properties[index],
+                    function (item) { //success
+                        $scope.travel.Properties[index].isNew = false;
+                        $scope.travel.Properties[index].editMode = false;
+                        $scope.anyEditInProgress = false;
+                        delete $scope.travel.Properties[index].oldValue;
+                    });
                 } else {
-                    propertyService.updateItem($scope.travel.Properties[index]);
+                    propertyService.updateItem($scope.travel.Properties[index],
+                    function (item) { //success
+                        $scope.travel.Properties[index].editMode = false;
+                        delete $scope.travel.Properties[index].oldValue;
+                    });
                 }
-
-                $scope.travel.Properties[index].editMode = false;
-                delete $scope.travel.Properties[index].oldValue;
             };
 
             $scope.cancelPropertyEdit = function (index) {
                 angular.copy($scope.travel.Properties[index].oldValue, $scope.travel.Properties[index]);
                 delete $scope.travel.Properties[index].oldValue;
                 $scope.travel.Properties[index].editMode = false;
+                $scope.anyEditInProgress = false;
             };
 
             $scope.removeProperty = function (index) {
@@ -221,6 +235,8 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 marker.editMode = true;
                 marker.icon = placeService.activeIcon();
                 marker.draggable = true;
+                $scope.anyEditInProgress = true;
+                $rootScope.errors = {};
             }
 
             $scope.savePlace = function (marker) {
@@ -241,14 +257,18 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                         delete marker.icon;
                         marker.isNew = false;
                         marker.draggable = false;
+                        marker.editMode = false;
+                        $scope.anyEditInProgress = false;
                         $scope.PlaceAddMode = false;
                     });
                 }
                 else {
-                    placeService.updateItem(marker);
+                    placeService.updateItem(marker,
+                    function (item) { //success
+                        marker.editMode = false;
+                        $scope.anyEditInProgress = false;
+                    });
                 }
-
-                marker.editMode = false;
             };
 
             $scope.removePlace = function (marker) {
@@ -368,8 +388,12 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$state', 'travel
         $scope.createNewTravel = function () {
             var travel = $scope.travel;
             travel.ZoomLevel = 12;
-            travel.Latitude = $scope.markers[0].lat;
-            travel.Longitude = $scope.markers[0].lng;
+
+            if ($scope.markers[0])
+            {
+                travel.Latitude = $scope.markers[0].lat;
+                travel.Longitude = $scope.markers[0].lng;
+            }
 
             if (imageToUpload !== null) {
                 var randomName = uploadService.randomName($scope.travel.Name, imageToUpload.name);

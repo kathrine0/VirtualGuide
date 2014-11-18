@@ -64,7 +64,7 @@ namespace VirtualGuide.Models
         /// Language code in format of pl_PL
         /// </summary>
         [Required]
-        [RegularExpression("^[a-z]{2}-[A-Z]{2}$")]
+        [RegularExpression("^[a-z]{2}_[A-Z]{2}$")]
         public string Language { get; set; }
 
         [Required]

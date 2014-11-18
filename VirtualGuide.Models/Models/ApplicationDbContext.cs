@@ -109,8 +109,16 @@ namespace VirtualGuide.Models
                 }
             }
 
-            return base.SaveChanges();
+            try
+            {
+                return base.SaveChanges();
+
+            } catch (Exception e)
+            {
+                throw;
+            }
         }
+
 
     }
 }

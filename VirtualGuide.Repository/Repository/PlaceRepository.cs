@@ -31,7 +31,7 @@ namespace VirtualGuide.Repository
             {
                 IList<Place> items = db.Places.Where(x => x.TravelId == travelId).ToList();
 
-                IList<BasicPlaceViewModel> result = Mapper.Map<List<BasicPlaceViewModel>>(items);
+                IList<BasicPlaceViewModel> result = Mapper.Map<IList<BasicPlaceViewModel>>(items);
 
                 return result;
             }

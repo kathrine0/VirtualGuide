@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtualGuide.Common\VirtualGuide.Common.csproj">
+      <Project>{863d678d-7271-4c1e-8c23-d4182a2b98b8}</Project>
+      <Name>VirtualGuide.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualGuide.Models\VirtualGuide.Models.csproj">
       <Project>{5cbb970a-9998-4f18-98f5-6c82f92fb3e0}</Project>
       <Name>VirtualGuide.Models</Name>

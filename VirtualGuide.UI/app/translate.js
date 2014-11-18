@@ -58,7 +58,10 @@
         'Add Places': 'Add Places',
         'CongratulationsPlaces': 'Now it\'s time to add some places worth seeing in the location. Start adding by clicking or tapping a place on the map. You can also use the search box.',
         'NoTravelsMsg': 'It\'s lonely here. Add a new guide using the add guide button.',
-
+        'This value cannot be null': 'This value cannot be null',
+        'Invalid language': 'Invalid language',
+        'Provided string is too long': 'Provided string is too long',
+        'Choose icon': 'Choose icon'
     });
 
     $translateProvider.translations('pl', {
@@ -120,6 +123,12 @@
         'Add Places': 'Dodaj miejsca',
         'CongratulationsPlaces': 'Teraz dodaj warte zobaczenia miejsca. Rozpocznij klikając w odpowiednie miejsce na mapie. Możesz też skorzystać z wyszukiwarki.',
         'NoTravelsMsg': 'Pusto tutaj. Dodaj nowy przewodnik korzystając z przycisku na górze strony',
+        'This value cannot be null': 'Ta wartość nie może być pusta',
+        'Invalid language': 'Nieprawidłowy język',
+        'Provided string is too long': 'Zbyt długa wartość',
+        'Choose icon': 'Wybierz ikonę',
+
+
 
     });
 

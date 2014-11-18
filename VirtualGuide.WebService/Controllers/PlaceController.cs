@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using VirtualGuide.Repository;
 using VirtualGuide.ViewModels;
@@ -17,11 +18,10 @@ namespace VirtualGuide.WebService.Controllers
         private PlaceRepository pr = new PlaceRepository();
 
         [Route("Places/Categories/{language}")]
-        public HttpResponseMessage GetPlaceCategories(string language)
+        [HttpGet]
+        public IList<PlaceCategoryViewModel> GetPlaceCategories(string language)
         {
-            IList<PlaceCategoryViewModel> categories = pr.GetPlaceCategories(language);
-
-            return Request.CreateResponse<IList<PlaceCategoryViewModel>>(HttpStatusCode.OK, categories);
+            return pr.GetPlaceCategories(language);
 
         }
 
@@ -33,13 +33,12 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Places/{travelId}")]
         [HttpGet]
-        public HttpResponseMessage GetPlaces(int travelId)
+        public IList<BasicPlaceViewModel> GetPlaces(int travelId)
         {
             //todo: authorize creator
             try
             {
-                IList<BasicPlaceViewModel> places = pr.GetAllForTravel(travelId);
-                return Request.CreateResponse(HttpStatusCode.OK, places);
+                return pr.GetAllForTravel(travelId);
             }
             catch
             {
@@ -54,22 +53,23 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Places")]
         [HttpPost]
-        public HttpResponseMessage PostPlaces(IList<BasicPlaceViewModel> places)
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PostPlaces(IList<BasicPlaceViewModel> places)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
 
 
             try
             {
                 pr.AddMany(places);
-                return Request.CreateResponse(HttpStatusCode.Created);
+                return StatusCode(HttpStatusCode.Created);
             }
             catch
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
 
         }
@@ -81,22 +81,24 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Places")]
         [HttpPut]
-        public HttpResponseMessage PutPlaces(IList<BasicPlaceViewModel> places)
+        [ResponseType(typeof(void))]
+
+        public IHttpActionResult PutPlaces(IList<BasicPlaceViewModel> places)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
 
 
             try
             {
                 pr.UpdateMany(places);
-                return Request.CreateResponse(HttpStatusCode.Created);
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
 
         }
@@ -108,21 +110,22 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Place")]
         [HttpPost]
-        public HttpResponseMessage PostPlace(BasicPlaceViewModel place)
+        [ResponseType(typeof(void))]        
+        public IHttpActionResult PostPlace(BasicPlaceViewModel place)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
 
             try
             {
                 var item = pr.Add(place);
-                return Request.CreateResponse(HttpStatusCode.Created, item);
+                return StatusCode(HttpStatusCode.Created);
             }
             catch
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
         }
 
@@ -133,21 +136,22 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Place/{id}")]
         [HttpPut]
-        public HttpResponseMessage PutPlace(int id, BasicPlaceViewModel place)
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutPlace(int id, BasicPlaceViewModel place)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
+                return BadRequest(ModelState);
             }
 
             try
             {
                 pr.Update(id, place);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return StatusCode(HttpStatusCode.NoContent);
             }
             catch
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
         }
     }

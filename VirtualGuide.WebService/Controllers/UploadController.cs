@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VirtualGuide.Common.Helpers;
 
 namespace VirtualGuide.WebService.Controllers
@@ -20,22 +21,19 @@ namespace VirtualGuide.WebService.Controllers
        
         [HttpPost] // This is from System.Web.Http, and not from System.Web.Mvc
         [Route("Upload")]
-        public HttpResponseMessage Upload()
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Upload()
         {
             try
             {
                 HttpFileCollection files = HttpContext.Current.Request.Files;
                 NameValueCollection form = HttpContext.Current.Request.Form;
                 FileHelper.UploadFiles(files, form);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Ok(HttpStatusCode.NoContent);
             }
-            catch(HttpResponseException)
+            catch (Exception e)
             {
-                throw;
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
 
 

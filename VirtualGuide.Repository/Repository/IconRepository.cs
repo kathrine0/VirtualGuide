@@ -15,16 +15,9 @@ namespace VirtualGuide.Repository
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                IQueryable<Icon> icons = db.Icon;
+                IList<Icon> icons = db.Icon.ToList();
 
-                var result = new List<IconViewModel>();
-
-                foreach (var icon in icons)
-                {
-                    result.Add(Mapper.Map<IconViewModel>(icon));
-                }
-
-                return result;
+                return Mapper.Map<IList<IconViewModel>>(icons);
             }
 
         }

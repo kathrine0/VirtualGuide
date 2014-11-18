@@ -10,13 +10,13 @@ namespace VirtualGuide.ViewModels
     public class IconViewModel
     {
         public int Id { get; set; }
-        [Required]
-        [StringLength(255)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(255, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Name { get; set; }
-        [Required]
-        [StringLength(10)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(10, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Symbol { get; set; }
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Path { get; set; }
     }
 }

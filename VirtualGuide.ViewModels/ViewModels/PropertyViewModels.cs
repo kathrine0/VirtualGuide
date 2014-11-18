@@ -11,21 +11,21 @@ namespace VirtualGuide.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(35)]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
+        [StringLength(35, ErrorMessageResourceName="StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public int TravelId { get; set; }
 
         public int Order { get; set; }
 
         public IconViewModel Icon { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ChooseIcon", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public int IconId { get; set; }
     }
 }

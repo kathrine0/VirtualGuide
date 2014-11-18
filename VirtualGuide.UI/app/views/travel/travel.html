@@ -14,22 +14,22 @@
                 <div class="box-tools pull-right">
                     <button class="btn btn-default btn-sm" ng-click="cancelTravelEdit()" data-original-title="cancel"><i class="fa fa-times"></i></button>
                 </div>
-                <div class="form-group">
+                <div ng-class="$root.errors['travel.Name'] ? 'has-error form-group' : 'form-group' ">
+
+                    <span ng-bind-html="'travel.Name' | errorLabel" ></span>
                     <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="{{'Enter name for your guide' | translate }}" />
                 </div>
                 <div ng-class="$root.errors['travel.Description'] ? 'has-error form-group' : 'form-group' ">
-                    <label ng-show="$root.errors['travel.Description']">
-                        <i class="fa fa-times-circle-o"></i>
-                        <span ng-bind="$root.errors['travel.Description'][0]"></span>
-                    </label>
+                    <span ng-bind-html="'travel.Description' | errorLabel" ></span>
                     <textarea class="form-control" ng-model="travel.Description" rows="3" placeholder="{{'Enter short description' | translate}}"></textarea>
                 </div>
-                <div class="form-group">
+                <div ng-class="$root.errors['travel.Price'] ? 'has-error form-group' : 'form-group' ">
+                    <span ng-bind-html="'travel.Price' | errorLabel" ></span>
                     <input type="number" ng-model="travel.Price" class="form-control" placeholder="{{'Enter price' | translate}}" />
                 </div>
             </div>
             <div class="box-footer">
-                <button ng-click="editTravel()" class="btn btn-success" ng-hide="travel.editMode" translate>Edit</button>
+                <button ng-click="editTravel()" class="btn btn-success" ng-hide="travel.editMode || anyEditInProgress" translate>Edit</button>
                 <button ng-click="saveTravel()" class="btn btn-success" ng-show="travel.editMode" translate>Save</button>
             </div>
         </div>
@@ -69,21 +69,24 @@
                         <button class="btn btn-default btn-sm" ng-click="property.isNew ? removeProperty($index) : cancelPropertyEdit($index)" data-original-title="cancel"><i class="fa fa-times"></i></button>
                     </div>
                     <div class="form-group form-inline">
-                        <div class="form-group">
+                        <div ng-class="$root.errors['property.IconId'] ? 'has-error form-group' : 'form-group' ">
+                            <span ng-bind-html="'property.IconId' | errorLabel" ></span>
                             <button class="btn btn-default choose-icon-btn" ng-click="chooseIcon($index)">
                                 <span ng-bind-html="property.Icon.Path | imageSource: 'icon-thumb'"></span>
                             </button>
                         </div>
-                        <div class="form-group">
+                        <div ng-class="$root.errors['property.Title'] ? 'has-error form-group' : 'form-group' ">
+                            <span ng-bind-html="'property.Title' | errorLabel" ></span>
                             <input type="text" style="width:250px" maxlength="30" ng-model="property.Title" class="form-control" placeholder="{{'Enter title' | translate}}" />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div ng-class="$root.errors['property.Description'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'property.Description' | errorLabel" ></span>
                         <textarea class="form-control" ng-model="property.Description" rows="8" placeholder="{{'Enter description' | translate}}"></textarea>
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode" translate>Edit</button>
+                    <button class="btn btn-success" ng-click="editProperty($index)" ng-hide="property.editMode|| anyEditInProgress" translate>Edit</button>
                     <button class="btn btn-success" ng-click="saveProperty($index)" ng-show="property.editMode" translate>Save</button>
                     <button class="btn btn-danger" ng-click="removeProperty($index)" ng-show="property.editMode" translate>Delete</button>
                 </div>
@@ -148,7 +151,8 @@
                 <div class="box-body" ng-show="marker.editMode">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
+                            <div ng-class="$root.errors['place.Name'] ? 'has-error form-group' : 'form-group' ">
+                                <span ng-bind-html="'place.Name' | errorLabel" ></span>
                                 <input type="text" 
                                         ng-model="marker.place.Name"
                                         class="form-control" 
@@ -163,14 +167,16 @@
                         </div>
                         <div class="col-md-8">
 
-                            <div class="form-group">
+                            <div ng-class="$root.errors['place.Description'] ? 'has-error form-group' : 'form-group' ">
+                                <span ng-bind-html="'place.Description' | errorLabel" ></span>
                                 <textarea   class="form-control"
                                             placeholder="{{'Enter description about the place such as history or interesting facts' | translate}}"
                                             ng-model="marker.place.Description"
                                             rows="3" 
                                             required></textarea>
                             </div>
-                            <div class="form-group">
+                            <div ng-class="$root.errors['place.CategoryId'] ? 'has-error form-group' : 'form-group' ">
+                                <span ng-bind-html="'place.CategoryId' | errorLabel" ></span>
                                 <select class="form-control" 
                                         ng-model="marker.place.CategoryId"
                                         ng-options="category.Id as category.Name for category in categories"
@@ -182,7 +188,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button class="btn btn-success" ng-click="editPlace(marker)" ng-hide="marker.editMode" translate>Edit</button>
+                    <button class="btn btn-success" ng-click="editPlace(marker)" ng-hide="marker.editMode || anyEditInProgress" translate>Edit</button>
                     <button class="btn btn-default" ng-click="showOnMap(marker)" translate>Show on Map</button>
                     <button class="btn btn-success" ng-click="savePlace(marker)" ng-show="marker.editMode" translate>Save</button>
                     <button class="btn btn-danger" ng-click="removePlace(marker)" ng-show="marker.editMode" translate>Delete</button>

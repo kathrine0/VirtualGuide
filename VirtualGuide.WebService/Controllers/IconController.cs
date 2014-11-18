@@ -17,11 +17,9 @@ namespace VirtualGuide.WebService.Controllers
 
         [Route("Icon")]
         [HttpGet]
-        public HttpResponseMessage GetIcons()
+        public IList<IconViewModel> GetIcons()
         {
-            IList<IconViewModel> icons = ir.GetIcons();
-
-            return Request.CreateResponse<IList<IconViewModel>>(HttpStatusCode.OK, icons);
+            return ir.GetIcons();
 
         }
     }

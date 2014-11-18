@@ -15,12 +15,11 @@ app.factory('errorInterceptorService', ['$q', '$rootScope', function ($q, $rootS
                     errors[key] = [];
                     for (var i = 0; i < rejection.data.ModelState[key].length; i++) {
                         errors[key].push(rejection.data.ModelState[key][i]);
+                        console.log(rejection.data.ModelState[key][i]);
                     }
                 }
 
                 $rootScope.errors = errors;
-                console.log($rootScope.errors['travel.Description'][0]);
-                //$rootScope.$broadcast('errors', { 'errors': errors });
             }
             return $q.reject(rejection);
         }

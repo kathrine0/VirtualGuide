@@ -28,18 +28,13 @@ namespace VirtualGuide.WebService.Controllers
         [AllowAnonymous]
         [Route("Travels")]
         [HttpGet]
-        public HttpResponseMessage GetTravels()
+        public IList<BasicTravelViewModel> GetTravels()
         {         
             try
             {
-                IList<BasicTravelViewModel> travels = tr.GetApprovedTravelList();
-                return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+                return tr.GetApprovedTravelList();
             } 
-            catch(HttpResponseException)
-            {
-                throw;
-            }
-            catch
+            catch (Exception e)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
@@ -52,20 +47,14 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("OwnedTravels")]
         [HttpGet]
-        public HttpResponseMessage GetOwnedTravels()
+        public IList<CustomerTravelViewModel> GetOwnedTravels()
         {
             try
             {
                 string userName = User.Identity.Name;
-                IList<CustomerTravelViewModel> travels = tr.GetOwnedTravelList(userName);
-    
-                return Request.CreateResponse<IList<CustomerTravelViewModel>>(HttpStatusCode.OK, travels);
-            } 
-            catch(HttpResponseException)
-            {
-                throw;
+                return tr.GetOwnedTravelList(userName);
             }
-            catch
+            catch (Exception e)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
@@ -78,20 +67,14 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("CreatorTravel")]
         [HttpGet]
-        public HttpResponseMessage GetCreatedTravels()
+        public IList<BasicTravelViewModel> GetCreatedTravels()
         {
             try
             {
                 string userName = User.Identity.Name;
-                IList<BasicTravelViewModel> travels = tr.GetCreatedTravelList(userName);
-
-                return Request.CreateResponse<IList<BasicTravelViewModel>>(HttpStatusCode.OK, travels);
+                return tr.GetCreatedTravelList(userName);
             }
-            catch (HttpResponseException)
-            {
-                throw;
-            }
-            catch
+            catch (Exception e)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
@@ -105,26 +88,23 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("CreatorTravel/{id}")]
         [HttpGet]
-        public HttpResponseMessage GetTravel(int id)
+        [ResponseType(typeof(CreatorTravelViewModel))]
+        public IHttpActionResult GetTravel(int id)
         {
             try
             {
                 string userName = User.Identity.Name;
                 CreatorTravelViewModel travel = tr.GetTravelDetailsForCreator(id, userName);
 
-                return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.OK, travel);
-            }
-            catch (HttpResponseException)
-            {
-                throw;
+                return Ok(travel);
             }
             catch (ObjectNotFoundException)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             }
-            catch
+            catch (Exception e)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
         }
 
@@ -136,23 +116,17 @@ namespace VirtualGuide.WebService.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //return Request.CreateResponse<ModelStateDictionary>(HttpStatusCode.BadRequest, ModelState);
                 return BadRequest(ModelState);
             }
 
             try
             {
                 CreatorTravelViewModel item = tr.Add(travel);
-                //return Request.CreateResponse<CreatorTravelViewModel>(HttpStatusCode.Created, item);
-                return CreatedAtRoute("CreatorTravel", new { id = item.Id }, item);
+                return Created("CreatorTravel/{id}", item);
             }
-            catch (HttpResponseException)
+            catch (Exception e)
             {
-                throw;
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
         }
 
@@ -175,81 +149,11 @@ namespace VirtualGuide.WebService.Controllers
                 tr.Update(id, travel);
                 return StatusCode(HttpStatusCode.NoContent);
             }
-            catch (HttpResponseException)
-            {
-                throw;
-            }
-            catch
+            catch (Exception e)
             {
                 return BadRequest();
             }
         }
-
-        // PUT: api/Travels/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutTravel(int id, Travel travel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (id != travel.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    db.Entry(travel).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!TravelExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
-
-        //POST: api/Travels
-        //[ResponseType(typeof(Travel))]
-        //public IHttpActionResult PostTravel(Travel travel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    db.Travels.Add(travel);
-        //    db.SaveChanges();
-
-        //    return CreatedAtRoute("DefaultApi", new { id = travel.Id }, travel);
-        //}
-
-        //// DELETE: api/Travels/5
-        //[ResponseType(typeof(Travel))]
-        //public IHttpActionResult DeleteTravel(int id)
-        //{
-        //    Travel travel = db.Travels.Find(id);
-        //    if (travel == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    db.Travels.Remove(travel);
-        //    db.SaveChanges();
-
-        //    return Ok(travel);
-        //}
 
 
     }
