@@ -120,6 +120,9 @@
   <data name="ChooseIcon" xml:space="preserve">
     <value>Choose icon</value>
   </data>
+  <data name="InvalidDataType" xml:space="preserve">
+    <value>Invalid Data Type</value>
+  </data>
   <data name="InvalidLanguageFormat" xml:space="preserve">
     <value>Invalid language</value>
   </data>

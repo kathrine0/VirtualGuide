@@ -95,7 +95,7 @@
         <div>
             <div class="box box-default">
                 <div class="box-body">
-                    <button class="btn btn-primary btn-large" ng-click="addProperty()" translate>Add property</button>
+                    <button class="btn btn-primary btn-large" ng-click="addProperty()" ng-hide="anyEditInProgress" translate>Add property</button>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
                 <leaflet id="map" tiles="$root.tiles" markers="map.markers" defaults="map.defaults" center="map.center" controls="$root.controls"></leaflet>
             </div>
             <div class="box-footer">
-                <div ng-show="PlaceAddMode == false">
+                <div ng-show="PlaceAddMode == false && !anyEditInProgress">
                     <button class="btn btn-primary" ng-click="PlaceAddMode = 'marker'" translate>Add place</button>
                 </div>
                 <div ng-show="PlaceAddMode == 'marker'">

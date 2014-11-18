@@ -61,7 +61,8 @@
         'This value cannot be null': 'This value cannot be null',
         'Invalid language': 'Invalid language',
         'Provided string is too long': 'Provided string is too long',
-        'Choose icon': 'Choose icon'
+        'Choose icon': 'Choose icon',
+        'Invalid Data Type': 'Invalid Data Type'
     });
 
     $translateProvider.translations('pl', {
@@ -127,6 +128,7 @@
         'Invalid language': 'Nieprawidłowy język',
         'Provided string is too long': 'Zbyt długa wartość',
         'Choose icon': 'Wybierz ikonę',
+        'Invalid Data Type': 'Nieprawidłowy format danych',
 
 
 

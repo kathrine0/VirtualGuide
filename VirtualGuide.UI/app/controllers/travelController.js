@@ -2,30 +2,6 @@
 app.controller('getTravelsController', ['$scope', '$state', 'travelService',
     function ($scope, $state, travelService) {
     
-    //var successCallback = function (data, status, headers, config) {
-    //    notificationFactory.success();
-
-    //    return travelsService.getTravels().success(getTravelsSuccessCallback).error(errorCallback);
-    //};
-
-    //var successPostCallback = function (data, status, headers, config) {
-    //    successCallback(data, status, headers, config).success(function () {
-    //        $scope.toggleAddMode();
-    //        $scope.travel = {};
-    //    });
-    //};
-
-    //var getTravelsSuccessCallback = function (data, status) {
-    //    $scope.travels = data;
-    //};
-
-    //var errorCallback = function (data, status, headers, config) {
-    //    notificationFactory.error(data.ExceptionMessage);
-    //};
-
-    //travelsService.getTravels().success(getTravelsSuccessCallback).error(errorCallback);
-
-        
         $scope.travels = travelService.getAllForCreator();
 
         $scope.showTravel = function (id) {
@@ -158,6 +134,8 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                     editMode: true,
                     isNew: true
                 });
+                $scope.anyEditInProgress = true;
+                $rootScope.errors = {};
             };
 
             $scope.editProperty = function (index) {
@@ -259,6 +237,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                         marker.draggable = false;
                         marker.editMode = false;
                         $scope.anyEditInProgress = false;
+                        $rootScope.errors = {};
                         $scope.PlaceAddMode = false;
                     });
                 }
@@ -267,6 +246,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                     function (item) { //success
                         marker.editMode = false;
                         $scope.anyEditInProgress = false;
+                        $rootScope.errors = {};
                     });
                 }
             };
@@ -275,6 +255,8 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 //todo remove on server
                 var index = $scope.map.markers.indexOf(marker);
                 $scope.map.markers.splice(index, 1);
+                $scope.anyEditInProgress = false;
+                $rootScope.errors = {};
             };
 
             $scope.onPlaceImageSelect = function ($files, marker) {
@@ -324,6 +306,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
 
                 var marker = createMarker(location, searchValue, placeholder);
                 $scope.map.markers.push(marker);
+                $scope.anyEditInProgress = true;
                 $scope.PlaceAddMode = 'input';
             }
 

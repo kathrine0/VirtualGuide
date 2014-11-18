@@ -70,6 +70,15 @@ namespace VirtualGuide.Common.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Data Type.
+        /// </summary>
+        public static string InvalidDataType {
+            get {
+                return ResourceManager.GetString("InvalidDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid language.
         /// </summary>
         public static string InvalidLanguageFormat {
