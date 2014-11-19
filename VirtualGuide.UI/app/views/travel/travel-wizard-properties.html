@@ -19,21 +19,24 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div ng-class="$root.errors['properties[{{$index}}].Title'] ? 'has-error form-group' : 'form-group' ">
+                            <span ng-bind-html="'properties[{{$index}}].Title' | errorLabel" ></span>
                             <label translate>Title</label>
                             <input type="text" ng-model="property.Title" class="form-control" placeholder="{{'Enter title' | translate}}" />
                         </div>
-                        <div class="form-group">
+                        <div ng-class="$root.errors['properties[{{$index}}].Description'] ? 'has-error form-group' : 'form-group' ">
+                            <span ng-bind-html="'properties[{{$index}}].Description' | errorLabel" ></span>
                             <label translate>Description</label>
                             <textarea class="form-control" ng-model="property.Description" rows="3" placeholder="{{'Enter description' | translate}}"></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div ng-class="$root.errors['properties[{{$index}}].IconId'] ? 'has-error form-group' : 'form-group' ">
+                            <span ng-bind-html="'properties[{{$index}}].IconId' | errorLabel" ></span>
                             <label translate>Symbol</label>
                             <span ng-bind-html="property.Icon.Path | imageSource: 'icon-small'"></span>
                             <br />
-                            <button type="button" class="btn btn-success" ng-click="chooseIcon($index)" ng-bind="property.Icon == null ? 'Choose' | translate : 'Change' | translate "></button>
+                            <button type="button" class="btn btn-success" ng-click="chooseIcon($index)" ng-bind="(property.Icon == null ? 'Choose' : 'Change') | translate "></button>
 
                         </div>
                     </div>

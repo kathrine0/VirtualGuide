@@ -192,6 +192,8 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular-translate.js" />
     <Content Include="Scripts\angular-translate.min.js" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
@@ -961,6 +963,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js.map">
       <DependentUpon>ui-bootstrap-tpls.min.js</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CathetineWebApp.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />

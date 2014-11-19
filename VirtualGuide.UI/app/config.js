@@ -3,9 +3,13 @@
 //global variables
 app.run(function ($rootScope) {
 
-    //WS config
+    //local config
     $rootScope.webservice = 'http://localhost/VirtualGuide/';
 
+    //remote config
+    //$rootScope.webservice = 'http://catherine.cloudapp.net:8080/';
+
+    
     //Maps config
     $rootScope.tiles = {
         url: "http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png",

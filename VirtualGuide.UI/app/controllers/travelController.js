@@ -386,7 +386,7 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$state', 'travel
 
 
             travelService.createItem(travel, function (newtravel) {
-                $state.go('admin.travelproperties/', { id: newtravel.Id });
+                $state.go('admin.travelproperties', { id: newtravel.Id });
             });
         };
 
@@ -422,7 +422,8 @@ app.controller('newTravelPropertiesController', ['$scope', '$state', '$modal', '
             Title: 'Historia',
             Description: '',
             Icon: null,
-            IconId: null
+            IconId: null,
+            TravelId: $state.params.id
         });
 
         $scope.icons = propertyService.getIcons();

@@ -2,7 +2,11 @@
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
-    var site_prefix = '/VirtualGuide.UI';
+    //local config
+    var site_prefix = '/VirtualGuide.UI/';
+
+    //remote config
+    //var site_prefix = '';
 
     $urlRouterProvider.otherwise("/admin/home");
 
@@ -79,8 +83,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 //    });
 
 
-app.run(['$location', '$rootScope', function ($location, $rootScope) {
+app.run(['$state', '$rootScope', 'authService', function ($state, $rootScope, authService) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         $rootScope.title = toState.title ? toState.title : "";
     });
+
+    $rootScope.$on('$locationChangeSuccess', function(event) {
+
+        event.preventDefault();
+        if (!authService.authentication.isAuth) {
+            $state.transitionTo('login');
+        } else {
+            $urlRouter.sync();
+        }
+    });
+
 }]);

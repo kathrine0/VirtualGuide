@@ -33,20 +33,23 @@
             <form role="form">
                 <div class="box-body">
                     <!-- text input -->
-                    <div class="form-group">
+                    <div ng-class="$root.errors['place.Name'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'place.Name' | errorLabel" ></span>
                         <label for="name" translate>Name</label>
                         <input type="text" name="name" ng-model="activeMarker.place.Name" 
                                ng-disabled="activeMarker == null" class="form-control"
                                placeholder="{{'Enter name for this place' | translate}}" required />
                     </div>
-                    <div class="form-group">
+                    <div ng-class="$root.errors['place.Description'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'place.Description' | errorLabel" ></span>
                         <label for="description" translate>Description</label>
                         <textarea class="form-control" name="description" 
                                   ng-model="activeMarker.place.Description"
                                   ng-disabled="activeMarker == null" rows="3" 
                                   placeholder="{{'Enter description about the place such as history or interesting facts' | translate}}" required></textarea>
                     </div>
-                    <div class="form-group">
+                    <div ng-class="$root.errors['place.CategoryId'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'place.CategoryId' | errorLabel" ></span>
                         <label for="name">Category</label>
                         <select class="form-control" 
                                 ng-model="activeMarker.place.CategoryId"

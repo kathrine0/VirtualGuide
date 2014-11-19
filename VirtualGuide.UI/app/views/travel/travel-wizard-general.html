@@ -7,15 +7,18 @@
             <form role="form">
                 <div class="box-body">
                     <!-- text input -->
-                    <div class="form-group">
+                    <div ng-class="$root.errors['travel.Name'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'travel.Name' | errorLabel" ></span>
                         <label for="name" translate>Name</label>
                         <input type="text" name="name" ng-model="travel.Name" class="form-control" placeholder="{{'Enter name for your guide' | translate }}" />
                     </div>
-                    <div class="form-group">
+                    <div ng-class="$root.errors['travel.Description'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'travel.Description' | errorLabel" ></span>
                         <label for="description" translate>Description</label>
                         <textarea class="form-control" name="description" ng-model="travel.Description" rows="3" placeholder="{{'Enter short description' | translate}}"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div ng-class="$root.errors['travel.Price'] ? 'has-error form-group' : 'form-group' ">
+                        <span ng-bind-html="'travel.Price' | errorLabel" ></span>
                         <label for="name">Price</label>
                         <input type="number" name="price" ng-model="travel.Price" class="form-control" placeholder="{{'Enter price' | translate}}" />
                     </div>
