@@ -19,20 +19,21 @@ namespace VirtualGuide.Repository
             Mapper.CreateMap<CreatorTravelViewModel, Travel>();
             Mapper.CreateMap<Travel, SimpleCreatorTravelViewModel>();
             Mapper.CreateMap<SimpleCreatorTravelViewModel, Travel>();
-            Mapper.CreateMap<Travel, CustomerTravelViewModel>();
+            Mapper.CreateMap<Travel, CustomerTravelViewModel>();                
 
             ///Place
             Mapper.CreateMap<Place, BasicPlaceViewModel>();
             Mapper.CreateMap<BasicPlaceViewModel, Place>();
             Mapper.CreateMap<Place, MobilePlaceViewModel>()
-                .ForMember(mpvm => mpvm.Category, m => m.MapFrom(s => s.Category == null ? string.Empty : s.Category.Name))
-                .ForMember(mpvm => mpvm.IconName, m => m.MapFrom(s => s.Category == null ? string.Empty : s.Category.IconName));
+                .ForMember(dest => dest.Category, m => m.MapFrom(source => source.Category == null ? string.Empty : source.Category.Name))
+                .ForMember(dest => dest.IconName, m => m.MapFrom(source => source.Category == null ? string.Empty : source.Category.IconName));
 
             //Place Categories
             Mapper.CreateMap<PlaceCategory, PlaceCategoryViewModel>();
 
             ///Property
             Mapper.CreateMap<Property, BasicPropertyViewModel>();
+            Mapper.CreateMap<Property, MobilePropertyViewModel>();
             Mapper.CreateMap<BasicPropertyViewModel, Property>();
 
             ///Icon

@@ -15,7 +15,6 @@ namespace VirtualGuide.WebService
         {
             var cors = new EnableCorsAttribute(System.Configuration.ConfigurationManager.AppSettings["WebAppUrl"], "*", "*");
             config.EnableCors(cors);
-            config.EnableCors();
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.

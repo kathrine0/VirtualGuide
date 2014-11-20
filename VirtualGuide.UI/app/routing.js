@@ -83,7 +83,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 //    });
 
 
-app.run(['$state', '$rootScope', 'authService', function ($state, $rootScope, authService) {
+app.run(['$state', '$rootScope', '$urlRouter', 'authService', function ($state, $rootScope, $urlRouter, authService) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         $rootScope.title = toState.title ? toState.title : "";
     });

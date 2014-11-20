@@ -30,7 +30,13 @@ namespace VirtualGuide.Repository
         public IList<CustomerTravelViewModel> GetOwnedTravelList(string userEmail)
         {
             User user = findUserByEmail(userEmail);
-            IList<User_Purchased_Travel> items = user.PurchasedTravels.ToList();
+
+            IList<Travel> items = new List<Travel>();
+
+            foreach (var item in user.PurchasedTravels)
+            {
+                items.Add(item.Travel);
+            }
 
             return Mapper.Map<IList<CustomerTravelViewModel>>(items);
 

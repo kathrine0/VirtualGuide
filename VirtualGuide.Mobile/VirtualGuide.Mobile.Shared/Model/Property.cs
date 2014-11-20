@@ -26,6 +26,6 @@ namespace VirtualGuide.Mobile.Model
         public int TravelId { get; set; }
 
         [Column("Icon")]
-        public string Icon { get; set; }
+        public string IconSymbol { get; set; }
     }
 }

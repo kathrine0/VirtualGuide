@@ -28,4 +28,21 @@ namespace VirtualGuide.ViewModels
         [Required(ErrorMessageResourceName = "ChooseIcon", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public int IconId { get; set; }
     }
+
+    public class MobilePropertyViewModel
+    {
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public int TravelId { get; set; }
+
+        public int Order { get; set; }
+
+        public string IconSymbol { get; set; }
+
+        public int IconId { get; set; }
+    }
 }
