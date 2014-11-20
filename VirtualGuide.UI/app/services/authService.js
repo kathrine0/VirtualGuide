@@ -25,7 +25,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', '$rootScope', 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
 
         var deferred = $q.defer();
-        console.log(serviceBase);
+
         $http.post(serviceBase + 'token', data, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).success(function (response) {
