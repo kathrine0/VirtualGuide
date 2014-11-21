@@ -126,6 +126,7 @@
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\Logo.scale-140.png" />
     <Content Include="Assets\Logo.scale-240.png" />
+    <Content Include="Assets\textlogo.png" />
     <Content Include="Assets\MapMarker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

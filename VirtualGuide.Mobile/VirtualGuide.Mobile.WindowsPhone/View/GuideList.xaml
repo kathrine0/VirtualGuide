@@ -49,11 +49,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ProgressBar Visibility="{Binding Loading, Converter={StaticResource TrueIsVisible}}" IsIndeterminate="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Height="5" />
+        <ProgressBar Visibility="{Binding Loading, Converter={StaticResource TrueIsVisible}}" IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Height="5" Margin="0,-20,0,0" />
         <!-- TitlePanel -->
-        <StackPanel Grid.Row="0" Margin="24,17,0,28">
-            <TextBlock Text="Guide list" Style="{ThemeResource TitleTextBlockStyle}" Typography.Capitals="SmallCaps"/>
-        </StackPanel>
+        <Border Grid.Row="0" Margin="0,-15,0,0" BorderThickness="0,0,0,1" BorderBrush="#FFCFCFCF" Padding="0,0,0,5">
+            <Image Source="/Assets/textlogo.png" Width="200" Height="54" />
+        </Border>
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="24,0">
