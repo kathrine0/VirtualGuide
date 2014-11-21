@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,6 +34,10 @@ namespace VirtualGuide.Mobile
     {
 #if WINDOWS_PHONE_APP
         private TransitionCollection transitions;
+#endif
+
+#if DEBUG
+        public static Stopwatch StopWatch;
 #endif
 
         //public const string WebService = @"http://catherine.cloudapp.net:8080/";
@@ -69,6 +74,8 @@ namespace VirtualGuide.Mobile
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 //this.DebugSettings.EnableFrameRateCounter = true;
+                StopWatch = new Stopwatch();
+                StopWatch.Start();
             }
 #endif
 

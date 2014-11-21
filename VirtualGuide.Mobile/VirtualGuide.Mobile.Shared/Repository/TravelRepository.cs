@@ -20,28 +20,35 @@ namespace VirtualGuide.Mobile.Repository
 
         #region access webservice
 
-        private async Task<List<Travel>> LoadAvailableTravels()
+        public async Task<List<GuideListBindingModel>> DownloadAvailableTravels()
         {
-            return await HttpHelper.GetData<List<Travel>>("api/Travels");
+            var travels = await HttpHelper.GetData<List<Travel>>("api/Travels");
+            HttpHelper.ImageDownloader<Travel>(travels);
+            foreach (var travel in travels) travel.IsOwned = false;
+
+            SaveAvailableTravels(travels);
+
+            return ModelHelper.ObjectToViewModel<GuideListBindingModel, Travel>(travels);
         }
 
-        private async Task<List<Travel>> LoadOwnedTravels()
+        public async Task<List<GuideListBindingModel>> DownloadOwnedTravels()
         {
-            return await HttpHelper.GetData<List<Travel>>("api/OwnedTravels");
-        }
-
-        public async Task<List<GuideMainBindingModel>> GetAvailableTravels()
-        {
-            var availableTravels = await LoadAvailableTravels();
-            var viewModels = ModelHelper.ObjectToViewModel<GuideMainBindingModel, Travel>(availableTravels);
-
-            foreach(var model in viewModels)
+            if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
             {
-                model.IsOwned = false;
+
+                var travels = await HttpHelper.GetData<List<Travel>>("api/OwnedTravels");
+                HttpHelper.ImageDownloader<Travel>(travels);
+                foreach (var travel in travels) travel.IsOwned = true;
+
+                SaveOwnedTravelsAndDownloadImages(travels);
+
+                return ModelHelper.ObjectToViewModel<GuideListBindingModel, Travel>(travels);
             }
 
-            return viewModels;
+            //if user is not authenticated
+            return new List<GuideListBindingModel>();
         }
+       
 
         #endregion
 
@@ -66,24 +73,6 @@ namespace VirtualGuide.Mobile.Repository
 
             return (T) Activator.CreateInstance(typeof(T), travel[0]);
         }
-        public async Task<List<T>> DownloadAndSaveAllTravels<T>()
-            where T : BaseTravelBindingModel
-        {
-            var allTravels = new List<T>();
-            List<T> ownedTravels = new List<T>();
-
-            //download owned travels, when user is logged in
-            if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
-            {
-                ownedTravels = await DownloadAndSaveOwnedTravels<T>();
-                allTravels.AddRange(ownedTravels);
-            }
-            var availableTravels = await DownloadAndSaveAvailableTravels<T>(ownedTravels);
-
-            allTravels.AddRange(availableTravels);
-
-            return allTravels;
-        }
 
         #endregion
 
@@ -94,51 +83,28 @@ namespace VirtualGuide.Mobile.Repository
 
             return travels;
         }
-        private async Task<List<T>> DownloadAndSaveOwnedTravels<T>() 
+
+        private async void SaveOwnedTravelsAndDownloadImages(List<Travel> travels)
         {
-            var travels = await LoadOwnedTravels();
             var downloadTask = new List<Task>();
-            
-            foreach (var travel in travels) travel.IsOwned = true;
-            await App.Connection.InsertOrReplaceAllAsync(travels);
-            
             downloadTask.Add(HttpHelper.MapDownloader(travels));
-            downloadTask.Add(HttpHelper.ImageDownloader<Travel>(travels));
+
+            await App.Connection.InsertOrReplaceAllAsync(travels);
+
             foreach (var travel in travels)
             {
                 await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
-
                 await App.Connection.InsertOrReplaceAllAsync(travel.Places);
-                downloadTask.Add(HttpHelper.ImageDownloader<Place>(travel.Places));
+                downloadTask.Add(HttpHelper.ImageDownloaderAsync<Place>(travel.Places));
             }
 
+            //callback!
             await Task.WhenAll(downloadTask);
-
-            var viewModels = ModelHelper.ObjectToViewModel<T, Travel>(travels);
-            
-            return viewModels;
         }
-        private async Task<List<T>> DownloadAndSaveAvailableTravels<T>(List<T> ownedTravels)
-            where T : BaseTravelBindingModel
+
+        private async void SaveAvailableTravels(List<Travel> travels)
         {
-            var travels = await LoadAvailableTravels();
-            var newTravels = new List<Travel>();
-            foreach (var travel in travels)
-            {
-                if (!ownedTravels.Exists(x => x.Id == travel.Id))
-                {
-                    newTravels.Add(travel);
-                    travel.IsOwned = false;
-                }
-            }
-
-            await App.Connection.InsertOrReplaceAllAsync(newTravels);
-
-            await HttpHelper.ImageDownloader<Travel>(newTravels);
-
-            var viewModels = ModelHelper.ObjectToViewModel<T, Travel>(newTravels);
-
-            return viewModels;
+            await App.Connection.InsertOrReplaceAllAsync(travels);
         }
 
         #endregion

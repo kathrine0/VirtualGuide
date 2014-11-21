@@ -3,20 +3,19 @@ using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using VirtualGuide.Mobile.Helper;
-
 using VirtualGuide.Mobile.Repository;
 using Windows.UI.Xaml.Data;
-using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.BindingModel;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideList
 {
 
-    [ImplementPropertyChanged]
-    public class GuideListViewModel
+    //[ImplementPropertyChanged]
+    public class GuideListViewModel : INotifyPropertyChanged
     {
         #region readonly properties
 
@@ -62,10 +61,18 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         
         #region public properties
 
+        private ObservableCollection<GuideListBindingModel> _data = new ObservableCollection<GuideListBindingModel>();
+        [AlsoNotifyFor("Collection")]
         public ObservableCollection<GuideListBindingModel> Data
         {
-            get;
-            set;
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = value;
+            }
         }
 
         private CollectionViewSource _collection;
@@ -86,6 +93,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         public bool Loading { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         #endregion
 
         #region public methods
@@ -105,6 +114,9 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         public async void RefreshExecute()
         {
+            var data = new List<GuideListBindingModel>();
+            var Download = new List<Task<List<GuideListBindingModel>>>();
+            
             if (localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS)) return;
             localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, true);
 
@@ -112,7 +124,27 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 Loading = true;
 
-                Data = new ObservableCollection<GuideListBindingModel>(await _travelRepository.DownloadAndSaveAllTravels<GuideListBindingModel>());
+                Download.Add(_travelRepository.DownloadAvailableTravels());
+                Download.Add(_travelRepository.DownloadOwnedTravels());
+
+                foreach (var d in Download)
+                {
+                    //d.ContinueWith(t =>
+                    //{
+                    //    foreach (var item in t.Result)
+                    //        Data.Add(item);
+                    //});
+
+                    var result = await d;
+
+                    foreach (var item in result)
+                        data.Add(item);
+                    
+                }
+
+                //change me
+                Data = new ObservableCollection<GuideListBindingModel>(data);
+                
             }
             catch (HttpRequestException ex)
             {

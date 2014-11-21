@@ -130,8 +130,22 @@ namespace VirtualGuide.Mobile.Helper
             }
         }
 
-        public async static Task ImageDownloader<T>(List<T> items) where T : BaseImageModel
+        public static void ImageDownloader<T>(List<T> items) where T : BaseImageModel
         {
+            var downloadTask = ScheduleImageDownload(items);
+            Task download = DownloadScheduledImages(items, downloadTask);
+        }
+
+        public static async Task ImageDownloaderAsync<T>(List<T> items) where T : BaseImageModel
+        {
+            var downloadTask = ScheduleImageDownload(items);
+            await DownloadScheduledImages(items, downloadTask);
+        }
+
+        public static List<Task> ScheduleImageDownload<T>(List<T> items) where T : BaseImageModel
+        {
+            var downloadTask = new List<Task>();
+
             foreach (var item in items)
             {
                 if (!String.IsNullOrEmpty(item.ImageSrc))
@@ -140,11 +154,18 @@ namespace VirtualGuide.Mobile.Helper
                     var name = type.Substring(type.LastIndexOf('.')+1, type.Length - type.LastIndexOf('.')-1);
 
                     var filename = String.Format("{0}_{1}", name, GetFileName(item.ImageSrc));
-                    await HttpHelper.Download(App.WebService + item.ImageSrc, filename, "images");
+                    downloadTask.Add(HttpHelper.Download(App.WebService + item.ImageSrc, filename, "images"));
                     item.ImageSrc = filename;
                 }
             }
 
+            return downloadTask;
+        }
+
+
+        public async static Task DownloadScheduledImages<T>(List<T> items, List<Task> downloadTask) where T : BaseImageModel
+        {
+            await Task.WhenAll(downloadTask);
             await App.Connection.UpdateAllAsync(items);
         }
 
