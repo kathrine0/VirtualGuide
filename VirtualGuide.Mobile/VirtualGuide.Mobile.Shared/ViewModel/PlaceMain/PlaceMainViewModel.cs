@@ -1,4 +1,6 @@
-﻿using PropertyChanged;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Views;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,8 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 {
-    [ImplementPropertyChanged]
-    public class PlaceMainViewModel
+    public class PlaceMainViewModel : BaseViewModel
     {   
         #region readonly properties
 
@@ -34,25 +35,21 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         #region constructors
 
-        public PlaceMainViewModel()
+        public PlaceMainViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
             Place = new PlaceMainBindingModel();
 
             Initialize();
         }
 
-        public PlaceMainViewModel(Place place)
-        {
-            Place = new PlaceMainBindingModel(place);
-        }
-
         #endregion
 
         #region commands
 
-        //public DelegateCommand NavigateToMapCommand { get; set; }
+        //public RelayCommand NavigateToMapCommand { get; set; }
 
-        //public DelegateCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
+        //public RelayCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
 
         #endregion
 
@@ -67,7 +64,6 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
         #region private properties
 
         private int _placeId;
-
         private PlaceRepository _placeRepository = new PlaceRepository();
 
         #endregion
@@ -76,8 +72,8 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         private void Initialize()
         {
-            //NavigateToMapCommand = new DelegateCommand(NavigateToMapExecute);
-            //PropertyClickCommand = new DelegateCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
+            //NavigateToMapCommand = new RelayCommand(NavigateToMapExecute);
+            //PropertyClickCommand = new RelayCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
 
             Options = new ObservableCollection<PlaceMainOptions>() 
             { 

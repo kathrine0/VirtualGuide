@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using GalaSoft.MvvmLight.Command;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,8 @@ namespace VirtualGuide.Mobile.BindingModel
     [ImplementPropertyChanged]
     public class MapPlaceBindingModel
     {
-        public DelegateCommand<MapPlaceBindingModel> ShowDetailCloudCommand { get; set; }
-        public DelegateCommand<MapPlaceBindingModel> NavigateToPlaceDetailsCommand { get; set; }
+        public RelayCommand<MapPlaceBindingModel> ShowDetailCloudCommand { get; set; }
+        public RelayCommand<MapPlaceBindingModel> NavigateToPlaceDetailsCommand { get; set; }
 
         public MapPlaceBindingModel() { }
 

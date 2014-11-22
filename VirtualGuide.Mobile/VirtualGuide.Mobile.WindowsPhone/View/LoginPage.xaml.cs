@@ -13,8 +13,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class LoginPage : Page
     {
         private NavigationHelper navigationHelper;
-        private LoginViewModel _viewModel = new LoginViewModel(typeof(GuideList), typeof(RegisterPage));
-
+        
         public LoginPage()
         {
             this.InitializeComponent();
@@ -24,11 +23,6 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
             this.SpinningAnimation.Begin();
-        }
-
-        public LoginViewModel ViewModel
-        {
-            get { return this._viewModel; }
         }
 
         #region Navigation
@@ -83,9 +77,6 @@ namespace VirtualGuide.Mobile.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedFrom(e);
-
-            ViewModel.TurnOffLoader();
-
         }
 
         #endregion       

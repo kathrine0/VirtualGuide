@@ -17,13 +17,6 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
 
-        private GuideListViewModel _viewModel = new GuideListViewModel(typeof(LoginPage), typeof(GuideMain));
-
-        public GuideListViewModel ViewModel
-        {
-            get { return this._viewModel; }
-        }
-
         public GuideList()
         {
             this.InitializeComponent();
@@ -111,6 +104,7 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
+
 
     }
 }

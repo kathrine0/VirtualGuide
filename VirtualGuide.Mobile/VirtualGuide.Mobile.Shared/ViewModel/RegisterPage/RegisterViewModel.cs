@@ -1,4 +1,6 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -9,24 +11,16 @@ using VirtualGuide.Mobile.Repository;
 
 namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 {
-    [ImplementPropertyChanged]
-    public class RegisterViewModel
+    public class RegisterViewModel : BaseViewModel
     {
-        #region readonly properties
-
-        private readonly Type _nextPageType;
-
-        #endregion
-
         #region constructors
 
-        public RegisterViewModel(Type nextPageType)
+        public RegisterViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
-            RegisterCommand = new DelegateCommand(RegisterExecute);
+            RegisterCommand = new RelayCommand(RegisterExecute);
 
             RegisterButtonContent = "Register";
-
-            _nextPageType = nextPageType;
         }
 
         #endregion
@@ -60,7 +54,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
         /// <summary>
         /// Validate form and Register user
         /// </summary>
-        public DelegateCommand RegisterCommand
+        public RelayCommand RegisterCommand
         {
             get;
             set;
@@ -131,12 +125,9 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
             //authenticate user
             await _userRepository.Login(Email, Password);
 
-            if (_nextPageType != null)
-            {
-                localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
-                App.RootFrame.Navigate(_nextPageType);
-            }
-
+            localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
+            _navigationService.NavigateTo("GuideList");
+            
         }
 
         #endregion

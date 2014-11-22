@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace VirtualGuide.Mobile.Helper
 {
@@ -23,6 +24,36 @@ namespace VirtualGuide.Mobile.Helper
             Func<TSource, TGroup> groupSelector, bool isSortDescending = false)
         {
             var groups = new List<ListGroup<TSource>>();
+
+            // Group and sort items based on values returned from the selectors
+            var query = from item in source
+                        orderby groupSelector(item), sortSelector(item)
+                        group item by groupSelector(item) into g
+                        select new { GroupName = g.Key, Items = g };
+
+            // For each group generated from the query, create a ListGroup
+            // and fill it with its items
+            foreach (var g in query)
+            {
+                ListGroup<TSource> group = new ListGroup<TSource>();
+                group.Key = g.GroupName;
+                foreach (var item in g.Items)
+                    group.Add(item);
+
+                if (isSortDescending)
+                    groups.Insert(0, group);
+                else
+                    groups.Add(group);
+            }
+
+            return groups;
+        }
+
+        public static ObservableCollection<ListGroup<TSource>> ToObservableGroups<TSource, TSort, TGroup>(
+            this IEnumerable<TSource> source, Func<TSource, TSort> sortSelector,
+            Func<TSource, TGroup> groupSelector, bool isSortDescending = false)
+        {
+            var groups = new ObservableCollection<ListGroup<TSource>>();
 
             // Group and sort items based on values returned from the selectors
             var query = from item in source

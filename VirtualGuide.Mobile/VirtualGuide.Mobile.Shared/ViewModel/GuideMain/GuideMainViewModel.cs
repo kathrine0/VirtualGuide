@@ -9,21 +9,17 @@ using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
 using VirtualGuide.Mobile.BindingModel;
 using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Commands;
 using Windows.UI.Xaml.Controls;
+using GalaSoft.MvvmLight;
+using VirtualGuide.Mobile.Common;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideMain
 {
 
-    [ImplementPropertyChanged]
-    public class GuideMainViewModel
+    public class GuideMainViewModel : BaseViewModel
     {
-        #region readonly properties
-
-        private readonly Type _mapsPage;
-
-        #endregion
-
         #region events
 
         public event Action DataLoaded;
@@ -33,28 +29,21 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         #endregion
 
         #region constructors
-        public GuideMainViewModel(Type mapsPage)
+        public GuideMainViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
-
             Travel = new GuideMainBindingModel();
 
             Initialize();
-            _mapsPage = mapsPage;
         }
-        public GuideMainViewModel(Travel travel, Type mapsPage)
-            : this(mapsPage)
-        {
-            Travel = new GuideMainBindingModel(travel);
-        }
-
 
         #endregion
 
         #region commands
 
-        public DelegateCommand NavigateToMapCommand { get; set; }
+        public RelayCommand NavigateToMapCommand { get; set; }
 
-        public DelegateCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
+        public RelayCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
 
         #endregion
 
@@ -82,7 +71,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             {
                 _mapImage = value;
             }
-        }
+        }       
 
         public ObservableCollection<GuideMainPropertyBindingModel> Properties
         {
@@ -95,9 +84,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         #region private properties
 
         private int _travelId;
-
         private PropertyRepository _propertyRepository = new PropertyRepository();
-
         private TravelRepository _travelRepository = new TravelRepository();
 
         #endregion
@@ -106,8 +93,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         private void Initialize()
         {
-            NavigateToMapCommand = new DelegateCommand(NavigateToMapExecute);
-            PropertyClickCommand = new DelegateCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
+            NavigateToMapCommand = new RelayCommand(NavigateToMapExecute);
+            PropertyClickCommand = new RelayCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
 
             var tours = new GuideMainPropertyBindingModel() {
                 Name = "Tours", 
@@ -140,7 +127,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
                 foreach(var prop in props)
                 {
                     Properties.Add(prop);
-                }                   
+                }
+
             }
 
             if (DataLoaded != null)
@@ -151,7 +139,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         public void NavigateToMapExecute()
         {
-            App.RootFrame.Navigate(_mapsPage, Travel.Id);
+            _navigationService.NavigateTo("Maps", _travelId);
         }
 
         public void PropertyClickExecute(GuideMainPropertyBindingModel item)

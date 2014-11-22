@@ -33,7 +33,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class PlaceMain : Page
     {
         private NavigationHelper navigationHelper;
-        private PlaceMainViewModel _viewModel = new PlaceMainViewModel();
+        private PlaceMainViewModel viewModel;
 
         public PlaceMain()
         {
@@ -42,6 +42,8 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            viewModel = DataContext as PlaceMainViewModel;
         }
 
         /// <summary>
@@ -50,15 +52,6 @@ namespace VirtualGuide.Mobile.View
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
-        }
-
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public PlaceMainViewModel ViewModel
-        {
-            get { return this._viewModel; }
         }
 
         /// <summary>
@@ -76,7 +69,7 @@ namespace VirtualGuide.Mobile.View
         {
             var placeId = (int)e.NavigationParameter;
 
-            ViewModel.LoadData(placeId);
+            viewModel.LoadData(placeId);
         }
 
         /// <summary>

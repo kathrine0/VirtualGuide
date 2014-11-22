@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Prism.Commands;
-using PropertyChanged;
+﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,38 +16,27 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace VirtualGuide.Mobile.ViewModel.MapPage
 {
-    public class MapViewModel : INotifyPropertyChanged
+    public class MapViewModel : BaseViewModel
     {
-        #region readonly properties
-
-        private readonly Type _placeMain;
-
-        #endregion
-
+ 
         #region events
 
         public event Action<Geopoint, double> ZoomingMapToPoint;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region constructors
 
-        public MapViewModel(Travel travel, Type placeMain) : this(placeMain)
+        public MapViewModel(INavigationService navigationService)
+            : base(navigationService)
         {
-            ZoomLevel = travel.ZoomLevel;
-            Center = new Geopoint(new BasicGeoposition() { Latitude = travel.Latitude, Longitude = travel.Longitude });
-
-        }
-
-        public MapViewModel(Type placeMain)
-        {
-            _placeMain = placeMain;
-
-            uiFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            this._uiFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
             Initialize();
 
@@ -73,10 +61,10 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         #region commands
 
-        public DelegateCommand InitializeMapCommand { get; set; }
-        public DelegateCommand HideDetailCloudsCommand { get; set; }
-        public DelegateCommand LocateMeCommand { get; set; }
-        public DelegateCommand ShowHideFilterScreenCommand { get; set; }
+        public RelayCommand InitializeMapCommand { get; set; }
+        public RelayCommand HideDetailCloudsCommand { get; set; }
+        public RelayCommand LocateMeCommand { get; set; }
+        public RelayCommand ShowHideFilterScreenCommand { get; set; }
 
         #endregion
 
@@ -145,7 +133,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         private int? _visibleDetailsPlaceId;
         private bool _markerTapped = false;
 
-        private TaskFactory uiFactory;
+        private TaskFactory _uiFactory;
 
         /// <summary>
         /// Is map currently centered to User Position
@@ -158,10 +146,10 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         #region private methods
         private void Initialize()
         {
-            InitializeMapCommand = new DelegateCommand(InitializeMapExecute);
-            HideDetailCloudsCommand = new DelegateCommand(HideDetailCloudsExecute);
-            LocateMeCommand = new DelegateCommand(LocateMeExecute);
-            ShowHideFilterScreenCommand = new DelegateCommand(ShowHideFilterScreenExecute);
+            InitializeMapCommand = new RelayCommand(InitializeMapExecute);
+            HideDetailCloudsCommand = new RelayCommand(HideDetailCloudsExecute);
+            LocateMeCommand = new RelayCommand(LocateMeExecute);
+            ShowHideFilterScreenCommand = new RelayCommand(ShowHideFilterScreenExecute);
 
             Categories.CollectionChanged += Categories_CollectionChanged;
         }
@@ -237,8 +225,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
                 foreach (var place in places)
                 {
-                    place.ShowDetailCloudCommand = new DelegateCommand<MapPlaceBindingModel>(ShowDetailCloudExecute);
-                    place.NavigateToPlaceDetailsCommand = new DelegateCommand<MapPlaceBindingModel>(NavigateToPlaceDetailsExecute);
+                    place.ShowDetailCloudCommand = new RelayCommand<MapPlaceBindingModel>(ShowDetailCloudExecute);
+                    place.NavigateToPlaceDetailsCommand = new RelayCommand<MapPlaceBindingModel>(NavigateToPlaceDetailsExecute);
 
                     _places.Add(place);
                 }
@@ -285,7 +273,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         public void NavigateToPlaceDetailsExecute(MapPlaceBindingModel place)
         {
-            App.RootFrame.Navigate(_placeMain, place.Id);
+            _navigationService.NavigateTo("PlaceMain", place.Id);
         }
 
         public void ShowDetailCloudExecute(MapPlaceBindingModel place)
@@ -333,15 +321,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             FilterMode = !FilterMode;
         }
 
-        public virtual void OnPropertyChanged(string propertyName)
-        {
-            var propertyChanged = PropertyChanged;
-            if (propertyChanged != null)
-            {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         #endregion
 
         #region GPS and Compass
@@ -362,7 +341,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         private async void OnStatusChanged(Geolocator sender, StatusChangedEventArgs e)
         {
-            await uiFactory.StartNew( () =>
+            await _uiFactory.StartNew( () =>
             {
                 switch (e.Status)
                 {
@@ -389,7 +368,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         private async void OnPositionChanged(Geolocator sender, PositionChangedEventArgs e)
         {
-            await uiFactory.StartNew(() =>
+            await _uiFactory.StartNew(() =>
             {
                 Geoposition pos = e.Position;
 
@@ -411,7 +390,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         async private void ReadingChanged(object sender, CompassReadingChangedEventArgs e)
         {
-            await uiFactory.StartNew(() =>
+            await _uiFactory.StartNew(() =>
             {
                 CompassReading reading = e.Reading;
 

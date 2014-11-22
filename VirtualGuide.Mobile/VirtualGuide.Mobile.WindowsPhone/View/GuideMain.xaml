@@ -9,9 +9,8 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Extensions="using:VirtualGuide.Mobile.Helper"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}"
-    >
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"    
+    DataContext="{Binding GuideMain, Source={StaticResource Locator}}">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -33,9 +32,8 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
 
-        
 
-        <Hub Header="{Binding Travel.Name}" x:Name="MainHub">
+        <Hub Header="{Binding Travel.Name}"  x:Name="MainHub">
             <HubSection x:Name="TheHub">
                 <DataTemplate>
                     <ScrollViewer>

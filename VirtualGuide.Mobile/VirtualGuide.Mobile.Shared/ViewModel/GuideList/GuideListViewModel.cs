@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Prism.Commands;
-using PropertyChanged;
+﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,47 +9,16 @@ using VirtualGuide.Mobile.BindingModel;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Windows.UI.Xaml;
+using GalaSoft.MvvmLight.Views;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideList
 {
 
-    //[ImplementPropertyChanged]
-    public class GuideListViewModel : INotifyPropertyChanged
+    public class GuideListViewModel : BaseViewModel
     {
-        #region readonly properties
-
-        private readonly Type _loginPage;
-        private readonly Type _guideMainPage;
-
-
-        #endregion
-
-        #region constructors
-
-        public GuideListViewModel(Type loginPage, Type guideMainPage)
-        {
-            _loginPage = loginPage;
-            _guideMainPage = guideMainPage;
-
-            Initialize();
-        }
-
-        #endregion
-
-        #region commands
-
-        public DelegateCommand<GuideListBindingModel> TravelItemClickCommand { get; set; }
-
-        public DelegateCommand RefreshCommand { get; set; }
-
-        public DelegateCommand LogoutCommand { get; set; }
-
-        #endregion
-
-        #region events
-
-        #endregion
-
         #region private properties
 
         private TravelRepository _travelRepository = new TravelRepository();
@@ -58,42 +26,61 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         LocalDataHelper localDataHelper = new LocalDataHelper();
 
         #endregion
+
+        #region constructors
+
+        public GuideListViewModel(INavigationService navigationService) : base(navigationService)
+        {           
+            Initialize();
+        }
+
+        #endregion
+
+        #region commands
+
+        public RelayCommand<GuideListBindingModel> TravelItemClickCommand { get; set; }
+
+        public RelayCommand RefreshCommand { get; set; }
+
+        public RelayCommand LogoutCommand { get; set; }
+
+
+        #endregion
+
+        #region events
+
+        #endregion
         
         #region public properties
 
         private ObservableCollection<GuideListBindingModel> _data = new ObservableCollection<GuideListBindingModel>();
-        [AlsoNotifyFor("Collection")]
+
         public ObservableCollection<GuideListBindingModel> Data
         {
-            get
-            {
-                return _data;
-            }
-            set
-            {
-                _data = value;
-            }
+            get { return _data; }
+            set { Set(ref _data, value); }
         }
 
-        private CollectionViewSource _collection;
-        public CollectionViewSource Collection
+        public ObservableCollection<ListGroup<GuideListBindingModel>> DataGrouped
         {
             get
             {
-                _collection = new CollectionViewSource();
                 if (Data != null)
                 {
-                    var grouped = Data.ToGroups(x => x.Name, x => x.IsOwned, true);
-                    _collection.Source = grouped;
-                    _collection.IsSourceGrouped = true;
+                    var grouped = Data.ToObservableGroups(x => x.Name, x => x.IsOwned, true);
+
+                    return grouped;
                 }
-                return _collection;
+                return null;
             }
         }
 
-        public bool Loading { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private bool _loading;
+        public bool Loading
+        {
+            get { return _loading; }
+            set { Set(ref _loading, value); }
+        }
 
         #endregion
 
@@ -101,9 +88,9 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         public void TravelItemClickExecute(GuideListBindingModel item)
         {
-            if (item.IsOwned && _guideMainPage != null)
+            if (item.IsOwned)
             {
-                App.RootFrame.Navigate(_guideMainPage, item.Id);
+                _navigationService.NavigateTo("GuideMain", item.Id);
             }
             else if (!item.IsOwned)
             {
@@ -112,10 +99,12 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
         }
 
+        
         public async void RefreshExecute()
         {
-            var data = new List<GuideListBindingModel>();
-            var Download = new List<Task<List<GuideListBindingModel>>>();
+            //var data = new List<GuideListBindingModel>();
+            Data = new ObservableCollection<GuideListBindingModel>();
+            var Download = new List<Task>();
             
             if (localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS)) return;
             localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, true);
@@ -124,27 +113,11 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 Loading = true;
 
-                Download.Add(_travelRepository.DownloadAvailableTravels());
-                Download.Add(_travelRepository.DownloadOwnedTravels());
+                Download.Add(StartDownloading(_travelRepository.DownloadAvailableTravels()));
+                Download.Add(StartDownloading(_travelRepository.DownloadOwnedTravels()));
 
-                foreach (var d in Download)
-                {
-                    //d.ContinueWith(t =>
-                    //{
-                    //    foreach (var item in t.Result)
-                    //        Data.Add(item);
-                    //});
+                await Task.WhenAll(Download);
 
-                    var result = await d;
-
-                    foreach (var item in result)
-                        data.Add(item);
-                    
-                }
-
-                //change me
-                Data = new ObservableCollection<GuideListBindingModel>(data);
-                
             }
             catch (HttpRequestException ex)
             {
@@ -156,10 +129,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 {
                     MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
 
-                    if (_loginPage != null)
-                    {
-                        App.RootFrame.Navigate(_loginPage);
-                    }
+                    _navigationService.NavigateTo("Login");
                 }
                 else
                 {
@@ -178,8 +148,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         {
             await _userRepository.Logout();
 
-            if (_loginPage != null)
-                App.RootFrame.Navigate(_loginPage);
+            _navigationService.NavigateTo("Login");
         }
 
         #endregion
@@ -188,9 +157,9 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
         private async void Initialize()
         {
-            TravelItemClickCommand = new DelegateCommand<GuideListBindingModel>(TravelItemClickExecute);
-            RefreshCommand = new DelegateCommand(RefreshExecute);
-            LogoutCommand = new DelegateCommand(LogoutExecute);
+            TravelItemClickCommand = new RelayCommand<GuideListBindingModel>(TravelItemClickExecute);
+            RefreshCommand = new RelayCommand(RefreshExecute);
+            LogoutCommand = new RelayCommand(LogoutExecute);
 
             Loading = true;
             //TODO Check if token is still active
@@ -208,6 +177,19 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 Loading = false;
             }
+        }
+        private async Task StartDownloading(Task<List<GuideListBindingModel>> task)
+        {
+            var data = await task;
+            await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                foreach (var item in data)
+                {
+                    Data.Add(item);
+                }
+
+                this.RaisePropertyChanged("DataGrouped");
+            });
         }
 
         #endregion

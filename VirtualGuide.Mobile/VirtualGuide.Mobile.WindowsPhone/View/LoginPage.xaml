@@ -10,7 +10,7 @@
     xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding ViewModel, RelativeSource={RelativeSource Mode=Self}}">
+    DataContext="{Binding Login, Source={StaticResource Locator}}">
 
     <Page.Resources>
         <converter:TrueIsVisible x:Key="TrueIsVisible" />

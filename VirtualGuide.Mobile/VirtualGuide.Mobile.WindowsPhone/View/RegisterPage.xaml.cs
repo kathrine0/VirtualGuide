@@ -28,8 +28,6 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class RegisterPage : Page
     {
         private NavigationHelper navigationHelper;
-        private RegisterViewModel _viewModel = new RegisterViewModel(typeof(GuideList));
-
         public RegisterPage()
         {
             this.InitializeComponent();
@@ -47,15 +45,6 @@ namespace VirtualGuide.Mobile.View
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
-        }
-
-        /// <summary>
-        /// Gets the view model for this <see cref="Page"/>.
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public RegisterViewModel ViewModel
-        {
-            get { return this._viewModel; }
         }
 
         /// <summary>

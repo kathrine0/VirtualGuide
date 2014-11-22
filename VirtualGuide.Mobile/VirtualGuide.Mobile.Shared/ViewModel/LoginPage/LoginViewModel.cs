@@ -1,4 +1,6 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -11,34 +13,22 @@ using Windows.UI.Xaml.Controls;
 
 namespace VirtualGuide.Mobile.ViewModel.LoginPage
 {
-    [ImplementPropertyChanged]
-    public class LoginViewModel
+    public class LoginViewModel : BaseViewModel
     {
-        #region readonly properties
-
-        private readonly Type _nextPageType;
-        private readonly Type _registerPageType;
-
-        #endregion
-
         #region constructors
 
         /// <summary>
         /// ViewModel for Login Page
         /// </summary>
-        /// <param name="nextPageType">Type of page to navigate to after login</param>
-        public LoginViewModel(Type nextPageType, Type registerPageType)
-        {
-            _nextPageType = nextPageType;
-            _registerPageType = registerPageType;
+        /// <param name="guideListType">Type of page to navigate to after login</param>
+        public LoginViewModel(INavigationService navigationService)
+            : base(navigationService)
+        {            
+            SignInCommand = new RelayCommand(SignInExecute);
+            SkipLoginCommand = new RelayCommand(SkipLoginExecute);
+            RegisterCommand = new RelayCommand(RegisterExecute);
 
-            SignInCommand = new DelegateCommand(SignInExecute);
-            SkipLoginCommand = new DelegateCommand(SkipLoginExecute);
-            RegisterCommand = new DelegateCommand(RegisterExecute);
-
-            LoginButtonContent = "Login";
-
-
+            TurnOffLoader();
         }
 
         #endregion
@@ -51,7 +41,6 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         private UserRepository _userRepository = new UserRepository();
         private LocalDataHelper localDataHelper = new LocalDataHelper();
-        
 
         #endregion
         
@@ -72,7 +61,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         /// <summary>
         /// Check Email and Password and Log User in
         /// </summary>
-        public DelegateCommand SignInCommand
+        public RelayCommand SignInCommand
         {
             get;
             set;
@@ -81,12 +70,12 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         /// <summary>
         /// Navigate to Register page
         /// </summary>
-        public DelegateCommand RegisterCommand { get; set; }
+        public RelayCommand RegisterCommand { get; set; }
 
         /// <summary>
         /// Skip login and redirect to next page
         /// </summary>
-        public DelegateCommand SkipLoginCommand
+        public RelayCommand SkipLoginCommand
         {
             get;
             set;
@@ -146,24 +135,21 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
                 return;
             }
 
-            if (_nextPageType != null)
-            {
-                localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
-                App.RootFrame.Navigate(_nextPageType);
-            }
+            
+            localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
+            _navigationService.NavigateTo("GuideList");
+            
 
         }
 
         private void SkipLoginExecute()
         {
-            if (_nextPageType != null)
-                App.RootFrame.Navigate(_nextPageType);
+            _navigationService.NavigateTo("GuideList");
         }
 
         private void RegisterExecute()
         {
-            if (_registerPageType != null)
-                App.RootFrame.Navigate(_registerPageType);
+            _navigationService.NavigateTo("Register");
         }
 
         #endregion

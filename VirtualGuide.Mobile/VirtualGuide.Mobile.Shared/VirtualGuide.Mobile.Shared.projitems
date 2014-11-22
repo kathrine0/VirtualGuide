@@ -26,18 +26,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\User\LastLoggedUserSettingsModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ItemsChangeObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Converters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableCollectionViewSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\RelayCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\BindingHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ColorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\GeoHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HttpHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\HubBinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ListHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\LocalDataHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NavigationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\Section.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UIHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BaseImageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BaseModel.cs" />
@@ -53,12 +55,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\MySQLiteExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideList\GuideListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\GuideMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LoginPage\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapPage\MapViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\PlaceMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\RegisterPage\RegisterViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>

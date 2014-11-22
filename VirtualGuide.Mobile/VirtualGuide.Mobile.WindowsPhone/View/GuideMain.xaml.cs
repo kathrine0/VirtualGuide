@@ -28,8 +28,7 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class GuideMain : Page
     {
         private NavigationHelper navigationHelper;
-
-        private GuideMainViewModel _viewModel = new GuideMainViewModel(typeof(MapPage));
+        private GuideMainViewModel viewModel;
 
         public GuideMain()
         {
@@ -39,12 +38,11 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-            ViewModel.DataLoaded += CreateHubSections;
-            ViewModel.ScrollRequested += ScrollToItem;
-        }
-        public GuideMainViewModel ViewModel
-        {
-            get { return this._viewModel; }
+
+
+            viewModel = DataContext as GuideMainViewModel;
+            viewModel.DataLoaded += CreateHubSections;
+            viewModel.ScrollRequested += ScrollToItem;
         }
 
         #region Navigation
@@ -73,7 +71,7 @@ namespace VirtualGuide.Mobile.View
         {
             var travelId = (int)e.NavigationParameter;
 
-            ViewModel.LoadData(travelId);
+            viewModel.LoadData(travelId);
         }
 
         /// <summary>
@@ -96,6 +94,7 @@ namespace VirtualGuide.Mobile.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+            
             
         }
 
@@ -128,7 +127,7 @@ namespace VirtualGuide.Mobile.View
 
         private void CreateHubSections()
         {
-            foreach (var property in ViewModel.Properties)
+            foreach (var property in viewModel.Properties)
             {
                 if (property.Type != GuideMainPropertyBindingModel.Types.REGULAR)
                     continue;
@@ -136,7 +135,7 @@ namespace VirtualGuide.Mobile.View
                 HubSection hubSection = new HubSection();
                 hubSection.Header = property.Icon + property.Name;
                 hubSection.DataContext = property;
-                hubSection.ContentTemplate = (DataTemplate) this.Resources["PropertyContentTemplate"];
+                hubSection.ContentTemplate = (DataTemplate)this.Resources["PropertyContentTemplate"];
 
                 MainHub.Sections.Add(hubSection);
             }

@@ -37,8 +37,8 @@ namespace VirtualGuide.Mobile.View
     public sealed partial class MapPage : Page
     {
         private NavigationHelper navigationHelper;
-        private MapViewModel _viewModel = new MapViewModel(typeof(PlaceMain));
-        
+        private MapViewModel viewModel;
+
         public MapPage()
         {
             this.InitializeComponent();
@@ -47,7 +47,9 @@ namespace VirtualGuide.Mobile.View
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-            ViewModel.ZoomingMapToPoint += ViewModel_ZoomingMapToPoint;
+            viewModel = DataContext as MapViewModel;
+
+            viewModel.ZoomingMapToPoint += ViewModel_ZoomingMapToPoint;
 
             DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
         }
@@ -65,12 +67,6 @@ namespace VirtualGuide.Mobile.View
         public NavigationHelper NavigationHelper
         {
             get { return this.navigationHelper; }
-        }
-
-        public MapViewModel ViewModel
-        {
-            get { return this._viewModel; }
-            set { _viewModel = value; }
         }
 
         #endregion
@@ -96,13 +92,13 @@ namespace VirtualGuide.Mobile.View
             await statusBar.HideAsync();
 
             var travelId = (int)e.NavigationParameter;
-            ViewModel.LoadData(travelId);
+            viewModel.LoadData(travelId);
 
             if (e.PageState != null && e.PageState.ContainsKey("Latitude")
                 && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
             {
-                ViewModel.ZoomLevel = (double)e.PageState["Zoom"];
-                ViewModel.Center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
+                viewModel.ZoomLevel = (double)e.PageState["Zoom"];
+                viewModel.Center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
             }
         }
 
@@ -116,9 +112,9 @@ namespace VirtualGuide.Mobile.View
         /// serializable state.</param>
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            e.PageState["Latitude"] = ViewModel.Center.Position.Latitude;
-            e.PageState["Longitude"] = ViewModel.Center.Position.Longitude;
-            e.PageState["Zoom"] = ViewModel.ZoomLevel;
+            e.PageState["Latitude"] = viewModel.Center.Position.Latitude;
+            e.PageState["Longitude"] = viewModel.Center.Position.Longitude;
+            e.PageState["Zoom"] = viewModel.ZoomLevel;
         }
 
         /// <summary>
