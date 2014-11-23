@@ -24,7 +24,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 {
     public class MapViewModel : BaseViewModel
     {
- 
+
         #region events
 
         public event Action<Geopoint, double> ZoomingMapToPoint;
@@ -39,10 +39,12 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             this._uiFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
 
-            Travel = new MapTravelBindingModel();
-            Places = new ObservableCollection<MapPlaceBindingModel>();
-            Categories = new ItemsChangeObservableCollection<CategoryVisibility>();
-           
+            _travel = new MapTravelBindingModel();
+            _places = new ObservableCollection<MapPlaceBindingModel>();
+            _categories = new ItemsChangeObservableCollection<CategoryVisibility>();
+
+            Initialize();
+            
             LocationEllipse = new LocationEllipseParams()
             {
                 Fill = new SolidColorBrush(Color.FromArgb(255, 83, 83, 83)),
@@ -56,8 +58,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                 CompassMode = false,
                 Fill = new SolidColorBrush(Colors.Gray)
             };
-            
-            Initialize();
         }
 
         #endregion
@@ -72,7 +72,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         #endregion
 
         #region public properties
-
         private Geopoint _userGeoposition;
         public Geopoint UserGeoposition
         {
@@ -102,7 +101,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         }
 
         private bool _isMarkerVisible;
-        public bool IsMarkerVisible 
+        public bool IsMarkerVisible
         {
             get { return _isMarkerVisible; }
             set { Set(ref _isMarkerVisible, value); }
@@ -126,7 +125,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         public ObservableCollection<MapPlaceBindingModel> Places
         {
             get { return _places; }
-            private set { Set(ref _places, value); }
+            set { Set(ref _places, value); }
         }
 
         private LocationEllipseParams _locationEllipse;
@@ -151,16 +150,24 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         }
 
         private ItemsChangeObservableCollection<CategoryVisibility> _categories;
-        public ItemsChangeObservableCollection<CategoryVisibility> Categories 
-        { 
+        public ItemsChangeObservableCollection<CategoryVisibility> Categories
+        {
             get { return _categories; }
-            set 
-            { 
-                Set(ref _categories, value); 
+            set
+            {
+                Set(ref _categories, value);
             }
         }
 
-        public bool FilterMode { get; set; }
+        private bool _filterMode;
+        public bool FilterMode
+        {
+            get { return _filterMode; }
+            set
+            {
+                Set(ref _filterMode, value);
+            }
+        }
 
         #endregion
 
@@ -182,7 +189,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         /// Is map currently centered to User Position
         /// </summary>
         private bool _centeredToPosition = false;
-        
+
 
         #endregion
 
@@ -201,16 +208,14 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             IEnumerable<string> visibileCategories = Categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
 
-            this.RaisePropertyChanged("Places");
+            foreach (var place in _places)
+            {
+                if (visibileCategories.Contains(place.Category))
+                    place.Visibility = true;
+                else
+                    place.Visibility = false;
+            }
 
-            //foreach (var place in Places)
-            //{
-            //    if (visibileCategories.Contains(place.Category))
-            //        place.Visibility = true;
-            //    else
-            //        place.Visibility = false;
-            //}
-            
 
             //OnPropertyChanged("Places");
         }
@@ -263,12 +268,12 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         public async void LoadData()
         {
             IsWorkInProgress = true;
-            Places.Clear();
             Categories.Clear();
+            Places.Clear();
 
-            if (_travelId != 0 || (Travel != null && Travel.Id != 0))
+            if (_travelId != 0)
             {
-                Travel = await _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
+                var travelTask = _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
 
                 var places = await _placeRepository.GetParentPlacesByTravelIdAsync<MapPlaceBindingModel>(_travelId);
 
@@ -286,7 +291,11 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                 {
                     Categories.Add(new CategoryVisibility() { Visibile = true, Name = category });
                 }
+
+                Travel = await travelTask;
             }
+
+
             IsWorkInProgress = false;
         }
 
@@ -318,7 +327,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             if (_markerTapped) return;
             HideAllClouds();
-            
+
         }
 
         public void NavigateToPlaceDetailsExecute(MapPlaceBindingModel place)
@@ -391,7 +400,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         private async void OnStatusChanged(Geolocator sender, StatusChangedEventArgs e)
         {
-            await _uiFactory.StartNew( () =>
+            await _uiFactory.StartNew(() =>
             {
                 switch (e.Status)
                 {
@@ -426,6 +435,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
                 if (_centeredToPosition && ZoomingMapToPoint != null)
                 {
+                    //Task.Run(() => Maps.TrySetViewAsync(_mapElement.UserGeoposition));
+                    //Will it work?
                     ZoomingMapToPoint(UserGeoposition, ZoomLevel);
 
                 }
@@ -499,7 +510,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                 CompassPath.Fill = new SolidColorBrush(Colors.Gray);
                 CompassIsActive = false;
 
-                if(ZoomingMapToPoint != null)
+                if (ZoomingMapToPoint != null)
                 {
                     ZoomingMapToPoint(Center, ZoomLevel);
                 }
@@ -519,7 +530,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             public Brush Stroke { get; set; }
             public int Width { get; set; }
             public int Height { get; set; }
-            
+
         }
 
         [ImplementPropertyChanged]

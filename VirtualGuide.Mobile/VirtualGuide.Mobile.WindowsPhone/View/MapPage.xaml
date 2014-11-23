@@ -40,7 +40,7 @@
                 </Core:EventTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
 			<Maps:MapItemsControl 
-				ItemsSource="{Binding Places}" 
+				ItemsSource="{Binding Places, Mode=OneWay}" 
 				ItemTemplate="{StaticResource MapMarker}" />
 
             <!-- Point showing user's current position -->

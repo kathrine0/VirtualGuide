@@ -75,9 +75,6 @@ namespace VirtualGuide.Mobile.View
             StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
             await statusBar.HideAsync();
 
-            var travelId = (int)e.NavigationParameter;
-            viewModel.LoadData(travelId);
-
             if (e.PageState != null && e.PageState.ContainsKey("Latitude")
                 && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
             {
@@ -94,8 +91,12 @@ namespace VirtualGuide.Mobile.View
         /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
         /// <param name="e">Event data that provides an empty dictionary to be populated with
         /// serializable state.</param>
-        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        private async void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
+            //Restore system tray
+            StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            await statusBar.ShowAsync();
+
             e.PageState["Latitude"] = viewModel.Center.Position.Latitude;
             e.PageState["Longitude"] = viewModel.Center.Position.Longitude;
             e.PageState["Zoom"] = viewModel.ZoomLevel;
@@ -116,6 +117,9 @@ namespace VirtualGuide.Mobile.View
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var travelId = (int)e.Parameter;
+            viewModel.LoadData(travelId);
+
             this.navigationHelper.OnNavigatedTo(e);
         }
 
@@ -141,29 +145,6 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
-
-        #region Positioning
-
-        
-
-        
-
-        #endregion
-
-        #region Compass
-
-        
-
-        #endregion
-
-        #region Maps
-
-        #endregion
-
-        #region MyPosition Button
-        
-        #endregion
-
 
         private void Filter_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
