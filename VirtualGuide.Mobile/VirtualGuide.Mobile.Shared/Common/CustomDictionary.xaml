@@ -2,6 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VirtualGuide.Mobile.Common"
+    xmlns:converter="using:VirtualGuide.Mobile.Common"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+	xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     >
 
     <ResourceDictionary.ThemeDictionaries>
@@ -14,6 +18,11 @@
             
             <SolidColorBrush Color="#FF808080" x:Key="Gray"/>
             <SolidColorBrush Color="#FFFFFFFF" x:Key="PageBackground" />
+
+            <converter:IsOwnedToOpacity x:Key="IsOwnedToOpacity" />
+            <converter:IsOwnedToText x:Key="IsOwnedToText" />
+            <converter:TrueIsVisible x:Key="TrueIsVisible" />
+            <converter:FalseIsVisible x:Key="FalseIsVisible" />
 
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
@@ -84,5 +93,115 @@
     </DataTemplate>
 
     <!--End Grid View-->
+
+    <!-- Guide List Templates -->
+    
+    <DataTemplate x:Key="OwnedTravelsListItem">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Margin="0,9.5,0,0" Grid.Column="0" HorizontalAlignment="Left">
+                <Image Opacity="{Binding IsOwned, Converter={StaticResource IsOwnedToOpacity}}" Source="{Binding ImagePath, Mode=OneWay}" Stretch="UniformToFill" Height="79" Width="79"/>
+            </Border>
+            <StackPanel Grid.Column="1" Margin="14.5,0,0,0">
+                <TextBlock Text="{Binding Name, Mode=OneWay}" Style="{ThemeResource ListViewItemTextBlockStyle}"/>
+                <TextBlock Text="{Binding Description, Mode=OneWay}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="Logo">
+        <Border Grid.Row="0" Margin="0,-15,0,0" BorderThickness="0,0,0,1" BorderBrush="#FFCFCFCF" Padding="0,0,0,5">
+            <Image Source="/Assets/textlogo.png" Width="200" Height="54" />
+        </Border>
+    </ControlTemplate>
+
+    <!-- Guide Main Template -->
+
+    <DataTemplate x:Key="PropertyContentTemplate">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,5,0,0">
+            <Grid>
+                <TextBlock Text="{Binding Description}" Style="{StaticResource BaseTextBlock}" />
+            </Grid>
+        </ScrollViewer>
+    </DataTemplate>
+
+    <!-- Maps Template -->
+    <!--Data Template for every place marker on the map-->
+
+    <DataTemplate x:Key="MapMarker">
+        <Canvas Visibility="{Binding Visibility, Converter={StaticResource TrueIsVisible}}">
+            <Image 
+					Source="{Binding Icon}" 
+					Stretch="Uniform"
+					Maps:MapControl.Location="{Binding Point}"
+					Margin="-15,-36,0,0"
+					Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
+					Maps:MapControl.NormalizedAnchorPoint="1,0.5" 
+					 >
+
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="Tapped">
+                        <Core:InvokeCommandAction 
+                                Command="{Binding ShowDetailCloudCommand}"
+                                CommandParameter="{Binding}"
+                                />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+            </Image>
+
+            <Grid   Height="60" 
+						Background="Black"
+						Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
+						Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+						Maps:MapControl.Location="{Binding Point}" 
+						Width="200" 
+                        Margin="-80,-80,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+							Grid.Column="0"
+							Foreground="White"
+							Text="{Binding Name}"       
+							TextWrapping="Wrap"
+							FontSize="15" Margin="5"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"/>
+                <Grid   Margin="1"
+					    Grid.Column="1"
+					    Background="{StaticResource ThemeGreen}"
+					    DataContext="{Binding}">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="Tapped">
+                            <Core:InvokeCommandAction 
+                                    Command="{Binding NavigateToPlaceDetailsCommand}"
+                                    CommandParameter="{Binding}"/>
+
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                    <TextBlock 
+								Text="&#xe111;" 
+								FontFamily="Segoe UI Symbol"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Foreground="White"
+								FontSize="30"/>
+                </Grid>
+                <Polygon Points="0,0 20,20,40,0" 
+					VerticalAlignment="Bottom" 
+					HorizontalAlignment="Center" 
+					Fill="Black" 
+					Margin="0,0,-20,-19"  />
+                <Ellipse Width="20" Height="10" VerticalAlignment="Bottom" Fill="#7F000000" Margin="0,0,-20,-24"/>
+            </Grid>
+        </Canvas>
+    </DataTemplate>
+
+    <!-- End Data Template -->
 
 </ResourceDictionary>

@@ -6,95 +6,12 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
-	xmlns:converter="using:VirtualGuide.Mobile.Common"
 	xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
 	xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Extensions="using:VirtualGuide.Mobile.Helper"
 	mc:Ignorable="d"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding Map, Source={StaticResource Locator}}">
-
-	<Page.Resources>
-		<converter:TrueIsVisible x:Key="TrueIsVisible" />
-        <converter:FalseIsVisible x:Key="FalseIsVisible" />
-
-        <!--Data T
-        emplate for every place marker on the map-->
-        
-		<DataTemplate x:Key="MapMarker">
-            <Canvas Visibility="{Binding Visibility, Converter={StaticResource TrueIsVisible}}">
-				<Image 
-					Source="{Binding Icon}" 
-					Stretch="Uniform"
-					Maps:MapControl.Location="{Binding Point}"
-					Margin="-15,-36,0,0"
-					Visibility="{Binding DetailsVisibility, Converter={StaticResource FalseIsVisible}}"
-					Maps:MapControl.NormalizedAnchorPoint="1,0.5" 
-					 >
-
-					<Interactivity:Interaction.Behaviors>
-						<Core:EventTriggerBehavior EventName="Tapped">
-							<Core:InvokeCommandAction 
-                                Command="{Binding ShowDetailCloudCommand}"
-                                CommandParameter="{Binding}"
-                                />
-						</Core:EventTriggerBehavior>
-					</Interactivity:Interaction.Behaviors>
-				</Image>
-
-				<Grid   Height="60" 
-						Background="Black"
-						Visibility="{Binding DetailsVisibility, Converter={StaticResource TrueIsVisible}}"
-						Maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-						Maps:MapControl.Location="{Binding Point}" 
-						Width="200" 
-                        Margin="-80,-80,0,0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="60" />
-					</Grid.ColumnDefinitions>
-					<TextBlock 
-							Grid.Column="0"
-							Foreground="White"
-							Text="{Binding Name}"       
-							TextWrapping="Wrap"
-							FontSize="15" Margin="5"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Center"/>
-					<Grid 
-					    Margin="1"
-					    Grid.Column="1"
-					    Background="{StaticResource ThemeGreen}"
-					    DataContext="{Binding}">
-                        <Interactivity:Interaction.Behaviors>
-                            <Core:EventTriggerBehavior EventName="Tapped">
-                                <Core:InvokeCommandAction 
-                                    Command="{Binding NavigateToPlaceDetailsCommand}"
-                                    CommandParameter="{Binding}"/>
-                                
-                            </Core:EventTriggerBehavior>
-                        </Interactivity:Interaction.Behaviors>
-                        <TextBlock 
-								Text="&#xe111;" 
-								FontFamily="Segoe UI Symbol"
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Foreground="White"
-								FontSize="30"/>
-					</Grid>
-					<Polygon Points="0,0 20,20,40,0" 
-					VerticalAlignment="Bottom" 
-					HorizontalAlignment="Center" 
-					Fill="Black" 
-					Margin="0,0,-20,-19"  />
-					<Ellipse Width="20" Height="10" VerticalAlignment="Bottom" Fill="#7F000000" Margin="0,0,-20,-24"/>
-				</Grid>
-			</Canvas>
-		</DataTemplate>
-
-        <!-- End Data Template -->
-        
-	</Page.Resources>
 
 	<Grid x:Name="LayoutRoot">
 

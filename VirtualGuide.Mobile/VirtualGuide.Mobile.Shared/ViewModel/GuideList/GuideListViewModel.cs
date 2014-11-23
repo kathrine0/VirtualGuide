@@ -95,7 +95,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         
         public async void RefreshExecute()
         {
-            //var data = new List<GuideListBindingModel>();
             Data = new ObservableCollection<GuideListBindingModel>();
             var Download = new List<Task>();
             

@@ -7,14 +7,11 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     x:Class="VirtualGuide.Mobile.View.LoginPage"
-    xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Login, Source={StaticResource Locator}}">
 
     <Page.Resources>
-        <converter:TrueIsVisible x:Key="TrueIsVisible" />
-        
         <Storyboard x:Name="SpinningAnimation" >
         	<DoubleAnimation AutoReverse="False"
         		Duration="0:0:1"
@@ -25,48 +22,64 @@
         		To="360"  />
         </Storyboard>
     </Page.Resources>
-    
-	<Grid>
-		<StackPanel VerticalAlignment="Center" Margin="20,0">
-            <TextBlock x:Uid="EmailLabel" Text="Email" />
-			<TextBox Text="{Binding Email, Mode=TwoWay}" />
-			<TextBlock x:Uid="PasswordLabel" Text="Password" />
-			<PasswordBox Password="{Binding Password, Mode=TwoWay}" />
-			<Grid>
-                <Button x:Name="LoginButton" Content="{Binding LoginButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding SignInCommand}"/>
-				<Image
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ContentControl Grid.Row="0" Template="{StaticResource Logo}" />
+
+        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="24,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Uid="EmailLabel" Text="Email" />
+                <TextBox Text="{Binding Email, Mode=TwoWay}" />
+                <TextBlock x:Uid="PasswordLabel" Text="Password" />
+                <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
+                <Grid>
+                    <Button x:Name="LoginButton" Content="{Binding LoginButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding SignInCommand}"/>
+                    <Image
 					x:Name="LoginProgress"
 					Visibility="{Binding LoginInProgress, Converter={StaticResource TrueIsVisible}}"
 					Height="30"
 					Width="30"
 					Source="ms-appx:///Assets/Spinner.png"
 					Stretch="Uniform">
-					<Image.RenderTransform>
-						<RotateTransform x:Name="SpinningRotateTransform"
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="SpinningRotateTransform"
 							CenterX="15"
 							CenterY="15" />
-					</Image.RenderTransform>
-				</Image>
-			</Grid>
-           
-			<TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />
-			<StackPanel Orientation="Horizontal">
-                <TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource ThemeGreen}" >
+                        </Image.RenderTransform>
+                    </Image>
+                </Grid>
+
+                <TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource ThemeGreen}" >
                     <Interactivity:Interaction.Behaviors>
 						<Core:EventTriggerBehavior EventName="Tapped">
 							<Core:InvokeCommandAction Command="{Binding RegisterCommand}"/>
 						</Core:EventTriggerBehavior>
 					</Interactivity:Interaction.Behaviors>
-                </TextBlock>
-                <TextBlock x:Uid="or" Text="or" Margin="7,0" />
-				<TextBlock x:Uid="SkipLogin" Text="Skip login" Foreground="{StaticResource ThemeGreen}" >
+                    </TextBlock>
+                    <TextBlock x:Uid="or" Text="or" Margin="7,0" />
+                    <TextBlock x:Uid="SkipLogin" Text="Skip login" Foreground="{StaticResource ThemeGreen}" >
 					<Interactivity:Interaction.Behaviors>
 						<Core:EventTriggerBehavior EventName="Tapped">
 							<Core:InvokeCommandAction Command="{Binding SkipLoginCommand}"/>
 						</Core:EventTriggerBehavior>
 					</Interactivity:Interaction.Behaviors>
-				</TextBlock>
-			</StackPanel>
-		</StackPanel>
-	</Grid>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Page>

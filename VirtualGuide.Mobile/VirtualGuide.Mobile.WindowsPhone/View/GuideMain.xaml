@@ -11,18 +11,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"    
     DataContext="{Binding GuideMain, Source={StaticResource Locator}}">
-
-    <Page.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="PropertyContentTemplate">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,5,0,0">
-                    <Grid>
-                        <TextBlock Text="{Binding Description}" Style="{StaticResource BaseTextBlock}" />
-                    </Grid>
-                </ScrollViewer>
-            </DataTemplate>
-        </ResourceDictionary>
-    </Page.Resources>
     
     <Grid x:Name="LayoutRoot">
 

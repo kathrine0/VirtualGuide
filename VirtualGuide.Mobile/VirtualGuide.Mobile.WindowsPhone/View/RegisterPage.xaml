@@ -7,13 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:converter="using:VirtualGuide.Mobile.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Register, Source={StaticResource Locator}}">
 
     <Page.Resources>
-        <converter:TrueIsVisible x:Key="TrueIsVisible" />
         <Storyboard x:Name="SpinningAnimation" >
             <DoubleAnimation AutoReverse="False"
         		Duration="0:0:1"
@@ -25,33 +23,47 @@
         </Storyboard>
     </Page.Resources>
 
-    <Grid>
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="Create new account" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="0,12,0,0"/>
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center" Margin="20,0">
-            <TextBlock x:Uid="EmailLabel" Text="Email" />
-            <TextBox Text="{Binding Email, Mode=TwoWay}" />
-            <TextBlock x:Uid="PasswordLabel" Text="Password" />
-            <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
-            <TextBlock x:Uid="PasswordRepeatLabel" Text="Repeat password" />
-            <PasswordBox Password="{Binding RepeatPassword, Mode=TwoWay}" />
-            <Grid>
-                <Button Content="{Binding RegisterButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>
-                <Image
-					x:Name="LoginProgress"
-					Visibility="{Binding RegistrationInProgress, Converter={StaticResource TrueIsVisible}}"
-					Height="30"
-					Width="30"
-					Source="ms-appx:///Assets/Spinner.png"
-					Stretch="Uniform">
-                    <Image.RenderTransform>
-                        <RotateTransform x:Name="SpinningRotateTransform"
-							CenterX="15"
-							CenterY="15" />
-                    </Image.RenderTransform>
-                </Image>
-            </Grid>
-        </StackPanel>
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ContentControl Grid.Row="0" Template="{StaticResource Logo}" />
+
+        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="24,0">
+
+            <StackPanel VerticalAlignment="Center" Margin="20,0">
+                <TextBlock x:Uid="EmailLabel" Text="Email" />
+                <TextBox Text="{Binding Email, Mode=TwoWay}" />
+                <TextBlock x:Uid="PasswordLabel" Text="Password" />
+                <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
+                <TextBlock x:Uid="PasswordRepeatLabel" Text="Repeat password" />
+                <PasswordBox Password="{Binding RepeatPassword, Mode=TwoWay}" />
+                <Grid>
+                    <Button Content="{Binding RegisterButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding RegisterCommand}"/>
+                    <Image
+				x:Name="LoginProgress"
+				Visibility="{Binding RegistrationInProgress, Converter={StaticResource TrueIsVisible}}"
+				Height="30"
+				Width="30"
+				Source="ms-appx:///Assets/Spinner.png"
+				Stretch="Uniform">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="SpinningRotateTransform"
+						CenterX="15"
+						CenterY="15" />
+                        </Image.RenderTransform>
+                    </Image>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
