@@ -19,6 +19,7 @@ using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Windows.UI.Xaml.Controls.Maps;
 
 namespace VirtualGuide.Mobile.ViewModel.MapPage
 {
@@ -64,7 +65,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         #region commands
 
-        public RelayCommand InitializeMapCommand { get; set; }
+        public RelayCommand<MapControl> InitializeMapCommand { get; set; }
         public RelayCommand HideDetailCloudsCommand { get; set; }
         public RelayCommand LocateMeCommand { get; set; }
         public RelayCommand ShowHideFilterScreenCommand { get; set; }
@@ -169,6 +170,17 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             }
         }
 
+        private bool _mapInitialized = false;
+        public bool MapInitialized
+        {
+            get { return _mapInitialized; }
+            set
+            {
+                Set(ref _mapInitialized, value);
+            }
+        }
+        
+
         #endregion
 
         #region private properties
@@ -196,7 +208,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         #region private methods
         private void Initialize()
         {
-            InitializeMapCommand = new RelayCommand(InitializeMapExecute);
+            InitializeMapCommand = new RelayCommand<MapControl>(InitializeMapExecute);
             HideDetailCloudsCommand = new RelayCommand(HideDetailCloudsExecute);
             LocateMeCommand = new RelayCommand(LocateMeExecute);
             ShowHideFilterScreenCommand = new RelayCommand(ShowHideFilterScreenExecute);
@@ -271,6 +283,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             Categories.Clear();
             Places.Clear();
 
+            SetupGPSAndCompass();
+
             if (_travelId != 0)
             {
                 var travelTask = _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
@@ -299,28 +313,28 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             IsWorkInProgress = false;
         }
 
-        public async void InitializeMapExecute()
+        public void InitializeMapExecute(MapControl mapControl)
         {
-            //Wait if travel has not been loaded yet
-            if (Travel == null)
-            {
-                await Task.Delay(300);
-            }
+            if (MapInitialized || 
+                mapControl == null || 
+                mapControl.LoadingStatus != MapLoadingStatus.Loaded ||
+                Travel == null)
+                return;
 
             //set initial parameters
-            if (ZoomLevel == 0 || Center == null)
-            {
-                var zoomLevel = Travel.ZoomLevel;
-                var center = new Geopoint(new BasicGeoposition() { Latitude = Travel.Latitude, Longitude = Travel.Longitude });
 
-                if (ZoomingMapToPoint != null)
-                {
-                    ZoomingMapToPoint(center, zoomLevel);
-                }
+            var zoomLevel = Travel.ZoomLevel;
+            var center = new Geopoint(new BasicGeoposition() { Latitude = Travel.Latitude, Longitude = Travel.Longitude });
+
+            if (ZoomingMapToPoint != null)
+            {
+                ZoomingMapToPoint(center, zoomLevel);
             }
 
+            ZoomLevel = zoomLevel;
+            
             //setup geolocation
-            SetupGPSAndCompass();
+            MapInitialized = true;
         }
 
         public void HideDetailCloudsExecute()
@@ -435,10 +449,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
                 if (_centeredToPosition && ZoomingMapToPoint != null)
                 {
-                    //Task.Run(() => Maps.TrySetViewAsync(_mapElement.UserGeoposition));
-                    //Will it work?
                     ZoomingMapToPoint(UserGeoposition, ZoomLevel);
-
                 }
             });
         }

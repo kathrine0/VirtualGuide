@@ -22,6 +22,7 @@ namespace VirtualGuide.Mobile.View
     {
         private NavigationHelper navigationHelper;
         private MapViewModel viewModel;
+        private int TravelId;
 
         public MapPage()
         {
@@ -35,7 +36,7 @@ namespace VirtualGuide.Mobile.View
 
             viewModel.ZoomingMapToPoint += ViewModel_ZoomingMapToPoint;
 
-            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
+            
         }
 
         private async void ViewModel_ZoomingMapToPoint(Geopoint center, double zoomLevel)
@@ -70,16 +71,33 @@ namespace VirtualGuide.Mobile.View
         /// session.  The state will be null the first time a page is visited.</param>
         private async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            TravelId = (int)e.NavigationParameter;
+            viewModel.LoadData(TravelId);
 
             //Hide system tray
             StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+
+            //Enable orientations
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
+
             await statusBar.HideAsync();
 
-            if (e.PageState != null && e.PageState.ContainsKey("Latitude")
-                && e.PageState.ContainsKey("Longitude") && e.PageState.ContainsKey("Zoom"))
+            if (e.PageState != null && 
+                e.PageState.ContainsKey(String.Format("Travel{0}{1}", TravelId, "Latitude")) && 
+                e.PageState.ContainsKey(String.Format("Travel{0}{1}", TravelId, "Longitude")) && 
+                e.PageState.ContainsKey(String.Format("Travel{0}{1}", TravelId, "Zoom")))
             {
-                viewModel.ZoomLevel = (double)e.PageState["Zoom"];
-                viewModel.Center = new Geopoint(new BasicGeoposition() { Latitude = (double)e.PageState["Latitude"], Longitude = (double)e.PageState["Longitude"] });
+                viewModel.ZoomLevel = (double)e.PageState[String.Format("Travel{0}{1}", TravelId, "Zoom")];
+                viewModel.Center = new Geopoint(new BasicGeoposition() {
+                    Latitude  = (double) e.PageState[String.Format("Travel{0}{1}", TravelId, "Latitude")],
+                    Longitude = (double) e.PageState[String.Format("Travel{0}{1}", TravelId, "Longitude")] 
+                });
+            
+                viewModel.MapInitialized = true;
+            }
+            else
+            {
+                viewModel.MapInitialized = false;
             }
         }
 
@@ -95,11 +113,15 @@ namespace VirtualGuide.Mobile.View
         {
             //Restore system tray
             StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+
+            //Disable orientations
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
+
             await statusBar.ShowAsync();
 
-            e.PageState["Latitude"] = viewModel.Center.Position.Latitude;
-            e.PageState["Longitude"] = viewModel.Center.Position.Longitude;
-            e.PageState["Zoom"] = viewModel.ZoomLevel;
+            e.PageState[String.Format("Travel{0}{1}", TravelId, "Latitude")] = viewModel.Center.Position.Latitude;
+            e.PageState[String.Format("Travel{0}{1}", TravelId, "Longitude")] = viewModel.Center.Position.Longitude;
+            e.PageState[String.Format("Travel{0}{1}", TravelId, "Zoom")] = viewModel.ZoomLevel;
         }
 
         /// <summary>
@@ -117,8 +139,7 @@ namespace VirtualGuide.Mobile.View
         /// handlers that cannot cancel the navigation request.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var travelId = (int)e.Parameter;
-            viewModel.LoadData(travelId);
+            
 
             this.navigationHelper.OnNavigatedTo(e);
         }
@@ -150,7 +171,6 @@ namespace VirtualGuide.Mobile.View
         {
 
         }
-
     }
 
 }

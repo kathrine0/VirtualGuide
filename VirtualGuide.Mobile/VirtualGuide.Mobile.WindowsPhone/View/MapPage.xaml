@@ -29,11 +29,13 @@
 			LandmarksVisible="True" 
 			PedestrianFeaturesVisible="True"
 			ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}" 
-			Center="{Binding Center, Mode=TwoWay}"
+			Center="{Binding Center, Mode=TwoWay}"            
 			>
             <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="Loaded">
-                    <Core:InvokeCommandAction Command="{Binding InitializeMapCommand}" />
+                <Core:EventTriggerBehavior EventName="LoadingStatusChanged">
+                    <Core:InvokeCommandAction Command="{Binding InitializeMapCommand}" 
+                                              InputConverter="{StaticResource MapEventConverter}"
+                                              InputConverterParameter="{Binding ElementName=Maps}" />
                 </Core:EventTriggerBehavior>
                 <Core:EventTriggerBehavior EventName="MapTapped">
                     <Core:InvokeCommandAction Command="{Binding HideDetailCloudsCommand}" />

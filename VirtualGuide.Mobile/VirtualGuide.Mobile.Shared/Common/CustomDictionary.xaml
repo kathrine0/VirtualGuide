@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:VirtualGuide.Mobile.Common"
-    xmlns:converter="using:VirtualGuide.Mobile.Common"
+    xmlns:Converter="using:VirtualGuide.Mobile.Converters"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
 	xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
@@ -20,10 +19,12 @@
             <SolidColorBrush Color="#FF808080" x:Key="Gray"/>
             <SolidColorBrush Color="#FFFFFFFF" x:Key="PageBackground" />
 
-            <converter:IsOwnedToOpacity x:Key="IsOwnedToOpacity" />
-            <converter:IsOwnedToText x:Key="IsOwnedToText" />
-            <converter:TrueIsVisible x:Key="TrueIsVisible" />
-            <converter:FalseIsVisible x:Key="FalseIsVisible" />
+            <Converter:IsOwnedToOpacity x:Key="IsOwnedToOpacity" />
+            <Converter:IsOwnedToText x:Key="IsOwnedToText" />
+            <Converter:TrueIsVisible x:Key="TrueIsVisible" />
+            <Converter:FalseIsVisible x:Key="FalseIsVisible" />
+            <Converter:DistanceToString x:Key="DistanceToString" />
+            <Converter:MapEventConverter x:Key="MapEventConverter" />
 
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
