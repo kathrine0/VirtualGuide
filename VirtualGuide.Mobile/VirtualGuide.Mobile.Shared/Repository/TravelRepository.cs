@@ -64,7 +64,8 @@ namespace VirtualGuide.Mobile.Repository
         public async Task<T> GetTravelByIdAsync<T>(int id) 
             where T : BaseTravelBindingModel
         {
-            var travel = await App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE Id=?", id);
+            var query = App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE Id=?", id);
+            var travel = await query.ConfigureAwait(false);
 
             if (travel.Count != 1)
             {
@@ -79,7 +80,8 @@ namespace VirtualGuide.Mobile.Repository
         #region private methods
         private async Task<List<Travel>> GetOwnedTravels()
         {
-            var travels = await App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE IsOwned=?", true);
+            var query = App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE IsOwned=?", true);
+            var travels = await query.ConfigureAwait(false);
 
             return travels;
         }
@@ -89,12 +91,12 @@ namespace VirtualGuide.Mobile.Repository
             var downloadTask = new List<Task>();
             downloadTask.Add(HttpHelper.MapDownloader(travels));
 
-            await App.Connection.InsertOrReplaceAllAsync(travels);
+            await App.Connection.InsertOrReplaceAllAsync(travels).ConfigureAwait(false);
 
             foreach (var travel in travels)
             {
-                await App.Connection.InsertOrReplaceAllAsync(travel.Properties);
-                await App.Connection.InsertOrReplaceAllAsync(travel.Places);
+                await App.Connection.InsertOrReplaceAllAsync(travel.Properties).ConfigureAwait(false);
+                await App.Connection.InsertOrReplaceAllAsync(travel.Places).ConfigureAwait(false);
                 downloadTask.Add(HttpHelper.ImageDownloaderAsync<Place>(travel.Places));
             }
 
@@ -104,7 +106,7 @@ namespace VirtualGuide.Mobile.Repository
 
         private async void SaveAvailableTravels(List<Travel> travels)
         {
-            await App.Connection.InsertOrReplaceAllAsync(travels);
+            await App.Connection.InsertOrReplaceAllAsync(travels).ConfigureAwait(false);
         }
 
         #endregion

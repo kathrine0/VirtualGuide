@@ -14,8 +14,9 @@
             <SolidColorBrush Color="#FF5cb0d7" x:Key="ThemeBlue"/>
             <SolidColorBrush Color="#FFFBDE8A" x:Key="ThemeYellow" />
             <SolidColorBrush Color="#ffff205c" x:Key="ThemeRed" />
-            <SolidColorBrush Color="#FF4C6472" x:Key="ThemeGray" />            
-            
+            <SolidColorBrush Color="#FF4C6472" x:Key="ThemeGray" />
+            <SolidColorBrush Color="#FFCCCCCC" x:Key="ThemeLightGray" /> 
+
             <SolidColorBrush Color="#FF808080" x:Key="Gray"/>
             <SolidColorBrush Color="#FFFFFFFF" x:Key="PageBackground" />
 
@@ -114,7 +115,7 @@
     </DataTemplate>
 
     <ControlTemplate x:Key="Logo">
-        <Border Grid.Row="0" Margin="0,-15,0,0" BorderThickness="0,0,0,1" BorderBrush="#FFCFCFCF" Padding="0,0,0,5">
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="{StaticResource ThemeLightGray}" Padding="0,0,0,5">
             <Image Source="/Assets/textlogo.png" Width="200" Height="54" />
         </Border>
     </ControlTemplate>

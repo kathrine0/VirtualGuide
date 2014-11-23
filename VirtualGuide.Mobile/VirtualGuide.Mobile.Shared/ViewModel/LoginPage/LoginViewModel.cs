@@ -94,7 +94,9 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
             LoginButtonContent = "";
             LoginInProgress = true;
+            IsWorkInProgress = true;
 
+            var success = false;
 
             if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
             {
@@ -106,7 +108,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
             try
             {
-                await _userRepository.Login(Email, Password);
+                success = await _userRepository.Login(Email, Password);
 
             }
             catch (HttpRequestException ex)
@@ -123,21 +125,19 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
                 {
                     MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
                 }
-                TurnOffLoader();
-
-                return;
             }
             catch
             {
                 MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
-                TurnOffLoader();
-
-                return;
             }
 
-            
-            localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
-            _navigationService.NavigateTo("GuideList");
+            TurnOffLoader();
+
+            if (success)
+            {
+                localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
+                _navigationService.NavigateTo("GuideList");
+            }
             
 
         }

@@ -13,14 +13,16 @@ namespace VirtualGuide.Mobile.Repository
     {
         public async Task<List<T>> GetParentPlacesByTravelIdAsync<T>(int travelId)
         {
-            var places = await App.Connection.QueryAsync<Place>("Select * FROM Place WHERE TravelId = ? AND (ParentId IS NULL OR ParentId = '' ) ORDER BY Latitude DESC", travelId);
+            var query = App.Connection.QueryAsync<Place>("Select * FROM Place WHERE TravelId = ? AND (ParentId IS NULL OR ParentId = '' ) ORDER BY Latitude DESC", travelId);
+            var places = await query.ConfigureAwait(false);
 
             return ModelHelper.ObjectToViewModel<T, Place>(places);
         }
 
         public async Task<T> GetPlaceById<T>(int placeId)
         {
-            var place = await App.Connection.QueryAsync<Place>("Select * FROM Place WHERE Id = ?", placeId);
+            var query = App.Connection.QueryAsync<Place>("Select * FROM Place WHERE Id = ?", placeId);
+            var place = await query.ConfigureAwait(false);
 
             if (place.Count == 0)
                 throw new Exception("Element not found");

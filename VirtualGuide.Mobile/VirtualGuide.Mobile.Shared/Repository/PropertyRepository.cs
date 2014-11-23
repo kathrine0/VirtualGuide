@@ -13,8 +13,9 @@ namespace VirtualGuide.Mobile.Repository
     {
         private async Task<List<Property>> GetPropertiesByTravelIdAsync(int TravelId)
         {
-            var properties = await App.Connection.QueryAsync<Property>("Select * FROM Property WHERE TravelId = ? ORDER BY ItemsOrder ASC", TravelId);
+            var query = App.Connection.QueryAsync<Property>("Select * FROM Property WHERE TravelId = ? ORDER BY ItemsOrder ASC", TravelId);
 
+            var properties = await query.ConfigureAwait(false);
             return properties;
         }
 

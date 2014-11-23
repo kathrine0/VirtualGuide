@@ -12,7 +12,7 @@ namespace VirtualGuide.Mobile.Repository
     public class UserRepository
     {
         SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
-        public async Task Login(string email, string password)
+        public async Task<bool> Login(string email, string password)
         {
             if (!String.IsNullOrEmpty(email) && !(String.IsNullOrEmpty(password)))
             {
@@ -22,8 +22,11 @@ namespace VirtualGuide.Mobile.Repository
 
                 if (!result.ContainsKey("access_token")) throw new Exception();
 
-                settingsDataHelper.SetValue(SettingsDataHelper.TOKEN, result["access_token"]);         
+                settingsDataHelper.SetValue(SettingsDataHelper.TOKEN, result["access_token"]);
+                return true;
             }
+
+            return false;
         }
 
         public async Task Logout()

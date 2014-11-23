@@ -14,6 +14,7 @@ namespace VirtualGuide.Mobile.Helper
         public static readonly Brush YELLOW = (SolidColorBrush)Application.Current.Resources["ThemeYellow"];
         public static readonly Brush RED = (SolidColorBrush)Application.Current.Resources["ThemeRed"];
         public static readonly Brush GRAY = (SolidColorBrush)Application.Current.Resources["ThemeGray"];
+        public static readonly Brush LIGHTGRAY = (SolidColorBrush)Application.Current.Resources["ThemeLightGray"];
 
         public static Brush[] TileColors = new Brush[]
         {

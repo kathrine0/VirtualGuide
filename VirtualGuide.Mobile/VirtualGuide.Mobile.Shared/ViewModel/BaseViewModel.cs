@@ -82,7 +82,7 @@ namespace VirtualGuide.Mobile.ViewModel
         {
 #if WINDOWS_PHONE_APP
             var statusBar = StatusBar.GetForCurrentView();
-            //statusBar.ForegroundColor = ((SolidColorBrush)ColorHelper.BLUE).Color;
+            statusBar.ForegroundColor = ((SolidColorBrush)ColorHelper.GRAY).Color;
             
 
             if (IsWorkInProgress)

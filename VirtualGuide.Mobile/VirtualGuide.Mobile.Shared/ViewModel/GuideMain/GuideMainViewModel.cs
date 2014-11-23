@@ -32,6 +32,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         public GuideMainViewModel(INavigationService navigationService)
             : base(navigationService)
         {
+            Properties = new ObservableCollection<GuideMainPropertyBindingModel>();
             Travel = new GuideMainBindingModel();
 
             Initialize();
@@ -49,10 +50,11 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         #region public properties
 
+        private GuideMainBindingModel _travel;
         public GuideMainBindingModel Travel
         {
-            get;
-            private set;
+            get { return _travel; }
+            private set { Set(ref _travel, value); }
         }
 
         private ImageSource _mapImage;
@@ -67,16 +69,14 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
                 return null;
             }
-            private set
-            {
-                _mapImage = value;
-            }
-        }       
+            private set { Set(ref _mapImage, value); }
+        }
 
+        private ObservableCollection<GuideMainPropertyBindingModel> _properties;
         public ObservableCollection<GuideMainPropertyBindingModel> Properties
         {
-            get;
-            private set;
+            get { return _properties; }
+            private set { Set(ref _properties, value); }
         }
 
         #endregion
@@ -96,14 +96,14 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             NavigateToMapCommand = new RelayCommand(NavigateToMapExecute);
             PropertyClickCommand = new RelayCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
 
-            var tours = new GuideMainPropertyBindingModel() {
-                Name = "Tours", 
-                Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, 
-                Icon="\uD83C\uDFF0", 
-                Type=GuideMainPropertyBindingModel.Types.TOURS};
+            //Move it somewhere else anyway
+            //var tours = new GuideMainPropertyBindingModel() {
+            //    Name = "Tours", 
+            //    Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, 
+            //    Icon="\uD83C\uDFF0", 
+            //    Type=GuideMainPropertyBindingModel.Types.TOURS};
 
-            Properties = new ObservableCollection<GuideMainPropertyBindingModel>();
-            Properties.Add(tours);
+            //Properties.Add(tours);
         }
 
         #endregion
@@ -118,6 +118,9 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         public async void LoadData()
         {
+            IsWorkInProgress = true;
+            Properties.Clear();
+
             if (_travelId != 0 || (Travel != null && Travel.Id != 0))
             {
                 Travel = await _travelRepository.GetTravelByIdAsync<GuideMainBindingModel>(_travelId);
@@ -135,6 +138,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             {
                 DataLoaded();
             }
+            IsWorkInProgress = false;
         }
 
         public void NavigateToMapExecute()

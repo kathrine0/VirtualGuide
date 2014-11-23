@@ -217,6 +217,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         public async void LoadData()
         {
+            IsWorkInProgress = true;
             if (_travelId != 0 || (Travel != null && Travel.Id != 0))
             {
                 Travel = await _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
@@ -238,6 +239,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                     _categories.Add(new CategoryVisibility() { Visibile = true, Name = category });
                 }
             }
+            IsWorkInProgress = false;
         }
 
         public async void InitializeMapExecute()
