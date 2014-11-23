@@ -135,7 +135,7 @@
     <!--Data Template for every place marker on the map-->
 
     <DataTemplate x:Key="MapMarker">
-        <Canvas Visibility="{Binding Visibility, Converter={StaticResource TrueIsVisible}}">
+        <Canvas Visibility="{Binding Category.Visibile, Converter={StaticResource TrueIsVisible}}">
             <Image 
 					Source="{Binding Icon}" 
 					Stretch="Uniform"

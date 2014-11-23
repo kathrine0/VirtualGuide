@@ -22,7 +22,7 @@ namespace VirtualGuide.Mobile.BindingModel
         {
             Id = place.Id;
             Name = place.Name;
-            Category = place.Category;
+            CategoryName = place.Category;
             Point = new Geopoint(new BasicGeoposition() { Latitude = place.Latitude, Longitude = place.Longitude });
             _iconName = place.IconName;
         }
@@ -30,13 +30,17 @@ namespace VirtualGuide.Mobile.BindingModel
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public string Category { get; set; }
+        public string CategoryName { get; set; }
+
+        public CategoryVisibilityModel Category
+        {
+            get;
+            set;
+        }
 
         public Geopoint Point { get; set; }
 
         public bool DetailsVisibility { get; set; }
-
-        public bool Visibility { get; set; }
 
         private string _iconName;
 
@@ -60,7 +64,6 @@ namespace VirtualGuide.Mobile.BindingModel
                 return _icon;
             }
         }
-
         
     }
 }

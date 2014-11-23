@@ -139,32 +139,42 @@
 		</Grid>
 
 		<!-- Categories screen -->
-		<Border x:Name="PlaceFilterScreen" 
+		<Grid x:Name="PlaceFilterScreen" 
               HorizontalAlignment="Right" 
               Background="#CC000000" 
               Visibility="{Binding FilterMode, Converter={StaticResource TrueIsVisible}}">
             
-            <Canvas>
-			    <TextBlock Foreground="White">Categories</TextBlock>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+			<TextBlock 
+                Foreground="White" 
+                Grid.Row="0"
+                Margin="10,5,10,0">
+                Categories
+            </TextBlock>
 
-                <ListView
-				    SelectionMode="Extended" 
-                    ItemsSource="{Binding Categories}" 
-                    Margin="10"
-                    >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox IsChecked="{Binding Visibile, Mode=TwoWay}" 
-                                      Content="{Binding Name}" 
-                                      Foreground="White" 
-                                      BorderBrush="White" Background="White" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Canvas>           
+            <ListView
+				SelectionMode="Extended" 
+                ItemsSource="{Binding Categories}" 
+                Margin="10"
+                Grid.Row="1"
+                >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding Visibile, Mode=TwoWay}" 
+                                    Content="{Binding Name}" 
+                                    Foreground="White" 
+                                    BorderBrush="White" Background="White" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+                       
 
 			
-		</Border>
+		</Grid>
 		
 	</Grid>
 

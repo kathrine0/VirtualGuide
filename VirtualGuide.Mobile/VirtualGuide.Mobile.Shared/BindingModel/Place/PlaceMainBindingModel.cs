@@ -50,7 +50,10 @@ namespace VirtualGuide.Mobile.BindingModel
             }
         }
 
-        public string Category { get; set; }
+        public string Category
+        { 
+            get; set; 
+        }
 
     }
 }

@@ -52,7 +52,8 @@ namespace VirtualGuide.WebService.Controllers
             try
             {
                 string userName = User.Identity.Name;
-                return tr.GetOwnedTravelList(userName);
+                var travels = tr.GetOwnedTravelList(userName);
+                return travels;
             }
             catch (Exception e)
             {

@@ -166,11 +166,6 @@ namespace VirtualGuide.Mobile.View
         }
 
         #endregion
-
-        private void Filter_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
     }
 
 }

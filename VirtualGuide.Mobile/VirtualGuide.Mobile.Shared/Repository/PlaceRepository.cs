@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
@@ -30,6 +32,19 @@ namespace VirtualGuide.Mobile.Repository
             var viewmodelList = ModelHelper.ObjectToViewModel<T, Place>(place);
 
             return viewmodelList[0];
-         }
+        }
+
+        public ItemsChangeObservableCollection<CategoryVisibilityModel> GetCategoryVisibilityCollection(List<MapPlaceBindingModel> places)
+        {
+            IEnumerable<string> categories = places.Select(x => x.CategoryName).Distinct();
+            ItemsChangeObservableCollection<CategoryVisibilityModel> result = new ItemsChangeObservableCollection<CategoryVisibilityModel>();
+
+            foreach (var category in categories)
+            {
+                result.Add(new CategoryVisibilityModel() { Visibile = true, Name = category });
+            }
+
+            return result;
+        }
     }
 }

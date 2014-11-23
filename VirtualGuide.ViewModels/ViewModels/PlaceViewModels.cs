@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace VirtualGuide.ViewModels
 {
-    //TODO Automapper!
     public class MobilePlaceViewModel
     {
         public int Id { get; set; }

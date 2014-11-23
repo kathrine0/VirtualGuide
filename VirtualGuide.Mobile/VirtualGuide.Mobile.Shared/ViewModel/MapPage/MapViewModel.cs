@@ -42,7 +42,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
             _travel = new MapTravelBindingModel();
             _places = new ObservableCollection<MapPlaceBindingModel>();
-            _categories = new ItemsChangeObservableCollection<CategoryVisibility>();
+            _categories = new ItemsChangeObservableCollection<CategoryVisibilityModel>();
 
             Initialize();
             
@@ -150,8 +150,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             private set { Set(ref _calibrationInProgress, value); }
         }
 
-        private ItemsChangeObservableCollection<CategoryVisibility> _categories;
-        public ItemsChangeObservableCollection<CategoryVisibility> Categories
+        private ItemsChangeObservableCollection<CategoryVisibilityModel> _categories;
+        public ItemsChangeObservableCollection<CategoryVisibilityModel> Categories
         {
             get { return _categories; }
             set
@@ -160,11 +160,11 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             }
         }
 
-        private bool _filterMode;
+        private bool _filterMode = false;
         public bool FilterMode
         {
             get { return _filterMode; }
-            set
+            private set
             {
                 Set(ref _filterMode, value);
             }
@@ -212,24 +212,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             HideDetailCloudsCommand = new RelayCommand(HideDetailCloudsExecute);
             LocateMeCommand = new RelayCommand(LocateMeExecute);
             ShowHideFilterScreenCommand = new RelayCommand(ShowHideFilterScreenExecute);
-
-            Categories.CollectionChanged += Categories_CollectionChanged;
-        }
-
-        private void Categories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            IEnumerable<string> visibileCategories = Categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
-
-            foreach (var place in _places)
-            {
-                if (visibileCategories.Contains(place.Category))
-                    place.Visibility = true;
-                else
-                    place.Visibility = false;
-            }
-
-
-            //OnPropertyChanged("Places");
         }
 
         private void HideAllClouds()
@@ -290,20 +272,16 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                 var travelTask = _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
 
                 var places = await _placeRepository.GetParentPlacesByTravelIdAsync<MapPlaceBindingModel>(_travelId);
+                Categories = _placeRepository.GetCategoryVisibilityCollection(places);
+
 
                 foreach (var place in places)
                 {
+                    place.Category = Categories.Where(x => x.Name == place.CategoryName).FirstOrDefault();
                     place.ShowDetailCloudCommand = new RelayCommand<MapPlaceBindingModel>(ShowDetailCloudExecute);
                     place.NavigateToPlaceDetailsCommand = new RelayCommand<MapPlaceBindingModel>(NavigateToPlaceDetailsExecute);
 
                     Places.Add(place);
-                }
-
-                IEnumerable<string> categories = Places.Select(x => x.Category).Distinct();
-
-                foreach (var category in categories)
-                {
-                    Categories.Add(new CategoryVisibility() { Visibile = true, Name = category });
                 }
 
                 Travel = await travelTask;
@@ -551,23 +529,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             public bool CompassMode { get; set; }
             public Brush Fill { get; set; }
-        }
-
-        public class CategoryVisibility : INotifyPropertyChanged
-        {
-            public bool Visibile
-            {
-                get;
-                set;
-            }
-
-            public string Name
-            {
-                get;
-                set;
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
         }
 
         #endregion

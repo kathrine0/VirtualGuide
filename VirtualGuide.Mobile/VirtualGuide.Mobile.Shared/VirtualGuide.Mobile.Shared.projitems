@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\CategoryVisibilityModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\ListPlaceBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\MapPlaceBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Place\PlaceMainBindingModel.cs" />
