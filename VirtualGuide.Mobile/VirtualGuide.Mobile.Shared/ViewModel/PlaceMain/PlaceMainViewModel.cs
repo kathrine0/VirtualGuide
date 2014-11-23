@@ -96,10 +96,14 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         public async void LoadData()
         {
+            IsWorkInProgress = true;
+            
             if (_placeId != 0 || (Place != null && Place.Id != 0))
             {
                 Place = await _placeRepository.GetPlaceById<PlaceMainBindingModel>(_placeId);
             }
+            
+            IsWorkInProgress = false;
         }
 
         //public void NavigateToMapExecute()

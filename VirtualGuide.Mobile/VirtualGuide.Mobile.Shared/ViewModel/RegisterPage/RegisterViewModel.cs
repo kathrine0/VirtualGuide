@@ -71,30 +71,26 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
                 return;
             }
 
+            IsWorkInProgress = true;
             RegisterButtonContent = "";
             RegistrationInProgress = true;
+            var success = false;
 
             if (string.IsNullOrEmpty(Email) || 
                 string.IsNullOrEmpty(Password) ||
                 string.IsNullOrEmpty(RepeatPassword))
             {
                 MessageBoxHelper.Show("Enter username and passwords", "");
-                TurnOffLoader();
-
-                return;
             }
 
             if (string.IsNullOrEmpty(Password) != string.IsNullOrEmpty(RepeatPassword))
             {
                 MessageBoxHelper.Show("Passwords don't match", "");
-                TurnOffLoader();
-
-                return;
             }
 
             try
             {
-                await _userRepository.Register(Email, Password, RepeatPassword);
+                success = await _userRepository.Register(Email, Password, RepeatPassword);
 
             }
             catch (HttpRequestException ex)
@@ -112,15 +108,14 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
                     MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
                 }
 
-                TurnOffLoader();
-                return;
             }
             catch
             {
                 MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
-                TurnOffLoader();
-                return;
+
             }
+
+            TurnOffLoader();
 
             //authenticate user
             await _userRepository.Login(Email, Password);

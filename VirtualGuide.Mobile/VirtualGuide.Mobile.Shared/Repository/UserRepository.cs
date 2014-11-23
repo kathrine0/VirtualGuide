@@ -36,7 +36,7 @@ namespace VirtualGuide.Mobile.Repository
             settingsDataHelper.RemoveValue(SettingsDataHelper.TOKEN);
         }
 
-        public async Task Register(string username, string password, string repeatPassword)
+        public async Task<bool> Register(string username, string password, string repeatPassword)
         {
             var data = new
             {
@@ -46,6 +46,8 @@ namespace VirtualGuide.Mobile.Repository
             };
 
             var result = await HttpHelper.PostData<object>("api/Account/Register", data);
+            //TODO!
+            return true;
         }
     }
 }
