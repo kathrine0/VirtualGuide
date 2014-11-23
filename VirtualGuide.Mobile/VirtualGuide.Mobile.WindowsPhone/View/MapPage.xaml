@@ -64,7 +64,7 @@
 					<Grid 
 					    Margin="1"
 					    Grid.Column="1"
-					    Background="{StaticResource ThemeStrongGreen}"
+					    Background="{StaticResource ThemeGreen}"
 					    DataContext="{Binding}">
                         <Interactivity:Interaction.Behaviors>
                             <Core:EventTriggerBehavior EventName="Tapped">

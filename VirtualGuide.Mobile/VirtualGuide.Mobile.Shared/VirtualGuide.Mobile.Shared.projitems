@@ -26,7 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\User\LastLoggedUserSettingsModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ItemsChangeObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Converters.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableCollectionViewSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\BindingHelper.cs" />
@@ -39,7 +38,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\MessageBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NavigationHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\Section.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UIHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BaseImageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BaseModel.cs" />
@@ -65,9 +63,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)BindingModel\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Common\CustomDictionary.xaml">

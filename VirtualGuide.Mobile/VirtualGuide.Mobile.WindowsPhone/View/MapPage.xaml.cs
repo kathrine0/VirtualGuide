@@ -1,29 +1,13 @@
 ﻿using VirtualGuide.Mobile.Common;
 using System;
-using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using VirtualGuide.Mobile.ViewModel;
-using VirtualGuide.Mobile.Repository;
 using Windows.Devices.Geolocation;
-using Windows.UI.Xaml.Input;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
-using PropertyChanged;
-using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Controls.Maps;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using VirtualGuide.Mobile.Helper;
-using Windows.Devices.Sensors;
 using Windows.Graphics.Display;
 using Windows.Phone.UI.Input;
-using System.Collections.ObjectModel;
-using VirtualGuide.Mobile.ViewModel.GuideList;
-using VirtualGuide.Mobile.Model;
-using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.ViewModel.MapPage;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
