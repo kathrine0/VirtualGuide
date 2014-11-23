@@ -13,6 +13,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding GuideList, Source={StaticResource Locator}}">
 
+    
     <Page.Resources>
 
         <CollectionViewSource x:Key="Collection" Source="{Binding Path=DataGrouped}" IsSourceGrouped="True" />
@@ -52,8 +53,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ProgressBar Visibility="{Binding Loading, Converter={StaticResource TrueIsVisible}}" IsIndeterminate="True" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Height="5" Margin="0,-20,0,0" />
-        <!-- TitlePanel -->
         <Border Grid.Row="0" Margin="0,-15,0,0" BorderThickness="0,0,0,1" BorderBrush="#FFCFCFCF" Padding="0,0,0,5">
             <Image Source="/Assets/textlogo.png" Width="200" Height="54" />
         </Border>
@@ -102,5 +101,7 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
+    
+
 
 </Page>

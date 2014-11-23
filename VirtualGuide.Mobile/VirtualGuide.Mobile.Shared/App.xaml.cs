@@ -41,7 +41,7 @@ namespace VirtualGuide.Mobile
 #endif
 
         //public const string WebService = @"http://catherine.cloudapp.net:8080/";
-        public const string WebService = @"http://192.168.0.18/VirtualGuide/";
+        public const string WebService = @"http://192.168.10.180/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
         private LocalDataHelper localDataHelper = new LocalDataHelper();
         private SettingsDataHelper settingsDataHelper = new SettingsDataHelper();

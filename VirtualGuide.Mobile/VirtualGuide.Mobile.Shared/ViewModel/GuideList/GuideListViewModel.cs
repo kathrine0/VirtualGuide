@@ -75,13 +75,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
         }
 
-        private bool _loading;
-        public bool Loading
-        {
-            get { return _loading; }
-            set { Set(ref _loading, value); }
-        }
-
         #endregion
 
         #region public methods
@@ -111,7 +104,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
             try
             {
-                Loading = true;
+                IsWorkInProgress = true;
 
                 Download.Add(StartDownloading(_travelRepository.DownloadAvailableTravels()));
                 Download.Add(StartDownloading(_travelRepository.DownloadOwnedTravels()));
@@ -140,7 +133,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, false);
 
-                Loading = false;
+                IsWorkInProgress = false;
             }
         }
 
@@ -161,7 +154,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             RefreshCommand = new RelayCommand(RefreshExecute);
             LogoutCommand = new RelayCommand(LogoutExecute);
 
-            Loading = true;
+            IsWorkInProgress = true;
             //TODO Check if token is still active
             Data = new ObservableCollection<GuideListBindingModel>(new List<GuideListBindingModel>(await _travelRepository.GetAllTravelsAsync()));
 
@@ -175,7 +168,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
             if (!localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS))
             {
-                Loading = false;
+                IsWorkInProgress = false;
             }
         }
         private async Task StartDownloading(Task<List<GuideListBindingModel>> task)

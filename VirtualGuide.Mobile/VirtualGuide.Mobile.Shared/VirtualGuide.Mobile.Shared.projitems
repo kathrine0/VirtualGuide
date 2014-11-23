@@ -93,4 +93,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Spinner.png" />
     <Content Include="$(MSBuildThisFileDirectory)FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
+  </ItemGroup>
 </Project>
