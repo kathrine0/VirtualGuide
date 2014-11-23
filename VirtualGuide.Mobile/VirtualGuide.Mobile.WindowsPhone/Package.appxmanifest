@@ -5,7 +5,7 @@
   <!--PhoneProductId="9c663dd0-4c24-4049-8fb9-1bd754264deb"-->
   <Properties>
     <DisplayName>TravelGuide</DisplayName>
-    <PublisherDisplayName>kbiernat</PublisherDisplayName>
+    <PublisherDisplayName>TravelGuide</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>

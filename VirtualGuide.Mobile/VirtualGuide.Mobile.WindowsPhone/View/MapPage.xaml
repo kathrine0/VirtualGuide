@@ -181,7 +181,7 @@
 	<Page.BottomAppBar>
 		<CommandBar x:Name="commandBar" Background="Black" Foreground="#DEFFFFFF">
 			<CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="Filter" Label="Filter Places" Command="{Binding ShowHideFilterScreenCommand}" Icon="Filter" />
+                <AppBarButton x:Name="Filter" x:Uid="Filter" Label="Filter Places" Command="{Binding ShowHideFilterScreenCommand}" Icon="Filter" />
 			</CommandBar.PrimaryCommands>
 		</CommandBar>
 	</Page.BottomAppBar>

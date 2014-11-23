@@ -43,8 +43,10 @@ namespace VirtualGuide.Mobile
         //public const string WebService = @"http://catherine.cloudapp.net:8080/";
         public const string WebService = @"http://192.168.10.180/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
+               
         private LocalDataHelper localDataHelper = new LocalDataHelper();
         private SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
+
         
         public static string MapToken = "6lLX1mlgjcbABymCCQ-y2w";
         public static string GmapsToken = "AIzaSyBNBqnWyCp2fz0gSKTTK_n7uYQPxTdCQ_0";
@@ -124,7 +126,7 @@ namespace VirtualGuide.Mobile
                 if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
                 {
                     page = typeof(GuideList);
-                }               
+                }
 
                 if (!RootFrame.Navigate(page, e.Arguments))
                 {

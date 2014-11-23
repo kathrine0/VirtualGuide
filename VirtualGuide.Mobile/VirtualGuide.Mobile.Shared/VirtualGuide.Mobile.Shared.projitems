@@ -100,6 +100,7 @@
     <Content Include="$(MSBuildThisFileDirectory)FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\pl-PL\Resources.resw" />
   </ItemGroup>
 </Project>

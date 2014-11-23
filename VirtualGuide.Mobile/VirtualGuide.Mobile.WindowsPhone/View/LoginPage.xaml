@@ -40,9 +40,9 @@
 
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="24,0">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock x:Uid="EmailLabel" Text="Email" />
+                <TextBlock Text="Email" x:Uid="Email" />
                 <TextBox Text="{Binding Email, Mode=TwoWay}" />
-                <TextBlock x:Uid="PasswordLabel" Text="Password" />
+                <TextBlock x:Uid="Password" Text="Password" />
                 <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
                 <Grid>
                     <Button x:Name="LoginButton" Content="{Binding LoginButtonContent}"  HorizontalAlignment="Stretch" Command="{Binding SignInCommand}"/>
