@@ -318,7 +318,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             if (MapInitialized || 
                 mapControl == null || 
                 mapControl.LoadingStatus != MapLoadingStatus.Loaded ||
-                Travel == null)
+                Travel == null ||
+                Travel.Id != _travelId)
                 return;
 
             //set initial parameters
@@ -329,10 +330,11 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             if (ZoomingMapToPoint != null)
             {
                 ZoomingMapToPoint(center, zoomLevel);
-            }
-
-            ZoomLevel = zoomLevel;
+            }            
             
+            //ZoomLevel = Travel.ZoomLevel;
+            //Center = new Geopoint(new BasicGeoposition() { Latitude = Travel.Latitude, Longitude = Travel.Longitude });
+
             //setup geolocation
             MapInitialized = true;
         }

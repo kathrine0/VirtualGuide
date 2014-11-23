@@ -139,28 +139,32 @@
 		</Grid>
 
 		<!-- Categories screen -->
-		<Grid x:Name="PlaceFilterScreen" 
+		<Border x:Name="PlaceFilterScreen" 
               HorizontalAlignment="Right" 
               Background="#CC000000" 
               Visibility="{Binding FilterMode, Converter={StaticResource TrueIsVisible}}">
-			<TextBlock Foreground="White">Categories</TextBlock>
+            
+            <Canvas>
+			    <TextBlock Foreground="White">Categories</TextBlock>
 
-            <ListView
-				SelectionMode="Extended" 
-                ItemsSource="{Binding Categories}" 
-                Margin="10"
-                >
-                <ListView.ItemTemplate>
-					<DataTemplate>
-                        <CheckBox IsChecked="{Binding Visibile, Mode=TwoWay}" 
-                                  Content="{Binding Name}" 
-                                  Foreground="White" 
-                                  BorderBrush="White" Background="White" />
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
+                <ListView
+				    SelectionMode="Extended" 
+                    ItemsSource="{Binding Categories}" 
+                    Margin="10"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Visibile, Mode=TwoWay}" 
+                                      Content="{Binding Name}" 
+                                      Foreground="White" 
+                                      BorderBrush="White" Background="White" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Canvas>           
+
 			
-		</Grid>
+		</Border>
 		
 	</Grid>
 
