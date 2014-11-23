@@ -58,7 +58,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         public ObservableCollection<GuideListBindingModel> Data
         {
             get { return _data; }
-            set { Set(ref _data, value); }
+            private set { Set(ref _data, value); }
         }
 
         public ObservableCollection<ListGroup<GuideListBindingModel>> DataGrouped

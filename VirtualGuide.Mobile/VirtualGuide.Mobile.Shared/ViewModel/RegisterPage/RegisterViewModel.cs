@@ -37,15 +37,40 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 
         #region public properties
 
-        public string Email { get; set; }
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set { Set(ref _email, value); }
+        }
 
-        public string Password { get; set; }
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set { Set(ref _password, value); }
+        }
 
-        public string RepeatPassword { get; set; }
+        private string _repeatPassword;
+        public string RepeatPassword
+        {
+            get { return _repeatPassword; }
+            set { Set(ref _repeatPassword, value); }
+        }
 
-        public string RegisterButtonContent { get; set; }
+        private string _registerButtonContent;
+        public string RegisterButtonContent
+        {
+            get { return _registerButtonContent; }
+            private set { Set(ref _registerButtonContent, value); }
+        }
 
-        public bool RegistrationInProgress { get; set; }
+        private bool _registrationInProgress;
+        public bool RegistrationInProgress
+        {
+            get { return _registrationInProgress; }
+            private set { Set(ref _registrationInProgress, value); }
+        }
 
         #endregion
 

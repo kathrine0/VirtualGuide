@@ -46,13 +46,33 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
         
         #region public propeties
 
-        public string Email { get; set; }
-      
-        public string Password { get; set; }
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set { Set(ref _email, value); }
+        }
 
-        public string LoginButtonContent { get; set; }
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set { Set(ref _password, value); }
+        }
 
-        public bool LoginInProgress { get; set; }
+        private string _loginButtonContent;
+        public string LoginButtonContent
+        {
+            get { return _loginButtonContent; }
+            private set { Set(ref _loginButtonContent, value); }
+        }
+
+        private bool _loginInProgress;
+        public bool LoginInProgress
+        {
+            get { return _loginInProgress; }
+            private set { Set(ref _loginInProgress, value); }
+        }
         
         #endregion
 

@@ -38,9 +38,10 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             this._uiFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
 
-            Initialize();
 
             Travel = new MapTravelBindingModel();
+            Places = new ObservableCollection<MapPlaceBindingModel>();
+            Categories = new ItemsChangeObservableCollection<CategoryVisibility>();
            
             LocationEllipse = new LocationEllipseParams()
             {
@@ -55,6 +56,8 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                 CompassMode = false,
                 Fill = new SolidColorBrush(Colors.Gray)
             };
+            
+            Initialize();
         }
 
         #endregion
@@ -70,47 +73,90 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         #region public properties
 
-        public Geopoint UserGeoposition { get; set; }
-    
-        public double ZoomLevel { get; set; }
-      
-        public Geopoint Center { get; set; }
-       
-        public bool CompassIsActive { get; set; }
+        private Geopoint _userGeoposition;
+        public Geopoint UserGeoposition
+        {
+            get { return _userGeoposition; }
+            set { Set(ref _userGeoposition, value); }
+        }
 
-        public bool IsMarkerVisible { get; set; }
+        private double _zoomLevel;
+        public double ZoomLevel
+        {
+            get { return _zoomLevel; }
+            set { Set(ref _zoomLevel, value); }
+        }
 
-        public double Heading { get; set; }
+        private Geopoint _center;
+        public Geopoint Center
+        {
+            get { return _center; }
+            set { Set(ref _center, value); }
+        }
 
+        private bool _compassIsActive;
+        public bool CompassIsActive
+        {
+            get { return _compassIsActive; }
+            set { Set(ref _compassIsActive, value); }
+        }
+
+        private bool _isMarkerVisible;
+        public bool IsMarkerVisible 
+        {
+            get { return _isMarkerVisible; }
+            set { Set(ref _isMarkerVisible, value); }
+        }
+
+        private double _heading;
+        public double Heading
+        {
+            get { return _heading; }
+            set { Set(ref _heading, value); }
+        }
+
+        private MapTravelBindingModel _travel;
         public MapTravelBindingModel Travel
         {
-            get;
-            private set;
+            get { return _travel; }
+            private set { Set(ref _travel, value); }
         }
 
+        private ObservableCollection<MapPlaceBindingModel> _places;
         public ObservableCollection<MapPlaceBindingModel> Places
         {
-            get
-            {
-                return _places;
-            }
+            get { return _places; }
+            private set { Set(ref _places, value); }
         }
 
-        public LocationEllipseParams LocationEllipse { get; set; }
+        private LocationEllipseParams _locationEllipse;
+        public LocationEllipseParams LocationEllipse
+        {
+            get { return _locationEllipse; }
+            private set { Set(ref _locationEllipse, value); }
+        }
 
-        public CompassPathParams CompassPath { get; set; }
+        private CompassPathParams _compassPath;
+        public CompassPathParams CompassPath
+        {
+            get { return _compassPath; }
+            private set { Set(ref _compassPath, value); }
+        }
 
-        public bool CalibrationInProgress { get; set; }
+        private bool _calibrationInProgress;
+        public bool CalibrationInProgress
+        {
+            get { return _calibrationInProgress; }
+            private set { Set(ref _calibrationInProgress, value); }
+        }
 
+        private ItemsChangeObservableCollection<CategoryVisibility> _categories;
         public ItemsChangeObservableCollection<CategoryVisibility> Categories 
         { 
-            get
-            {
-                return _categories;
-            }
-            set
-            {
-                _categories = value;
+            get { return _categories; }
+            set 
+            { 
+                Set(ref _categories, value); 
             }
         }
 
@@ -123,9 +169,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         private int _travelId;
         private TravelRepository _travelRepository = new TravelRepository();
         private PlaceRepository _placeRepository = new PlaceRepository();
-
-        private ItemsChangeObservableCollection<CategoryVisibility> _categories = new ItemsChangeObservableCollection<CategoryVisibility>();
-        private ObservableCollection<MapPlaceBindingModel> _places = new ObservableCollection<MapPlaceBindingModel>();
 
         private Compass _compass;
         private Geolocator _geolocator = null;
@@ -156,15 +199,17 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
         private void Categories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            IEnumerable<string> visibileCategories = _categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
+            IEnumerable<string> visibileCategories = Categories.Where(x => x.Visibile == true).Select(x => x.Name).ToList();
 
-            foreach (var place in _places)
-            {
-                if (visibileCategories.Contains(place.Category))
-                    place.Visibility = true;
-                else
-                    place.Visibility = false;
-            }
+            this.RaisePropertyChanged("Places");
+
+            //foreach (var place in Places)
+            //{
+            //    if (visibileCategories.Contains(place.Category))
+            //        place.Visibility = true;
+            //    else
+            //        place.Visibility = false;
+            //}
             
 
             //OnPropertyChanged("Places");
@@ -174,7 +219,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             if (_visibleDetailsPlaceId != null)
             {
-                _places.Where(place => place.Id == _visibleDetailsPlaceId).All(x => x.DetailsVisibility = false);
+                Places.Where(place => place.Id == _visibleDetailsPlaceId).All(x => x.DetailsVisibility = false);
             }
 
             _visibleDetailsPlaceId = null;
@@ -218,6 +263,9 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         public async void LoadData()
         {
             IsWorkInProgress = true;
+            Places.Clear();
+            Categories.Clear();
+
             if (_travelId != 0 || (Travel != null && Travel.Id != 0))
             {
                 Travel = await _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
@@ -229,14 +277,14 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
                     place.ShowDetailCloudCommand = new RelayCommand<MapPlaceBindingModel>(ShowDetailCloudExecute);
                     place.NavigateToPlaceDetailsCommand = new RelayCommand<MapPlaceBindingModel>(NavigateToPlaceDetailsExecute);
 
-                    _places.Add(place);
+                    Places.Add(place);
                 }
 
-                IEnumerable<string> categories = _places.Select(x => x.Category).Distinct();
+                IEnumerable<string> categories = Places.Select(x => x.Category).Distinct();
 
                 foreach (var category in categories)
                 {
-                    _categories.Add(new CategoryVisibility() { Visibile = true, Name = category });
+                    Categories.Add(new CategoryVisibility() { Visibile = true, Name = category });
                 }
             }
             IsWorkInProgress = false;
@@ -285,7 +333,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
             place.DetailsVisibility = true;
 
-            _places.Move(_places.IndexOf(place), _places.Count - 1);
+            Places.Move(Places.IndexOf(place), Places.Count - 1);
 
             _visibleDetailsPlaceId = place.Id;
             _markerTapped = true;
@@ -378,8 +426,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
 
                 if (_centeredToPosition && ZoomingMapToPoint != null)
                 {
-                    //Task.Run(() => Maps.TrySetViewAsync(_mapElement.UserGeoposition));
-                    //Will it work?
                     ZoomingMapToPoint(UserGeoposition, ZoomLevel);
 
                 }

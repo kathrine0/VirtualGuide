@@ -27,10 +27,6 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         #region events
 
-        //public event Action DataLoaded;
-
-        //public event Action<GuideMainPropertyBindingModel> ScrollRequested;
-
         #endregion
 
         #region constructors
@@ -55,9 +51,19 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         #region public properties
 
-        public PlaceMainBindingModel Place { get; set; }
+        private PlaceMainBindingModel _place;
+        public PlaceMainBindingModel Place
+        {
+            get { return _place; }
+            private set { Set(ref _place, value); }
+        }
 
-        public ObservableCollection<PlaceMainOptions> Options { get; set; }
+        private ObservableCollection<PlaceMainOptions> _options;
+        public ObservableCollection<PlaceMainOptions> Options
+        {
+            get { return _options; }
+            private set { Set(ref _options, value); }
+        }
 
         #endregion
 
