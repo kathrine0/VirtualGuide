@@ -25,10 +25,21 @@ namespace VirtualGuide.Mobile.BindingModel
             Id = property.Id;
             Name = property.Title;
             Icon = property.IconSymbol;
-            Background = ColorHelper.YELLOW;
             Type = Types.REGULAR;
             Description = property.Description;
 
+            if (Background == null)
+            {
+                Background = ColorHelper.YELLOW;
+            }
+
+        }
+
+        public GuideMainPropertyBindingModel(Property property, int i) : this(property)
+        {
+            List<Brush> colors = new List<Brush>() { ColorHelper.BLUE, ColorHelper.GREEN, ColorHelper.RED };
+
+            Background = colors[i % colors.Count];
         }
 
         #endregion
@@ -49,7 +60,11 @@ namespace VirtualGuide.Mobile.BindingModel
             }
         }
         public string Description { get; set; }
-        public Brush Background { get; set; }
+        public Brush Background 
+        { 
+            get; 
+            set; 
+        }
 
         private string _iconSymbol = string.Empty;
         public string Icon { 

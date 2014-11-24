@@ -79,21 +79,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
 
-    <DataTemplate x:Key="DetailsGrid">
-        <Grid  
-            Width="160" 
-            Height="75" 
-            Margin="0,0,10,10" 
-            >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding Icon}" Foreground="{Binding Background}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"  />
-            <TextBlock Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Margin="10,0" TextWrapping="Wrap" />
-        </Grid>
-    </DataTemplate>
-
+    
     <!--End Grid View-->
 
     <!-- Guide List Templates -->
@@ -129,6 +115,29 @@
                 <TextBlock Text="{Binding Description}" Style="{StaticResource BaseTextBlock}" />
             </Grid>
         </ScrollViewer>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PropertyHeaderTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Icon}" Foreground="{Binding Background}" FontFamily="Segoe UI Symbol" />
+            <TextBlock Text=" " />
+            <TextBlock Text="{Binding Name}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DetailsGrid">
+        <Grid  
+            Width="160" 
+            Height="75" 
+            Margin="0,0,10,10" 
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding Icon}" Foreground="{Binding Background}" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"  />
+            <TextBlock Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Margin="10,0" TextWrapping="Wrap" />
+        </Grid>
     </DataTemplate>
 
     <!-- Maps Template -->

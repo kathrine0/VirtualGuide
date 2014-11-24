@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
@@ -19,11 +20,18 @@ namespace VirtualGuide.Mobile.Repository
             return properties;
         }
 
-        public async Task<List<T>> GetSimpleProperties<T>(int travelId)
+        public async Task<List<GuideMainPropertyBindingModel>> GetSimplePropertiesWithColors(int travelId)
         {
             var properties = await GetPropertiesByTravelIdAsync(travelId);
 
-            return ModelHelper.ObjectToViewModel<T, Property>(properties);
+            var viewModels = new List<GuideMainPropertyBindingModel>();
+
+            for (int i = 0; i < properties.Count; i++ )
+            {
+                viewModels.Add(new GuideMainPropertyBindingModel(properties[i], i));
+            }
+
+            return viewModels;
         }
     }
 }

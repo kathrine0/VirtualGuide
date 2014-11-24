@@ -125,7 +125,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             {
                 Travel = await _travelRepository.GetTravelByIdAsync<GuideMainBindingModel>(_travelId);
              
-                var props = (await _propertyRepository.GetSimpleProperties<GuideMainPropertyBindingModel>(_travelId));
+                var props = (await _propertyRepository.GetSimplePropertiesWithColors(_travelId));
                 
                 foreach(var prop in props)
                 {
