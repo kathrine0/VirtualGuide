@@ -10,6 +10,7 @@ using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.View;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Resources;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -41,8 +42,9 @@ namespace VirtualGuide.Mobile
 #endif
 
         //public const string WebService = @"http://catherine.cloudapp.net:8080/";
-        public const string WebService = @"http://192.168.10.180/VirtualGuide/";
+        public const string WebService = @"http://192.168.2.94/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
+        public static ResourceLoader ResLoader = new ResourceLoader();
                
         private LocalDataHelper localDataHelper = new LocalDataHelper();
         private SettingsDataHelper settingsDataHelper = new SettingsDataHelper();

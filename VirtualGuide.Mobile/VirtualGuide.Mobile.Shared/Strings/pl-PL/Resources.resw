@@ -144,4 +144,81 @@
   <data name="SkipLogin.Text" xml:space="preserve">
     <value>pomiń</value>
   </data>
+  <data name="Categories.Text" xml:space="preserve">
+    <value>Kategoria</value>
+  </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>Pobrane</value>
+  </data>
+  <data name="EmptyPasswordOrUsername" xml:space="preserve">
+    <value>Wpisz nazwę użytkownika i hasło</value>
+    <comment>Enter username and password</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Błąd</value>
+  </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Galeria</value>
+  </data>
+  <data name="InvalidUsernameOrPassword" xml:space="preserve">
+    <value>Nieprawidłowa nazwa użytkownika lub hasło</value>
+    <comment>Invalid username or password</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Zaloguj</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>Więcej</value>
+  </data>
+  <data name="Navigate" xml:space="preserve">
+    <value>Prowadź do</value>
+  </data>
+  <data name="NoConnection" xml:space="preserve">
+    <value>Brak połączenia z Internetem</value>
+    <comment>No Connection</comment>
+  </data>
+  <data name="NoIdentity" xml:space="preserve">
+    <value>Użytkownik niezalogowany</value>
+    <comment>No identity</comment>
+  </data>
+  <data name="NoInternetConnectionAtLogin" xml:space="preserve">
+    <value>Włącz trasfer danych lub WIFI albo pomiń logowanie aby pracować offline.</value>
+    <comment>No internet connection. Turn on Data Transfer or Wifi or skip login and work offline.", "No Connection</comment>
+  </data>
+  <data name="NoLocation" xml:space="preserve">
+    <value>Ustawienia lokalizacji wyłączone</value>
+  </data>
+  <data name="PasswordRepeat.Text" xml:space="preserve">
+    <value>Powtórz hasło</value>
+  </data>
+  <data name="PasswordsDontMatch" xml:space="preserve">
+    <value>Zarejestruj się</value>
+  </data>
+  <data name="PleaseLogIn" xml:space="preserve">
+    <value>Proszę zalogować się używając swojej nazwy użytkownika i hasła</value>
+    <comment>Please log in using your login and password.</comment>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>Polecane</value>
+  </data>
+  <data name="RegisterButton" xml:space="preserve">
+    <value>Zarejestruj</value>
+  </data>
+  <data name="TurnOnLocationInstruction" xml:space="preserve">
+    <value>Usługi lokalizacji są wyłączone w Twoim telefonie. Aby je włączyć przejdź do menu "Ustawienia" i wybierz funkcję "Lokalizacja".</value>
+  </data>
+  <data name="TurnOnTransfer" xml:space="preserve">
+    <value>Włącz trasfer danych lub WIFI</value>
+    <comment>Please check your internet connection</comment>
+  </data>
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>Wystąpił nieoczekiwany błąd. Proszę spróbować ponownie.</value>
+    <comment>Unexpected error occured. Please try again later.</comment>
+  </data>
+  <data name="YourGuides" xml:space="preserve">
+    <value>Twoje przewodniki</value>
+  </data>
 </root>

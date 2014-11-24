@@ -115,17 +115,17 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
                 {
-                    MessageBoxHelper.Show("Please check your internet connection.", "No Connection");
+                    MessageBoxHelper.Show(App.ResLoader.GetString("TurnOnTransfer"), App.ResLoader.GetString("NoConnection"));
                 }
                 else if (ex.Message == System.Net.HttpStatusCode.Unauthorized.ToString())
                 {
-                    MessageBoxHelper.Show("Please log in using your login and password.", "No identity");
+                    MessageBoxHelper.Show(App.ResLoader.GetString("PleaseLogIn"), App.ResLoader.GetString("NoIdentity"));
 
                     _navigationService.NavigateTo("Login");
                 }
                 else
                 {
-                    MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                    MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
                 }
             }
             finally

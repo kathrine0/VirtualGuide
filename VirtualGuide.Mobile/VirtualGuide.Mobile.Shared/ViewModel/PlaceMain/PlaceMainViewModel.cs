@@ -83,10 +83,10 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
             Options = new ObservableCollection<PlaceMainOptions>() 
             { 
-                new PlaceMainOptions("Map", OPTION.MAP, "&#x1f30d;", ColorHelper.BLUE),
-                new PlaceMainOptions("Navigate", OPTION.NAVIGATION, "&#x27A4;", ColorHelper.RED),
-                new PlaceMainOptions("Gallery", OPTION.GALLERY, "&#x1f4db;", ColorHelper.GREEN),
-                new PlaceMainOptions("More", OPTION.SUBPLACES, "&#xe109;", ColorHelper.YELLOW)
+                new PlaceMainOptions(App.ResLoader.GetString("Map"), OPTION.MAP, "&#x1f30d;", ColorHelper.BLUE),
+                new PlaceMainOptions(App.ResLoader.GetString("Navigate"), OPTION.NAVIGATION, "&#x27A4;", ColorHelper.RED),
+                new PlaceMainOptions(App.ResLoader.GetString("Gallery"), OPTION.GALLERY, "&#x1f4db;", ColorHelper.GREEN),
+                new PlaceMainOptions(App.ResLoader.GetString("More"), OPTION.SUBPLACES, "&#xe109;", ColorHelper.YELLOW)
             };
         }
 

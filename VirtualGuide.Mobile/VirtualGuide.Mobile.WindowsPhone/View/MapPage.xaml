@@ -148,13 +148,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
-			<TextBlock 
+
+            <TextBlock 
                 Foreground="White" 
                 Grid.Row="0"
-                Margin="10,5,10,0">
-                Categories
-            </TextBlock>
+                Margin="10,5,10,0" Text="Categories" x:Uid="Categories" />
+
 
             <ListView
 				SelectionMode="Extended" 

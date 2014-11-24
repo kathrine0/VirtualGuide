@@ -24,7 +24,7 @@ namespace VirtualGuide.Mobile.Helper
             if (!localDataHelper.KeyExists(LocalDataHelper.LOCATION_MSG) || localDataHelper.GetValue<bool>(LocalDataHelper.LOCATION_MSG) == false)
             {
                 localDataHelper.SetValue(LocalDataHelper.LOCATION_MSG, true); 
-                Show("Location feature is turned off");
+                Show(App.ResLoader.GetString("TurnOnLocationInstruction"), App.ResLoader.GetString("NoLocation"));
             }
         }
     }

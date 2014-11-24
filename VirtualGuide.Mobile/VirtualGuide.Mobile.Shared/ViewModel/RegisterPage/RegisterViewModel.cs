@@ -20,7 +20,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
         {
             RegisterCommand = new RelayCommand(RegisterExecute);
 
-            RegisterButtonContent = "Register";
+            RegisterButtonContent = App.ResLoader.GetString("RegisterButton");
         }
 
         #endregion
@@ -105,12 +105,12 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
                 string.IsNullOrEmpty(Password) ||
                 string.IsNullOrEmpty(RepeatPassword))
             {
-                MessageBoxHelper.Show("Enter username and passwords", "");
+                MessageBoxHelper.Show(App.ResLoader.GetString("EmptyPasswordOrUsername"));
             }
 
             if (string.IsNullOrEmpty(Password) != string.IsNullOrEmpty(RepeatPassword))
             {
-                MessageBoxHelper.Show("Passwords don't match", "");
+                MessageBoxHelper.Show(App.ResLoader.GetString("PasswordsDontMatch"));
             }
 
             try
@@ -122,21 +122,21 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
             {
                 if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
                 {
-                    MessageBoxHelper.Show("No internet connection. Turn on Data Transfer or Wifi or skip login and work offline.", "No Connection");
+                    MessageBoxHelper.Show(App.ResLoader.GetString("NoInternetConnectionAtLogin"), App.ResLoader.GetString("NoConnection"));
                 }
                 else if (ex.Message == System.Net.HttpStatusCode.BadRequest.ToString())
                 {
-                    MessageBoxHelper.Show("Invalid username or password", "Error");
+                    MessageBoxHelper.Show(App.ResLoader.GetString("InvalidUsernameOrPassword"), App.ResLoader.GetString("Error"));
                 }
                 else
                 {
-                    MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                    MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
                 }
 
             }
             catch
             {
-                MessageBoxHelper.Show("Unexpected error occured. Please try again later.", "Error");
+                MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
 
             }
 
@@ -157,7 +157,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
         private void TurnOffLoader()
         {
             RegistrationInProgress = false;
-            RegisterButtonContent = "Register";
+            RegisterButtonContent = App.ResLoader.GetString("RegisterButton");
         }
 
         #endregion

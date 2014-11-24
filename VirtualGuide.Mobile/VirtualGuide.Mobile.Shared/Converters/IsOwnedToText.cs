@@ -14,17 +14,17 @@ namespace VirtualGuide.Mobile.Converters
 
             if (isOwned)
             {
-                return "Your guides";
+                return App.ResLoader.GetString("Downloaded");
             }
             else
             {
-                return "See also";
+                return App.ResLoader.GetString("Recommended");
             }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if ((string)value == "Your guides")
+            if ((string)value == App.ResLoader.GetString("Downloaded"))
             {
                 return true;
             }
