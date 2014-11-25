@@ -129,6 +129,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 {
                     MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
                 }
+
+                RestoreOldGuides();
             }
             finally
             {
@@ -180,6 +182,13 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
 
                 this.RaisePropertyChanged("DataGrouped");
             });
+        }
+
+        private async void RestoreOldGuides()
+        {
+            IsWorkInProgress = true;
+            Data = new ObservableCollection<GuideListBindingModel>(new List<GuideListBindingModel>(await _travelRepository.GetAllTravelsAsync()));
+            IsWorkInProgress = false;
         }
 
         #endregion
