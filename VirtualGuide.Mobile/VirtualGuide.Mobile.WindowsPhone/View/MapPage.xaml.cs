@@ -1,15 +1,11 @@
-﻿using VirtualGuide.Mobile.Common;
-using System;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Windows.Devices.Geolocation;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Controls.Maps;
+﻿using System;
 using VirtualGuide.Mobile.Helper;
-using Windows.Graphics.Display;
-using Windows.Phone.UI.Input;
 using VirtualGuide.Mobile.ViewModel.MapPage;
-using VirtualGuide.Mobile.ViewModel.Interfaces;
+using Windows.Devices.Geolocation;
+using Windows.Phone.UI.Input;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Navigation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 

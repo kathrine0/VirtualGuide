@@ -98,18 +98,13 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
         {
             IsWorkInProgress = true;
             
-            if (_placeId != 0 || (Place != null && Place.Id != 0))
+            if (_placeId != 0)
             {
                 Place = await _placeRepository.GetPlaceById<PlaceMainBindingModel>(_placeId);
             }
             
             IsWorkInProgress = false;
         }
-
-        //public void NavigateToMapExecute()
-        //{
-        //    App.RootFrame.Navigate(_mapsPage, Travel.Id);
-        //}
 
         #endregion
 

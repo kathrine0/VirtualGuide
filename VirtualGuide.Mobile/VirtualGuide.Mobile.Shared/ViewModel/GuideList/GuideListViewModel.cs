@@ -89,8 +89,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
             else if (!item.IsOwned)
             {
-                //TODO
-                //App.RootFrame.Navigate(_storePage, item.Id);
+                _navigationService.NavigateTo("BuyGuide", item.Id);
             }
         }
 

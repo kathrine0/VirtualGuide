@@ -19,13 +19,7 @@ namespace VirtualGuide.Mobile.ViewModel
         #region constructors
 
         static ViewModelLocator()
-        {
-            
-            //SimpleIoc.Default.Register<INavigationService>(() => navigationService);
-
-
-            //SimpleIoc.Default.Register<MainViewModel>();
-            //SimpleIoc.Default.Register<DetailsViewModel>();
+        {          
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<INavigationService>(() => CreateNavigationService());
@@ -36,6 +30,7 @@ namespace VirtualGuide.Mobile.ViewModel
             SimpleIoc.Default.Register<MapViewModel>();
             SimpleIoc.Default.Register<PlaceMainViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
+            SimpleIoc.Default.Register<BuyGuideViewModel>();
         }
 
         #endregion
@@ -84,6 +79,13 @@ namespace VirtualGuide.Mobile.ViewModel
                 return ServiceLocator.Current.GetInstance<RegisterViewModel>();
             }
         }
+        public BuyGuideViewModel BuyGuide
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<BuyGuideViewModel>();
+            }
+        }
 
         #endregion
 
@@ -99,6 +101,7 @@ namespace VirtualGuide.Mobile.ViewModel
             navigationService.Configure("Maps", typeof(VirtualGuide.Mobile.View.MapPage));
             navigationService.Configure("Register", typeof(VirtualGuide.Mobile.View.RegisterPage));
             navigationService.Configure("PlaceMain", typeof(VirtualGuide.Mobile.View.PlaceMain));
+            navigationService.Configure("BuyGuide", typeof(VirtualGuide.Mobile.View.BuyGuide));
 
             return navigationService;
         }
@@ -116,6 +119,7 @@ namespace VirtualGuide.Mobile.ViewModel
             viewModelLocator.Map.Cleanup();
             viewModelLocator.PlaceMain.Cleanup();
             viewModelLocator.Register.Cleanup();
+            viewModelLocator.BuyGuide.Cleanup();
 
             //Messenger.Reset();
         }

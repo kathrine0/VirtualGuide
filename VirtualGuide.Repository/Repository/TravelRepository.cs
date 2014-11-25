@@ -95,6 +95,37 @@ namespace VirtualGuide.Repository
             
         }
 
+        public CustomerTravelViewModel BuyTravel(int id, string userEmail)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                User user = userManager.FindByEmail(userEmail);
+                Travel travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+
+                if (travel == null)
+                {
+                    throw new ObjectNotFoundException("Travel not found");
+                }
+
+                int isPurchased = user.PurchasedTravels.Where(x => x.TravelId == travel.Id).Count();
+
+                if (isPurchased > 0)
+                {
+                    throw new UnauthorizedAccessException("This user already owns this travel");
+                }
+
+                var purchase = new User_Purchased_Travel()
+                {
+                    TravelId = travel.Id
+                };
+
+                db.User_Purchased_Travels.Add(purchase);
+                db.SaveChanges();
+
+                return Mapper.Map<CustomerTravelViewModel>(travel);
+            }
+        }
+
         public CreatorTravelViewModel Add(CreatorTravelViewModel item)
         {
             //todo validate user role
@@ -117,7 +148,7 @@ namespace VirtualGuide.Repository
                 Travel oldTravel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
 
                 Travel travel = Mapper.Map<SimpleCreatorTravelViewModel, Travel>(item, oldTravel);
-                //Travel travel = Mapper.Map<Travel>(item);
+
                 var entry = db.Entry(travel);
                 entry.State = EntityState.Modified;
 
@@ -125,8 +156,6 @@ namespace VirtualGuide.Repository
                 entry.Property(e => e.CreatorId).IsModified = false;
                 entry.Property(e => e.ApprovalStatus).IsModified = false;
 
-                //entry.Property(e => e.Properties).IsModified = false;
-                //entry.Property(e => e.Places).IsModified = false;
 
                 try
                 {
@@ -141,5 +170,6 @@ namespace VirtualGuide.Repository
                 return Mapper.Map<CreatorTravelViewModel>(travel);
             }
         }
+
     }
 }

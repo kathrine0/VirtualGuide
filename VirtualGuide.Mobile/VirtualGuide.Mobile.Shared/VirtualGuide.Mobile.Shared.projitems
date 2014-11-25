@@ -60,6 +60,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BuyGuide\BuyGuideViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideList\GuideListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\GuideMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Interfaces\INavigableViewModel.cs" />

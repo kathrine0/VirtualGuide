@@ -62,6 +62,32 @@ namespace VirtualGuide.WebService.Controllers
         }
 
         /// <summary>
+        /// TODO: secure this
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("BuyTravel")]
+        [HttpPost]
+        public IHttpActionResult BuyTravel(int id)
+        {
+            try
+            {
+                string userName = User.Identity.Name;
+                CustomerTravelViewModel travel = tr.BuyTravel(id, userName);
+
+                return Ok(travel);
+            }
+            catch (ObjectNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
         /// Listr of travels created by user
         /// Use: WebApp
         /// </summary>
