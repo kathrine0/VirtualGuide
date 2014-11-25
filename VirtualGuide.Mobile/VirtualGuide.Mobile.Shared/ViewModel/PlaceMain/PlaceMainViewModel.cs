@@ -94,12 +94,6 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         #region public methods
 
-        public void LoadData(int placeId)
-        {
-            _placeId = placeId;
-            LoadData();
-        }
-
         public async void LoadData()
         {
             IsWorkInProgress = true;
@@ -148,6 +142,18 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
             public string Name { get; set; }
 
             public OPTION Type { get; set; }
+        }
+
+        #endregion
+
+        #region navigation
+
+        public override void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+            _placeId = (int)e.NavigationParameter;
+            LoadData();
+
+            base.NavigationHelper_LoadState(sender, e);
         }
 
         #endregion

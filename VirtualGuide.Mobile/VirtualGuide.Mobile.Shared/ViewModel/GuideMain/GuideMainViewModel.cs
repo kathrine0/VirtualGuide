@@ -110,12 +110,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         #region public methods
 
-        public void LoadData(int travelId)
-        {
-            _travelId = travelId;
-            LoadData();
-        }
-
         public async void LoadData()
         {
             IsWorkInProgress = true;
@@ -162,6 +156,19 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
                     
                 break;
             }
+        }
+
+        #endregion
+
+        #region navigation
+
+        public override void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+            _travelId = (int)e.NavigationParameter;
+
+            LoadData();
+
+            base.NavigationHelper_LoadState(sender, e);
         }
 
         #endregion

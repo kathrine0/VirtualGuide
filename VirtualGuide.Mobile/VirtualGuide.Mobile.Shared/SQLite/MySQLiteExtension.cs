@@ -20,6 +20,19 @@ namespace SQLite
             });
             return c;
         }
+
+        public int InsertOrIgnoreAll(System.Collections.IEnumerable objects)
+        {
+            var c = 0;
+            RunInTransaction(() =>
+            {
+                foreach (var r in objects)
+                {
+                    c += Insert(r, "OR IGNORE", r.GetType());
+                }
+            });
+            return c;
+        }
     }
 
     public partial class SQLiteAsyncConnection
@@ -44,6 +57,18 @@ namespace SQLite
                 using (conn.Lock())
                 {
                     return conn.InsertOrReplace(item);
+                }
+            });
+        }
+
+        public Task<int> InsertOrIgnoreAllAsync(IEnumerable items)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var conn = GetConnection();
+                using (conn.Lock())
+                {
+                    return conn.InsertOrIgnoreAll(items);
                 }
             });
         }

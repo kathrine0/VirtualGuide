@@ -22,7 +22,6 @@ namespace VirtualGuide.Mobile.Helper
         }
 
         public const string LOCATION_MSG = "locationMessage";
-        public const string LOAD_IN_PROGRESS = "LoadInProgress";
         public const string REFRESH_NOW = "refreshNow";
 
     }

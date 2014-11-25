@@ -115,6 +115,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
             LoginButtonContent = "";
             LoginInProgress = true;
             IsWorkInProgress = true;
+            ProgressText = App.ResLoader.GetString("LogingIn");
 
             var success = false;
 
@@ -150,20 +151,22 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
             {
                 MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
             }
-
-            TurnOffLoader();
-
-            if (success)
+            finally
             {
-                localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
-                _navigationService.NavigateTo("GuideList");
-            }
-            
+                TurnOffLoader();
 
+                if (success)
+                {
+                    localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
+                    _navigationService.NavigateTo("GuideList");
+                }
+            }
         }
 
         private void SkipLoginExecute()
         {
+            TurnOffLoader();
+
             _navigationService.NavigateTo("GuideList");
         }
 
@@ -178,6 +181,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         public void TurnOffLoader()
         {
+            IsWorkInProgress = false;
             LoginInProgress = false;
             LoginButtonContent = App.ResLoader.GetString("Login");
         }

@@ -13,6 +13,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Windows.UI.Xaml;
 using GalaSoft.MvvmLight.Views;
+using Windows.Phone.UI.Input;
+using Windows.UI.Xaml.Navigation;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideList
 {
@@ -97,13 +99,13 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         {
             Data = new ObservableCollection<GuideListBindingModel>();
             var Download = new List<Task>();
-            
-            if (localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS)) return;
-            localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, true);
 
+            if (IsWorkInProgress) return;
+            
             try
             {
                 IsWorkInProgress = true;
+                ProgressText = App.ResLoader.GetString("Downloading");
 
                 Download.Add(StartDownloading(_travelRepository.DownloadAvailableTravels()));
                 Download.Add(StartDownloading(_travelRepository.DownloadOwnedTravels()));
@@ -130,8 +132,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
             finally
             {
-                localDataHelper.SetValue(LocalDataHelper.LOAD_IN_PROGRESS, false);
-
                 IsWorkInProgress = false;
             }
         }
@@ -157,6 +157,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             //TODO Check if token is still active
             Data = new ObservableCollection<GuideListBindingModel>(new List<GuideListBindingModel>(await _travelRepository.GetAllTravelsAsync()));
 
+            IsWorkInProgress = false;
+
             //check if just logged in or if data is empty
             var shouldReload = localDataHelper.GetValue<bool>(LocalDataHelper.REFRESH_NOW);
             if (Data.Count == 0 || shouldReload)
@@ -165,10 +167,6 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, false);
             }
 
-            if (!localDataHelper.GetValue<bool>(LocalDataHelper.LOAD_IN_PROGRESS))
-            {
-                IsWorkInProgress = false;
-            }
         }
         private async Task StartDownloading(Task<List<GuideListBindingModel>> task)
         {
@@ -185,6 +183,35 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         }
 
         #endregion
+
+        #region navigation
+
+        private void HardwareButtonsBackPressedExecute(object sender, BackPressedEventArgs e)
+        {
+            //Quit application when no authentification is required
+            SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
+            if (!String.IsNullOrEmpty(settingsDataHelper.GetValue<string>(SettingsDataHelper.TOKEN)))
+            {
+                App.Current.Exit();
+            }
+        }
+
+        public override void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+            HardwareButtons.BackPressed += HardwareButtonsBackPressedExecute;
+
+            base.NavigationHelper_LoadState(sender, e);
+        }
+
+        public override void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+            HardwareButtons.BackPressed -= HardwareButtonsBackPressedExecute;
+
+            base.NavigationHelper_SaveState(sender, e);
+        }
+
+        #endregion
+
     }
 }
 

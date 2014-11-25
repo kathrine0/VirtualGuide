@@ -106,7 +106,7 @@ namespace VirtualGuide.Mobile.Repository
 
         private async void SaveAvailableTravels(List<Travel> travels)
         {
-            await App.Connection.InsertOrReplaceAllAsync(travels).ConfigureAwait(false);
+            await App.Connection.InsertOrIgnoreAllAsync(travels).ConfigureAwait(false);
         }
 
         #endregion

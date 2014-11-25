@@ -62,6 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideList\GuideListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\GuideMain\GuideMainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\Interfaces\INavigableViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LoginPage\LoginViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MapPage\MapViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\PlaceMainViewModel.cs" />

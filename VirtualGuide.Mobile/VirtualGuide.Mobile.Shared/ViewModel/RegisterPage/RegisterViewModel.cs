@@ -99,6 +99,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
             IsWorkInProgress = true;
             RegisterButtonContent = "";
             RegistrationInProgress = true;
+            ProgressText = App.ResLoader.GetString("Registering");
             var success = false;
 
             if (string.IsNullOrEmpty(Email) || 
@@ -137,16 +138,18 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
             catch
             {
                 MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
-
+            }
+            finally
+            {
+                TurnOffLoader();
+                //authenticate user
             }
 
-            TurnOffLoader();
-
-            //authenticate user
             await _userRepository.Login(Email, Password);
 
             localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
-            _navigationService.NavigateTo("GuideList");
+            _navigationService.NavigateTo("GuideList"); 
+            
             
         }
 
@@ -157,6 +160,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
         private void TurnOffLoader()
         {
             RegistrationInProgress = false;
+            IsWorkInProgress = false;
             RegisterButtonContent = App.ResLoader.GetString("RegisterButton");
         }
 

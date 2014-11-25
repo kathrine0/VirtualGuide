@@ -20,6 +20,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.ViewManagement;
+using Windows.Graphics.Display;
 
 namespace VirtualGuide.Mobile.ViewModel.MapPage
 {
@@ -44,7 +46,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             _places = new ObservableCollection<MapPlaceBindingModel>();
             _categories = new ItemsChangeObservableCollection<CategoryVisibilityModel>();
 
-            Initialize();
+            BindCommands();
             
             LocationEllipse = new LocationEllipseParams()
             {
@@ -206,12 +208,33 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         #endregion
 
         #region private methods
-        private void Initialize()
+        private void BindCommands()
         {
             InitializeMapCommand = new RelayCommand<MapControl>(InitializeMapExecute);
             HideDetailCloudsCommand = new RelayCommand(HideDetailCloudsExecute);
             LocateMeCommand = new RelayCommand(LocateMeExecute);
             ShowHideFilterScreenCommand = new RelayCommand(ShowHideFilterScreenExecute);
+        }
+
+        private async void SetUpUI()
+        {
+            //Hide system tray
+            StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            await statusBar.HideAsync();
+
+            //Enable orientations
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
+        }
+
+        private async void RestoreUI()
+        {
+            //Restore system tray
+            StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+            await statusBar.ShowAsync();
+
+            //Disable orientations
+            DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
+
         }
 
         private void HideAllClouds()
@@ -253,12 +276,6 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         #endregion
 
         #region public methods
-        public void LoadData(int travelId)
-        {
-            _travelId = travelId;
-            LoadData();
-        }
-
         public async void LoadData()
         {
             IsWorkInProgress = true;
@@ -529,6 +546,51 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             public bool CompassMode { get; set; }
             public Brush Fill { get; set; }
+        }
+
+        #endregion
+
+        #region navigation
+
+        public override void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+            _travelId = (int)e.NavigationParameter;
+            LoadData();
+
+            SetUpUI();
+
+
+            if (e.PageState != null &&
+                e.PageState.ContainsKey(String.Format("Travel{0}{1}", _travelId, "Latitude")) &&
+                e.PageState.ContainsKey(String.Format("Travel{0}{1}", _travelId, "Longitude")) &&
+                e.PageState.ContainsKey(String.Format("Travel{0}{1}", _travelId, "Zoom")))
+            {
+                ZoomLevel = (double)e.PageState[String.Format("Travel{0}{1}", _travelId, "Zoom")];
+                Center = new Geopoint(new BasicGeoposition()
+                {
+                    Latitude = (double)e.PageState[String.Format("Travel{0}{1}", _travelId, "Latitude")],
+                    Longitude = (double)e.PageState[String.Format("Travel{0}{1}", _travelId, "Longitude")]
+                });
+
+                MapInitialized = true;
+            }
+            else
+            {
+                MapInitialized = false;
+            }
+
+            base.NavigationHelper_LoadState(sender, e);
+        }
+
+        public override void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+            RestoreUI();
+
+            e.PageState[String.Format("Travel{0}{1}", _travelId, "Latitude")] = Center.Position.Latitude;
+            e.PageState[String.Format("Travel{0}{1}", _travelId, "Longitude")] = Center.Position.Longitude;
+            e.PageState[String.Format("Travel{0}{1}", _travelId, "Zoom")] = ZoomLevel;
+
+            base.NavigationHelper_SaveState(sender, e);
         }
 
         #endregion

@@ -5,13 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using VirtualGuide.Mobile.Helper;
+using VirtualGuide.Mobile.View;
+using VirtualGuide.Mobile.ViewModel.Interfaces;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
-    public class BaseViewModel : ViewModelBase
+    public class BaseViewModel : ViewModelBase, INavigableViewModel
     {
 
         #region private properties
@@ -25,6 +28,9 @@ namespace VirtualGuide.Mobile.ViewModel
         public BaseViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+
+            OnNavigatedToCommand = new RelayCommand<NavigationEventArgs>(OnNavigatedTo);
+            OnNavigatedFromCommand = new RelayCommand<NavigationEventArgs>(OnNavigatedFrom);
         }
 
         #endregion
@@ -48,13 +54,21 @@ namespace VirtualGuide.Mobile.ViewModel
             }
         }
 
-        private string _progressText = "Loading";
+        private string _defaultLoadingText = App.ResLoader.GetString("Loading");
+        private string _progressText = string.Empty;
 
         public string ProgressText
         {
             get 
             { 
-                return _progressText; 
+                if (!String.IsNullOrEmpty(_progressText))
+                {
+                    return _progressText; 
+                }
+                else
+                {
+                    return _defaultLoadingText;
+                }
             }
             protected set
             {
@@ -92,12 +106,62 @@ namespace VirtualGuide.Mobile.ViewModel
             }
             else
             {
-                statusBar.ProgressIndicator.Text = string.Empty;
+                ProgressText = string.Empty;
+                //statusBar.ProgressIndicator.Text = string.Empty;
                 await statusBar.ProgressIndicator.HideAsync();
             }
 #endif
         }
 
         #endregion
+
+        #region INavigableViewModel
+
+        public RelayCommand<NavigationEventArgs> OnNavigatedToCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand<NavigationEventArgs> OnNavigatedFromCommand
+        {
+            get;
+            set;
+        }
+
+        protected virtual void OnNavigatedTo(NavigationEventArgs e)
+        {
+            NavigationHelper.OnNavigatedTo(e);
+        }
+
+        protected virtual void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            NavigationHelper.OnNavigatedFrom(e);
+        }
+
+        public NavigationHelper NavigationHelper
+        {
+            get;
+            private set;
+        }
+
+        public virtual void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+        }
+
+        public virtual void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+        }
+
+        public void SetNavigationHelper(NavigationHelper nh)
+        {
+            NavigationHelper = nh;
+            NavigationHelper.LoadState += this.NavigationHelper_LoadState;
+            NavigationHelper.SaveState += this.NavigationHelper_SaveState;
+        }
+
+        #endregion
+
+
     }
 }

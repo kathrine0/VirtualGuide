@@ -82,6 +82,14 @@ namespace VirtualGuide.Mobile
                 StopWatch.Start();
             }
 #endif
+            // Setup database
+            SetupDatabase();
+
+            //Remove old runtime data
+            localDataHelper.DeleteContainer();
+            //Create runtime data container
+            localDataHelper.CreateContainer();
+
 
             RootFrame = Window.Current.Content as Frame;
 
@@ -136,13 +144,7 @@ namespace VirtualGuide.Mobile
                 }
             }
 
-            // Setup database
-            SetupDatabase();
-
-            //Remove old runtime data
-            localDataHelper.DeleteContainer();
-            //Create runtime data container
-            localDataHelper.CreateContainer();
+           
 
             // Ensure the current window is active
             Window.Current.Activate();
