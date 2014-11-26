@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
+using System.Web.Http.Tracing;
+using VirtualGuide.Common.Helpers;
 using VirtualGuide.Repository;
 using VirtualGuide.ViewModels;
 
@@ -103,6 +105,7 @@ namespace VirtualGuide.WebService.Controllers
             }
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
         }

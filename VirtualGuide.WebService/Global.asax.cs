@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Tracing;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using VirtualGuide.Common.Helpers;
 using VirtualGuide.Repository;
 
 namespace VirtualGuide.WebService
@@ -22,6 +26,15 @@ namespace VirtualGuide.WebService
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AutoMapperConfig.Configure();
+            GlobalConfiguration.Configuration.Services.Add(typeof(IExceptionLogger), new TraceExceptionLogger());
+        }
+    }
+
+    public class TraceExceptionLogger : ExceptionLogger
+    {
+        public override void Log(ExceptionLoggerContext context)
+        {
+            Logger.Instance.LogException(context.Exception, LogLevel.error);
         }
     }
 }
