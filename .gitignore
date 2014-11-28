@@ -53,3 +53,6 @@ _ReSharper*/
 
 #Uploads folder
 VirtualGuide.WebService/Uploads/*
+
+#logs
+VirtualGuide.WebService/logs

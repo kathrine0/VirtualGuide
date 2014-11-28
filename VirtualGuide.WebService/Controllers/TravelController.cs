@@ -38,6 +38,7 @@ namespace VirtualGuide.WebService.Controllers
             } 
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
         }
@@ -59,6 +60,7 @@ namespace VirtualGuide.WebService.Controllers
             }
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
         }
@@ -69,7 +71,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("BuyTravel")]
-        [HttpPost]
+        [HttpGet]
         public IHttpActionResult BuyTravel(int id)
         {
             try
@@ -79,12 +81,14 @@ namespace VirtualGuide.WebService.Controllers
 
                 return Ok(travel);
             }
-            catch (ObjectNotFoundException)
+            catch (ObjectNotFoundException e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 return NotFound();
             }
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 return BadRequest();
             }
         }
@@ -128,12 +132,14 @@ namespace VirtualGuide.WebService.Controllers
 
                 return Ok(travel);
             }
-            catch (ObjectNotFoundException)
+            catch (ObjectNotFoundException e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 return NotFound();
             }
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 return BadRequest();
             }
         }
@@ -156,6 +162,7 @@ namespace VirtualGuide.WebService.Controllers
             }
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 return BadRequest();
             }
         }
@@ -167,10 +174,12 @@ namespace VirtualGuide.WebService.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Logger.Instance.LogException(new Exception("Invalid Model State"), LogLevel.error);
                 return BadRequest(ModelState);
             }
             if (id != travel.Id)
             {
+                Logger.Instance.LogException(new Exception("id != travel.Id" + id + " " + travel.Id), LogLevel.error);
                 return BadRequest();
             }
 
@@ -181,6 +190,7 @@ namespace VirtualGuide.WebService.Controllers
             }
             catch (Exception e)
             {
+                Logger.Instance.LogException(e, LogLevel.error);
                 return BadRequest();
             }
         }

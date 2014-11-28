@@ -27,6 +27,7 @@ namespace VirtualGuide.WebService
 
             AutoMapperConfig.Configure();
             GlobalConfiguration.Configuration.Services.Add(typeof(IExceptionLogger), new TraceExceptionLogger());
+            Logger.Instance.LogMessage("App Started", LogLevel.info);
         }
     }
 
