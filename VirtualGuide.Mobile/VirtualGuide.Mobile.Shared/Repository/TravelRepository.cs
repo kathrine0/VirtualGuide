@@ -49,6 +49,18 @@ namespace VirtualGuide.Mobile.Repository
             return new List<GuideListBindingModel>();
         }
        
+        public async Task<GuideListBindingModel> DownloadBoughtTravel(int id)
+        {
+            var travel = await HttpHelper.GetData<Travel>(String.Format("api/BuyTravel/{0}", id));
+            var travelList = new List<Travel>() { travel };
+
+            HttpHelper.ImageDownloader<Travel>(travelList);
+            travel.IsOwned = true;
+
+            SaveOwnedTravelsAndDownloadImages(travelList);
+
+            return new GuideListBindingModel(travel);
+        }
 
         #endregion
 

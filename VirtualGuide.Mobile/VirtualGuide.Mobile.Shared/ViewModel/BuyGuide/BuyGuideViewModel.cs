@@ -1,6 +1,8 @@
-﻿using GalaSoft.MvvmLight.Views;
+﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Helper;
@@ -16,7 +18,15 @@ namespace VirtualGuide.Mobile.ViewModel
             : base(navigationService)
         {
             Travel = new GuideListBindingModel();
+
+            Initialize();
         }
+
+        #endregion
+
+        #region commands
+
+        public RelayCommand BuyCommand { get; set; }
 
         #endregion
 
@@ -39,6 +49,47 @@ namespace VirtualGuide.Mobile.ViewModel
         #endregion
 
         #region private methods
+
+        private void Initialize()
+        {
+            BuyCommand = new RelayCommand(BuyExecute);
+        }
+
+        private async void BuyExecute()
+        {
+            if (IsWorkInProgress) return;
+
+            try
+            {
+                IsWorkInProgress = true;
+
+                var travel = await _travelRepository.DownloadBoughtTravel(_travelId);
+                IsWorkInProgress = false;
+                _navigationService.NavigateTo("GuideMain", _travelId);
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.Message == System.Net.HttpStatusCode.NotFound.ToString())
+                {
+                    MessageBoxHelper.Show(App.ResLoader.GetString("TurnOnTransfer"), App.ResLoader.GetString("NoConnection"));
+                }
+                else if (ex.Message == System.Net.HttpStatusCode.Unauthorized.ToString())
+                {
+                    MessageBoxHelper.Show(App.ResLoader.GetString("PleaseLogIn"), App.ResLoader.GetString("NoIdentity"));
+
+                    _navigationService.NavigateTo("Login");
+                }
+                else
+                {
+                    MessageBoxHelper.Show(App.ResLoader.GetString("UnexpectedError"), App.ResLoader.GetString("Error"));
+                }
+            }
+            finally
+            {
+                IsWorkInProgress = false;
+            }
+
+        }
 
         private async void LoadData()
         {

@@ -37,7 +37,7 @@
             <TextBlock Grid.Row="0" Text="{Binding Travel.Name}" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" />
             <Image Grid.Row="1" Source="{Binding Travel.ImagePath}" Stretch="UniformToFill" Height="200" />
             <TextBlock Grid.Row="2" Margin="0, 10" Text="{Binding Travel.Description}" Style="{ThemeResource ListViewItemSubheaderTextBlockStyle}" TextWrapping="WrapWholeWords"/>
-            <Button Grid.Row="3" HorizontalAlignment="Stretch" Content="Buy" x:Uid="Buy" />
+            <Button Grid.Row="3" HorizontalAlignment="Stretch" Content="Buy" x:Uid="Buy" Command="{Binding BuyCommand}" />
 
         </Grid>
     </Grid>
