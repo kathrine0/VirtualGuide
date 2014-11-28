@@ -51,11 +51,11 @@ namespace VirtualGuide.Mobile.Repository
        
         public async Task<GuideListBindingModel> DownloadBoughtTravel(int id)
         {
-            var travel = await HttpHelper.GetData<Travel>(String.Format("api/BuyTravel/{0}", id));
-            var travelList = new List<Travel>() { travel };
-
-            HttpHelper.ImageDownloader<Travel>(travelList);
+            var travel = await HttpHelper.PostData<Travel>(String.Format("api/BuyTravel/{0}", id));
             travel.IsOwned = true;
+            
+            var travelList = new List<Travel>() { travel };
+            HttpHelper.ImageDownloader<Travel>(travelList);
 
             SaveOwnedTravelsAndDownloadImages(travelList);
 

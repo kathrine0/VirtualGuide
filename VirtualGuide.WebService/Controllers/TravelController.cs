@@ -70,8 +70,8 @@ namespace VirtualGuide.WebService.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("BuyTravel")]
-        [HttpGet]
+        [Route("BuyTravel/{id}")]
+        [HttpPost]
         public IHttpActionResult BuyTravel(int id)
         {
             try

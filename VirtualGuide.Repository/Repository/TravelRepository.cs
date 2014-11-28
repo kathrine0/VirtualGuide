@@ -116,7 +116,8 @@ namespace VirtualGuide.Repository
 
                 var purchase = new User_Purchased_Travel()
                 {
-                    TravelId = travel.Id
+                    TravelId = travel.Id,
+                    UserId = user.Id
                 };
 
                 db.User_Purchased_Travels.Add(purchase);

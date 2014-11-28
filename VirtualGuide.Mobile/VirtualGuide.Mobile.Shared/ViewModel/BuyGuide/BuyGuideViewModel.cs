@@ -65,7 +65,7 @@ namespace VirtualGuide.Mobile.ViewModel
 
                 var travel = await _travelRepository.DownloadBoughtTravel(_travelId);
                 IsWorkInProgress = false;
-                _navigationService.NavigateTo("GuideMain", _travelId);
+                _navigationService.NavigateTo("GuideList", travel);
             }
             catch (HttpRequestException ex)
             {

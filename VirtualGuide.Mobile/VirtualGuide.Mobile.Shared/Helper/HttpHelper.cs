@@ -54,7 +54,7 @@ namespace VirtualGuide.Mobile.Helper
             return result;
         }
 
-        public static async Task<T> PostData<T>(string webPath, object data)
+        public static async Task<T> PostData<T>(string webPath, object data = null)
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage response = null;

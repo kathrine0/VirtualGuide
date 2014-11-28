@@ -233,4 +233,7 @@
   <data name="Registering" xml:space="preserve">
     <value>Rejestracja...</value>
   </data>
+  <data name="Buy.Content" xml:space="preserve">
+    <value>Pobierz</value>
+  </data>
 </root>

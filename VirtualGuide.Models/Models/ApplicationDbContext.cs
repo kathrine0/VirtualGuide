@@ -54,15 +54,14 @@ namespace VirtualGuide.Models
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Place>()
-                        .HasOptional(i => i.Parent)
-                        .WithMany(i => i.Children)
-                        .HasForeignKey(i => i.ParentId);
+                .HasOptional(i => i.Parent)
+                .WithMany(i => i.Children)
+                .HasForeignKey(i => i.ParentId);
 
-
-        //    modelBuilder.Entity<User>()
-        //.HasOptional(a => a.UserDetail)
-        //.WithOptionalDependent()
-        //.WillCascadeOnDelete(true);
+            modelBuilder.Entity<User>()
+                .HasMany(i => i.PurchasedTravels)
+                .WithRequired()
+                .WillCascadeOnDelete(false);            
         }
 
 

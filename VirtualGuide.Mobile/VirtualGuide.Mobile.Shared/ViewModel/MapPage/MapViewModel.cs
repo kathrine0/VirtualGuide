@@ -586,9 +586,12 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
         {
             RestoreUI();
 
-            e.PageState[String.Format("Travel{0}{1}", _travelId, "Latitude")] = Center.Position.Latitude;
-            e.PageState[String.Format("Travel{0}{1}", _travelId, "Longitude")] = Center.Position.Longitude;
-            e.PageState[String.Format("Travel{0}{1}", _travelId, "Zoom")] = ZoomLevel;
+            if (Center != null)
+            {
+                e.PageState[String.Format("Travel{0}{1}", _travelId, "Latitude")] = Center.Position.Latitude;
+                e.PageState[String.Format("Travel{0}{1}", _travelId, "Longitude")] = Center.Position.Longitude;
+                e.PageState[String.Format("Travel{0}{1}", _travelId, "Zoom")] = ZoomLevel;
+            }
 
             base.NavigationHelper_SaveState(sender, e);
         }

@@ -61,7 +61,7 @@
                     </Image>
                 </Grid>
 
-                <TextBlock x:Uid="NoAccount" Text="Don't have and account?" Margin="0,50,0,0" />
+                <TextBlock Text="Don't have and account?" x:Uid="NoAccount" Margin="0,50,0,0" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Uid="Register" Text="Register" Foreground="{StaticResource ThemeGreen}" >
                     <Interactivity:Interaction.Behaviors>

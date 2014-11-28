@@ -208,6 +208,16 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         {
             HardwareButtons.BackPressed += HardwareButtonsBackPressedExecute;
 
+            if (e.NavigationParameter != null && e.NavigationParameter is GuideListBindingModel)
+            {
+                var newTravel = e.NavigationParameter as GuideListBindingModel;
+                if (!Data.Contains(newTravel))
+                {
+                    Data.Insert(0, newTravel);
+                    this.RaisePropertyChanged("DataGrouped");
+                }
+            }
+
             base.NavigationHelper_LoadState(sender, e);
         }
 
