@@ -61,6 +61,7 @@ namespace VirtualGuide.Mobile.ViewModel
 
             try
             {
+                MessageBoxHelper.Show(App.ResLoader.GetString("DownloadMaps"));
                 IsWorkInProgress = true;
 
                 var travel = await _travelRepository.DownloadBoughtTravel(_travelId);

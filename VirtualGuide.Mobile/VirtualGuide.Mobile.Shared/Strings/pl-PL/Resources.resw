@@ -236,4 +236,7 @@
   <data name="Buy.Content" xml:space="preserve">
     <value>Pobierz</value>
   </data>
+  <data name="DownloadMaps" xml:space="preserve">
+    <value>Aby korzystać a aplikacji w trybie offline, przejdź do aplikacji Here Maps i pobierz mapy dla żądanego regionu.</value>
+  </data>
 </root>
