@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using VirtualGuide.Mobile.BindingModel;
+using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
+using Windows.UI.Popups;
 
 namespace VirtualGuide.Mobile.ViewModel
 {
@@ -65,8 +67,13 @@ namespace VirtualGuide.Mobile.ViewModel
                 IsWorkInProgress = true;
 
                 var travel = await _travelRepository.DownloadBoughtTravel(_travelId);
-                IsWorkInProgress = false;
+
                 _navigationService.NavigateTo("GuideList", travel);
+            }
+            catch (TravelAlreadyOwnedException)
+            {
+                MessageBoxHelper.Show(App.ResLoader.GetString("TravelAlreadyOwned"));
+                _navigationService.NavigateTo("GuideList");
             }
             catch (HttpRequestException ex)
             {
@@ -113,7 +120,20 @@ namespace VirtualGuide.Mobile.ViewModel
             _travelId = (int)e.NavigationParameter;
             LoadData();
 
+            if (!UserRepository.IsUserLoggedIn())
+            {
+                MessageBoxHelper.ShowWithCommands(App.ResLoader.GetString("NotLoggedInGuideDownload"), "", new List<UICommand>() {
+                    new UICommand(App.ResLoader.GetString("Yes"), new UICommandInvokedHandler(this.GoToLoginCommandInvokedHandler)),
+                    new UICommand(App.ResLoader.GetString("Skip")),
+                });
+            }
+
             base.NavigationHelper_LoadState(sender, e);
+        }
+
+        private void GoToLoginCommandInvokedHandler(IUICommand command)
+        {
+            _navigationService.NavigateTo("Login");
         }
 
         #endregion

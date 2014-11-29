@@ -172,25 +172,29 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 foreach (var item in data)
                 {
-                    var duplicate = Data.FirstOrDefault(i => i.Id == item.Id);
-
-                    //if owned item already exists continue
-                    if (duplicate != null && !item.IsOwned && duplicate.IsOwned)
-                    {
-                        continue;
-                    }
-                    //if new item is owned overide or if both items are not owned
-                    if (duplicate != null && item.IsOwned ||
-                        duplicate != null && !item.IsOwned && !duplicate.IsOwned)
-                    {
-                        Data.Remove(duplicate);
-                    } 
-
-                    Data.Add(item);
-
-                    this.RaisePropertyChanged("DataGrouped");
+                    InsertTravelToData(item);
                 }
             });
+            this.RaisePropertyChanged("DataGrouped");
+        }
+
+        private void InsertTravelToData(GuideListBindingModel item)
+        {
+            var duplicate = Data.FirstOrDefault(i => i.Id == item.Id);
+
+            //if owned item already exists continue
+            if (duplicate != null && !item.IsOwned && duplicate.IsOwned)
+            {
+                return;
+            }
+            //if new item is owned overide or if both items are not owned
+            if (duplicate != null && item.IsOwned ||
+                duplicate != null && !item.IsOwned && !duplicate.IsOwned)
+            {
+                Data.Remove(duplicate);
+            }
+
+            Data.Add(item);
         }
 
         private async void RestoreOldGuides()
@@ -223,7 +227,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 var newTravel = e.NavigationParameter as GuideListBindingModel;
                 if (!Data.Contains(newTravel))
                 {
-                    Data.Insert(0, newTravel);
+                    InsertTravelToData(newTravel);
                     this.RaisePropertyChanged("DataGrouped");
                 }
             }

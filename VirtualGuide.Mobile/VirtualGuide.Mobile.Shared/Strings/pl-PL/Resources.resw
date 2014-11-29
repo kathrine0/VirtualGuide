@@ -239,4 +239,19 @@
   <data name="DownloadMaps" xml:space="preserve">
     <value>Aby korzystać a aplikacji w trybie offline, przejdź do aplikacji Here Maps i pobierz mapy dla żądanego regionu.</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="NotLoggedInGuideDownload" xml:space="preserve">
+    <value>Zalogowani użytkownicy mogą synchronizować pobrane przewodniki między swoimi urządzeniami. Czy chcesz się teraz zalogować?</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Pomiń</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="TravelAlreadyOwned" xml:space="preserve">
+    <value>Ten przewodnik został już pobrany</value>
+  </data>
 </root>

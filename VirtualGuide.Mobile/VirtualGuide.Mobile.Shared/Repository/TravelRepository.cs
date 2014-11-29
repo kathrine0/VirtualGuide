@@ -51,7 +51,23 @@ namespace VirtualGuide.Mobile.Repository
        
         public async Task<GuideListBindingModel> DownloadBoughtTravel(int id)
         {
-            var travel = await HttpHelper.PostData<Travel>(String.Format("api/BuyTravel/{0}", id));
+            try
+            {
+                var t = await this.GetTravelById(id);
+                if (t.IsOwned)
+                    throw new TravelAlreadyOwnedException();
+            } catch (EntityNotFoundException)
+            {
+                //It's OK if the entity wasn't found. Continue with downloading it
+            }
+
+            Travel travel;
+
+            if (UserRepository.IsUserLoggedIn())
+                travel = await HttpHelper.PostData<Travel>(String.Format("api/BuyTravel/{0}", id));
+            else
+                travel = await HttpHelper.PostData<Travel>(String.Format("api/BuyTravelAnonymous/{0}", id));
+
             travel.IsOwned = true;
             
             var travelList = new List<Travel>() { travel };
@@ -76,15 +92,8 @@ namespace VirtualGuide.Mobile.Repository
         public async Task<T> GetTravelByIdAsync<T>(int id) 
             where T : BaseTravelBindingModel
         {
-            var query = App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE Id=?", id);
-            var travel = await query.ConfigureAwait(false);
-
-            if (travel.Count != 1)
-            {
-                throw new Exception("Entity not found");
-            }
-
-            return (T) Activator.CreateInstance(typeof(T), travel[0]);
+            var travel = await this.GetTravelById(id);
+            return (T) Activator.CreateInstance(typeof(T), travel);
         }
 
         #endregion
@@ -96,6 +105,19 @@ namespace VirtualGuide.Mobile.Repository
             var travels = await query.ConfigureAwait(false);
 
             return travels;
+        }
+
+        private async Task<Travel> GetTravelById(int id)
+        {
+            var query = App.Connection.QueryAsync<Travel>("Select * FROM Travel WHERE Id=?", id);
+            var travel = await query.ConfigureAwait(false);
+
+            if (travel.Count != 1)
+            {
+                throw new EntityNotFoundException();
+            }
+
+            return travel[0];
         }
 
         private async void SaveOwnedTravelsAndDownloadImages(List<Travel> travels)

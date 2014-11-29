@@ -1,5 +1,9 @@
-﻿using Windows.Storage;
+﻿using System;
+using GalaSoft.MvvmLight.Command;
+using System.Collections.Generic;
+using Windows.Storage;
 using Windows.UI.Popups;
+using Windows.UI.Core;
 
 namespace VirtualGuide.Mobile.Helper
 {
@@ -7,16 +11,39 @@ namespace VirtualGuide.Mobile.Helper
     {
         private static LocalDataHelper localDataHelper = new LocalDataHelper();
        
-        public static void Show(string content, string title)
+        public static async void Show(string content, string title)
         {
             MessageDialog messageDialog = new MessageDialog(content, title);
-            messageDialog.ShowAsync();
+
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await messageDialog.ShowAsync();
+            });
+
+
         }
 
-        public static void Show(string content)
+        public static async void Show(string content)
         {
-            MessageDialog messageDialog = new MessageDialog(content);
-            messageDialog.ShowAsync();
+            Show(content, "");
+        }
+
+        public static async void ShowWithCommands(string content, string title, IList<UICommand> commands, uint defaultCommandIndex = 0, uint cancelCommandIndex = 1)
+        {
+            MessageDialog messageDialog = new MessageDialog(content, title);
+            
+            foreach(var command in commands)
+            {
+                messageDialog.Commands.Add(command);
+            }
+
+            messageDialog.DefaultCommandIndex = defaultCommandIndex;
+            messageDialog.CancelCommandIndex = cancelCommandIndex;
+
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await messageDialog.ShowAsync();
+            });
         }
 
         public static void ShowNoLocation()

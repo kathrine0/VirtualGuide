@@ -49,5 +49,12 @@ namespace VirtualGuide.Mobile.Repository
             //TODO!
             return true;
         }
+
+        public static bool IsUserLoggedIn()
+        {
+            SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
+            return settingsDataHelper.KeyExists(SettingsDataHelper.TOKEN);
+        }
+
     }
 }

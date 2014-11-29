@@ -65,11 +65,6 @@ namespace VirtualGuide.WebService.Controllers
             }
         }
 
-        /// <summary>
-        /// TODO: secure this
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [Route("BuyTravel/{id}")]
         [HttpPost]
         public IHttpActionResult BuyTravel(int id)
@@ -78,6 +73,29 @@ namespace VirtualGuide.WebService.Controllers
             {
                 string userName = User.Identity.Name;
                 CustomerTravelViewModel travel = tr.BuyTravel(id, userName);
+
+                return Ok(travel);
+            }
+            catch (ObjectNotFoundException e)
+            {
+                Logger.Instance.LogException(e, LogLevel.error);
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                Logger.Instance.LogException(e, LogLevel.error);
+                return BadRequest();
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("BuyTravelAnonymous/{id}")]
+        [HttpPost]
+        public IHttpActionResult BuyTravelAnonymous(int id)
+        {
+            try
+            {
+                CustomerTravelViewModel travel = tr.BuyTravelAnonymous(id);
 
                 return Ok(travel);
             }

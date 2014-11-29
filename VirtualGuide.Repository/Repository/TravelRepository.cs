@@ -127,6 +127,21 @@ namespace VirtualGuide.Repository
             }
         }
 
+        public CustomerTravelViewModel BuyTravelAnonymous(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Travel travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+
+                if (travel == null)
+                {
+                    throw new ObjectNotFoundException("Travel not found");
+                }
+
+                return Mapper.Map<CustomerTravelViewModel>(travel);
+            }
+        }
+
         public CreatorTravelViewModel Add(CreatorTravelViewModel item)
         {
             //todo validate user role
