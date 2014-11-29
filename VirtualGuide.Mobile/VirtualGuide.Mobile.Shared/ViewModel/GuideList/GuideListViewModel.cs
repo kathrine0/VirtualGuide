@@ -1,20 +1,16 @@
-﻿using PropertyChanged;
+﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
+using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
-using Windows.UI.Xaml.Data;
-using VirtualGuide.Mobile.BindingModel;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using Windows.UI.Xaml;
-using GalaSoft.MvvmLight.Views;
 using Windows.Phone.UI.Input;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideList
 {
@@ -80,8 +76,10 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         #endregion
 
         #region public methods
+        #endregion
 
-        public void TravelItemClickExecute(GuideListBindingModel item)
+        #region private methods
+        private void TravelItemClickExecute(GuideListBindingModel item)
         {
             if (item.IsOwned)
             {
@@ -89,14 +87,13 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
             else if (!item.IsOwned)
             {
+                //if (Data.FirstOrDefault(x => x.Id == x.))
                 _navigationService.NavigateTo("BuyGuide", item.Id);
             }
         }
 
-        
-        public async void RefreshExecute()
+        private async void RefreshExecute()
         {
-            Data = new ObservableCollection<GuideListBindingModel>();
             var Download = new List<Task>();
 
             if (IsWorkInProgress) return;
@@ -110,6 +107,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 Download.Add(StartDownloading(_travelRepository.DownloadOwnedTravels()));
 
                 await Task.WhenAll(Download);
+                
+
 
             }
             catch (HttpRequestException ex)
@@ -137,16 +136,12 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
         }
 
-        public async void LogoutExecute()
+        private async void LogoutExecute()
         {
             await _userRepository.Logout();
 
             _navigationService.NavigateTo("Login");
         }
-
-        #endregion
-
-        #region private methods
 
         private async void Initialize()
         {
@@ -169,6 +164,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             }
 
         }
+
         private async Task StartDownloading(Task<List<GuideListBindingModel>> task)
         {
             var data = await task;
@@ -176,10 +172,24 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
             {
                 foreach (var item in data)
                 {
-                    Data.Add(item);
-                }
+                    var duplicate = Data.FirstOrDefault(i => i.Id == item.Id);
 
-                this.RaisePropertyChanged("DataGrouped");
+                    //if owned item already exists continue
+                    if (duplicate != null && !item.IsOwned && duplicate.IsOwned)
+                    {
+                        continue;
+                    }
+                    //if new item is owned overide or if both items are not owned
+                    if (duplicate != null && item.IsOwned ||
+                        duplicate != null && !item.IsOwned && !duplicate.IsOwned)
+                    {
+                        Data.Remove(duplicate);
+                    } 
+
+                    Data.Add(item);
+
+                    this.RaisePropertyChanged("DataGrouped");
+                }
             });
         }
 
