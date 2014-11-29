@@ -75,9 +75,9 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
         //#region scope travel actions
 
         $scope.onTravelImageSelect = function ($files) {
-            uploadService.decodeImage($files[0], function (image) {
+            uploadService.decodeImage($files[0], function (image, resizedFile) {
                 $scope.travel.Image = image;
-                imageToUpload = $files[0];
+                imageToUpload = resizedFile;
             });
         };
 
@@ -265,9 +265,9 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
             };
 
             $scope.onPlaceImageSelect = function ($files, marker) {
-                uploadService.decodeImage($files[0], function (image) {
+                uploadService.decodeImage($files[0], function (image, resizedFile) {
                     marker.place.Image = image;
-                    marker.place.imageToUpload = $files[0];
+                    marker.place.imageToUpload = resizedFile;
                 });
             };
 
@@ -363,7 +363,7 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$state', 'travel
 
         //#region local variables
         var imageToUpload = null;
-        var placeholder = "http://fpoimg.com/1000x300?text=Place%20your%20image%20here";
+        var placeholder = "http://fpoimg.com/300x300?text=Place%20your%20image%20here";
         //#endregion local variables
 
         //#region scope variables
@@ -396,9 +396,9 @@ app.controller('newTravelController', ['$scope', '$rootScope', '$state', 'travel
         };
 
         $scope.onFileSelect = function ($files) {
-            uploadService.decodeImage($files[0], function (image) {
+            uploadService.decodeImage($files[0], function (image, resizedFile) {
                 $scope.image = image;
-                imageToUpload = $files[0];
+                imageToUpload = resizedFile;
             });
         };
         
@@ -572,9 +572,9 @@ function ($scope, $state, $filter, placeService, uploadService) {
     };
 
     $scope.onImageSelect = function ($files) {
-        uploadService.decodeImage($files[0], function (image) {
+        uploadService.decodeImage($files[0], function (image, resizedFile) {
             $scope.activeMarker.image = image;
-            $scope.activeMarker.imageToUpload = $files[0];
+            $scope.activeMarker.imageToUpload = resizedFile;
         });
     };
     //#endregion scope actions

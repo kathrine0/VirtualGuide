@@ -3625,6 +3625,9 @@ fieldset[disabled] .btn-vk.active {
 .leaflet-popup-content a {
   cursor: pointer;
 }
+.alltravels .thumbnail {
+  width: 100%;
+}
 .nav,
 .pagination,
 .carousel,
