@@ -62,7 +62,10 @@
         'Invalid language': 'Invalid language',
         'Provided string is too long': 'Provided string is too long',
         'Choose icon': 'Choose icon',
-        'Invalid Data Type': 'Invalid Data Type'
+        'Invalid Data Type': 'Invalid Data Type',
+        'Published': 'Published',
+        'Not published': 'Not published',
+        'Publish': 'Publish'
     });
 
     $translateProvider.translations('pl', {
@@ -129,9 +132,9 @@
         'Provided string is too long': 'Zbyt długa wartość',
         'Choose icon': 'Wybierz ikonę',
         'Invalid Data Type': 'Nieprawidłowy format danych',
-
-
-
+        'Published': 'Opublikowany',
+        'Not published': 'Nieopublikowany',
+        'Publish': 'Publikuj'
     });
 
     $translateProvider.preferredLanguage('pl');

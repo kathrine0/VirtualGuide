@@ -35,8 +35,14 @@
                 <td>{{travel.Name}}</td>
                 <td>{{travel.Description}}</td>
                 <td>${{travel.Price}}</td>
-                <td><span class="label label-success">Approved</span></td>
-                <td><button ng-click="showTravel(travel.Id)" class="btn btn-small btn-primary" translate>Show</button></td>
+                <td>
+                    <span class="label label-success" ng-show="travel.ApprovalStatus" translate>Published</span>
+                    <span class="label label-warning" ng-hide="travel.ApprovalStatus" translate>Not published</span>
+                </td>
+                <td>
+                    <button ng-click="showTravel(travel.Id)" class="btn btn-small btn-primary" translate>Show</button>
+                    <button ng-click="publishTravel(travel)" ng-hide="travel.ApprovalStatus" class="btn btn-small btn-success" translate>Publish</button>
+                </td>
             </tr>
         </table>
         <p ng-hide="travels.length" translate="NoTravelsMsg"></p>

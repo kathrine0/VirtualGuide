@@ -187,5 +187,28 @@ namespace VirtualGuide.Repository
             }
         }
 
+
+        public void Approve(int id, string userEmail)
+        {
+            //todo validate user role
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                User user = userManager.FindByEmail(userEmail);
+                Travel travel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
+
+                if (travel == null)
+                {
+                    throw new ObjectNotFoundException("Travel not found");
+                }
+
+                if (travel.CreatorId != user.Id && !userManager.IsInRole(user.Id, "Approver"))
+                {
+                    throw new UnauthorizedAccessException("This user is not eligible to this action");
+                }
+
+                travel.ApprovalStatus = true;
+                db.SaveChanges();
+            }
+        }
     }
 }

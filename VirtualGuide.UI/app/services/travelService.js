@@ -1,6 +1,7 @@
 ﻿'use strict';
 
-app.factory('travelService', ['travelRepository', function (travelRepository) {
+app.factory('travelService', ['travelRepository', 'travelApproveRepository',
+    function (travelRepository, travelApproveRepository) {
 
     var travelService = {};
     
@@ -93,6 +94,11 @@ app.factory('travelService', ['travelRepository', function (travelRepository) {
         }
 
         return markers;
+    }
+
+    travelService.publishTravel = function (id, successCallback, errorCallback)
+    {
+        travelApproveRepository.update({ id: id })
     }
 
     return travelService;

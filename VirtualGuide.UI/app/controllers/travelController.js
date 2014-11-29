@@ -8,6 +8,11 @@ app.controller('getTravelsController', ['$scope', '$state', 'travelService',
             $state.go('admin.travelshow', {id: id});
         };
 
+        $scope.publishTravel = function (travel) {
+            travelService.publishTravel(travel.Id);
+            travel.ApprovalStatus = true;
+        };
+
         $scope.newTravel = function () {
             $state.go('admin.travelnew');
         };

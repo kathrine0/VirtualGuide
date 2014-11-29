@@ -33,6 +33,8 @@ namespace VirtualGuide.ViewModels
         [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string ImageSrc { get; set; }
 
+        public bool ApprovalStatus { get; set; }
+
     }
 
     /// <summary>

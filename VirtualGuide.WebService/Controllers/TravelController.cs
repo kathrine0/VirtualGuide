@@ -21,27 +21,7 @@ namespace VirtualGuide.WebService.Controllers
     {
         private TravelRepository tr = new TravelRepository();
 
-        /// <summary>
-        /// All Travels in the system
-        /// Use: WebApp & Mobile
-        /// GET: api/Travels
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        [Route("Travels")]
-        [HttpGet]
-        public IList<BasicTravelViewModel> GetTravels()
-        {         
-            try
-            {
-                return tr.GetApprovedTravelList();
-            } 
-            catch (Exception e)
-            {
-                Logger.Instance.LogException(e, LogLevel.error);
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
-        }
+        #region consumed by mobile app
 
         /// <summary>
         /// Travels owned by user
@@ -111,6 +91,10 @@ namespace VirtualGuide.WebService.Controllers
             }
         }
 
+        #endregion
+
+        #region consumed by web app
+
         /// <summary>
         /// Listr of travels created by user
         /// Use: WebApp
@@ -131,7 +115,6 @@ namespace VirtualGuide.WebService.Controllers
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
         }
-
 
         /// <summary>
         /// Get travel detail for Creator
@@ -212,7 +195,51 @@ namespace VirtualGuide.WebService.Controllers
                 return BadRequest();
             }
         }
+        
+        [Route("ApproveTravel/{id}")]
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult ApproveTravel(int id)
+        {
+            try
+            {
+                string userName = User.Identity.Name;
+                tr.Approve(id, userName);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                Logger.Instance.LogException(e, LogLevel.error);
+                return BadRequest();
+            }
+        }
 
+        #endregion
 
+        #region universal methods
+
+        /// <summary>
+        /// All Travels in the system
+        /// Use: WebApp & Mobile
+        /// GET: api/Travels
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("Travels")]
+        [HttpGet]
+        public IList<BasicTravelViewModel> GetTravels()
+        {         
+            try
+            {
+                return tr.GetApprovedTravelList();
+            } 
+            catch (Exception e)
+            {
+                Logger.Instance.LogException(e, LogLevel.error);
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+        }
+        
+        #endregion
     }
 }

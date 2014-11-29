@@ -13,3 +13,13 @@ app.factory('travelRepository', ['$resource', '$rootScope', function ($resource,
     });
 
 }]);
+
+app.factory('travelApproveRepository', ['$resource', '$rootScope', function ($resource, $rootScope) {
+
+    var serviceBase = $rootScope.webservice;
+
+    return $resource(serviceBase + 'api/ApproveTravel/:id', {}, {
+        update: { method: 'PUT', params: { id: '@id' } }
+    });
+
+}]);
