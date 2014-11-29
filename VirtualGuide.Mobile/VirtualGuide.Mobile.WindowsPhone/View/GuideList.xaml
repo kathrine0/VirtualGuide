@@ -60,7 +60,11 @@
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
-            
+
+            <ProgressRing Grid.Row="0" 
+                        Style="{StaticResource DefaultProgressRing}"
+                        IsActive="{Binding DataGrouped, Converter={StaticResource EmptyIsTrueConverter}, Mode=OneWay}" />
+
             <!--Available Guides-->
             <TextBlock x:Name="NoConnectionMessage" Grid.Row="1" Text="No Internet Connection" HorizontalAlignment="Center" Visibility="Collapsed" />
 

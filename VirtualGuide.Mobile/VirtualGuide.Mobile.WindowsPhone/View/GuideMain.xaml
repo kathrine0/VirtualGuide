@@ -31,7 +31,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             
-                            <Image Source="{Binding MapImage}" Height="200" Width="Auto" 
+                            <Image Source="{Binding MapImage, Mode=OneWay}" Height="200" Width="Auto" 
                                    Stretch="UniformToFill" Margin="0,0,10,10" Grid.Row="0" >
                                 <Interactivity:Interaction.Behaviors>
                                     <Core:EventTriggerBehavior EventName="Tapped">
@@ -39,14 +39,17 @@
                                     </Core:EventTriggerBehavior>
                                 </Interactivity:Interaction.Behaviors>
                             </Image>
+                            <ProgressRing Grid.Row="0" 
+                                          Style="{StaticResource DefaultProgressRing}"
+                                          IsActive="{Binding MapImage, Converter={StaticResource NullIsTrueConverter}, Mode=OneWay}"/>
 
                             <GridView Grid.Row="1"
-                            x:Name="PropertiesView" 
-                            IsItemClickEnabled="True" 
-                            Extensions:ItemClickCommand.Command="{Binding PropertyClickCommand}"
-                            ItemsSource="{Binding Properties}"
-                            ItemTemplate="{StaticResource DetailsGrid}"
-                                />
+                                x:Name="PropertiesView" 
+                                IsItemClickEnabled="True" 
+                                Extensions:ItemClickCommand.Command="{Binding PropertyClickCommand}"
+                                ItemsSource="{Binding Properties, Mode=OneWay}"
+                                ItemTemplate="{StaticResource DetailsGrid}"
+                                />                           
                         </Grid>
                     </ScrollViewer>
                 </DataTemplate>
