@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using VirtualGuide.Models;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.Repository
 {
@@ -9,31 +9,31 @@ namespace VirtualGuide.Repository
         public static void Configure()
         {
             ///Travel
-            Mapper.CreateMap<Travel, BasicTravelViewModel>();
-            Mapper.CreateMap<Travel, CreatorTravelViewModel>();
-            Mapper.CreateMap<CreatorTravelViewModel, Travel>();
-            Mapper.CreateMap<Travel, SimpleCreatorTravelViewModel>();
-            Mapper.CreateMap<SimpleCreatorTravelViewModel, Travel>();
-            Mapper.CreateMap<Travel, CustomerTravelViewModel>();                
+            Mapper.CreateMap<Travel, BasicTravelBindingModel>();
+            Mapper.CreateMap<Travel, CreatorTravelBindingModel>();
+            Mapper.CreateMap<CreatorTravelBindingModel, Travel>();
+            Mapper.CreateMap<Travel, SimpleCreatorTravelBindingModel>();
+            Mapper.CreateMap<SimpleCreatorTravelBindingModel, Travel>();
+            Mapper.CreateMap<Travel, CustomerTravelBindingModel>();                
 
             ///Place
-            Mapper.CreateMap<Place, BasicPlaceViewModel>();
-            Mapper.CreateMap<BasicPlaceViewModel, Place>();
-            Mapper.CreateMap<Place, MobilePlaceViewModel>()
+            Mapper.CreateMap<Place, BasicPlaceBindingModel>();
+            Mapper.CreateMap<BasicPlaceBindingModel, Place>();
+            Mapper.CreateMap<Place, MobilePlaceBindingModel>()
                 .ForMember(dest => dest.Category, m => m.MapFrom(source => source.Category == null ? string.Empty : source.Category.Name))
                 .ForMember(dest => dest.IconName, m => m.MapFrom(source => source.Category == null ? string.Empty : source.Category.IconName));
 
             //Place Categories
-            Mapper.CreateMap<PlaceCategory, PlaceCategoryViewModel>();
+            Mapper.CreateMap<PlaceCategory, PlaceCategoryBindingModel>();
 
             ///Property
-            Mapper.CreateMap<Property, BasicPropertyViewModel>();
-            Mapper.CreateMap<Property, MobilePropertyViewModel>();
-            Mapper.CreateMap<BasicPropertyViewModel, Property>();
+            Mapper.CreateMap<Property, BasicPropertyBindingModel>();
+            Mapper.CreateMap<Property, MobilePropertyBindingModel>();
+            Mapper.CreateMap<BasicPropertyBindingModel, Property>();
 
             ///Icon
-            Mapper.CreateMap<Icon, IconViewModel>();
-            Mapper.CreateMap<IconViewModel, Icon>();
+            Mapper.CreateMap<Icon, IconBindingModel>();
+            Mapper.CreateMap<IconBindingModel, Icon>();
         }
     }
 }

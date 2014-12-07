@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace VirtualGuide.ViewModels
+namespace VirtualGuide.BindingModels
 {
     /// <summary>
     /// Basic model for the list of Travels
     /// </summary>
-    public class BasicTravelViewModel
+    public class BasicTravelBindingModel
     {
         public int Id { get; set; }
 
@@ -37,7 +37,7 @@ namespace VirtualGuide.ViewModels
     /// <summary>
     /// Model that the end user gets with all the details
     /// </summary>
-    public class CustomerTravelViewModel
+    public class CustomerTravelBindingModel
     {
         public int Id { get; set; }
 
@@ -45,11 +45,11 @@ namespace VirtualGuide.ViewModels
 
         public string Description { get; set; }
 
-        public virtual IList<MobilePlaceViewModel> Places { get; set; }
+        public virtual IList<MobilePlaceBindingModel> Places { get; set; }
 
-        public virtual IList<BasicExcursionViewModel> Excursions { get; set; }
+        public virtual IList<BasicExcursionBindingModels> Excursions { get; set; }
 
-        public virtual IList<MobilePropertyViewModel> Properties { get; set; }
+        public virtual IList<MobilePropertyBindingModel> Properties { get; set; }
 
         public string Language { get; set; }
 
@@ -65,7 +65,7 @@ namespace VirtualGuide.ViewModels
     /// <summary>
     /// Model for travels creator
     /// </summary>
-    public class CreatorTravelViewModel
+    public class CreatorTravelBindingModel
     {
         public int Id { get; set; }
 
@@ -77,11 +77,11 @@ namespace VirtualGuide.ViewModels
         [StringLength(100, ErrorMessageResourceName = "StringTooLong", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public string Description { get; set; }
 
-        public virtual IList<BasicPlaceViewModel> Places { get; set; }
+        public virtual IList<BasicPlaceBindingModel> Places { get; set; }
 
-        public virtual IList<BasicExcursionViewModel> Excursions { get; set; }
+        public virtual IList<BasicExcursionBindingModels> Excursions { get; set; }
 
-        public virtual IList<BasicPropertyViewModel> Properties { get; set; }
+        public virtual IList<BasicPropertyBindingModel> Properties { get; set; }
 
         [Required(ErrorMessageResourceName = "ValueNotNull", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public double Price { get; set; }
@@ -109,7 +109,7 @@ namespace VirtualGuide.ViewModels
     /// <summary>
     /// Model for travels creator without any collections (used for edit only)
     /// </summary>
-    public class SimpleCreatorTravelViewModel
+    public class SimpleCreatorTravelBindingModel
     {
         public int Id { get; set; }
 

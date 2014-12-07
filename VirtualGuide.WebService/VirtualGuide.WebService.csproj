@@ -214,6 +214,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtualGuide.BindingModels\VirtualGuide.BindingModels.csproj">
+      <Project>{f09b06d7-58cf-4999-aef6-995f22ee63a7}</Project>
+      <Name>VirtualGuide.BindingModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualGuide.Common\VirtualGuide.Common.csproj">
       <Project>{863d678d-7271-4c1e-8c23-d4182a2b98b8}</Project>
       <Name>VirtualGuide.Common</Name>
@@ -230,10 +234,9 @@
       <Project>{2af51b16-5a98-42a0-9bf5-7422fcbbdaab}</Project>
       <Name>VirtualGuide.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VirtualGuide.ViewModels\VirtualGuide.ViewModels.csproj">
-      <Project>{f09b06d7-58cf-4999-aef6-995f22ee63a7}</Project>
-      <Name>VirtualGuide.ViewModels</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

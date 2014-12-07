@@ -4,24 +4,24 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using VirtualGuide.Models;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.Repository
 {
     public class PropertyRepository : BaseRepository
     {
-        public IList<BasicPropertyViewModel> GetPropertiesList(int travelId)
+        public IList<BasicPropertyBindingModel> GetPropertiesList(int travelId)
         {
             //todo check if user is permitted
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 IList<Property> items = db.Properties.Where(x => x.Travel.Id == travelId).ToList();
            
-                return Mapper.Map <IList<BasicPropertyViewModel>>(items);
+                return Mapper.Map <IList<BasicPropertyBindingModel>>(items);
             }
         }
 
-        public void AddMany(IList<BasicPropertyViewModel> items)
+        public void AddMany(IList<BasicPropertyBindingModel> items)
         {
             //todo validate against is user owner of the travel
 
@@ -35,7 +35,7 @@ namespace VirtualGuide.Repository
             }
         }
 
-        public BasicPropertyViewModel Add(BasicPropertyViewModel item)
+        public BasicPropertyBindingModel Add(BasicPropertyBindingModel item)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -44,11 +44,11 @@ namespace VirtualGuide.Repository
                 db.Properties.Add(property);
                 db.SaveChanges();
 
-                return Mapper.Map<BasicPropertyViewModel>(property);
+                return Mapper.Map<BasicPropertyBindingModel>(property);
             }
         }
 
-        public void Update(int id, BasicPropertyViewModel item)
+        public void Update(int id, BasicPropertyBindingModel item)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {

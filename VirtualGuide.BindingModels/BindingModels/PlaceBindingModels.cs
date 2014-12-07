@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VirtualGuide.ViewModels
+namespace VirtualGuide.BindingModels
 {
-    public class MobilePlaceViewModel
+    public class MobilePlaceBindingModel
     {
         public int Id { get; set; }
 
@@ -25,7 +25,7 @@ namespace VirtualGuide.ViewModels
         public int TravelId { get; set; }
     }
 
-    public class BasicPlaceViewModel
+    public class BasicPlaceBindingModel
     {
         public int Id { get; set; }
 

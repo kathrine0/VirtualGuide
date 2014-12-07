@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VirtualGuide.ViewModels
+namespace VirtualGuide.BindingModels
 {
     // Models used as parameters to AccountController actions.
 

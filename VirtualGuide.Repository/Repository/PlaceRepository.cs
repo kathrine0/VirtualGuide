@@ -4,37 +4,37 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using VirtualGuide.Models;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.Repository
 {
     public class PlaceRepository : BaseRepository
     {
 
-        public IList<PlaceCategoryViewModel> GetPlaceCategories(string language)
+        public IList<PlaceCategoryBindingModel> GetPlaceCategories(string language)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 IList<PlaceCategory> categories = db.PlaceCategory.Where(x => x.Language == language).ToList();
 
-                return Mapper.Map<IList<PlaceCategoryViewModel>>(categories);
+                return Mapper.Map<IList<PlaceCategoryBindingModel>>(categories);
             }
     
         }
 
-        public IList<BasicPlaceViewModel> GetAllForTravel(int travelId)
+        public IList<BasicPlaceBindingModel> GetAllForTravel(int travelId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 IList<Place> items = db.Places.Where(x => x.TravelId == travelId).ToList();
 
-                IList<BasicPlaceViewModel> result = Mapper.Map<IList<BasicPlaceViewModel>>(items);
+                IList<BasicPlaceBindingModel> result = Mapper.Map<IList<BasicPlaceBindingModel>>(items);
 
                 return result;
             }
         }
 
-        public void AddMany(IList<BasicPlaceViewModel> items)
+        public void AddMany(IList<BasicPlaceBindingModel> items)
         {
             //todo validate against is user owner of the travel
 
@@ -47,7 +47,7 @@ namespace VirtualGuide.Repository
             }
         }
 
-        public BasicPlaceViewModel Add(BasicPlaceViewModel item)
+        public BasicPlaceBindingModel Add(BasicPlaceBindingModel item)
         {
             //todo validate against is user owner of the travel
 
@@ -58,11 +58,11 @@ namespace VirtualGuide.Repository
                 db.Places.Add(place);
                 db.SaveChanges();
 
-                return Mapper.Map<BasicPlaceViewModel>(place);
+                return Mapper.Map<BasicPlaceBindingModel>(place);
             }
         }
 
-        public void UpdateMany(IList<BasicPlaceViewModel> items)
+        public void UpdateMany(IList<BasicPlaceBindingModel> items)
         {
             //todo validate against is user owner of the travel
 
@@ -80,7 +80,7 @@ namespace VirtualGuide.Repository
             }
         }
 
-        public void Update(int id, BasicPlaceViewModel item)
+        public void Update(int id, BasicPlaceBindingModel item)
         {
             //todo validate against is user owner of the travel
 

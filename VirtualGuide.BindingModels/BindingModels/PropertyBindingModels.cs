@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VirtualGuide.ViewModels
+namespace VirtualGuide.BindingModels
 {
-    public class BasicPropertyViewModel
+    public class BasicPropertyBindingModel
     {
         public int Id { get; set; }
 
@@ -18,13 +18,13 @@ namespace VirtualGuide.ViewModels
 
         public int Order { get; set; }
 
-        public IconViewModel Icon { get; set; }
+        public IconBindingModel Icon { get; set; }
 
         [Required(ErrorMessageResourceName = "ChooseIcon", ErrorMessageResourceType = typeof(Common.Translation.Resources))]
         public int IconId { get; set; }
     }
 
-    public class MobilePropertyViewModel
+    public class MobilePropertyBindingModel
     {
         public int Id { get; set; }
 

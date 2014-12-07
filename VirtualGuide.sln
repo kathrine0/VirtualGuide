@@ -35,13 +35,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69055F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.Repository", "VirtualGuide.Repository\VirtualGuide.Repository.csproj", "{90AA56E0-5FA4-4A69-AE8C-E19F267DA916}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.ViewModels", "VirtualGuide.ViewModels\VirtualGuide.ViewModels.csproj", "{F09B06D7-58CF-4999-AEF6-995F22EE63A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualGuide.BindingModels", "VirtualGuide.BindingModels\VirtualGuide.BindingModels.csproj", "{F09B06D7-58CF-4999-AEF6-995F22EE63A7}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		VirtualGuide.Mobile\VirtualGuide.Mobile.Shared\VirtualGuide.Mobile.Shared.projitems*{7eaf0aa7-0f4a-4428-946d-57a2d62e3d11}*SharedItemsImports = 13
 		VirtualGuide.Mobile\VirtualGuide.Mobile.Shared\VirtualGuide.Mobile.Shared.projitems*{0a7daa03-9260-4cd7-852b-b0487a20ecf9}*SharedItemsImports = 4
-		VirtualGuide.Mobile\VirtualGuide.Mobile.Shared\VirtualGuide.Mobile.Shared.projitems*{0e8dc30c-d873-4c27-b899-b12275cad596}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_x86|Any CPU = Debug_x86|Any CPU

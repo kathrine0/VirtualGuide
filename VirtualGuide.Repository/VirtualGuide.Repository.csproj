@@ -73,13 +73,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VirtualGuide.BindingModels\VirtualGuide.BindingModels.csproj">
+      <Project>{f09b06d7-58cf-4999-aef6-995f22ee63a7}</Project>
+      <Name>VirtualGuide.BindingModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VirtualGuide.Models\VirtualGuide.Models.csproj">
       <Project>{5cbb970a-9998-4f18-98f5-6c82f92fb3e0}</Project>
       <Name>VirtualGuide.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VirtualGuide.ViewModels\VirtualGuide.ViewModels.csproj">
-      <Project>{f09b06d7-58cf-4999-aef6-995f22ee63a7}</Project>
-      <Name>VirtualGuide.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

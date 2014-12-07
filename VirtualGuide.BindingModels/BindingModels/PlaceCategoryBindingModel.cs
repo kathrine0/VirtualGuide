@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VirtualGuide.ViewModels
+namespace VirtualGuide.BindingModels
 {
-    public class PlaceCategoryViewModel
+    public class PlaceCategoryBindingModel
     {
         public int Id { get; set; }
 

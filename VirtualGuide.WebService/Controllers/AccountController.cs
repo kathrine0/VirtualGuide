@@ -16,7 +16,7 @@ using System.Web.Http.ModelBinding;
 using VirtualGuide.Models;
 using VirtualGuide.Services.Managers;
 using VirtualGuide.Services.Providers;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 using VirtualGuide.WebService.Results;
 
 namespace VirtualGuide.WebService.Controllers

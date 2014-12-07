@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using VirtualGuide.Repository;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.WebService.Controllers
 {
@@ -13,7 +13,7 @@ namespace VirtualGuide.WebService.Controllers
 
         [Route("Icon")]
         [HttpGet]
-        public IList<IconViewModel> GetIcons()
+        public IList<IconBindingModel> GetIcons()
         {
             return ir.GetIcons();
 

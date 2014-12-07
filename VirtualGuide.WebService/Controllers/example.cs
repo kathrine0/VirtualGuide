@@ -9,7 +9,7 @@
 //using System.Web.Http;
 //using System.Web.Http.Description;
 //using VirtualGuide.Models;
-//using VirtualGuide.ViewModels;
+//using VirtualGuide.BindingModels;
 
 //namespace VirtualGuide.WebService.Controllers
 //{
@@ -19,10 +19,10 @@
 
 
 //        // GET: api/example/5
-//        [ResponseType(typeof(BasicPropertyViewModel))]
+//        [ResponseType(typeof(BasicPropertyBindingModel))]
 //        public IHttpActionResult GetBasicPropertyViewModel(int id)
 //        {
-//            BasicPropertyViewModel basicPropertyViewModel = db.BasicPropertyViewModels.Find(id);
+//            BasicPropertyBindingModel basicPropertyViewModel = db.BasicPropertyViewModels.Find(id);
 //            if (basicPropertyViewModel == null)
 //            {
 //                return NotFound();
@@ -33,7 +33,7 @@
 
 //        // PUT: api/example/5
 //        [ResponseType(typeof(void))]
-//        public IHttpActionResult PutBasicPropertyViewModel(int id, BasicPropertyViewModel basicPropertyViewModel)
+//        public IHttpActionResult PutBasicPropertyViewModel(int id, BasicPropertyBindingModel basicPropertyViewModel)
 //        {
 //            if (!ModelState.IsValid)
 //            {
@@ -67,8 +67,8 @@
 //        }
 
 //        // POST: api/example
-//        [ResponseType(typeof(BasicPropertyViewModel))]
-//        public IHttpActionResult PostBasicPropertyViewModel(BasicPropertyViewModel basicPropertyViewModel)
+//        [ResponseType(typeof(BasicPropertyBindingModel))]
+//        public IHttpActionResult PostBasicPropertyViewModel(BasicPropertyBindingModel basicPropertyViewModel)
 //        {
 //            if (!ModelState.IsValid)
 //            {
@@ -82,10 +82,10 @@
 //        }
 
 //        // DELETE: api/example/5
-//        [ResponseType(typeof(BasicPropertyViewModel))]
+//        [ResponseType(typeof(BasicPropertyBindingModel))]
 //        public IHttpActionResult DeleteBasicPropertyViewModel(int id)
 //        {
-//            BasicPropertyViewModel basicPropertyViewModel = db.BasicPropertyViewModels.Find(id);
+//            BasicPropertyBindingModel basicPropertyViewModel = db.BasicPropertyViewModels.Find(id);
 //            if (basicPropertyViewModel == null)
 //            {
 //                return NotFound();

@@ -7,7 +7,7 @@ using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using VirtualGuide.Common.Helpers;
 using VirtualGuide.Repository;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.WebService.Controllers
 {
@@ -26,7 +26,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("OwnedTravels")]
         [HttpGet]
-        public IList<CustomerTravelViewModel> GetOwnedTravels()
+        public IList<CustomerTravelBindingModel> GetOwnedTravels()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace VirtualGuide.WebService.Controllers
             try
             {
                 string userName = User.Identity.Name;
-                CustomerTravelViewModel travel = tr.BuyTravel(id, userName);
+                CustomerTravelBindingModel travel = tr.BuyTravel(id, userName);
 
                 return Ok(travel);
             }
@@ -71,7 +71,7 @@ namespace VirtualGuide.WebService.Controllers
         {
             try
             {
-                CustomerTravelViewModel travel = tr.BuyTravelAnonymous(id);
+                CustomerTravelBindingModel travel = tr.BuyTravelAnonymous(id);
 
                 return Ok(travel);
             }
@@ -98,7 +98,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("CreatorTravel")]
         [HttpGet]
-        public IList<BasicTravelViewModel> GetCreatedTravels()
+        public IList<BasicTravelBindingModel> GetCreatedTravels()
         {
             try
             {
@@ -119,13 +119,13 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("CreatorTravel/{id}")]
         [HttpGet]
-        [ResponseType(typeof(CreatorTravelViewModel))]
+        [ResponseType(typeof(CreatorTravelBindingModel))]
         public IHttpActionResult GetTravel(int id)
         {
             try
             {
                 string userName = User.Identity.Name;
-                CreatorTravelViewModel travel = tr.GetTravelDetailsForCreator(id, userName);
+                CreatorTravelBindingModel travel = tr.GetTravelDetailsForCreator(id, userName);
 
                 return Ok(travel);
             }
@@ -143,9 +143,9 @@ namespace VirtualGuide.WebService.Controllers
 
 
         [Route("CreatorTravel")]
-        [ResponseType(typeof(CreatorTravelViewModel))]
+        [ResponseType(typeof(CreatorTravelBindingModel))]
         [HttpPost]
-        public IHttpActionResult PostTravel(CreatorTravelViewModel travel)
+        public IHttpActionResult PostTravel(CreatorTravelBindingModel travel)
         {
             if (!ModelState.IsValid)
             {
@@ -154,7 +154,7 @@ namespace VirtualGuide.WebService.Controllers
 
             try
             {
-                CreatorTravelViewModel item = tr.Add(travel);
+                CreatorTravelBindingModel item = tr.Add(travel);
                 return Created("CreatorTravel/{id}", item);
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("CreatorTravel/{id}")]
         [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTravel(int id, SimpleCreatorTravelViewModel travel)
+        public IHttpActionResult PutTravel(int id, SimpleCreatorTravelBindingModel travel)
         {
             if (!ModelState.IsValid)
             {
@@ -223,7 +223,7 @@ namespace VirtualGuide.WebService.Controllers
         [AllowAnonymous]
         [Route("Travels")]
         [HttpGet]
-        public IList<BasicTravelViewModel> GetTravels()
+        public IList<BasicTravelBindingModel> GetTravels()
         {         
             try
             {

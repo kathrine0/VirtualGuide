@@ -4,7 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using VirtualGuide.Repository;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.WebService.Controllers
 {
@@ -22,7 +22,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Properties")]
         [HttpGet]
-        public IList<BasicPropertyViewModel> GetProperties(int travelId)
+        public IList<BasicPropertyBindingModel> GetProperties(int travelId)
         {
             var properties = pr.GetPropertiesList(travelId);
             return properties;
@@ -36,7 +36,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("Properties")]
         [HttpPost]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostProperties(IList<BasicPropertyViewModel> properties)
+        public IHttpActionResult PostProperties(IList<BasicPropertyBindingModel> properties)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("Property")]
         [HttpPost]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostProperty(BasicPropertyViewModel property)
+        public IHttpActionResult PostProperty(BasicPropertyBindingModel property)
         {
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("Property/{id}")]
         [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProperty(int id, BasicPropertyViewModel property)
+        public IHttpActionResult PutProperty(int id, BasicPropertyBindingModel property)
         {
             if (!ModelState.IsValid)
             {

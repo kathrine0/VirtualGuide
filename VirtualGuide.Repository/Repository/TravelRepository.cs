@@ -7,24 +7,24 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using VirtualGuide.Models;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.Repository
 {
     public class TravelRepository : BaseRepository
     {
-        public IList<BasicTravelViewModel> GetApprovedTravelList()
+        public IList<BasicTravelBindingModel> GetApprovedTravelList()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 IList<Travel> items = db.Travels.Where(x => x.ApprovalStatus == true).ToList();
 
-                return Mapper.Map<IList<BasicTravelViewModel>>(items);
+                return Mapper.Map<IList<BasicTravelBindingModel>>(items);
             }
 
         }
 
-        public IList<CustomerTravelViewModel> GetOwnedTravelList(string userEmail)
+        public IList<CustomerTravelBindingModel> GetOwnedTravelList(string userEmail)
         {
             User user = findUserByEmail(userEmail);
 
@@ -35,23 +35,23 @@ namespace VirtualGuide.Repository
                 items.Add(item.Travel);
             }
 
-            return Mapper.Map<IList<CustomerTravelViewModel>>(items);
+            return Mapper.Map<IList<CustomerTravelBindingModel>>(items);
 
         }
 
-        public IList<BasicTravelViewModel> GetCreatedTravelList(string userEmail)
+        public IList<BasicTravelBindingModel> GetCreatedTravelList(string userEmail)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 User user = findUserByEmail(userEmail);
                 IList<Travel> items = db.Travels.Where(x => x.CreatorId == user.Id).ToList();
 
-                return Mapper.Map<IList<BasicTravelViewModel>>(items);
+                return Mapper.Map<IList<BasicTravelBindingModel>>(items);
             }
 
         }
 
-        public CreatorTravelViewModel GetTravelDetailsForCreator(int id, string userEmail)
+        public CreatorTravelBindingModel GetTravelDetailsForCreator(int id, string userEmail)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -63,12 +63,12 @@ namespace VirtualGuide.Repository
                     throw new ObjectNotFoundException("Travel not found");
                 }
 
-                return Mapper.Map<CreatorTravelViewModel>(travel);
+                return Mapper.Map<CreatorTravelBindingModel>(travel);
             }
 
         }
 
-        public CustomerTravelViewModel GetTravelDetailsForCustomer(int id, string userEmail)
+        public CustomerTravelBindingModel GetTravelDetailsForCustomer(int id, string userEmail)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -87,12 +87,12 @@ namespace VirtualGuide.Repository
                     throw new UnauthorizedAccessException("This user is not authorised to see the details");
                 }
 
-                return Mapper.Map<CustomerTravelViewModel>(travel);
+                return Mapper.Map<CustomerTravelBindingModel>(travel);
             }
             
         }
 
-        public CustomerTravelViewModel BuyTravel(int id, string userEmail)
+        public CustomerTravelBindingModel BuyTravel(int id, string userEmail)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -120,11 +120,11 @@ namespace VirtualGuide.Repository
                 db.User_Purchased_Travels.Add(purchase);
                 db.SaveChanges();
 
-                return Mapper.Map<CustomerTravelViewModel>(travel);
+                return Mapper.Map<CustomerTravelBindingModel>(travel);
             }
         }
 
-        public CustomerTravelViewModel BuyTravelAnonymous(int id)
+        public CustomerTravelBindingModel BuyTravelAnonymous(int id)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -135,11 +135,11 @@ namespace VirtualGuide.Repository
                     throw new ObjectNotFoundException("Travel not found");
                 }
 
-                return Mapper.Map<CustomerTravelViewModel>(travel);
+                return Mapper.Map<CustomerTravelBindingModel>(travel);
             }
         }
 
-        public CreatorTravelViewModel Add(CreatorTravelViewModel item)
+        public CreatorTravelBindingModel Add(CreatorTravelBindingModel item)
         {
             //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -149,18 +149,18 @@ namespace VirtualGuide.Repository
                 db.Travels.Add(travel);
                 db.SaveChanges();
 
-                return Mapper.Map<CreatorTravelViewModel>(travel);
+                return Mapper.Map<CreatorTravelBindingModel>(travel);
             }
         }
 
-        public CreatorTravelViewModel Update(int id, SimpleCreatorTravelViewModel item)
+        public CreatorTravelBindingModel Update(int id, SimpleCreatorTravelBindingModel item)
         {
             //todo validate user role
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Travel oldTravel = db.Travels.Where(x => x.Id == id).FirstOrDefault();
 
-                Travel travel = Mapper.Map<SimpleCreatorTravelViewModel, Travel>(item, oldTravel);
+                Travel travel = Mapper.Map<SimpleCreatorTravelBindingModel, Travel>(item, oldTravel);
 
                 var entry = db.Entry(travel);
                 entry.State = EntityState.Modified;
@@ -180,7 +180,7 @@ namespace VirtualGuide.Repository
                     throw;
                 }
 
-                return Mapper.Map<CreatorTravelViewModel>(travel);
+                return Mapper.Map<CreatorTravelBindingModel>(travel);
             }
         }
 

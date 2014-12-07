@@ -4,7 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 using VirtualGuide.Repository;
-using VirtualGuide.ViewModels;
+using VirtualGuide.BindingModels;
 
 namespace VirtualGuide.WebService.Controllers
 {
@@ -16,7 +16,7 @@ namespace VirtualGuide.WebService.Controllers
 
         [Route("Places/Categories/{language}")]
         [HttpGet]
-        public IList<PlaceCategoryViewModel> GetPlaceCategories(string language)
+        public IList<PlaceCategoryBindingModel> GetPlaceCategories(string language)
         {
             return pr.GetPlaceCategories(language);
 
@@ -30,7 +30,7 @@ namespace VirtualGuide.WebService.Controllers
         /// <returns></returns>
         [Route("Places/{travelId}")]
         [HttpGet]
-        public IList<BasicPlaceViewModel> GetPlaces(int travelId)
+        public IList<BasicPlaceBindingModel> GetPlaces(int travelId)
         {
             //todo: authorize creator
             try
@@ -51,7 +51,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("Places")]
         [HttpPost]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostPlaces(IList<BasicPlaceViewModel> places)
+        public IHttpActionResult PostPlaces(IList<BasicPlaceBindingModel> places)
         {
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace VirtualGuide.WebService.Controllers
         [HttpPut]
         [ResponseType(typeof(void))]
 
-        public IHttpActionResult PutPlaces(IList<BasicPlaceViewModel> places)
+        public IHttpActionResult PutPlaces(IList<BasicPlaceBindingModel> places)
         {
             if (!ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("Place")]
         [HttpPost]
         [ResponseType(typeof(void))]        
-        public IHttpActionResult PostPlace(BasicPlaceViewModel place)
+        public IHttpActionResult PostPlace(BasicPlaceBindingModel place)
         {
             if (!ModelState.IsValid)
             {
@@ -134,7 +134,7 @@ namespace VirtualGuide.WebService.Controllers
         [Route("Place/{id}")]
         [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutPlace(int id, BasicPlaceViewModel place)
+        public IHttpActionResult PutPlace(int id, BasicPlaceBindingModel place)
         {
             if (!ModelState.IsValid)
             {
