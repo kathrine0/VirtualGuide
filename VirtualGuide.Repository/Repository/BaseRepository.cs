@@ -10,7 +10,7 @@ using VirtualGuide.Models;
 
 namespace VirtualGuide.Repository
 {
-    public abstract class BaseRepository
+    public abstract class BaseRepository : IDisposable
     {
 
         protected BaseVGUserManager userManager = new BaseVGUserManager();
@@ -25,7 +25,12 @@ namespace VirtualGuide.Repository
 
             return user;
         }
-        
 
+
+
+        public void Dispose()
+        {
+            userManager.Dispose();
+        }
     }
 }

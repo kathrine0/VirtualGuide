@@ -41,8 +41,8 @@ namespace VirtualGuide.Mobile
         public static Stopwatch StopWatch;
 #endif
 
-        //public const string WebService = @"http://catherine.cloudapp.net:8080/";
-        public const string WebService = @"http://192.168.10.180/VirtualGuide/";
+        public const string WebService = @"http://catherine.cloudapp.net:8080/";
+        //public const string WebService = @"http://192.168.10.180/VirtualGuide/";
         public static SQLiteAsyncConnection Connection = new SQLiteAsyncConnection("VirtualGuide.db");
         public static ResourceLoader ResLoader = new ResourceLoader();
                

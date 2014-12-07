@@ -72,8 +72,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlaceMain\PlaceMainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\RegisterPage\RegisterViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ViewModelLocator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)View\GuideList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Common\CustomDictionary.xaml">
