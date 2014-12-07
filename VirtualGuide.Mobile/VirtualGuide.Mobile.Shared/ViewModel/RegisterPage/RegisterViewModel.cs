@@ -1,11 +1,6 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using PropertyChanged;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
 

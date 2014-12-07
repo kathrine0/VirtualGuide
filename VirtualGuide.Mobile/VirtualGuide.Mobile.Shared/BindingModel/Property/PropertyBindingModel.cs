@@ -1,8 +1,6 @@
 ﻿using PropertyChanged;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using Windows.UI.Xaml.Media;

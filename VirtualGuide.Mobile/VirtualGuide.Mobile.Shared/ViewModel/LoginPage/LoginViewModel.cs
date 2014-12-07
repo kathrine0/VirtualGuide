@@ -1,15 +1,8 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using PropertyChanged;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
-using VirtualGuide.Mobile.View;
-using Windows.UI.Xaml.Controls;
 
 namespace VirtualGuide.Mobile.ViewModel.LoginPage
 {

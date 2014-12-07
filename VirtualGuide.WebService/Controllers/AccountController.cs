@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Claims;
@@ -7,17 +13,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
-using VirtualGuide.WebService.Results;
-using VirtualGuide.Services.Managers;
 using VirtualGuide.Models;
-using VirtualGuide.ViewModels;
+using VirtualGuide.Services.Managers;
 using VirtualGuide.Services.Providers;
+using VirtualGuide.ViewModels;
+using VirtualGuide.WebService.Results;
 
 namespace VirtualGuide.WebService.Controllers
 {

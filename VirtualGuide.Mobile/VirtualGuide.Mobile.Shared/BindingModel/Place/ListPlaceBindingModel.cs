@@ -1,11 +1,10 @@
 ﻿using PropertyChanged;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Data;
-using VirtualGuide.Mobile.Helper;
 
 namespace VirtualGuide.Mobile.BindingModel
 {

@@ -1,9 +1,5 @@
 ﻿using PropertyChanged;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VirtualGuide.Mobile.Model;
-using Windows.UI.Xaml.Media;
 
 namespace VirtualGuide.Mobile.BindingModel
 {

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using PropertyChanged;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Data;
+﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
+using System;
+using System.Collections.ObjectModel;
+using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
-using VirtualGuide.Mobile.BindingModel;
-using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Controls;
-using GalaSoft.MvvmLight;
-using VirtualGuide.Mobile.Common;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace VirtualGuide.Mobile.ViewModel.GuideMain
 {

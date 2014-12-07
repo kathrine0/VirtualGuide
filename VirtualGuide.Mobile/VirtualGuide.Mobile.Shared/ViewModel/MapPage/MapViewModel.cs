@@ -1,6 +1,7 @@
-﻿using PropertyChanged;
+﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
+using PropertyChanged;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,16 +13,11 @@ using VirtualGuide.Mobile.Repository;
 using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
 using Windows.Foundation;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
-using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.ViewManagement;
 using Windows.Graphics.Display;
+using Windows.UI;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Media;
 
 namespace VirtualGuide.Mobile.ViewModel.MapPage
 {

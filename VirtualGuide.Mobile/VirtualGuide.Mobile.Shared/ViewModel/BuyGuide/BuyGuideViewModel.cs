@@ -1,9 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;

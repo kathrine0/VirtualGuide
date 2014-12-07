@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
-using VirtualGuide.Mobile.ViewModel;
-using Windows.Networking.BackgroundTransfer;
-using Windows.Storage;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace VirtualGuide.Mobile.Repository
 {

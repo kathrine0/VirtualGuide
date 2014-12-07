@@ -1,8 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using PropertyChanged;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using VirtualGuide.Mobile.Model;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Media;

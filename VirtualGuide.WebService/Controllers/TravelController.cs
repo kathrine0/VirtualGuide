@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
-using System.Web.Http.Tracing;
 using VirtualGuide.Common.Helpers;
 using VirtualGuide.Repository;
 using VirtualGuide.ViewModels;

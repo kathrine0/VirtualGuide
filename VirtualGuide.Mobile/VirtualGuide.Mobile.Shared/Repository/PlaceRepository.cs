@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
-using VirtualGuide.Mobile.ViewModel;
 
 namespace VirtualGuide.Mobile.Repository
 {

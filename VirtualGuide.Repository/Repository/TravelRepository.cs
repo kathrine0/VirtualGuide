@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VirtualGuide.Models;
+﻿using AutoMapper;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity.Core;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
-using AutoMapper;
+using System.Linq;
+using VirtualGuide.Models;
 using VirtualGuide.ViewModels;
 
 namespace VirtualGuide.Repository

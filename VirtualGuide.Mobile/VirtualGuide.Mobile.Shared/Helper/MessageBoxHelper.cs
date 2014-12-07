@@ -1,9 +1,7 @@
 ﻿using System;
-using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
-using Windows.Storage;
-using Windows.UI.Popups;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 
 namespace VirtualGuide.Mobile.Helper
 {

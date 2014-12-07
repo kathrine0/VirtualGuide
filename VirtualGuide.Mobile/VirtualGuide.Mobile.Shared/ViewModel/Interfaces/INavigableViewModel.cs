@@ -1,7 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VirtualGuide.Mobile.Helper;
 using Windows.UI.Xaml.Navigation;
 

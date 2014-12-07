@@ -1,9 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VirtualGuide.Mobile.ViewModel.GuideList;
 using VirtualGuide.Mobile.ViewModel.GuideMain;
 using VirtualGuide.Mobile.ViewModel.LoginPage;

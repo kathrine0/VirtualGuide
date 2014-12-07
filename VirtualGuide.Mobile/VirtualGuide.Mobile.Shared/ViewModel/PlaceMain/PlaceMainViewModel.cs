@@ -1,14 +1,9 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Views;
+﻿using GalaSoft.MvvmLight.Views;
 using PropertyChanged;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
-using System.Text;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Helper;
-using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.Repository;
 using Windows.UI.Xaml.Media;
 
