@@ -6,6 +6,7 @@ using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
+using VirtualGuide.Mobile.Service;
 using Windows.UI.Popups;
 
 namespace VirtualGuide.Mobile.ViewModel
@@ -33,6 +34,7 @@ namespace VirtualGuide.Mobile.ViewModel
         #region private properties
 
         private int _travelId;
+        private TravelService _travelService = new TravelService();
         private TravelRepository _travelRepository = new TravelRepository();
 
         #endregion
@@ -64,7 +66,7 @@ namespace VirtualGuide.Mobile.ViewModel
                 MessageBoxHelper.Show(App.ResLoader.GetString("DownloadMaps"));
                 IsWorkInProgress = true;
 
-                var travel = await _travelRepository.DownloadBoughtTravel(_travelId);
+                var travel = await _travelService.DownloadBoughtTravel(_travelId);
 
                 _navigationService.NavigateTo("GuideList", travel);
             }
@@ -118,7 +120,7 @@ namespace VirtualGuide.Mobile.ViewModel
             _travelId = (int)e.NavigationParameter;
             LoadData();
 
-            if (!UserRepository.IsUserLoggedIn())
+            if (!UserService.IsUserLoggedIn())
             {
                 MessageBoxHelper.ShowWithCommands(App.ResLoader.GetString("NotLoggedInGuideDownload"), "", new List<UICommand>() {
                     new UICommand(App.ResLoader.GetString("Yes"), new UICommandInvokedHandler(this.GoToLoginCommandInvokedHandler)),

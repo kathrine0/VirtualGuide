@@ -57,7 +57,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repository\PlaceRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\PropertyRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\TravelRepository.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Repository\UserRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\TravelService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\UserService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\MySQLiteExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SQLite\SQLiteAsync.cs" />

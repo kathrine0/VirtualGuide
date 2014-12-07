@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualGuide.Mobile.Helper;
 
-namespace VirtualGuide.Mobile.Repository
+namespace VirtualGuide.Mobile.Service
 {
-    public class UserRepository
+    public class UserService
     {
         SettingsDataHelper settingsDataHelper = new SettingsDataHelper();
         public async Task<bool> Login(string email, string password)

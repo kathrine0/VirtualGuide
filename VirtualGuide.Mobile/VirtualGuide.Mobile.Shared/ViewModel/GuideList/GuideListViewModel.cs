@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
+using VirtualGuide.Mobile.Service;
 using Windows.Phone.UI.Input;
 using Windows.UI.Xaml;
 
@@ -20,7 +21,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
         #region private properties
 
         private TravelRepository _travelRepository = new TravelRepository();
-        private UserRepository _userRepository = new UserRepository();
+        private TravelService _travelService = new TravelService();
+        private UserService _userRepository = new UserService();
         LocalDataHelper localDataHelper = new LocalDataHelper();
 
         #endregion
@@ -103,8 +105,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideList
                 IsWorkInProgress = true;
                 ProgressText = App.ResLoader.GetString("Downloading");
 
-                Download.Add(StartDownloading(_travelRepository.DownloadAvailableTravels()));
-                Download.Add(StartDownloading(_travelRepository.DownloadOwnedTravels()));
+                Download.Add(StartDownloading(_travelService.DownloadAvailableTravels()));
+                Download.Add(StartDownloading(_travelService.DownloadOwnedTravels()));
 
                 await Task.WhenAll(Download);
                 

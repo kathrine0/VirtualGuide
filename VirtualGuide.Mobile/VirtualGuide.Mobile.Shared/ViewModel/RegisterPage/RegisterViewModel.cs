@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Views;
 using System.Net.Http;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
+using VirtualGuide.Mobile.Service;
 
 namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 {
@@ -25,7 +26,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 
         #region private properties
 
-        private UserRepository _userRepository = new UserRepository();
+        private UserService _userService = new UserService();
         private LocalDataHelper localDataHelper = new LocalDataHelper();
 
         #endregion
@@ -111,7 +112,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
 
             try
             {
-                success = await _userRepository.Register(Email, Password, RepeatPassword);
+                success = await _userService.Register(Email, Password, RepeatPassword);
 
             }
             catch (HttpRequestException ex)
@@ -140,7 +141,7 @@ namespace VirtualGuide.Mobile.ViewModel.RegisterPage
                 //authenticate user
             }
 
-            await _userRepository.Login(Email, Password);
+            await _userService.Login(Email, Password);
 
             localDataHelper.SetValue(LocalDataHelper.REFRESH_NOW, true);
             _navigationService.NavigateTo("GuideList"); 

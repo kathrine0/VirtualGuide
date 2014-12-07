@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Views;
 using System.Net.Http;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Repository;
+using VirtualGuide.Mobile.Service;
 
 namespace VirtualGuide.Mobile.ViewModel.LoginPage
 {
@@ -32,7 +33,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
         #region private properties
 
-        private UserRepository _userRepository = new UserRepository();
+        private UserService _userService = new UserService();
         private LocalDataHelper localDataHelper = new LocalDataHelper();
 
         #endregion
@@ -122,7 +123,7 @@ namespace VirtualGuide.Mobile.ViewModel.LoginPage
 
             try
             {
-                success = await _userRepository.Login(Email, Password);
+                success = await _userService.Login(Email, Password);
 
             }
             catch (HttpRequestException ex)
