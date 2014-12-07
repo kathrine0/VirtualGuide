@@ -19,9 +19,6 @@ namespace VirtualGuide.Mobile.View
     {
         private MapViewModel viewModel;
 
-
-        private int TravelId;
-
         public MapPage()
         {
             this.InitializeComponent();

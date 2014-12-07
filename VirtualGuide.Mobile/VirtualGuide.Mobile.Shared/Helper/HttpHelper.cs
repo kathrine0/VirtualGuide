@@ -210,7 +210,7 @@ namespace VirtualGuide.Mobile.Helper
                     image = new BitmapImage(imageUri);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //file already exists.
                 return;

@@ -64,8 +64,8 @@ namespace VirtualGuide.Mobile.BindingModel
             // convert latitude and longitude values to radians
             var prevRadLat = _placeLatitude * degreesToRadians;
             var prevRadLong = _placeLongitude * degreesToRadians;
-            var currRadLat = currentPosition.Coordinate.Latitude * degreesToRadians;
-            var currRadLong = currentPosition.Coordinate.Longitude * degreesToRadians;
+            var currRadLat = currentPosition.Coordinate.Point.Position.Latitude * degreesToRadians;
+            var currRadLong = currentPosition.Coordinate.Point.Position.Longitude * degreesToRadians;
 
             // calculate radian delta between each position.
             var radDeltaLat = currRadLat - prevRadLat;
