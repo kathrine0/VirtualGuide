@@ -284,7 +284,7 @@ namespace VirtualGuide.Mobile.ViewModel.MapPage
             {
                 var travelTask = _travelRepository.GetTravelByIdAsync<MapTravelBindingModel>(_travelId);
 
-                var places = await _placeRepository.GetParentPlacesByTravelIdAsync<MapPlaceBindingModel>(_travelId);
+                var places = await _placeRepository.GetParentPlacesByTravelIdAsync(_travelId);
                 Categories = _placeRepository.GetCategoryVisibilityCollection(places);
 
 

@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\BaseTravelBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\Travel\MapsBindingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BindingModel\User\LastLoggedUserSettingsModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AutoMapperConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\CustomExceptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ItemsChangeObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ObservableDictionary.cs" />
@@ -39,13 +40,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TrueIsVisible.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\BindingHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ColorHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\GeoHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\HubBinder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\ListHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\LocalDataHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\MessageBoxHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helper\ModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\NavigationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\UIHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BaseImageModel.cs" />

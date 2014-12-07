@@ -64,11 +64,11 @@ namespace VirtualGuide.Mobile.View
             }
         }
 
-        private void ScrollToItem(GuideMainPropertyBindingModel item)
+        private void ScrollToItem(PropertyBindingModel item)
         {
             if (item == null) return;
 
-            var hubElement = MainHub.Sections.Where(x => x.DataContext is GuideMainPropertyBindingModel && ((GuideMainPropertyBindingModel)x.DataContext).Id == item.Id).First();
+            var hubElement = MainHub.Sections.Where(x => x.DataContext is PropertyBindingModel && ((PropertyBindingModel)x.DataContext).Id == item.Id).First();
             UIHelper.ScollHubToSection(hubElement, ref MainHub);
         }
 
@@ -76,7 +76,7 @@ namespace VirtualGuide.Mobile.View
         {
             foreach (var property in viewModel.Properties)
             {
-                if (property.Type != GuideMainPropertyBindingModel.Types.REGULAR)
+                if (property.Type != PropertyBindingModel.Types.REGULAR)
                     continue;
 
                 HubSection hubSection = new HubSection();

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using VirtualGuide.Mobile.BindingModel;
 using VirtualGuide.Mobile.Helper;
@@ -18,7 +19,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         public event Action DataLoaded;
 
-        public event Action<GuideMainPropertyBindingModel> ScrollRequested;
+        public event Action<PropertyBindingModel> ScrollRequested;
 
         #endregion
 
@@ -26,7 +27,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         public GuideMainViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Properties = new ObservableCollection<GuideMainPropertyBindingModel>();
+            Properties = new ObservableCollection<PropertyBindingModel>();
             Travel = new GuideMainBindingModel();
 
             Initialize();
@@ -38,7 +39,7 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
 
         public RelayCommand NavigateToMapCommand { get; set; }
 
-        public RelayCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
+        public RelayCommand<PropertyBindingModel> PropertyClickCommand { get; set; }
 
         #endregion
 
@@ -66,8 +67,8 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             private set { Set(ref _mapImage, value); }
         }
 
-        private ObservableCollection<GuideMainPropertyBindingModel> _properties;
-        public ObservableCollection<GuideMainPropertyBindingModel> Properties
+        private ObservableCollection<PropertyBindingModel> _properties;
+        public ObservableCollection<PropertyBindingModel> Properties
         {
             get { return _properties; }
             private set { Set(ref _properties, value); }
@@ -88,14 +89,14 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
         private void Initialize()
         {
             NavigateToMapCommand = new RelayCommand(NavigateToMapExecute);
-            PropertyClickCommand = new RelayCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
+            PropertyClickCommand = new RelayCommand<PropertyBindingModel>(PropertyClickExecute);
 
             //Move it somewhere else anyway
-            //var tours = new GuideMainPropertyBindingModel() {
+            //var tours = new PropertyBindingModel() {
             //    Name = "Tours", 
             //    Background=VirtualGuide.Mobile.Helper.ColorHelper.GREEN, 
             //    Icon="\uD83C\uDFF0", 
-            //    Type=GuideMainPropertyBindingModel.Types.TOURS};
+            //    Type=PropertyBindingModel.Types.TOURS};
 
             //Properties.Add(tours);
         }
@@ -113,13 +114,15 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             {
                 Travel = await _travelRepository.GetTravelByIdAsync<GuideMainBindingModel>(_travelId);
              
-                var props = (await _propertyRepository.GetSimplePropertiesWithColors(_travelId));
+                var props = (await _propertyRepository.GetSimpleProperties(_travelId));
                 
-                foreach(var prop in props)
-                {
-                    Properties.Add(prop);
-                }
+                List<Brush> colors = new List<Brush>() { ColorHelper.BLUE, ColorHelper.GREEN, ColorHelper.RED };
 
+                for (var i = 0; i < props.Count; i++ )
+                {
+                    props[i].Background = colors[i % colors.Count];
+                    Properties.Add(props[i]);
+                }
             }
 
             if (DataLoaded != null)
@@ -134,15 +137,15 @@ namespace VirtualGuide.Mobile.ViewModel.GuideMain
             _navigationService.NavigateTo("Maps", _travelId);
         }
 
-        public void PropertyClickExecute(GuideMainPropertyBindingModel item)
+        public void PropertyClickExecute(PropertyBindingModel item)
         {
 
             switch(item.Type)
             {
-                case GuideMainPropertyBindingModel.Types.TOURS:
+                case PropertyBindingModel.Types.TOURS:
                     //todo
                 break;
-                case GuideMainPropertyBindingModel.Types.REGULAR:
+                case PropertyBindingModel.Types.REGULAR:
                     if (ScrollRequested != null)
                     {
                         ScrollRequested(item);

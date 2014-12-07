@@ -11,18 +11,11 @@ namespace VirtualGuide.Mobile.BindingModel
     {
         #region constructors
 
-        public GuideListBindingModel()
+        public GuideListBindingModel() : base()
         {
 
         }
 
-        public GuideListBindingModel(Travel travel) : base(travel)
-        {
-            Description = travel.Description;
-            Price = travel.Price;
-            _imageSrc = travel.ImageSrc;
-            IsOwned = travel.IsOwned;
-        }
 
         #endregion
 
@@ -34,7 +27,7 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public bool IsOwned { get; set; }
 
-        private string _imageSrc;
+        public string ImageSrc { get; private set; }
 
         private ImageSource _imagePath;
         public ImageSource ImagePath
@@ -45,7 +38,7 @@ namespace VirtualGuide.Mobile.BindingModel
                 Uri uri = null;
                 try
                 {
-                    uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    uri = new Uri("ms-appdata:///local/images/" + ImageSrc);
                     bitmap = new BitmapImage(uri);
                     _imagePath = bitmap;
                 }

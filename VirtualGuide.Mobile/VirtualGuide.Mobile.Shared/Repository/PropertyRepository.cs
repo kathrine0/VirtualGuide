@@ -15,18 +15,11 @@ namespace VirtualGuide.Mobile.Repository
             return properties;
         }
 
-        public async Task<List<GuideMainPropertyBindingModel>> GetSimplePropertiesWithColors(int travelId)
+        public async Task<List<PropertyBindingModel>> GetSimpleProperties(int travelId)
         {
             var properties = await GetPropertiesByTravelIdAsync(travelId);
-
-            var viewModels = new List<GuideMainPropertyBindingModel>();
-
-            for (int i = 0; i < properties.Count; i++ )
-            {
-                viewModels.Add(new GuideMainPropertyBindingModel(properties[i], i));
-            }
-
-            return viewModels;
+            
+            return AutoMapper.Mapper.Map<List<PropertyBindingModel>>(properties);
         }
     }
 }

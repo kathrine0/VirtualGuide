@@ -11,15 +11,15 @@ namespace VirtualGuide.Mobile.Repository
 {
     class PlaceRepository
     {
-        public async Task<List<T>> GetParentPlacesByTravelIdAsync<T>(int travelId)
+        public async Task<List<MapPlaceBindingModel>> GetParentPlacesByTravelIdAsync(int travelId)
         {
             var query = App.Connection.QueryAsync<Place>("Select * FROM Place WHERE TravelId = ? AND (ParentId IS NULL OR ParentId = '' ) ORDER BY Latitude DESC", travelId);
             var places = await query.ConfigureAwait(false);
 
-            return ModelHelper.ObjectToViewModel<T, Place>(places);
+            return AutoMapper.Mapper.Map<List<MapPlaceBindingModel>>(places);
         }
 
-        public async Task<T> GetPlaceById<T>(int placeId)
+        public async Task<PlaceMainBindingModel> GetPlaceById(int placeId)
         {
             var query = App.Connection.QueryAsync<Place>("Select * FROM Place WHERE Id = ?", placeId);
             var place = await query.ConfigureAwait(false);
@@ -27,9 +27,7 @@ namespace VirtualGuide.Mobile.Repository
             if (place.Count == 0)
                 throw new Exception("Element not found");
 
-            var viewmodelList = ModelHelper.ObjectToViewModel<T, Place>(place);
-
-            return viewmodelList[0];
+            return AutoMapper.Mapper.Map<PlaceMainBindingModel>(place.First());
         }
 
         public ItemsChangeObservableCollection<CategoryVisibilityModel> GetCategoryVisibilityCollection(List<MapPlaceBindingModel> places)

@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Diagnostics;
+using VirtualGuide.Mobile.Common;
 using VirtualGuide.Mobile.Helper;
 using VirtualGuide.Mobile.Model;
 using VirtualGuide.Mobile.View;
@@ -72,6 +73,9 @@ namespace VirtualGuide.Mobile
 #endif
             // Setup database
             SetupDatabase();
+
+            // Setup automapper
+            AutoMapperConfig.Configure();
 
             //Remove old runtime data
             localDataHelper.DeleteContainer();

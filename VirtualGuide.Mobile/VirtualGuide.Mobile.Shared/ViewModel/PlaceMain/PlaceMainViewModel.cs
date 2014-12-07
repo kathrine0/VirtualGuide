@@ -40,7 +40,7 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
 
         //public RelayCommand NavigateToMapCommand { get; set; }
 
-        //public RelayCommand<GuideMainPropertyBindingModel> PropertyClickCommand { get; set; }
+        //public RelayCommand<PropertyBindingModel> PropertyClickCommand { get; set; }
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
         private void Initialize()
         {
             //NavigateToMapCommand = new RelayCommand(NavigateToMapExecute);
-            //PropertyClickCommand = new RelayCommand<GuideMainPropertyBindingModel>(PropertyClickExecute);
+            //PropertyClickCommand = new RelayCommand<PropertyBindingModel>(PropertyClickExecute);
 
             Options = new ObservableCollection<PlaceMainOptions>() 
             { 
@@ -95,7 +95,7 @@ namespace VirtualGuide.Mobile.ViewModel.PlaceMain
             
             if (_placeId != 0)
             {
-                Place = await _placeRepository.GetPlaceById<PlaceMainBindingModel>(_placeId);
+                Place = await _placeRepository.GetPlaceById(_placeId);
             }
             
             IsWorkInProgress = false;

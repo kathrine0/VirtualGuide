@@ -16,17 +16,6 @@ namespace VirtualGuide.Mobile.BindingModel
 
         }
 
-        public GuideMainBindingModel(Travel travel) :base(travel)
-        {
-            Description = travel.Description;
-            Price = travel.Price;
-            Latitude = travel.Latitude;
-            Longitude = travel.Longitude;
-            ZoomLevel = travel.ZoomLevel;
-            _imageSrc = travel.ImageSrc;
-            IsOwned = travel.IsOwned;
-        }
-
         #endregion
 
         #region properties
@@ -43,7 +32,7 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public double ZoomLevel { get; set; }
 
-        private string _imageSrc;
+        public string ImageSrc { private set; get; }
 
         private ImageSource _imagePath;
         public ImageSource ImagePath
@@ -54,7 +43,7 @@ namespace VirtualGuide.Mobile.BindingModel
                 Uri uri = null;
                 try
                 {
-                    uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    uri = new Uri("ms-appdata:///local/images/" + ImageSrc);
                     bitmap = new BitmapImage(uri);
                     _imagePath = bitmap;
                 }

@@ -10,14 +10,6 @@ namespace VirtualGuide.Mobile.BindingModel
     public class PlaceMainBindingModel
     {
         public PlaceMainBindingModel() { }
-        public PlaceMainBindingModel(Place place)
-        {
-            Id = place.Id;
-            Name = place.Name;
-            Category = place.Category;
-            Description = place.Description;
-            _imageSrc = place.ImageSrc;
-        }
 
         public int Id { get; set; }
 
@@ -25,7 +17,7 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public string Description { get; set; }
 
-        private string _imageSrc;
+        public string ImageSrc { get; private set; }
 
         private ImageSource _imagePath;
         public ImageSource ImagePath
@@ -36,7 +28,7 @@ namespace VirtualGuide.Mobile.BindingModel
                 Uri uri = null;
                 try
                 {
-                    uri = new Uri("ms-appdata:///local/images/" + _imageSrc);
+                    uri = new Uri("ms-appdata:///local/images/" + ImageSrc);
                     bitmap = new BitmapImage(uri);
                     _imagePath = bitmap;
                 }

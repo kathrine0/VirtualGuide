@@ -12,14 +12,10 @@ namespace VirtualGuide.Mobile.BindingModel
     [ImplementPropertyChanged]
     public class ListPlaceBindingModel
     {
-        public ListPlaceBindingModel() { }
-        public ListPlaceBindingModel(Place place)
+        public ListPlaceBindingModel(double latitude, double longitude)
         {
-            Id = place.Id;
-            Name = place.Name;
-            Category = place.Category;
-            _placeLatitude = place.Latitude;
-            _placeLongitude = place.Longitude;
+            _placeLatitude = latitude;
+            _placeLongitude = longitude;
         }
 
         private double _placeLatitude;

@@ -12,14 +12,7 @@ namespace VirtualGuide.Mobile.BindingModel
             {
 
             }
-
-            public MapTravelBindingModel(Travel travel) : base(travel)
-            {
-                Latitude = travel.Latitude;
-                Longitude = travel.Longitude;
-                ZoomLevel = travel.ZoomLevel;
-            }
-
+        
             #endregion
 
             #region properties

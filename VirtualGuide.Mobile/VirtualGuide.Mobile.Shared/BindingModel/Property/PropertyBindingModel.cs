@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 namespace VirtualGuide.Mobile.BindingModel
 {
     [ImplementPropertyChanged]
-    public class GuideMainPropertyBindingModel
+    public class PropertyBindingModel
     {
         public enum Types
         {
@@ -16,28 +16,12 @@ namespace VirtualGuide.Mobile.BindingModel
         }
         
         #region constructors
-        public GuideMainPropertyBindingModel() { }
 
-        public GuideMainPropertyBindingModel(Property property)
+        public PropertyBindingModel()
         {
-            Id = property.Id;
-            Name = property.Title;
-            Icon = property.IconSymbol;
             Type = Types.REGULAR;
-            Description = property.Description;
 
-            if (Background == null)
-            {
-                Background = ColorHelper.YELLOW;
-            }
-
-        }
-
-        public GuideMainPropertyBindingModel(Property property, int i) : this(property)
-        {
-            List<Brush> colors = new List<Brush>() { ColorHelper.BLUE, ColorHelper.GREEN, ColorHelper.RED };
-
-            Background = colors[i % colors.Count];
+            Background = ColorHelper.YELLOW;           
         }
 
         #endregion
@@ -78,5 +62,6 @@ namespace VirtualGuide.Mobile.BindingModel
         public Types Type { get; set; }
 
         #endregion
+        
     }
 }

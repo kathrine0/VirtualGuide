@@ -16,15 +16,6 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public MapPlaceBindingModel() { }
 
-        public MapPlaceBindingModel(Place place)
-        {
-            Id = place.Id;
-            Name = place.Name;
-            CategoryName = place.Category;
-            Point = new Geopoint(new BasicGeoposition() { Latitude = place.Latitude, Longitude = place.Longitude });
-            _iconName = place.IconName;
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
 
@@ -40,7 +31,7 @@ namespace VirtualGuide.Mobile.BindingModel
 
         public bool DetailsVisibility { get; set; }
 
-        private string _iconName;
+        public string IconName { get; private set; }
 
         private ImageSource _icon;
         public ImageSource Icon
@@ -51,7 +42,7 @@ namespace VirtualGuide.Mobile.BindingModel
                 Uri uri = null;
                 try
                 {
-                    uri = new Uri(String.Format("ms-appx:///Assets/Markers/{0}.png", _iconName));
+                    uri = new Uri(String.Format("ms-appx:///Assets/Markers/{0}.png", IconName));
                     bitmap = new BitmapImage(uri);
                     _icon = bitmap;
                 }

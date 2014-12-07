@@ -22,7 +22,7 @@ namespace VirtualGuide.Mobile.Repository
 
             SaveAvailableTravels(travels);
 
-            return ModelHelper.ObjectToViewModel<GuideListBindingModel, Travel>(travels);
+            return AutoMapper.Mapper.Map<List<GuideListBindingModel>>(travels);
         }
 
         public async Task<List<GuideListBindingModel>> DownloadOwnedTravels()
@@ -36,7 +36,7 @@ namespace VirtualGuide.Mobile.Repository
 
                 SaveOwnedTravelsAndDownloadImages(travels);
 
-                return ModelHelper.ObjectToViewModel<GuideListBindingModel, Travel>(travels);
+                return AutoMapper.Mapper.Map<List<GuideListBindingModel>>(travels);
             }
 
             //if user is not authenticated
@@ -69,7 +69,7 @@ namespace VirtualGuide.Mobile.Repository
 
             SaveOwnedTravelsAndDownloadImages(travelList);
 
-            return new GuideListBindingModel(travel);
+            return AutoMapper.Mapper.Map<GuideListBindingModel>(travel);
         }
 
         #endregion
@@ -80,14 +80,15 @@ namespace VirtualGuide.Mobile.Repository
         public async Task<List<GuideListBindingModel>> GetAllTravelsAsync() 
         {
             var travels = await App.Connection.QueryAsync<Travel>("Select * FROM Travel");
-            var viewModels = ModelHelper.ObjectToViewModel<GuideListBindingModel, Travel>(travels);
-            return viewModels;
+
+            return AutoMapper.Mapper.Map<List<GuideListBindingModel>>(travels);
         }
         public async Task<T> GetTravelByIdAsync<T>(int id) 
             where T : BaseTravelBindingModel
         {
             var travel = await this.GetTravelById(id);
-            return (T) Activator.CreateInstance(typeof(T), travel);
+
+            return AutoMapper.Mapper.Map<T>(travel);
         }
 
         #endregion
