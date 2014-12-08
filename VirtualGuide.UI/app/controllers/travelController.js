@@ -165,6 +165,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                     propertyService.updateItem($scope.travel.Properties[index],
                     function (item) { //success
                         $scope.travel.Properties[index].editMode = false;
+                        $scope.anyEditInProgress = false;
                         delete $scope.travel.Properties[index].oldValue;
                     });
                 }
@@ -181,6 +182,7 @@ function ($scope, $state, $modal, $filter, $location, $anchorScroll, $rootScope,
                 //todo remove on server
                 delete $scope.travel.Properties[index].oldValue;
                 $scope.travel.Properties.splice(index, 1);
+                $scope.anyEditInProgress = false;
 
             };
 
