@@ -52,7 +52,7 @@ namespace VirtualGuide.Mobile.BindingModel
         }
 
         /// <summary>
-        /// This is Haversine formula
+        /// This is Ortodroma formula
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -62,29 +62,18 @@ namespace VirtualGuide.Mobile.BindingModel
             const double earthRadius = 6371; // kilometers
 
             // convert latitude and longitude values to radians
-            var prevRadLat = _placeLatitude * degreesToRadians;
-            var prevRadLong = _placeLongitude * degreesToRadians;
-            var currRadLat = currentPosition.Coordinate.Point.Position.Latitude * degreesToRadians;
-            var currRadLong = currentPosition.Coordinate.Point.Position.Longitude * degreesToRadians;
+            double prevRadLat = _placeLatitude * degreesToRadians;
+            double prevRadLong = _placeLongitude * degreesToRadians;
+            double currRadLat = currentPosition.Coordinate.Point.Position.Latitude * degreesToRadians;
+            double currRadLong = currentPosition.Coordinate.Point.Position.Longitude * degreesToRadians;
 
-            // calculate radian delta between each position.
-            var radDeltaLat = currRadLat - prevRadLat;
-            var radDeltaLong = currRadLong - prevRadLong;
+            // calculate ortodroma
+            var exp1 = Math.Pow((Math.Sin((prevRadLat - currRadLat) / 2), 2);
+            var exp2 = Math.Cos(prevRadLat)*Math.Cos(currRadLat)*Math.Pow(Math.Sin((prevRadLong-currRadLong)/2) ,2);
+            var ortodroma = 2 * earthRadius * Math.Asin(Math.Sqrt(exp1+exp2));
 
-            // calculate distance
-            var expr1 = (Math.Sin(radDeltaLat / 2.0) *
-                         Math.Sin(radDeltaLat / 2.0)) +
-
-                        (Math.Cos(prevRadLat) *
-                         Math.Cos(currRadLat) *
-                         Math.Sin(radDeltaLong / 2.0) *
-                         Math.Sin(radDeltaLong / 2.0));
-
-            var expr2 = 2.0 * Math.Atan2(Math.Sqrt(expr1),
-                                         Math.Sqrt(1 - expr1));
-
-            var distance = (earthRadius * expr2);
-            this.Distance = distance * 1000;  // return results as meters
+            // calculate radian delta between each position.            
+            this.Distance = ortodroma * 1000;  // return results as meters
         }
     }
 }
