@@ -3,10 +3,10 @@
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     //local config
-    var site_prefix = '/VirtualGuide.UI/';
+    // var site_prefix = '/VirtualGuide.UI/';
 
     //remote config
-    //var site_prefix = '';
+    var site_prefix = '';
 
     $urlRouterProvider.otherwise("/admin/home");
 
