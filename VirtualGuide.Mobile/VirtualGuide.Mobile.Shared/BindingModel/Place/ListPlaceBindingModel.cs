@@ -68,7 +68,7 @@ namespace VirtualGuide.Mobile.BindingModel
             double currRadLong = currentPosition.Coordinate.Point.Position.Longitude * degreesToRadians;
 
             // calculate ortodroma
-            var exp1 = Math.Pow((Math.Sin((prevRadLat - currRadLat) / 2), 2);
+            var exp1 = Math.Pow((Math.Sin((prevRadLat - currRadLat) / 2)), 2);
             var exp2 = Math.Cos(prevRadLat)*Math.Cos(currRadLat)*Math.Pow(Math.Sin((prevRadLong-currRadLong)/2) ,2);
             var ortodroma = 2 * earthRadius * Math.Asin(Math.Sqrt(exp1+exp2));
 
