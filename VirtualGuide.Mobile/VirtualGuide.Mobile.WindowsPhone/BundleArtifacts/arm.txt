@@ -1,0 +1,5 @@
+MainPackage=D:\PROJECTS\VirtualGuide\VirtualGuide.Mobile\VirtualGuide.Mobile.WindowsPhone\bin\ARM\Release\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_Bundle\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_ARM.appx
+SymbolPackage=D:\PROJECTS\VirtualGuide InstallFiles\mobile app\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_Test\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_ARM.appxsym
+ResourcePack=D:\PROJECTS\VirtualGuide\VirtualGuide.Mobile\VirtualGuide.Mobile.WindowsPhone\bin\ARM\Release\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_Bundle\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_language-pl.appx
+ResourcePack=D:\PROJECTS\VirtualGuide\VirtualGuide.Mobile\VirtualGuide.Mobile.WindowsPhone\bin\ARM\Release\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_Bundle\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_scale-100.appx
+ResourcePack=D:\PROJECTS\VirtualGuide\VirtualGuide.Mobile\VirtualGuide.Mobile.WindowsPhone\bin\ARM\Release\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_Bundle\VirtualGuide.Mobile.WindowsPhone_1.0.0.0_scale-140.appx

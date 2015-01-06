@@ -964,6 +964,7 @@
       <DependentUpon>ui-bootstrap-tpls.min.js</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CathetineWebApp.pubxml" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
