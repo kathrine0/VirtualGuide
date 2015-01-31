@@ -7,7 +7,7 @@ app.run(function ($rootScope) {
     //$rootScope.webservice = 'http://localhost/VirtualGuide/';
 
     //remote config
-    $rootScope.webservice = 'http://catherine.cloudapp.net:8080/';
+    $rootScope.webservice = 'http://catherine.cloudapp.net/Api/';
 
     
     //Maps config

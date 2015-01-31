@@ -103,7 +103,7 @@ app.factory('placeService', ['$rootScope', '$q', 'placesRepository', 'placeRepos
             places.push(marker.place);
         });
 
-        placesRepository.create({ id: travelId }, places,
+        placesRepository.create(places,
             function success() {
                 if (successCallback != undefined) {
                     successCallback();
